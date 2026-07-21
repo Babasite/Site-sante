@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Jouer à Sauve qui peut pour réviser les premiers réflexes de secours.">
+<title>Jeu : Sauve qui peut | Santé Prévention Terrain</title>
+<link rel="stylesheet" href="{% static 'accueil/pompier/css/pompier.css' %}">
+</head>
+
+<body id="top">
+<header class="site-header">
+    <div class="header-inner">
+        <a href="{% url 'pompier' %}" class="brand" aria-label="Retour à la page Sauver">
+            <img src="{% static 'accueil/images/logo.png' %}" alt="Logo" class="brand-logo">
+            <span class="brand-text">
+                <span class="brand-name">Santé Prévention Terrain</span>
+                <span class="brand-subtitle">Jeu : Sauve qui peut</span>
+            </span>
+        </a>
+
+        <div class="header-action">
+            <a href="{% url 'pompier' %}" class="game-button">
+                <span>←</span>
+                Retour à la page Sauver
+            </a>
+        </div>
+    </div>
+</header>
+
+<main class="page-shell">
+    <section class="game-section">
+        <div class="game-card">
+            <h2>🎮 Jeu : Sauve qui peut</h2>
+
+            <p class="game-intro">
+                Chaque bonne réponse allonge le serpent d’une case. Toutes les cinq bonnes
+                réponses, tu passes au niveau suivant et le serpent accélère.
+            </p>
+
+            <div class="hud">
+                <div class="hud-box">Score : <span id="score">0</span></div>
+                <div class="hud-box">Record : <span id="bestScore">0</span></div>
+                <div class="hud-box">Niveau : <span id="level">1</span>/10</div>
+                <div class="hud-box">Progression : <span id="levelProgress">0</span>/5</div>
+                <div class="hud-box">Vies : <span id="lives">❤️ ❤️ ❤️</span></div>
+                <div class="hud-box">
+                    Question : <span id="questionNumber">1</span>/<span id="questionTotal">5</span>
+                </div>
+            </div>
+
+            <div class="question-box" id="question"></div>
+
+            <div class="canvas-wrap">
+                <canvas id="gameCanvas" width="900" height="510">
+                    Votre navigateur ne prend pas en charge le canvas.
+                </canvas>
+            </div>
+
+            <div class="game-controls">
+                <button type="button" class="control-button start" id="startButton">▶ Démarrer</button>
+                <button type="button" class="control-button pause" id="pauseButton">⏸ Pause</button>
+                <button type="button" class="control-button restart" id="restartButton">↻ Recommencer</button>
+            </div>
+
+            <div class="mobile-controls">
+                <button type="button" id="up" aria-label="Aller vers le haut">▲</button>
+                <button type="button" id="left" aria-label="Aller vers la gauche">◀</button>
+                <button type="button" id="down" aria-label="Aller vers le bas">▼</button>
+                <button type="button" id="right" aria-label="Aller vers la droite">▶</button>
+            </div>
+
+            <p class="feedback" id="feedback" aria-live="polite"></p>
+
+            <div class="notice">
+                Ce jeu est une sensibilisation. Il ne remplace pas une formation pratique
+                aux premiers secours ni les consignes données par les services d’urgence.
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <img src="{% static 'accueil/images/logo.png' %}" alt="Logo" class="footer-logo">
+            <div>
+                <strong>Santé Prévention Terrain</strong>
+                <p>Apprendre, réagir, sauver.</p>
+            </div>
+        </div>
+        <a href="{% url 'pompier' %}">← Retour à la page Sauver</a>
+    </div>
+</footer>
+
+<script src="{% static 'accueil/pompier/js/questions.js' %}"></script>
+<script src="{% static 'accueil/pompier/js/snake.js' %}"></script>
+<script src="{% static 'accueil/pompier/js/pompier.js' %}"></script>
+</body>
+</html>

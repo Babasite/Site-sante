@@ -1,0 +1,255 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Check-up rapide</title>
+<style>
+*{box-sizing:border-box}
+:root{--blue:#005eb8;--dark:#004b92;--light:#eaf4ff;--beige:#efe3c3;--text:#1f2933;--muted:#52606d;--border:#d5dde5;--white:#fff;--ok:#177245;--warn:#a45c00;--danger:#b42318}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--beige);color:var(--text)}
+.logo-menu{position:absolute;top:20px;left:20px;z-index:10;width:200px;height:auto}
+header{min-height:160px;padding:35px 50px 35px 250px;background:var(--blue);color:white;display:flex;align-items:center}
+header h1{margin:0 0 10px;font-size:34px} header p{margin:0;max-width:780px;font-size:18px;line-height:1.5}
+.container{width:min(900px,calc(100% - 40px));margin:40px auto 70px}
+.back{display:inline-block;margin-bottom:20px;color:var(--dark);font-weight:bold;text-decoration:none}
+.card{background:white;border:1px solid var(--border);border-radius:16px;padding:30px;box-shadow:0 10px 28px rgba(31,41,51,.1);margin-bottom:24px}
+.card h2{margin-top:0;color:var(--dark)}
+.notice{padding:16px;background:var(--light);border-left:5px solid var(--blue);border-radius:8px;line-height:1.55}
+.warning{padding:16px;background:#fff6e8;border-left:5px solid var(--warn);border-radius:8px;line-height:1.55;margin-top:16px}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:22px}
+.field label{display:block;margin-bottom:7px;font-weight:bold}.field input{width:100%;padding:13px;border:2px solid var(--border);border-radius:9px}
+.field input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,94,184,.15)}
+.full{grid-column:1/-1}.check-line{display:flex;gap:10px;align-items:flex-start;margin:17px 0}
+.button{min-height:48px;padding:12px 22px;border:2px solid var(--blue);border-radius:9px;cursor:pointer;font-weight:bold;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.primary{background:var(--blue);color:white}.primary:hover{background:var(--dark)}.secondary{background:white;color:var(--blue)}
+.error{color:var(--danger);font-weight:bold;min-height:22px;margin-top:14px}
+.tool-result{display:none;margin-top:22px;padding:18px;background:var(--light);border-radius:11px;line-height:1.6}
+.tool-result.visible{display:block}.metric{font-size:31px;font-weight:bold;color:var(--dark)}
+.optional{margin-top:25px;padding-top:22px;border-top:1px solid var(--border)}
+.progress-info{display:flex;justify-content:space-between;color:var(--muted);font-weight:bold;margin-bottom:8px}
+.track{height:12px;background:#dfe7ee;border-radius:999px;overflow:hidden}.bar{height:100%;width:0;background:var(--blue);transition:.25s}
+.category{display:inline-block;margin-top:24px;padding:7px 12px;background:var(--light);color:var(--dark);border-radius:999px;font-weight:bold;font-size:14px}
+.question{font-size:25px;line-height:1.3}.help{color:var(--muted)}
+.answers{display:grid;gap:12px}.answer{display:block;cursor:pointer}.answer input{position:absolute;opacity:0}
+.answer span{display:block;padding:15px 18px;border:2px solid var(--border);border-radius:10px}
+.answer input:checked+span{border-color:var(--blue);background:var(--light)}.answer:hover span{border-color:var(--blue)}
+.nav{display:flex;justify-content:space-between;gap:15px;margin-top:24px}
+#quizCard,#resultCard{display:none}#quizCard.visible,#resultCard.visible{display:block}
+.score{text-align:center}.circle{width:170px;height:170px;margin:22px auto;border:12px solid var(--blue);border-radius:50%;background:var(--light);display:flex;flex-direction:column;justify-content:center}
+.circle strong{font-size:46px;color:var(--dark)}.feedback{padding:15px;border-radius:9px;margin:10px 0;line-height:1.5}
+.good{background:#edf8f1;border-left:5px solid var(--ok)}.priority{background:#fff6e8;border-left:5px solid var(--warn)}
+footer{text-align:center;color:#64748b;padding:25px}
+@media(max-width:700px){.logo-menu{left:50%;transform:translateX(-50%);width:180px}header{padding:140px 25px 35px;text-align:center}.container{width:min(100% - 24px,900px)}.card{padding:22px 18px}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.nav{flex-direction:column-reverse}.button{width:100%}}
+</style>
+</head>
+<body>
+<a href="{% url 'home' %}" title="Retour à l'accueil">
+<img class="logo-menu" src="{% static 'accueil/images/logo.png' %}" alt="Retour à l'accueil">
+</a>
+
+<header>
+<div>
+<h1>Check-up rapide</h1>
+<p>Commencez par deux indicateurs simples, puis répondez à 15 questions sur vos habitudes quotidiennes.</p>
+</div>
+</header>
+
+<main class="container">
+<a class="back" href="{% url 'outils' %}">← Retour aux outils</a>
+
+<section class="card" id="measureCard">
+<h2>Étape 1 — Indicateurs simples</h2>
+<p>L’IMC est calculé à partir de votre taille et de votre poids. Il s’agit d’un indicateur de repérage, pas d’un diagnostic.</p>
+
+<div class="warning">
+<strong>Ce calcul est réservé aux adultes.</strong> Ne l’utilisez pas si vous avez moins de 18 ans, si vous êtes enceinte, si vous avez un trouble du comportement alimentaire connu ou suspecté, ou une affection modifiant fortement la taille ou la composition corporelle.
+</div>
+
+<div class="form-grid">
+<div class="field">
+<label for="age">Âge</label>
+<input id="age" type="number" min="18" max="120" inputmode="numeric" placeholder="Ex. 42">
+</div>
+<div class="field">
+<label for="height">Taille en centimètres</label>
+<input id="height" type="number" min="120" max="230" step="0.1" inputmode="decimal" placeholder="Ex. 175">
+</div>
+<div class="field">
+<label for="weight">Poids en kilogrammes</label>
+<input id="weight" type="number" min="30" max="350" step="0.1" inputmode="decimal" placeholder="Ex. 72">
+</div>
+<div class="field">
+<label for="waist">Tour de taille en centimètres — facultatif</label>
+<input id="waist" type="number" min="40" max="220" step="0.1" inputmode="decimal" placeholder="Ex. 84">
+</div>
+</div>
+
+<label class="check-line">
+<input id="exclusion" type="checkbox">
+<span>Je confirme être adulte et ne pas être dans l’une des situations pour lesquelles ce calcul n’est pas adapté.</span>
+</label>
+
+<button type="button" class="button primary" id="calculateButton">Calculer mes indicateurs</button>
+<p class="error" id="measureError" role="alert"></p>
+
+<div class="tool-result" id="toolResult">
+<div>Votre IMC : <span class="metric" id="bmiValue"></span></div>
+<p id="bmiText"></p>
+<div id="whrBlock" style="display:none">
+<div>Rapport tour de taille / taille : <span class="metric" id="whrValue"></span></div>
+<p id="whrText"></p>
+</div>
+<div class="notice">
+Ces résultats ne sont pas ajoutés au score du questionnaire. L’IMC ne mesure pas directement la masse grasse et peut être moins interprétable chez certaines personnes, notamment très musclées.
+</div>
+<button type="button" class="button primary" id="startQuizButton" style="margin-top:18px">Commencer les 15 questions</button>
+</div>
+</section>
+
+<section class="card" id="quizCard" aria-live="polite">
+<div class="progress-info"><span id="counter"></span><span id="percent"></span></div>
+<div class="track" role="progressbar" aria-valuemin="0" aria-valuemax="100"><div class="bar" id="bar"></div></div>
+<div id="questionContainer"></div>
+<p class="error" id="quizError" role="alert"></p>
+<div class="nav">
+<button type="button" class="button secondary" id="previousButton">Précédente</button>
+<button type="button" class="button primary" id="nextButton">Suivante</button>
+</div>
+</section>
+
+<section class="card" id="resultCard">
+<div class="score">
+<h2>Votre résultat</h2>
+<div class="circle"><strong id="scoreValue">0</strong><span>sur 30</span></div>
+<h3 id="levelTitle"></h3>
+<p id="levelText"></p>
+</div>
+<h3>Points favorables</h3>
+<div id="strengths"></div>
+<h3>Priorités possibles</h3>
+<div id="priorities"></div>
+<div class="notice" style="margin-top:24px">
+Ce score est un repère interne à ce questionnaire. Il ne permet ni de diagnostiquer une maladie, ni d’exclure un problème de santé. En cas de symptôme inquiétant, persistant ou inhabituel, demandez un avis médical.
+</div>
+<div class="nav">
+<a class="button secondary" href="{% url 'outils' %}">Retour aux outils</a>
+<button type="button" class="button primary" id="restartButton">Recommencer</button>
+</div>
+</section>
+</main>
+
+<footer>Health Prevention Center — Outil d'information et de prévention santé</footer>
+
+<script>
+const questions=[
+["Sommeil","En moyenne, combien d’heures dormez-vous par nuit ?","Pensez à une semaine habituelle.",[["7 à 9 heures",2],["6 heures ou environ 10 heures",1],["Moins de 6 heures ou plus de 10 heures",0]],"Votre durée de sommeil est globalement favorable.","Votre durée de sommeil mérite votre attention."],
+["Sommeil","Au réveil, vous sentez-vous reposé(e) ?","Pensez à la majorité de vos réveils.",[["Souvent ou presque toujours",2],["Parfois",1],["Rarement ou jamais",0]],"Votre sommeil semble généralement récupérateur.","Votre récupération semble insuffisante."],
+["Sommeil","Vos horaires de coucher et de lever sont-ils réguliers ?","Une variation modérée le week-end reste possible.",[["Oui, la plupart du temps",2],["Ils varient assez souvent",1],["Ils sont très irréguliers",0]],"Vos horaires sont plutôt réguliers.","La régularité de votre sommeil pourrait être améliorée."],
+["Activité","Combien de temps d’activité physique modérée ou soutenue pratiquez-vous chaque semaine ?","Marche rapide, vélo, natation, course ou sport.",[["Au moins 150 minutes",2],["Entre 60 et 149 minutes",1],["Moins de 60 minutes",0]],"Votre activité déclarée atteint un repère favorable.","Augmenter progressivement votre activité pourrait être utile."],
+["Activité","Faites-vous du renforcement musculaire ?","Poids du corps, élastiques, musculation ou activité équivalente.",[["Deux fois par semaine ou plus",2],["Environ une fois par semaine",1],["Rarement ou jamais",0]],"Vous intégrez du renforcement musculaire.","Le renforcement musculaire est peu présent."],
+["Sédentarité","Interrompez-vous les longues périodes assises ?","Se lever ou marcher quelques minutes suffit.",[["Au moins toutes les 1 à 2 heures",2],["Parfois",1],["Rarement",0]],"Vous interrompez régulièrement la position assise.","Vos périodes assises semblent longues et peu interrompues."],
+["Alimentation","Mangez-vous des fruits et légumes à plusieurs repas ?","Frais, surgelés ou en conserve adaptés.",[["Oui, chaque jour",2],["Environ une fois par jour",1],["Moins d’une fois par jour",0]],"Les fruits et légumes sont bien présents.","Vous pourriez augmenter progressivement leur place."],
+["Alimentation","Consommez-vous des légumineuses, céréales complètes ou aliments riches en fibres ?","Lentilles, pois chiches, haricots, avoine ou pain complet.",[["Presque tous les jours",2],["Quelques fois par semaine",1],["Rarement ou jamais",0]],"Votre alimentation contient régulièrement des fibres.","Les aliments riches en fibres semblent peu présents."],
+["Alimentation","À quelle fréquence buvez-vous des boissons sucrées ?","Sodas, boissons énergisantes et boissons très sucrées.",[["Rarement ou jamais",2],["Une à trois fois par semaine",1],["Presque tous les jours",0]],"Votre consommation de boissons sucrées est limitée.","Les boissons sucrées sont fréquentes."],
+["Hydratation","Buvez-vous régulièrement de l’eau au cours de la journée ?","Les besoins varient selon les personnes et les situations.",[["Oui, régulièrement",2],["Cela dépend des jours",1],["J’oublie souvent",0]],"Vous pensez à vous hydrater régulièrement.","Vous oubliez souvent de boire."],
+["Tabac","Consommez-vous du tabac ou de la nicotine ?","Cigarettes, chicha, cigare ou vapotage nicotiné.",[["Non",2],["Occasionnellement",1],["Tous les jours ou presque",0]],"Vous ne déclarez pas de consommation actuelle.","Le tabac ou la nicotine constitue un point important de prévention."],
+["Alcool","À quelle fréquence consommez-vous de l’alcool ?","Cette question ne pose pas de diagnostic de dépendance.",[["Jamais ou très rarement",2],["Une à plusieurs fois par semaine, sans consommation quotidienne",1],["Tous les jours ou épisodes importants réguliers",0]],"Votre consommation déclarée est absente ou occasionnelle.","Votre consommation d’alcool mérite une attention particulière."],
+["Stress","Vous sentez-vous débordé(e) par le stress ?","Pensez aux dernières semaines.",[["Rarement",2],["Parfois",1],["Souvent ou presque toujours",0]],"Votre stress semble généralement maîtrisable.","Vous vous sentez fréquemment débordé(e)."],
+["Bien-être","Avez-vous du temps pour une activité qui vous fait du bien ?","Loisir, détente, activité créative, sport ou nature.",[["Plusieurs fois par semaine",2],["Occasionnellement",1],["Rarement ou jamais",0]],"Vous accordez du temps à votre bien-être.","Vous semblez avoir peu de temps de récupération."],
+["Soutien","Avez-vous quelqu’un à qui parler en cas de difficulté ?","Proche, ami, collègue ou professionnel.",[["Oui, facilement",2],["Oui, mais difficilement",1],["Non, pas actuellement",0]],"Vous identifiez une source de soutien.","Vous semblez manquer de soutien disponible."]
+];
+
+let current=0;
+const answers=new Array(questions.length).fill(null);
+const measureCard=document.getElementById("measureCard"),quizCard=document.getElementById("quizCard"),resultCard=document.getElementById("resultCard");
+
+function bmiCategory(bmi){
+ if(bmi<18.5)return "Votre IMC se situe sous 18,5. Un avis professionnel peut être utile, notamment en cas de perte de poids involontaire.";
+ if(bmi<25)return "Votre IMC se situe entre 18,5 et 24,9, catégorie de référence habituellement utilisée chez l’adulte.";
+ if(bmi<30)return "Votre IMC se situe entre 25 et 29,9. L’IMC reste un indicateur de repérage et doit être interprété avec d’autres éléments.";
+ return "Votre IMC est égal ou supérieur à 30. Un échange avec un professionnel peut aider à interpréter ce résultat dans votre situation.";
+}
+
+document.getElementById("calculateButton").onclick=()=>{
+ const age=Number(document.getElementById("age").value);
+ const height=Number(document.getElementById("height").value);
+ const weight=Number(document.getElementById("weight").value);
+ const waist=Number(document.getElementById("waist").value);
+ const confirmed=document.getElementById("exclusion").checked;
+ const error=document.getElementById("measureError");
+ error.textContent="";
+ if(!confirmed){error.textContent="Veuillez confirmer que ce calcul est adapté à votre situation.";return}
+ if(!Number.isFinite(age)||age<18||age>120){error.textContent="Saisissez un âge valide entre 18 et 120 ans.";return}
+ if(!Number.isFinite(height)||height<120||height>230){error.textContent="Saisissez une taille valide entre 120 et 230 cm.";return}
+ if(!Number.isFinite(weight)||weight<30||weight>350){error.textContent="Saisissez un poids valide entre 30 et 350 kg.";return}
+ const bmi=weight/((height/100)**2);
+ document.getElementById("bmiValue").textContent=bmi.toFixed(1);
+ document.getElementById("bmiText").textContent=bmiCategory(bmi);
+ const whrBlock=document.getElementById("whrBlock");
+ if(waist){
+   if(waist<40||waist>220){error.textContent="Le tour de taille doit être compris entre 40 et 220 cm.";return}
+   const ratio=waist/height;
+   document.getElementById("whrValue").textContent=ratio.toFixed(2);
+   document.getElementById("whrText").textContent=ratio<0.5
+     ?"Votre tour de taille est inférieur à la moitié de votre taille. Ce rapport reste un simple indicateur complémentaire."
+     :"Votre tour de taille est égal ou supérieur à la moitié de votre taille. Ce résultat peut justifier une discussion avec un professionnel, sans constituer un diagnostic.";
+   whrBlock.style.display="block";
+ }else{whrBlock.style.display="none"}
+ document.getElementById("toolResult").classList.add("visible");
+};
+
+document.getElementById("startQuizButton").onclick=()=>{
+ measureCard.style.display="none";
+ quizCard.classList.add("visible");
+ renderQuestion();
+ quizCard.scrollIntoView({behavior:"smooth"});
+};
+
+function renderQuestion(){
+ const q=questions[current],progress=Math.round((current+1)/questions.length*100);
+ document.getElementById("counter").textContent=`Question ${current+1} sur ${questions.length}`;
+ document.getElementById("percent").textContent=`${progress} %`;
+ document.getElementById("bar").style.width=`${progress}%`;
+ document.getElementById("questionContainer").innerHTML=`
+ <span class="category">${q[0]}</span>
+ <h2 class="question">${q[1]}</h2>
+ <p class="help">${q[2]}</p>
+ <div class="answers">${q[3].map((o,i)=>`
+ <label class="answer"><input type="radio" name="q${current}" value="${i}" ${answers[current]===i?"checked":""}><span>${o[0]}</span></label>`).join("")}</div>`;
+ document.querySelectorAll(`#questionContainer input`).forEach(r=>r.onchange=e=>{answers[current]=Number(e.target.value);document.getElementById("quizError").textContent=""});
+ document.getElementById("previousButton").disabled=current===0;
+ document.getElementById("nextButton").textContent=current===questions.length-1?"Voir mon résultat":"Question suivante";
+}
+
+document.getElementById("previousButton").onclick=()=>{if(current>0){current--;renderQuestion()}};
+document.getElementById("nextButton").onclick=()=>{
+ if(answers[current]===null){document.getElementById("quizError").textContent="Veuillez sélectionner une réponse.";return}
+ if(current<questions.length-1){current++;renderQuestion()}else showResults();
+};
+
+function showResults(){
+ let score=0,strengths=[],priorities=[];
+ questions.forEach((q,i)=>{
+   const s=q[3][answers[i]][1];score+=s;
+   (s===2?strengths:priorities).push({text:s===2?q[4]:q[5],score:s,cat:q[0]});
+ });
+ priorities.sort((a,b)=>a.score-b.score);
+ document.getElementById("scoreValue").textContent=score;
+ let title,text;
+ if(score>=25){title="Habitudes globalement favorables";text="Plusieurs habitudes favorables ressortent de vos réponses."}
+ else if(score>=18){title="Base encourageante";text="Quelques habitudes pourraient être améliorées progressivement."}
+ else if(score>=10){title="Plusieurs points d’attention";text="Choisissez une priorité simple plutôt que de tout modifier à la fois."}
+ else{title="Un accompagnement pourrait être utile";text="Plusieurs réponses suggèrent qu’un échange avec un professionnel pourrait vous aider à définir des priorités adaptées."}
+ document.getElementById("levelTitle").textContent=title;
+ document.getElementById("levelText").textContent=text;
+ document.getElementById("strengths").innerHTML=(strengths.slice(0,4).map(x=>`<div class="feedback good"><strong>${x.cat} :</strong> ${x.text}</div>`).join("")||'<div class="feedback good">Aucun point majeur ne ressort avec ce barème.</div>');
+ document.getElementById("priorities").innerHTML=(priorities.slice(0,4).map(x=>`<div class="feedback priority"><strong>${x.cat} :</strong> ${x.text}</div>`).join("")||'<div class="feedback good">Aucune priorité majeure ne ressort.</div>');
+ quizCard.classList.remove("visible");resultCard.classList.add("visible");resultCard.scrollIntoView({behavior:"smooth"});
+}
+
+document.getElementById("restartButton").onclick=()=>location.reload();
+</script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Veille scientifique</title>
+<style>
+body{
+    font-family:Arial;
+    background:#efe3c3;
+    margin:40px;
+}
+
+h1{color:#00695c;}
+
+button{
+    background:#00695c;
+    color:white;
+    border:none;
+    padding:15px;
+    font-size:18px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-top:20px;
+}
+button:hover{background:#004d40;}
+button:disabled{background:#78909c;cursor:wait;}
+
+.bloc{
+    background:white;
+    margin-top:30px;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px #ccc;
+}
+
+h2{color:#00796b;}
+
+.logo-menu{
+    position:absolute;
+    top:20px;
+    left:20px;
+    width:200px;
+}
+
+.contenu{
+    margin-left:240px;
+}
+
+.form-logo{
+    position:absolute;
+    top:240px;
+    left:20px;
+    width:200px;
+}
+
+.form-logo button{width:100%;}
+
+.message-attente{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    padding:180px 30px 30px;
+    text-align:center;
+    background:rgba(239,227,195,.97);
+}
+
+.message-attente h2{margin:0 0 30px;color:#00695c;font-size:34px;}
+.message-attente p{max-width:760px;margin:20px auto;font-size:21px;line-height:1.6;}
+.message-attente::after{
+    content:"";
+    display:block;
+    width:48px;height:48px;
+    margin:35px auto 0;
+    border:6px solid #c8d8d4;
+    border-top-color:#00695c;
+    border-radius:50%;
+    animation:tourner 1s linear infinite;
+}
+
+@keyframes tourner{to{transform:rotate(360deg);}}
+
+/* Colonne de droite indépendante */
+.colonne-droite{
+    position:fixed;
+    top:0;
+    right:180px;
+    width:320px;
+    height:100vh;
+    display:flex;
+    justify-content:flex-start;
+    align-items:center;
+    pointer-events:none;
+}
+
+.image-droite{
+    width:300px;
+    height:300px;
+    border-radius:18px;
+    background-image:url("{% static 'accueil/images/perroquet.png' %}");
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    box-shadow:0 12px 28px rgba(0,0,0,.18);
+}
+
+.bouton-veille-vert{
+    display:inline-block;
+    margin:10px 0;
+    padding:12px 15px;
+    border:none;
+    border-radius:8px;
+    background:#00695c;
+    color:white;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:16px;
+    font-weight:bold;
+    text-decoration:none;
+    cursor:pointer;
+}
+.bouton-veille-vert:hover{background:#004d40;color:white;}
+</style>
+{% include "accueil/includes/barre_redacteur_css.html" %}
+</head>
+<body>
+{% include "accueil/includes/barre_redacteur.html" %}
+
+<a href="/" title="Cliquer pour revenir à l'accueil">
+<img class="logo-menu" src="{% static 'accueil/images/logo.png' %}" alt="Retour à l'accueil">
+</a>
+
+{% if user.is_authenticated and user.is_staff %}
+<form method="post" class="form-logo" id="form-veille">
+{% csrf_token %}
+<button type="submit" id="bouton-veille">Lancer la veille scientifique</button>
+</form>
+{% else %}
+<div class="form-logo">
+<a class="bouton-redacteur" href="{% url 'redacteur_connexion' %}">Connexion rédacteur</a>
+</div>
+{% endif %}
+
+<div id="message-attente" class="message-attente">
+<h2>⏳ Patientez...</h2>
+<p>Je lis les publications, je supprime les doublons, je rédige le résumé et je cherche les convergences...</p>
+<p>Mon cerveau tourne en local avec seulement 8 Go de RAM, alors soyez indulgent... 😅</p>
+</div>
+
+<div class="contenu">
+<h1>Veille scientifique</h1>
+
+{% for message in messages %}<p class="message-redacteur">{{ message }}</p>{% endfor %}
+{% if erreur %}<p class="message-redacteur">{{ erreur }}</p>{% endif %}
+{% if derniere_veille %}
+<div style="display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin:18px 0;">
+    <a class="bouton-veille-vert" href="{% url 'detail_veille' derniere_veille.id %}">Voir la dernière veille</a>
+    <a class="bouton-veille-vert" href="{% url 'exporter_veille_pdf' derniere_veille.id %}">Exporter la dernière veille en PDF</a>
+</div>
+{% endif %}
+
+<p>Cette page permet de récupérer automatiquement les nouveautés provenant de :</p>
+
+<h3>Sources scientifiques</h3>
+<ul>
+<li>PubMed</li>
+<li>Google Scholar</li>
+<li>ProMed</li>
+<li>Prisme</li>
+<li>Cochrane Library</li>
+</ul>
+
+<h3>Agences officielles</h3>
+<ul>
+<li>HAS</li>
+<li>Santé Publique France</li>
+<li>ANSES</li>
+<li>OMS</li>
+<li>ECDC</li>
+<li>CDC</li>
+<li>INSERM</li>
+</ul>
+
+<h3>Gestion bibliographique</h3>
+<ul><li>Zotero</li></ul>
+
+{% if resultats %}
+<div class="bloc">
+<h2>Résultats</h2>
+<pre>{{ resultats }}</pre>
+</div>
+{% endif %}
+</div>
+
+<div class="colonne-droite">
+    <div class="image-droite"></div>
+</div>
+
+<script>
+const formulaireVeille=document.getElementById("form-veille");
+const boutonVeille=document.getElementById("bouton-veille");
+const messageAttente=document.getElementById("message-attente");
+
+if(formulaireVeille){formulaireVeille.addEventListener("submit",function(){
+    boutonVeille.disabled=true;
+    boutonVeille.textContent="Veille en cours...";
+    messageAttente.style.display="block";
+});}
+</script>
+
+</body>
+</html>

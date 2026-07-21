@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+{% load static %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curriculum Vitae</title>
+
+<style>
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#efe3c3;color:#5b3410;}
+.container{max-width:900px;margin:auto;padding:50px 30px;}
+h1{text-align:center;font-size:42px;font-weight:400;margin-bottom:50px;}
+.block{background:white;padding:35px;margin-bottom:30px;border:1px solid #ddd;border-radius:8px;}
+h2{color:#005eb8;font-weight:500;}
+h3{margin-top:30px;color:#5b3410;}
+p{line-height:1.7;}
+.logo-menu{position:fixed;top:20px;left:20px;width:200px;height:auto;}
+.cv-image{width:800px;max-width:100%;display:block;margin:30px auto;border:1px solid #ddd;border-radius:5px;}
+
+.demo-container{display:flex;justify-content:center;margin-top:20px;}
+.demo-card{display:block;width:360px;max-width:100%;position:relative;border-radius:8px;overflow:hidden;border:1px solid #ccc;}
+.demo-card img{width:100%;display:block;}
+.demo-title{position:absolute;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);color:#fff;padding:10px;text-align:center;}
+
+.video-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:20px;}
+.video-card{width:135px;}
+.video-thumb{display:block;position:relative;border-radius:6px;overflow:hidden;border:1px solid #ccc;}
+.video-thumb img{width:100%;display:block;}
+.play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:38px;height:28px;background:rgba(0,0,0,.75);border-radius:6px;}
+.play:after{content:"";position:absolute;left:15px;top:7px;border-left:11px solid white;border-top:7px solid transparent;border-bottom:7px solid transparent;}
+.video-label{text-align:center;font-size:11px;margin-top:5px;}
+</style>
+</head>
+<body>
+
+<a href="/" title="Cliquer pour revenir à l'accueil">
+<img class="logo-menu" src="{% static 'accueil/images/logo.png' %}" alt="Retour à l'accueil">
+</a>
+
+<div class="container">
+
+<h1>Curriculum Vitae</h1>
+
+<div class="block">
+<h2>Mon CV</h2>
+<p>Retrouvez mon parcours professionnel, mes compétences et mes expériences.</p>
+<img src="{% static 'accueil/images/CV.png' %}" alt="Mon CV" class="cv-image">
+</div>
+
+<div class="block">
+<h2>Mes réalisations</h2>
+
+<p>Sélection de reportages réalisés lors de mes missions de journaliste à l'étranger ainsi que dans le domaine de la santé.</p>
+
+<h3>Ma bande démo</h3>
+
+<div class="demo-container">
+<a class="demo-card" href="https://www.youtube.com/watch?v=gHvYucmuOEo" target="_blank" rel="noopener noreferrer">
+<img src="https://img.youtube.com/vi/gHvYucmuOEo/hqdefault.jpg" alt="Bande démo">
+<div class="demo-title">Voir ma bande démo</div>
+</a>
+</div>
+
+<h3>Mes reportages</h3>
+
+<div class="video-grid">
+
+<div class="video-card">
+<a class="video-thumb" href="https://www.youtube.com/watch?v=AKxGKds8Rnw" target="_blank" rel="noopener noreferrer">
+<img src="https://img.youtube.com/vi/AKxGKds8Rnw/hqdefault.jpg" alt="Reportage 1">
+<div class="play"></div>
+</a>
+<div class="video-label">Reportage 1</div>
+</div>
+
+<div class="video-card">
+<a class="video-thumb" href="https://www.youtube.com/watch?v=WbrNiLRaRmE" target="_blank" rel="noopener noreferrer">
+<img src="https://img.youtube.com/vi/WbrNiLRaRmE/hqdefault.jpg" alt="Reportage 2">
+<div class="play"></div>
+</a>
+<div class="video-label">Reportage 2</div>
+</div>
+
+<div class="video-card">
+<a class="video-thumb" href="https://www.youtube.com/watch?v=4XnjMzl2GQI" target="_blank" rel="noopener noreferrer">
+<img src="https://img.youtube.com/vi/4XnjMzl2GQI/hqdefault.jpg" alt="Reportage 3">
+<div class="play"></div>
+</a>
+<div class="video-label">Reportage 3</div>
+</div>
+
+<div class="video-card">
+<a class="video-thumb" href="https://www.youtube.com/watch?v=P_vFhVE52Qs" target="_blank" rel="noopener noreferrer">
+<img src="https://img.youtube.com/vi/P_vFhVE52Qs/hqdefault.jpg" alt="Santé">
+<div class="play"></div>
+</a>
+<div class="video-label">Santé</div>
+</div>
+
+<div class="video-card">
+<a class="video-thumb" href="https://www.youtube.com/watch?v=M7jWjamjGV8" target="_blank" rel="noopener noreferrer">
+<img src="https://img.youtube.com/vi/M7jWjamjGV8/hqdefault.jpg" alt="Reportage 5">
+<div class="play"></div>
+</a>
+<div class="video-label">Reportage 5</div>
+</div>
+
+<div class="video-card">
+<a class="video-thumb" href="https://www.youtube.com/watch?v=QorTJPRaCuQ" target="_blank" rel="noopener noreferrer">
+<img src="https://img.youtube.com/vi/QorTJPRaCuQ/hqdefault.jpg" alt="Reportage 6">
+<div class="play"></div>
+</a>
+<div class="video-label">Reportage 6</div>
+</div>
+
+<div class="video-card">
+<a class="video-thumb" href="https://www.youtube.com/watch?v=yd1zt8RIst8" target="_blank" rel="noopener noreferrer">
+<img src="https://img.youtube.com/vi/yd1zt8RIst8/hqdefault.jpg" alt="Reportage 7">
+<div class="play"></div>
+</a>
+<div class="video-label">Reportage 7</div>
+</div>
+
+<div class="video-card">
+<a class="video-thumb" href="https://www.youtube.com/watch?v=ldH2YEUEdOk" target="_blank" rel="noopener noreferrer">
+<img src="https://img.youtube.com/vi/ldH2YEUEdOk/hqdefault.jpg" alt="Reportage 8">
+<div class="play"></div>
+</a>
+<div class="video-label">Reportage 8</div>
+</div>
+
+<div class="video-card">
+<a class="video-thumb" href="https://www.youtube.com/watch?v=HMCu8VkA3Hg" target="_blank" rel="noopener noreferrer">
+<img src="https://img.youtube.com/vi/HMCu8VkA3Hg/hqdefault.jpg" alt="Reportage 9">
+<div class="play"></div>
+</a>
+<div class="video-label">Reportage 9</div>
+</div>
+
+</div>
+</div>
+
+<div class="block">
+<h2>Pour aller plus loin</h2>
+
+<p>Si vous souhaitez en savoir davantage sur mon parcours, mes expériences et mes compétences, je vous invite à consulter mon profil LinkedIn.</p>
+
+<p style="text-align:center;margin-top:30px;">
+<a href="https://www.linkedin.com/in/bastien-sabouret-0490541a/"
+target="_blank" rel="noopener noreferrer"
+style="display:inline-block;background:#005eb8;color:white;padding:15px 30px;text-decoration:none;border-radius:6px;font-size:18px;font-weight:bold;">
+Consulter mon profil LinkedIn
+</a>
+</p>
+
+</div>
+
+</div>
+</body>
+</html>

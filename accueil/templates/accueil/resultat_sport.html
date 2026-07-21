@@ -1,0 +1,225 @@
+{% extends "accueil/base.html" %}
+{% load static %}
+
+{% block title %}
+Mes recommandations sportives
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'accueil/css/resultat_sport.css' %}"
+>
+{% endblock %}
+
+{% block content %}
+<main class="resultats-page">
+
+    <section class="resultats-entete">
+        <div class="resultats-conteneur">
+
+            <p class="resultats-sur-titre">
+                Questionnaire terminé
+            </p>
+
+            <h1>
+                Les activités qui vous correspondent
+            </h1>
+
+            <p class="resultats-introduction">
+                Ces recommandations sont calculées à partir de vos
+                réponses, de vos préférences et des caractéristiques
+                des disciplines enregistrées.
+            </p>
+
+        </div>
+    </section>
+
+    <section
+        id="zone-chargement"
+        class="resultats-etat resultats-chargement"
+        aria-live="polite"
+    >
+        <div
+            class="resultats-chargement__cercle"
+            aria-hidden="true"
+        ></div>
+
+        <h2>
+            Calcul de vos recommandations
+        </h2>
+
+        <p>
+            Le moteur compare votre profil avec les différentes
+            disciplines sportives.
+        </p>
+    </section>
+
+    <section
+        id="message-erreur"
+        class="resultats-etat resultats-erreur"
+        aria-live="assertive"
+        hidden
+    >
+        <div
+            class="resultats-erreur__icone"
+            aria-hidden="true"
+        >
+            !
+        </div>
+
+        <h2>
+            Impossible d’afficher les résultats
+        </h2>
+
+        <p id="message-erreur-texte">
+            Aucun questionnaire terminé n’a été trouvé.
+        </p>
+
+        <div class="resultats-erreur__actions">
+
+            <a
+                class="resultats-bouton resultats-bouton--principal"
+                href="{% url 'bouger_questionnaire' %}"
+            >
+                Faire le questionnaire
+            </a>
+
+            <a
+                class="resultats-bouton resultats-bouton--secondaire"
+                href="{% url 'karate' %}"
+            >
+                Retour à la page Bouger
+            </a>
+
+        </div>
+    </section>
+
+    <div
+        id="contenu-resultats"
+        class="resultats-contenu"
+        hidden
+    >
+
+        <section class="resultats-section">
+            <div class="resultats-conteneur">
+
+                <div class="resultats-titre-section">
+
+                    <div>
+                        <p class="resultats-sur-titre">
+                            Votre profil
+                        </p>
+
+                        <h2>
+                            Les dimensions principales
+                        </h2>
+                    </div>
+
+                    <p class="resultats-titre-section__texte">
+                        Les valeurs ci-dessous résument les tendances
+                        obtenues à partir de vos réponses.
+                    </p>
+
+                </div>
+
+                <div
+                    id="profil-utilisateur"
+                    class="profil-grille"
+                ></div>
+
+            </div>
+        </section>
+
+        <section class="resultats-section resultats-section--sports">
+            <div class="resultats-conteneur">
+
+                <div class="resultats-titre-section">
+
+                    <div>
+                        <p class="resultats-sur-titre">
+                            Sélection personnalisée
+                        </p>
+
+                        <h2>
+                            Vos meilleures correspondances
+                        </h2>
+                    </div>
+
+                    <p
+                        id="nombre-resultats"
+                        class="resultats-compteur"
+                    >
+                        Disciplines sélectionnées
+                    </p>
+
+                </div>
+
+                <div
+                    id="liste-recommandations"
+                    class="recommandations-liste"
+                ></div>
+
+            </div>
+        </section>
+
+        <section class="resultats-section">
+            <div class="resultats-conteneur">
+
+                <aside class="resultats-prudence">
+
+                    <div
+                        class="resultats-prudence__icone"
+                        aria-hidden="true"
+                    >
+                        +
+                    </div>
+
+                    <div>
+                        <h2>
+                            Commencez progressivement
+                        </h2>
+
+                        <p>
+                            Ces propositions constituent une aide au
+                            choix et ne remplacent pas un avis médical.
+                            En cas de douleur, de maladie chronique,
+                            de grossesse, de handicap, de traitement
+                            médical ou de reprise après une longue
+                            période d’inactivité, demandez conseil à
+                            un professionnel de santé.
+                        </p>
+                    </div>
+
+                </aside>
+
+                <div class="resultats-actions">
+
+                    <a
+                        class="resultats-bouton resultats-bouton--principal"
+                        href="{% url 'bouger_questionnaire' %}"
+                    >
+                        Refaire le questionnaire
+                    </a>
+
+                    <a
+                        class="resultats-bouton resultats-bouton--secondaire"
+                        href="{% url 'karate' %}"
+                    >
+                        Retour à la page Bouger
+                    </a>
+
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'accueil/js/moteur_recommandation.js' %}"></script>
+<script src="{% static 'accueil/js/resultat_sport.js' %}"></script>
+{% endblock %}

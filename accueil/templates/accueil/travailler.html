@@ -1,0 +1,741 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Questionnaire d'orientation professionnelle pour découvrir les métiers correspondant à votre profil.">
+    <title>Pour quel travail suis-je fait ? | Santé Prévention Terrain</title>
+
+    <style>
+        :root{
+            --fond:#efe3c3;
+            --fond-clair:#fffaf0;
+            --vert:#43a047;
+            --vert-fonce:#2e7d32;
+            --vert-tres-fonce:#1b5e20;
+            --vert-clair:#dfeadb;
+            --texte:#2f382f;
+            --texte-clair:#667066;
+            --blanc:#ffffff;
+            --orange:#d98b3b;
+            --rouge:#a63c32;
+            --ombre:0 12px 30px rgba(53,67,50,.15);
+        }
+
+        *{box-sizing:border-box;margin:0;padding:0}
+        html{scroll-behavior:smooth}
+        body{
+            min-height:100vh;
+            background:var(--fond);
+            color:var(--texte);
+            font-family:Arial,Helvetica,sans-serif;
+            line-height:1.6;
+        }
+        a{color:inherit;text-decoration:none}
+        button{font:inherit}
+
+        .site-header{
+            border-bottom:1px solid rgba(55,107,77,.18);
+            background:rgba(239,227,195,.96);
+            box-shadow:0 6px 24px rgba(62,72,55,.08);
+        }
+        .header-inner{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:24px;
+            width:min(1200px,94%);
+            min-height:90px;
+            margin:auto;
+        }
+        .brand{display:flex;align-items:center;gap:14px}
+        .brand-logo{width:72px;height:72px;object-fit:contain}
+        .brand-text{display:flex;flex-direction:column;line-height:1.08}
+        .brand-name{
+            color:var(--vert-tres-fonce);
+            font-family:Georgia,"Times New Roman",serif;
+            font-size:1.35rem;
+            font-weight:800;
+        }
+        .brand-subtitle{
+            margin-top:5px;
+            color:var(--texte-clair);
+            font-size:.76rem;
+            font-weight:800;
+            letter-spacing:.1em;
+            text-transform:uppercase;
+        }
+        .back-link{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            min-height:42px;
+            padding:9px 17px;
+            border-radius:999px;
+            background:var(--vert);
+            color:var(--blanc);
+            font-size:.9rem;
+            font-weight:800;
+            transition:background .2s ease,transform .2s ease;
+        }
+        .back-link:hover,.back-link:focus-visible{
+            transform:translateY(-2px);
+            background:var(--vert-fonce);
+        }
+
+        .page-shell{width:min(950px,92%);margin:24px auto 65px}
+        .quiz-card{
+            padding:32px;
+            border:1px solid rgba(55,107,77,.14);
+            border-radius:28px;
+            background:linear-gradient(135deg,rgba(255,250,240,.98),rgba(223,234,219,.96));
+            box-shadow:var(--ombre);
+        }
+        .quiz-heading{margin-bottom:26px;text-align:center}
+        .eyebrow{
+            color:var(--vert-fonce);
+            font-size:.85rem;
+            font-weight:900;
+            letter-spacing:.08em;
+            text-transform:uppercase;
+        }
+        .page-title{
+            margin-top:7px;
+            color:var(--vert-tres-fonce);
+            font-family:Georgia,"Times New Roman",serif;
+            font-size:1.7rem;
+            line-height:1.2;
+        }
+        .page-description{
+            max-width:700px;
+            margin:10px auto 0;
+            color:var(--texte-clair);
+        }
+
+        .status-box{
+            padding:22px;
+            border:1px solid rgba(55,107,77,.14);
+            border-radius:18px;
+            background:rgba(255,255,255,.78);
+            text-align:center;
+        }
+        .status-box.error{
+            border-color:rgba(166,60,50,.25);
+            color:var(--rouge);
+        }
+
+        .progress{
+            width:100%;
+            height:10px;
+            overflow:hidden;
+            border-radius:999px;
+            background:#d7dfd4;
+        }
+        .progress-bar{
+            width:0;
+            height:100%;
+            border-radius:inherit;
+            background:var(--vert);
+            transition:width .3s ease;
+        }
+        .question-meta{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:15px;
+            margin-top:22px;
+            color:var(--texte-clair);
+            font-size:.9rem;
+            font-weight:800;
+        }
+        .question-theme{
+            display:inline-flex;
+            padding:5px 10px;
+            border-radius:999px;
+            background:var(--vert-clair);
+            color:var(--vert-fonce);
+        }
+        .question-title{
+            margin-top:18px;
+            color:var(--vert-tres-fonce);
+            font-family:Georgia,"Times New Roman",serif;
+            font-size:1.55rem;
+            line-height:1.35;
+        }
+        .answers{display:grid;gap:13px;margin-top:25px}
+        .answer-button{
+            width:100%;
+            padding:16px 18px;
+            border:1px solid rgba(55,107,77,.18);
+            border-radius:15px;
+            background:rgba(255,255,255,.82);
+            color:var(--texte);
+            cursor:pointer;
+            font-weight:750;
+            text-align:left;
+            transition:transform .2s ease,border-color .2s ease,background .2s ease,box-shadow .2s ease;
+        }
+        .answer-button:hover,.answer-button:focus-visible{
+            transform:translateY(-2px);
+            border-color:var(--vert);
+            background:var(--blanc);
+            box-shadow:0 8px 18px rgba(53,67,50,.12);
+        }
+        .answer-button.selected{
+            border-color:var(--vert-fonce);
+            background:var(--vert-clair);
+            box-shadow:0 0 0 2px rgba(46,125,50,.12);
+        }
+        .quiz-navigation{
+            display:flex;
+            justify-content:space-between;
+            gap:12px;
+            margin-top:24px;
+        }
+        .nav-quiz-button{
+            min-height:43px;
+            padding:10px 18px;
+            border:0;
+            border-radius:999px;
+            cursor:pointer;
+            font-weight:850;
+        }
+        .nav-quiz-button.secondary{
+            background:rgba(255,255,255,.82);
+            color:var(--vert-fonce);
+            border:1px solid rgba(55,107,77,.2);
+        }
+        .nav-quiz-button.primary{
+            background:var(--vert);
+            color:var(--blanc);
+        }
+        .nav-quiz-button:hover{filter:brightness(.96)}
+        .nav-quiz-button:disabled{opacity:.45;cursor:not-allowed}
+
+        .results{display:none}
+        .results.visible{display:block}
+        .results-heading{
+            margin-top:20px;
+            color:var(--vert-tres-fonce);
+            font-family:Georgia,"Times New Roman",serif;
+            font-size:1.55rem;
+            text-align:center;
+        }
+        .results-intro{
+            max-width:720px;
+            margin:10px auto 24px;
+            color:var(--texte-clair);
+            text-align:center;
+        }
+        .result-list{display:grid;gap:16px}
+        .result-card{
+            padding:20px;
+            border:1px solid rgba(55,107,77,.14);
+            border-radius:18px;
+            background:rgba(255,255,255,.82);
+        }
+        .result-top{
+            display:flex;
+            align-items:flex-start;
+            justify-content:space-between;
+            gap:18px;
+        }
+        .result-card h3{color:var(--vert-fonce);font-size:1.18rem}
+        .score{
+            flex:0 0 auto;
+            padding:5px 10px;
+            border-radius:999px;
+            background:var(--vert-clair);
+            color:var(--vert-fonce);
+            font-size:.86rem;
+            font-weight:900;
+        }
+        .result-card p{margin-top:9px;color:var(--texte-clair)}
+        .result-details{
+            display:grid;
+            grid-template-columns:repeat(2,minmax(0,1fr));
+            gap:8px 16px;
+            margin-top:13px;
+            font-size:.92rem;
+        }
+        .result-details strong{color:var(--texte)}
+        .more-button{
+            display:inline-flex;
+            margin-top:14px;
+            padding:9px 14px;
+            border:0;
+            border-radius:999px;
+            background:var(--vert);
+            color:var(--blanc);
+            cursor:pointer;
+            font-weight:800;
+        }
+        .extra-details{
+            display:none;
+            margin-top:14px;
+            padding-top:13px;
+            border-top:1px solid rgba(55,107,77,.14);
+        }
+        .extra-details.visible{display:block}
+        .warning{
+            margin-top:23px;
+            padding:16px 18px;
+            border-left:5px solid var(--orange);
+            border-radius:0 14px 14px 0;
+            background:rgba(217,139,59,.10);
+            font-size:.92rem;
+        }
+        .restart-button{
+            display:block;
+            margin:24px auto 0;
+            padding:12px 19px;
+            border:0;
+            border-radius:999px;
+            background:var(--vert);
+            color:var(--blanc);
+            cursor:pointer;
+            font-weight:850;
+        }
+        .restart-button:hover{background:var(--vert-fonce)}
+
+        @media(max-width:650px){
+            .header-inner{flex-direction:column;padding:13px 0 17px}
+            .back-link{width:100%}
+            .page-shell{width:94%;margin-top:22px}
+            .quiz-card{padding:24px 17px;border-radius:22px}
+            .question-meta,.result-top{align-items:flex-start;flex-direction:column}
+            .question-title,.results-heading{font-size:1.35rem}
+            .result-details{grid-template-columns:1fr}
+            .quiz-navigation{flex-direction:column-reverse}
+            .nav-quiz-button{width:100%}
+        }
+    </style>
+</head>
+
+<body>
+<header class="site-header">
+    <div class="header-inner">
+        <a href="{% url 'argent' %}" class="brand" aria-label="Retour à la page Gagner de l'argent">
+            <img src="{% static 'accueil/images/logo.png' %}" alt="Logo Santé Prévention Terrain" class="brand-logo">
+            <span class="brand-text">
+                <span class="brand-name">Santé Prévention Terrain</span>
+                <span class="brand-subtitle">Orientation professionnelle</span>
+            </span>
+        </a>
+
+        <a href="{% url 'argent' %}" class="back-link">← Retour à Gagner de l'argent</a>
+    </div>
+</header>
+
+<main class="page-shell">
+    <section class="quiz-card" aria-label="Questionnaire d'orientation professionnelle">
+        <div class="quiz-heading">
+            <p class="eyebrow">Test d'orientation</p>
+            <h1 class="page-title">Pour quel travail suis-je fait ?</h1>
+            <p class="page-description">
+                Réponds aux 90 questions pour découvrir les 20 métiers qui correspondent le mieux à tes préférences.
+            </p>
+        </div>
+
+        <div id="loadingBox" class="status-box">Chargement du questionnaire et des métiers…</div>
+        <div id="errorBox" class="status-box error" hidden></div>
+
+        <div id="quiz" hidden>
+            <div class="progress" aria-hidden="true">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <div class="question-meta">
+                <span class="question-theme" id="questionTheme">Profil</span>
+                <span id="questionCount"></span>
+            </div>
+
+            <h2 class="question-title" id="questionTitle"></h2>
+            <div class="answers" id="answers"></div>
+
+            <div class="quiz-navigation">
+                <button type="button" class="nav-quiz-button secondary" id="previousButton">
+                    ← Question précédente
+                </button>
+                <button type="button" class="nav-quiz-button primary" id="nextButton" disabled>
+                    Question suivante →
+                </button>
+            </div>
+        </div>
+
+        <div class="results" id="results">
+            <div class="progress" aria-hidden="true">
+                <div class="progress-bar" style="width:100%"></div>
+            </div>
+
+            <h2 class="results-heading">Les 20 métiers qui semblent le mieux te correspondre</h2>
+
+            <p class="results-intro">
+                Ce classement compare tes réponses aux critères présents dans la base des métiers.
+                Il constitue une piste d'orientation et non une décision définitive.
+            </p>
+
+            <div class="result-list" id="resultList"></div>
+
+            <p class="warning">
+                Les intitulés et classifications proviennent du référentiel ROME. Les niveaux de compatibilité
+                sont des estimations. Vérifie toujours les formations, les salaires, les contraintes et les
+                débouchés réels avant de prendre une décision.
+            </p>
+
+            <button type="button" class="restart-button" id="restartButton">
+                Refaire le questionnaire
+            </button>
+        </div>
+    </section>
+</main>
+
+<script>
+"use strict";
+
+const QUESTIONS_URL = "{% static 'accueil/data/questionstravail.json' %}";
+const METIERS_URL = "{% static 'accueil/data/metiers.json' %}";
+
+let questions = [];
+let metiers = [];
+let currentQuestion = 0;
+let reponses = [];
+
+const loadingBox = document.getElementById("loadingBox");
+const errorBox = document.getElementById("errorBox");
+const quiz = document.getElementById("quiz");
+const results = document.getElementById("results");
+const questionTheme = document.getElementById("questionTheme");
+const questionCount = document.getElementById("questionCount");
+const questionTitle = document.getElementById("questionTitle");
+const answers = document.getElementById("answers");
+const progressBar = document.getElementById("progressBar");
+const previousButton = document.getElementById("previousButton");
+const nextButton = document.getElementById("nextButton");
+const resultList = document.getElementById("resultList");
+const restartButton = document.getElementById("restartButton");
+
+function echapperHtml(valeur) {
+    return String(valeur ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+async function chargerJson(url, nomFichier) {
+    const response = await fetch(url, { cache: "no-store" });
+
+    if (!response.ok) {
+        throw new Error(
+            `Impossible de charger ${nomFichier} (erreur HTTP ${response.status}).`
+        );
+    }
+
+    try {
+        return await response.json();
+    } catch (erreur) {
+        throw new Error(`${nomFichier} n'est pas un fichier JSON valide.`);
+    }
+}
+
+async function initialiser() {
+    try {
+        const [donneesQuestions, donneesMetiers] = await Promise.all([
+            chargerJson(QUESTIONS_URL, "questionstravail.json"),
+            chargerJson(METIERS_URL, "metiers.json")
+        ]);
+
+        if (!Array.isArray(donneesQuestions.questions) || donneesQuestions.questions.length === 0) {
+            throw new Error("Aucune question n'a été trouvée dans questionstravail.json.");
+        }
+
+        if (!Array.isArray(donneesMetiers.metiers) || donneesMetiers.metiers.length === 0) {
+            throw new Error("Aucun métier n'a été trouvé dans metiers.json.");
+        }
+
+        questions = donneesQuestions.questions;
+        metiers = donneesMetiers.metiers;
+        reponses = new Array(questions.length).fill(null);
+
+        loadingBox.hidden = true;
+        errorBox.hidden = true;
+        quiz.hidden = false;
+
+        afficherQuestion();
+    } catch (erreur) {
+        console.error(erreur);
+        loadingBox.hidden = true;
+        quiz.hidden = true;
+        errorBox.hidden = false;
+        errorBox.textContent =
+            `${erreur.message} Vérifie que les deux fichiers sont placés dans accueil/static/accueil/data/.`;
+    }
+}
+
+function afficherQuestion() {
+    const question = questions[currentQuestion];
+    const choixEnregistre = reponses[currentQuestion];
+
+    questionTheme.textContent = question.theme || "Profil";
+    questionCount.textContent =
+        `Question ${currentQuestion + 1} sur ${questions.length}`;
+    questionTitle.textContent = question.question || question.title || "";
+
+    progressBar.style.width =
+        `${((currentQuestion + 1) / questions.length) * 100}%`;
+
+    answers.innerHTML = "";
+
+    const choices = Array.isArray(question.choices)
+        ? question.choices
+        : Array.isArray(question.answers)
+            ? question.answers
+            : [];
+
+    choices.forEach((choice, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "answer-button";
+        button.textContent = choice.label;
+
+        if (choixEnregistre === index) {
+            button.classList.add("selected");
+        }
+
+        button.addEventListener("click", () => {
+            reponses[currentQuestion] = index;
+
+            answers.querySelectorAll(".answer-button").forEach(element => {
+                element.classList.remove("selected");
+            });
+
+            button.classList.add("selected");
+            nextButton.disabled = false;
+        });
+
+        answers.appendChild(button);
+    });
+
+    previousButton.disabled = currentQuestion === 0;
+    nextButton.disabled = reponses[currentQuestion] === null;
+    nextButton.textContent =
+        currentQuestion === questions.length - 1
+            ? "Voir mes résultats"
+            : "Question suivante →";
+}
+
+function construireProfil() {
+    const sommes = {};
+    const poids = {};
+
+    questions.forEach((question, indexQuestion) => {
+        const indexChoix = reponses[indexQuestion];
+
+        if (indexChoix === null) {
+            return;
+        }
+
+        const choices = question.choices || question.answers || [];
+        const choix = choices[indexChoix];
+
+        if (!choix || !choix.criteres) {
+            return;
+        }
+
+        const priorite = Number(question.priority) || 1;
+
+        Object.entries(choix.criteres).forEach(([critere, valeur]) => {
+            const valeurNumerique = Number(valeur);
+
+            if (!Number.isFinite(valeurNumerique)) {
+                return;
+            }
+
+            sommes[critere] = (sommes[critere] || 0) + valeurNumerique * priorite;
+            poids[critere] = (poids[critere] || 0) + priorite;
+        });
+    });
+
+    const profil = {};
+
+    Object.keys(sommes).forEach(critere => {
+        profil[critere] = sommes[critere] / poids[critere];
+    });
+
+    return profil;
+}
+
+function calculerCompatibilite(metier, profil) {
+    const criteresMetier = metier.criteres || {};
+    const criteresCommuns = Object.keys(profil).filter(critere =>
+        Number.isFinite(Number(criteresMetier[critere]))
+    );
+
+    if (criteresCommuns.length === 0) {
+        return 0;
+    }
+
+    let sommeEcarts = 0;
+
+    criteresCommuns.forEach(critere => {
+        const valeurUtilisateur = Number(profil[critere]);
+        const valeurMetier = Number(criteresMetier[critere]);
+        sommeEcarts += Math.abs(valeurUtilisateur - valeurMetier);
+    });
+
+    const ecartMoyen = sommeEcarts / criteresCommuns.length;
+    const compatibilite = 100 - (ecartMoyen / 4) * 100;
+
+    return Math.max(0, Math.min(100, Math.round(compatibilite)));
+}
+
+function obtenirTexteFormation(metier) {
+    const formation = metier.formation || {};
+
+    if (Array.isArray(formation.diplomes) && formation.diplomes.length > 0) {
+        return formation.diplomes.join(", ");
+    }
+
+    return formation.niveau_indicatif || "Formation à vérifier selon le poste";
+}
+
+function obtenirNiveauEtudes(metier) {
+    const formation = metier.formation || {};
+    return formation.niveau_minimum || formation.niveau_indicatif || "Variable";
+}
+
+function obtenirSalaire(metier) {
+    if (metier.salaire) {
+        if (typeof metier.salaire === "string") {
+            return metier.salaire;
+        }
+
+        return metier.salaire.indicatif ||
+            metier.salaire.median ||
+            metier.salaire.description ||
+            "À vérifier selon l'expérience et la région";
+    }
+
+    return "À vérifier selon l'expérience et la région";
+}
+
+function afficherResultats() {
+    const profil = construireProfil();
+
+    const classement = metiers
+        .map(metier => ({
+            metier,
+            compatibilite: calculerCompatibilite(metier, profil)
+        }))
+        .sort((a, b) => {
+            if (b.compatibilite !== a.compatibilite) {
+                return b.compatibilite - a.compatibilite;
+            }
+
+            return String(a.metier.nom).localeCompare(
+                String(b.metier.nom),
+                "fr"
+            );
+        })
+        .slice(0, 20);
+
+    resultList.innerHTML = classement.map((element, index) => {
+        const metier = element.metier;
+        const detailsId = `details-metier-${index}`;
+
+        return `
+            <article class="result-card">
+                <div class="result-top">
+                    <h3>${index + 1}. ${echapperHtml(metier.nom)}</h3>
+                    <span class="score">${element.compatibilite} % de compatibilité</span>
+                </div>
+
+                <p>${echapperHtml(metier.description || "Description à compléter.")}</p>
+
+                <div class="result-details">
+                    <div><strong>Niveau d'études :</strong> ${echapperHtml(obtenirNiveauEtudes(metier))}</div>
+                    <div><strong>Formation :</strong> ${echapperHtml(obtenirTexteFormation(metier))}</div>
+                    <div><strong>Salaire :</strong> ${echapperHtml(obtenirSalaire(metier))}</div>
+                    <div><strong>Domaine :</strong> ${echapperHtml(metier.domaine || "Non renseigné")}</div>
+                </div>
+
+                <button
+                    type="button"
+                    class="more-button"
+                    data-details="${detailsId}"
+                    aria-expanded="false"
+                >
+                    En savoir plus
+                </button>
+
+                <div class="extra-details" id="${detailsId}">
+                    <p><strong>Fiche ROME :</strong> ${echapperHtml(metier.fiche_rome || metier.code_rome || "Non renseignée")}</p>
+                    <p><strong>Sous-domaine :</strong> ${echapperHtml(metier.sous_domaine || "Non renseigné")}</p>
+                    <p><strong>Environnement :</strong> ${echapperHtml(metier.conditions?.environnement_principal || "Non renseigné")}</p>
+                </div>
+            </article>
+        `;
+    }).join("");
+
+    resultList.querySelectorAll(".more-button").forEach(button => {
+        button.addEventListener("click", () => {
+            const details = document.getElementById(button.dataset.details);
+            const visible = details.classList.toggle("visible");
+
+            button.setAttribute("aria-expanded", String(visible));
+            button.textContent = visible ? "Réduire" : "En savoir plus";
+        });
+    });
+
+    quiz.hidden = true;
+    results.classList.add("visible");
+
+    window.scrollTo({
+        top: document.querySelector(".quiz-card").offsetTop - 20,
+        behavior: "smooth"
+    });
+}
+
+previousButton.addEventListener("click", () => {
+    if (currentQuestion > 0) {
+        currentQuestion -= 1;
+        afficherQuestion();
+    }
+});
+
+nextButton.addEventListener("click", () => {
+    if (reponses[currentQuestion] === null) {
+        return;
+    }
+
+    if (currentQuestion < questions.length - 1) {
+        currentQuestion += 1;
+        afficherQuestion();
+        return;
+    }
+
+    afficherResultats();
+});
+
+restartButton.addEventListener("click", () => {
+    currentQuestion = 0;
+    reponses = new Array(questions.length).fill(null);
+
+    results.classList.remove("visible");
+    quiz.hidden = false;
+
+    afficherQuestion();
+
+    window.scrollTo({
+        top: document.querySelector(".quiz-card").offsetTop - 20,
+        behavior: "smooth"
+    });
+});
+
+initialiser();
+</script>
+</body>
+</html>

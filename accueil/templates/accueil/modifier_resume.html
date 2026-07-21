@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modifier le résumé</title>
+<style>
+body{max-width:900px;margin:40px auto;padding:0 20px;font-family:Arial,sans-serif;line-height:1.6;color:#333;background:#fafafa;}
+h1{color:#003366;}.carte{padding:22px;border:1px solid #ddd;border-radius:8px;background:#fff;}
+.auto{padding:16px;background:#f4f8fc;white-space:pre-line;}textarea{width:100%;min-height:280px;padding:12px;box-sizing:border-box;font:inherit;}
+.actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:18px;}button,a{padding:10px 14px;border-radius:6px;font:inherit;text-decoration:none;}
+button{border:1px solid #00695c;background:#00695c;color:white;cursor:pointer;}a{border:1px solid #666;color:#333;background:white;}
+</style>
+</head>
+<body>
+<h1>Modifier le résumé</h1>
+<div class="carte">
+<h2>Résumé automatique</h2><div class="auto">{{ veille.resume }}</div>
+<form method="post">{% csrf_token %}
+<h2>Résumé manuel</h2>
+<textarea name="resume_manuel">{{ veille.resume_manuel }}</textarea>
+<p><label><input type="checkbox" name="resume_manuel_publie" {% if veille.resume_manuel_publie %}checked{% endif %}> Publier ce résumé sur le site</label></p>
+<div class="actions"><button type="submit">Enregistrer</button><a href="{% url 'detail_veille' veille.id %}">Annuler</a></div>
+</form>
+</div>
+</body>
+</html>

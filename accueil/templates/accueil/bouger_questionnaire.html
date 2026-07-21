@@ -1,0 +1,691 @@
+{% extends "accueil/base.html" %}
+{% load static %}
+
+{% block title %}
+Trouver mon activité physique
+{% endblock %}
+
+{% block extra_css %}
+
+<style>
+    .questionnaire-page {
+        min-height: 100vh;
+        padding: 15px 20px 40px;
+        background:
+            radial-gradient(
+                circle at top left,
+                rgba(55, 107, 77, 0.12),
+                transparent 34%
+            ),
+            #f6f1e4;
+    }
+
+    .questionnaire-conteneur {
+        width: min(900px, 100%);
+        margin: 0 auto;
+    }
+
+    .questionnaire-carte {
+        overflow: hidden;
+        border: 1px solid rgba(55, 107, 77, 0.16);
+        border-radius: 24px;
+        background: #ffffff;
+        box-shadow: 0 18px 45px rgba(48, 62, 46, 0.13);
+    }
+
+    .questionnaire-progression {
+        height: 9px;
+        background: #e4e8df;
+    }
+
+    .questionnaire-progression__barre {
+        width: 0;
+        height: 100%;
+        background: linear-gradient(90deg, #376b4d, #d9833b);
+        transition: width 0.3s ease;
+    }
+
+    .questionnaire-carte__contenu {
+        padding: clamp(24px, 5vw, 48px);
+    }
+
+    .questionnaire-meta {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 28px;
+        color: #697269;
+        font-size: 0.88rem;
+        font-weight: 700;
+    }
+
+    .questionnaire-theme {
+        color: #376b4d;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+
+    .questionnaire-question {
+        margin: 0 0 28px;
+        color: #263729;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(1.55rem, 4vw, 2.25rem);
+        line-height: 1.25;
+    }
+
+    .questionnaire-reponses {
+        display: grid;
+        gap: 13px;
+    }
+
+    .questionnaire-choix {
+        width: 100%;
+        min-height: 58px;
+        padding: 15px 18px;
+        border: 2px solid #dfe5dc;
+        border-radius: 14px;
+        background: #fbfcfa;
+        color: #2f382f;
+        cursor: pointer;
+        font-weight: 700;
+        text-align: left;
+        transition:
+            border-color 0.2s ease,
+            background 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    .questionnaire-choix:hover,
+    .questionnaire-choix:focus-visible {
+        transform: translateY(-2px);
+        border-color: #6f987d;
+        background: #f1f7f2;
+    }
+
+    .questionnaire-choix.est-selectionne {
+        border-color: #376b4d;
+        background: #e9f3ec;
+        color: #214c35;
+    }
+
+    .questionnaire-echelle {
+        padding: 10px 0;
+    }
+
+    .questionnaire-echelle__valeur {
+        display: block;
+        margin-bottom: 20px;
+        color: #214c35;
+        font-size: 2.8rem;
+        font-weight: 900;
+        text-align: center;
+    }
+
+    .questionnaire-echelle input {
+        width: 100%;
+        accent-color: #376b4d;
+    }
+
+    .questionnaire-echelle__legendes {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        margin-top: 12px;
+        color: #687168;
+        font-size: 0.84rem;
+    }
+
+    .questionnaire-actions {
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+        margin-top: 32px;
+    }
+
+    .questionnaire-bouton {
+        display: inline-flex;
+        min-height: 48px;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 22px;
+        border: 0;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 800;
+        text-decoration: none;
+        transition:
+            transform 0.2s ease,
+            background 0.2s ease;
+    }
+
+    .questionnaire-bouton:hover,
+    .questionnaire-bouton:focus-visible {
+        transform: translateY(-2px);
+    }
+
+    .questionnaire-bouton--principal {
+        background: #376b4d;
+        color: #ffffff;
+    }
+
+    .questionnaire-bouton--principal:hover {
+        background: #214c35;
+    }
+
+    .questionnaire-bouton--secondaire {
+        background: #e8ece6;
+        color: #344237;
+    }
+
+    .questionnaire-bouton[disabled] {
+        cursor: not-allowed;
+        opacity: 0.45;
+        transform: none;
+    }
+
+    .questionnaire-message {
+        padding: 50px 30px;
+        text-align: center;
+    }
+
+    .questionnaire-message h2 {
+        margin-top: 0;
+        color: #214c35;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 2rem;
+    }
+
+    .questionnaire-message p {
+        color: #626d64;
+    }
+
+    .questionnaire-chargement__cercle {
+        width: 54px;
+        height: 54px;
+        margin: 0 auto 20px;
+        border: 6px solid #dce4da;
+        border-top-color: #376b4d;
+        border-radius: 50%;
+        animation: questionnaireRotation 0.9s linear infinite;
+    }
+
+    .questionnaire-erreur {
+        color: #9f2e2e;
+    }
+
+    @keyframes questionnaireRotation {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    @media (max-width: 620px) {
+        .questionnaire-page {
+            padding: 10px 12px 40px;
+        }
+
+        .questionnaire-meta {
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .questionnaire-actions {
+            flex-direction: column-reverse;
+        }
+
+        .questionnaire-bouton {
+            width: 100%;
+        }
+    }
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<main class="questionnaire-page">
+    <div class="questionnaire-conteneur">
+
+```
+    <section class="questionnaire-carte">
+
+        <div
+            class="questionnaire-progression"
+            aria-hidden="true"
+        >
+            <div
+                id="barre-progression"
+                class="questionnaire-progression__barre"
+            ></div>
+        </div>
+
+        <div
+            id="zone-chargement"
+            class="questionnaire-message questionnaire-chargement"
+        >
+            <div
+                class="questionnaire-chargement__cercle"
+                aria-hidden="true"
+            ></div>
+
+            <p>
+                Préparation du questionnaire...
+            </p>
+        </div>
+
+        <div
+            id="zone-erreur"
+            class="questionnaire-message questionnaire-erreur"
+            hidden
+        >
+            <h2>
+                Impossible de charger le questionnaire
+            </h2>
+
+            <p id="texte-erreur">
+                Une erreur est survenue.
+            </p>
+
+            <a
+                class="questionnaire-bouton questionnaire-bouton--principal"
+                href="{% url 'karate' %}"
+            >
+                Retour
+            </a>
+        </div>
+
+        <div
+            id="zone-question"
+            class="questionnaire-carte__contenu"
+            hidden
+        >
+            <div class="questionnaire-meta">
+                <span
+                    id="question-theme"
+                    class="questionnaire-theme"
+                >
+                    Profil
+                </span>
+
+                <span id="question-compteur">
+                    Question 1
+                </span>
+            </div>
+
+            <h2
+                id="question-texte"
+                class="questionnaire-question"
+            >
+                Question
+            </h2>
+
+            <div
+                id="question-reponses"
+                class="questionnaire-reponses"
+            ></div>
+
+            <div class="questionnaire-actions">
+                <button
+                    id="bouton-retour"
+                    class="questionnaire-bouton questionnaire-bouton--secondaire"
+                    type="button"
+                >
+                    Recommencer
+                </button>
+
+                <button
+                    id="bouton-valider"
+                    class="questionnaire-bouton questionnaire-bouton--principal"
+                    type="button"
+                    hidden
+                >
+                    Valider et continuer
+                </button>
+            </div>
+        </div>
+
+    </section>
+
+</div>
+```
+
+</main>
+{% endblock %}
+
+{% block extra_js %}
+
+<script src="{% static 'accueil/js/moteur_recommandation.js' %}"></script>
+
+<script>
+"use strict";
+
+document.addEventListener("DOMContentLoaded", async function () {
+    const CLE_SESSION = "bouger_recommandation";
+    const URL_RESULTATS = "{% url 'bouger_resultat' %}";
+
+    const zoneChargement =
+        document.getElementById("zone-chargement");
+
+    const zoneErreur =
+        document.getElementById("zone-erreur");
+
+    const texteErreur =
+        document.getElementById("texte-erreur");
+
+    const zoneQuestion =
+        document.getElementById("zone-question");
+
+    const barreProgression =
+        document.getElementById("barre-progression");
+
+    const questionTheme =
+        document.getElementById("question-theme");
+
+    const questionCompteur =
+        document.getElementById("question-compteur");
+
+    const questionTexte =
+        document.getElementById("question-texte");
+
+    const questionReponses =
+        document.getElementById("question-reponses");
+
+    const boutonValider =
+        document.getElementById("bouton-valider");
+
+    const boutonRetour =
+        document.getElementById("bouton-retour");
+
+    let moteur = null;
+    let questionCourante = null;
+    let valeurSelectionnee = null;
+
+    function afficherErreur(message) {
+        zoneChargement.hidden = true;
+        zoneQuestion.hidden = true;
+
+        texteErreur.textContent =
+            message || "Une erreur est survenue.";
+
+        zoneErreur.hidden = false;
+    }
+
+    function calculerProgression() {
+        const etat = moteur.obtenirEtat();
+
+        const total = Math.max(
+            etat.minQuestions,
+            etat.nombreQuestionsPosees + 1
+        );
+
+        const progression = Math.min(
+            100,
+            Math.round(
+                etat.nombreQuestionsPosees /
+                total *
+                100
+            )
+        );
+
+        barreProgression.style.width =
+            `${progression}%`;
+
+        questionCompteur.textContent =
+            `Question ${etat.nombreQuestionsPosees + 1}`;
+    }
+
+    function terminerQuestionnaire() {
+        moteur.sauvegarderSession(CLE_SESSION);
+        barreProgression.style.width = "100%";
+        window.location.href = URL_RESULTATS;
+    }
+
+    function passerQuestionSuivante() {
+        questionCourante = moteur.prochaineQuestion();
+        valeurSelectionnee = null;
+
+        if (!questionCourante) {
+            terminerQuestionnaire();
+            return;
+        }
+
+        afficherQuestion(questionCourante);
+    }
+
+    function creerBoutonChoix(choix, multiple) {
+        const bouton = document.createElement("button");
+
+        bouton.type = "button";
+        bouton.className = "questionnaire-choix";
+        bouton.textContent = choix.label;
+
+        bouton.addEventListener("click", function () {
+            if (!multiple) {
+                moteur.enregistrerReponse(
+                    questionCourante.id,
+                    choix.label
+                );
+
+                passerQuestionSuivante();
+                return;
+            }
+
+            if (!Array.isArray(valeurSelectionnee)) {
+                valeurSelectionnee = [];
+            }
+
+            const position =
+                valeurSelectionnee.indexOf(choix.label);
+
+            if (position === -1) {
+                valeurSelectionnee.push(choix.label);
+                bouton.classList.add("est-selectionne");
+            } else {
+                valeurSelectionnee.splice(position, 1);
+                bouton.classList.remove("est-selectionne");
+            }
+
+            boutonValider.disabled =
+                valeurSelectionnee.length === 0;
+        });
+
+        return bouton;
+    }
+
+    function afficherQuestionChoix(question) {
+        const multiple = question.type === "multiple";
+
+        question.choices.forEach(function (choix) {
+            questionReponses.appendChild(
+                creerBoutonChoix(choix, multiple)
+            );
+        });
+
+        boutonValider.hidden = !multiple;
+        boutonValider.disabled = multiple;
+    }
+
+    function afficherQuestionEchelle(question) {
+        const minimum = Number(
+            question.scale?.min ?? 1
+        );
+
+        const maximum = Number(
+            question.scale?.max ?? 5
+        );
+
+        const valeurInitiale =
+            Math.round((minimum + maximum) / 2);
+
+        valeurSelectionnee = valeurInitiale;
+
+        const conteneur =
+            document.createElement("div");
+
+        conteneur.className =
+            "questionnaire-echelle";
+
+        const valeur =
+            document.createElement("output");
+
+        valeur.className =
+            "questionnaire-echelle__valeur";
+
+        valeur.textContent =
+            valeurInitiale;
+
+        const curseur =
+            document.createElement("input");
+
+        curseur.type = "range";
+        curseur.min = minimum;
+        curseur.max = maximum;
+        curseur.step = 1;
+        curseur.value = valeurInitiale;
+
+        curseur.addEventListener("input", function () {
+            valeurSelectionnee =
+                Number(curseur.value);
+
+            valeur.textContent =
+                curseur.value;
+        });
+
+        const legendes =
+            document.createElement("div");
+
+        legendes.className =
+            "questionnaire-echelle__legendes";
+
+        const labelMinimum =
+            question.scale?.labels?.[minimum] ||
+            question.scale?.labels?.[String(minimum)] ||
+            String(minimum);
+
+        const labelMaximum =
+            question.scale?.labels?.[maximum] ||
+            question.scale?.labels?.[String(maximum)] ||
+            String(maximum);
+
+        legendes.innerHTML = `
+            <span>${labelMinimum}</span>
+            <span>${labelMaximum}</span>
+        `;
+
+        conteneur.appendChild(valeur);
+        conteneur.appendChild(curseur);
+        conteneur.appendChild(legendes);
+
+        questionReponses.appendChild(conteneur);
+
+        boutonValider.hidden = false;
+        boutonValider.disabled = false;
+    }
+
+    function afficherQuestion(question) {
+        calculerProgression();
+
+        questionTheme.textContent =
+            question.theme || "Questionnaire";
+
+        questionTexte.textContent =
+            question.question || "Question";
+
+        questionReponses.replaceChildren();
+
+        boutonValider.hidden = true;
+        boutonValider.disabled = false;
+
+        if (
+            question.type === "single" ||
+            question.type === "multiple"
+        ) {
+            afficherQuestionChoix(question);
+            return;
+        }
+
+        if (question.type === "scale") {
+            afficherQuestionEchelle(question);
+            return;
+        }
+
+        throw new Error(
+            `Type de question non pris en charge : ${question.type}`
+        );
+    }
+
+    boutonValider.addEventListener("click", function () {
+        if (
+            !questionCourante ||
+            valeurSelectionnee === null ||
+            valeurSelectionnee === undefined
+        ) {
+            return;
+        }
+
+        if (
+            Array.isArray(valeurSelectionnee) &&
+            valeurSelectionnee.length === 0
+        ) {
+            return;
+        }
+
+        moteur.enregistrerReponse(
+            questionCourante.id,
+            valeurSelectionnee
+        );
+
+        passerQuestionSuivante();
+    });
+
+    boutonRetour.addEventListener("click", function () {
+        const confirmation = window.confirm(
+            "Voulez-vous recommencer le questionnaire depuis le début ?"
+        );
+
+        if (!confirmation) {
+            return;
+        }
+
+        moteur.supprimerSession(CLE_SESSION);
+        moteur.reinitialiser();
+        passerQuestionSuivante();
+    });
+
+    try {
+        if (
+            typeof window.MoteurRecommandation !==
+            "function"
+        ) {
+            throw new Error(
+                "Le moteur de recommandation n'est pas chargé."
+            );
+        }
+
+        moteur = new window.MoteurRecommandation();
+
+        await moteur.initialiser();
+
+        moteur.supprimerSession(CLE_SESSION);
+        moteur.reinitialiser();
+
+        zoneChargement.hidden = true;
+        zoneErreur.hidden = true;
+        zoneQuestion.hidden = false;
+
+        passerQuestionSuivante();
+    } catch (erreur) {
+        console.error(
+            "Erreur du questionnaire :",
+            erreur
+        );
+
+        afficherErreur(
+            erreur.message ||
+            "Le questionnaire n'a pas pu être chargé."
+        );
+    }
+});
+</script>
+
+{% endblock %}

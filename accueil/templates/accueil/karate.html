@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Comprendre pourquoi bouger et trouver une activité physique adaptée à ses envies.">
+<title>Bouger | Santé et mouvement</title>
+<style>
+:root{--fond:#efe3c3;--clair:#fffaf0;--vert:#376b4d;--vert-fonce:#214c35;--vert-clair:#dfeadb;--orange:#d9833b;--texte:#2f382f;--gris:#667066;--blanc:#fff;--ombre:0 12px 30px rgba(53,67,50,.13);--ombre-forte:0 18px 45px rgba(53,67,50,.2)}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{min-height:100vh;overflow-x:hidden;background:var(--fond);color:var(--texte);font-family:Arial,Helvetica,sans-serif;line-height:1.65}a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}img{display:block;max-width:100%}
+.site-header{position:relative;z-index:20;border-bottom:1px solid rgba(55,107,77,.18);background:rgba(239,227,195,.96);box-shadow:0 6px 24px rgba(62,72,55,.08);backdrop-filter:blur(12px)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:30px;width:min(1400px,94%);min-height:94px;margin:auto}.brand{display:flex;align-items:center;gap:15px;min-width:210px}.brand-logo{width:78px;height:78px;object-fit:contain;filter:drop-shadow(0 6px 8px rgba(45,80,57,.15))}.brand-text{display:flex;flex-direction:column;line-height:1.05}.brand-name{color:var(--vert-fonce);font-family:Georgia,"Times New Roman",serif;font-size:1.45rem;font-weight:800}.brand-subtitle{margin-top:6px;color:var(--gris);font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.main-nav{display:flex;gap:8px;flex-wrap:wrap}.nav-link{padding:11px 15px;border-radius:999px;font-size:.92rem;font-weight:700;background:var(--vert);color:var(--blanc);box-shadow:0 8px 18px rgba(55,107,77,.22);transition:.25s}.nav-link:hover{transform:translateY(-2px);background:var(--vert-fonce)}
+.header-action{display:flex;align-items:center;justify-content:flex-end}.header-questionnaire-button{display:block;border-radius:18px;overflow:hidden;transition:transform .25s ease,box-shadow .25s ease}.header-questionnaire-button img{display:block;width:240px;height:auto}.header-questionnaire-button:hover{transform:scale(1.04);box-shadow:0 12px 24px rgba(55,107,77,.28)}
+.page-shell{width:min(1400px,94%);margin:30px auto 70px}.hero{overflow:hidden;border:1px solid rgba(55,107,77,.14);border-radius:34px;background:linear-gradient(135deg,rgba(255,250,240,.98),rgba(224,235,215,.96));box-shadow:var(--ombre)}.hero-inner{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:40px;padding:54px;align-items:center}.eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:18px;padding:8px 14px;border:1px solid rgba(55,107,77,.2);border-radius:999px;background:rgba(255,255,255,.72);color:var(--vert);font-size:.82rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.hero-title{color:var(--vert-fonce);font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.8rem,6vw,5.5rem);line-height:.98;letter-spacing:-.045em}.hero-title span{display:block;color:var(--orange)}.hero-description{max-width:720px;margin-top:24px;color:#526057;font-size:1.08rem}
+.hero-card,.content-card{padding:30px;border:1px solid rgba(55,107,77,.13);border-radius:28px;background:rgba(255,250,240,.9);box-shadow:var(--ombre)}
+.content-card-image{position:relative;overflow:hidden;background:linear-gradient(rgba(255,255,255,.72),rgba(255,255,255,.72)),url("{% static 'accueil/images/pqbouger.png' %}");background-size:cover;background-position:center}.content-card-image>*{position:relative;z-index:1}
+.hero-card h2,.content-card h2{margin-bottom:15px;color:var(--vert-fonce);font-family:Georgia,"Times New Roman",serif}.hero-card p+p,.content-card p+p{margin-top:14px}.section{margin-top:34px}.intro-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}.content-card h2{font-size:2rem}
+.cta-wrap{margin-top:34px;text-align:center}.questionnaire-image-link{display:block;width:200px;margin:auto;border-radius:34px;transition:transform .25s,box-shadow .25s}.questionnaire-image-link:hover{transform:scale(1.02);box-shadow:0 18px 40px rgba(0,0,0,.18)}.questionnaire-image{width:100%;border-radius:34px}.cta-note{margin-top:14px;color:var(--vert-fonce);font-style:italic}
+.site-footer{margin-top:50px;padding:34px 4%;background:linear-gradient(145deg,var(--vert-fonce),var(--vert));color:#fff}.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:24px;width:min(1350px,100%);margin:auto}.footer-brand{display:flex;align-items:center;gap:14px}.footer-logo{width:64px;height:64px;object-fit:contain;padding:6px;border-radius:18px;background:rgba(255,255,255,.9)}
+@media(max-width:900px){.hero-inner,.intro-grid{grid-template-columns:1fr}.main-nav{display:none}.header-inner{gap:16px}.header-questionnaire-button img{width:190px}}@media(max-width:580px){.header-inner{min-height:78px;flex-wrap:wrap;padding:10px 0}.brand-logo{width:62px;height:62px}.header-action{width:100%;justify-content:center}.hero-inner{padding:24px 18px}.footer-inner{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body id="top">
+<header class="site-header">
+    <div class="header-inner">
+        <a href="{% url 'terrain' %}" class="brand" aria-label="Retour">
+            <img src="{% static 'accueil/images/logo.png' %}" alt="Logo" class="brand-logo">
+            <span class="brand-text">
+                <span class="brand-name">Santé Prévention Terrain</span>
+                <span class="brand-subtitle">Bouger</span>
+            </span>
+        </a>
+
+        <nav class="main-nav" aria-label="Navigation principale">
+            <a href="#introduction" class="nav-link">Pourquoi bouger ?</a>
+        </nav>
+
+        <div class="header-action">
+            <a href="{% url 'bouger_questionnaire' %}" class="header-questionnaire-button">
+                <img src="{% static 'accueil/images/boutonBouger.png' %}" alt="Accéder au questionnaire : comment pourrais-tu bouger ?">
+            </a>
+        </div>
+    </div>
+</header>
+
+<main class="page-shell">
+    <section class="hero">
+        <div class="hero-inner">
+            <div>
+                <p class="eyebrow">🏃 Mouvement et santé</p>
+                <h1 class="hero-title">Le mouvement,<span>c’est la vie.</span></h1>
+                <p class="hero-description">Le corps humain est fait pour marcher, courir, grimper, porter, sauter, lancer et s’adapter. L’objectif n’est pas de devenir un champion, mais de trouver une activité que l’on aura plaisir à pratiquer pendant des années.</p>
+            </div>
+            <aside class="hero-card">
+                <h2>Il n’existe pas de sport parfait</h2>
+                <p>Ce qui me correspond ne conviendra pas forcément à quelqu’un d’autre. L’âge, les objectifs, les douleurs éventuelles, le temps, le budget et le caractère influencent énormément le choix.</p>
+                <p>Plutôt que de te dire « fais ce sport », cette page va t’aider à trouver plusieurs activités qui pourraient vraiment te convenir.</p>
+            </aside>
+        </div>
+    </section>
+
+    <section class="section intro-grid" id="introduction">
+        <article class="content-card content-card-image">
+            <h2>Pourquoi bouger ? Parfois je me demande aussi 😄</h2>
+            <p>J'ai 44 piges et continue le karaté et le MMA. Ce que j'aime dans le karaté, c'est son approche philosophique et spirituelle (merci Ryu de Street Fighter).</p>
+            <p>Il permet de rester en bonne santé et peut être pratiqué toute une vie. Il entretient mon cardio, ma coordination, mon équilibre et ma proprioception, à défaut de ma souplesse devenue lamentable.</p>
+            <p>Le MMA, je ne peux pas dire que je trouve l'approche santé très pertinente, les impacts faisant partie de la pratique. En revanche, il complète ce qui manque à mon karaté : la lutte, les projections, le travail au sol et des situations de combat plus libres.</p>
+        </article>
+
+        <article class="content-card">
+            <h2>Trouvons ce qui te correspond</h2>
+            <p>Certaines personnes veulent retrouver la forme, d’autres perdre du poids, se muscler, gagner en mobilité, apprendre à se défendre, rencontrer du monde ou simplement prendre du plaisir.</p>
+            <p>Le meilleur sport n’est pas celui qui est à la mode. C’est celui que tu auras encore envie de pratiquer dans cinq ou dix ans.</p>
+            <p>Réponds à quelques questions. Tu obtiendras plusieurs idées classées selon ton profil, avec une courte explication pour chacune.</p>
+
+            <div class="cta-wrap">
+                <a href="{% url 'bouger_questionnaire' %}" class="questionnaire-image-link">
+                    <img src="{% static 'accueil/images/boutonBouger.png' %}" alt="Commencer le questionnaire" class="questionnaire-image">
+                </a>
+                <p class="cta-note">Le questionnaire s’ouvre sur une page dédiée.</p>
+            </div>
+        </article>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-brand">
+            <img src="{% static 'accueil/images/logo.png' %}" alt="Logo" class="footer-logo">
+            <div>
+                <strong>Santé Prévention Terrain</strong>
+                <p>Le mouvement, c'est la vie.</p>
+            </div>
+        </div>
+        <a href="#top">↑ Retour en haut</a>
+    </div>
+</footer>
+</body>
+</html>

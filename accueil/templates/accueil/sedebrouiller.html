@@ -1,0 +1,706 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Des idées pratiques pour voyager léger, gagner de l'argent et bricoler soi-même."
+    >
+
+    <title>Se débrouiller | Santé Prévention Terrain</title>
+
+    <style>
+
+        :root{
+            --fond-principal:#efe3c3;
+            --fond-clair:#fffaf0;
+            --vert-principal:#43a047;
+            --vert-fonce:#2e7d32;
+            --vert-tres-fonce:#1b5e20;
+            --vert-clair:#dfeadb;
+            --texte:#2f382f;
+            --texte-clair:#667066;
+            --blanc:#ffffff;
+            --ombre:0 12px 30px rgba(53,67,50,.15);
+            --ombre-forte:0 18px 45px rgba(53,67,50,.24);
+        }
+
+        *{
+            box-sizing:border-box;
+            margin:0;
+            padding:0;
+        }
+
+        html{
+            scroll-behavior:smooth;
+        }
+
+        body{
+            min-height:100vh;
+            overflow-x:hidden;
+            background:var(--fond-principal);
+            color:var(--texte);
+            font-family:Arial, Helvetica, sans-serif;
+            line-height:1.6;
+        }
+
+        a{
+            color:inherit;
+            text-decoration:none;
+        }
+
+        img{
+            display:block;
+            max-width:100%;
+        }
+
+        ::selection{
+            background:var(--vert-principal);
+            color:var(--blanc);
+        }
+
+        /* =============================================
+           BANDE DU HAUT
+        ============================================= */
+
+        .site-header{
+            position:relative;
+            z-index:20;
+            width:100%;
+            border-bottom:1px solid rgba(55,107,77,.18);
+            background:rgba(239,227,195,.96);
+            box-shadow:0 6px 24px rgba(62,72,55,.08);
+            backdrop-filter:blur(12px);
+        }
+
+        .header-inner{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:30px;
+            width:min(1400px,94%);
+            min-height:94px;
+            margin:0 auto;
+        }
+
+        .brand{
+            display:flex;
+            align-items:center;
+            gap:15px;
+            min-width:260px;
+        }
+
+        .brand-logo{
+            width:78px;
+            height:78px;
+            object-fit:contain;
+            filter:drop-shadow(
+                0 6px 8px rgba(45,80,57,.15)
+            );
+        }
+
+        .brand-text{
+            display:flex;
+            flex-direction:column;
+            line-height:1.05;
+        }
+
+        .brand-name{
+            color:var(--vert-tres-fonce);
+            font-family:Georgia, "Times New Roman", serif;
+            font-size:1.45rem;
+            font-weight:800;
+        }
+
+        .brand-subtitle{
+            margin-top:6px;
+            color:var(--texte-clair);
+            font-size:.78rem;
+            font-weight:700;
+            letter-spacing:.12em;
+            text-transform:uppercase;
+        }
+
+        .main-nav{
+            display:flex;
+            align-items:center;
+            justify-content:flex-end;
+            gap:12px;
+            flex-wrap:wrap;
+        }
+
+        .nav-button{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            gap:8px;
+            min-height:44px;
+            padding:10px 18px;
+            border-radius:999px;
+            background:var(--vert-principal);
+            color:var(--blanc);
+            font-size:.92rem;
+            font-weight:800;
+            box-shadow:
+                0 8px 18px rgba(67,160,71,.22);
+            transition:
+                transform .25s ease,
+                background .25s ease,
+                box-shadow .25s ease;
+        }
+
+        .nav-button:hover,
+        .nav-button:focus-visible{
+            transform:translateY(-3px);
+            background:var(--vert-fonce);
+            box-shadow:
+                0 12px 24px rgba(46,125,50,.28);
+        }
+
+        /* =============================================
+           CONTENU PRINCIPAL
+        ============================================= */
+
+        .page-container{
+            width:min(1100px,92%);
+            margin:45px auto 70px;
+        }
+
+        .hero{
+            position:relative;
+            overflow:hidden;
+            padding:52px 45px;
+            border:1px solid rgba(55,107,77,.14);
+            border-radius:34px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,250,240,.98),
+                    rgba(223,234,219,.96)
+                );
+            box-shadow:var(--ombre);
+            text-align:center;
+        }
+
+        .hero::before{
+            content:"";
+            position:absolute;
+            top:-110px;
+            right:-100px;
+            width:330px;
+            height:330px;
+            border-radius:18px;
+            background:rgba(67,160,71,.10);
+        }
+
+        .hero::after{
+            content:"";
+            position:absolute;
+            bottom:-170px;
+            left:-100px;
+            width:380px;
+            height:380px;
+            border-radius:50%;
+            background:rgba(229,185,77,.13);
+        }
+
+        .hero-content{
+            position:relative;
+            z-index:2;
+        }
+
+        .intro-row{
+            display:grid;
+            grid-template-columns:320px minmax(0,1fr);
+            gap:48px;
+            align-items:center;
+            margin-top:0;
+            text-align:left;
+        }
+
+        .illustration{
+            width:320px;
+            height:320px;
+            margin:0;
+            overflow:hidden;
+            border:12px solid rgba(255,255,255,.88);
+            border-radius:18px;
+            background-image:
+                url("{% static 'accueil/images/sedebrouillerpage.png' %}");
+            background-position:center;
+            background-repeat:no-repeat;
+            background-size:cover;
+            box-shadow:
+                0 24px 50px rgba(46,125,50,.22);
+            transition:
+                transform .35s ease,
+                box-shadow .35s ease;
+        }
+
+        .illustration:hover{
+            transform:translateY(-7px) scale(1.03);
+            box-shadow:
+                0 30px 60px rgba(46,125,50,.30);
+        }
+
+        .message{
+            max-width:720px;
+            margin:0;
+            color:var(--texte);
+            font-family:Georgia, "Times New Roman", serif;
+            font-size:clamp(1.8rem,4vw,2.7rem);
+            font-weight:700;
+            text-align:left;
+        }
+
+        .message-placeholder{
+            margin-top:14px;
+            color:var(--texte-clair);
+            font-family:Arial, Helvetica, sans-serif;
+            font-size:1.05rem;
+            font-weight:400;
+            text-align:left;
+        }
+
+        /* =============================================
+           BOUTONS SOUS LE TEXTE
+        ============================================= */
+
+        .actions{
+            display:grid;
+            grid-template-columns:
+                repeat(3, minmax(0,1fr));
+            gap:22px;
+            max-width:1100px;
+            margin:40px auto 0;
+        }
+
+        .action-card{
+            position:relative;
+            overflow:hidden;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:14px;
+            min-height:125px;
+            padding:24px;
+            border:1px solid rgba(55,107,77,.15);
+            border-radius:24px;
+            background:rgba(255,255,255,.76);
+            color:var(--vert-tres-fonce);
+            font-size:1.15rem;
+            font-weight:850;
+            box-shadow:var(--ombre);
+            transition:
+                transform .3s ease,
+                background .3s ease,
+                color .3s ease,
+                box-shadow .3s ease;
+        }
+
+        .action-card::after{
+            content:"";
+            position:absolute;
+            right:-45px;
+            bottom:-45px;
+            width:130px;
+            height:130px;
+            border-radius:50%;
+            background:rgba(67,160,71,.09);
+        }
+
+        .action-card:hover,
+        .action-card:focus-visible{
+            transform:translateY(-7px);
+            background:var(--vert-principal);
+            color:var(--blanc);
+            box-shadow:var(--ombre-forte);
+        }
+
+        .action-icon{
+            position:relative;
+            z-index:2;
+            display:grid;
+            place-items:center;
+            width:55px;
+            height:55px;
+            flex:0 0 auto;
+            border-radius:17px;
+            background:var(--vert-clair);
+            font-size:1.8rem;
+        }
+
+        .action-card:hover .action-icon,
+        .action-card:focus-visible .action-icon{
+            background:rgba(255,255,255,.88);
+        }
+
+        .action-text{
+            position:relative;
+            z-index:2;
+        }
+
+        .return-area{
+            margin-top:32px;
+            text-align:center;
+        }
+
+        .return-button{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            gap:8px;
+            padding:11px 25px;
+            border:1px solid rgba(55,107,77,.20);
+            border-radius:999px;
+            background:rgba(255,255,255,.58);
+            color:var(--vert-fonce);
+            font-weight:800;
+            transition:
+                transform .25s ease,
+                background .25s ease;
+        }
+
+        .return-button:hover,
+        .return-button:focus-visible{
+            transform:translateY(-2px);
+            background:rgba(255,255,255,.88);
+        }
+
+        /* =============================================
+           TABLETTE
+        ============================================= */
+
+        @media(max-width:1000px){
+
+            .actions{
+                grid-template-columns:
+                    repeat(2, minmax(0,1fr));
+            }
+
+            .action-card:last-child{
+                grid-column:1 / -1;
+            }
+
+        }
+
+        @media(max-width:850px){
+
+            .header-inner{
+                flex-direction:column;
+                justify-content:center;
+                gap:15px;
+                padding:14px 0 18px;
+            }
+
+            .brand{
+                min-width:auto;
+            }
+
+            .main-nav{
+                justify-content:center;
+            }
+
+            .hero{
+                padding:42px 25px;
+            }
+
+            .intro-row{
+                grid-template-columns:260px minmax(0,1fr);
+                gap:30px;
+            }
+
+            .illustration{
+                width:260px;
+                height:260px;
+            }
+
+        }
+
+        /* =============================================
+           MOBILE
+        ============================================= */
+
+        @media(max-width:600px){
+
+            .page-container{
+                width:94%;
+                margin-top:22px;
+            }
+
+            .brand-logo{
+                width:62px;
+                height:62px;
+            }
+
+            .brand-name{
+                font-size:1.1rem;
+            }
+
+            .brand-subtitle{
+                font-size:.68rem;
+            }
+
+            .main-nav{
+                width:100%;
+                flex-direction:column;
+            }
+
+            .nav-button{
+                width:100%;
+            }
+
+            .hero{
+                padding:32px 18px;
+                border-radius:24px;
+            }
+
+            .illustration{
+                width:230px;
+                height:230px;
+                margin:0 auto;
+                border-width:10px;
+            }
+
+            .message,
+            .message-placeholder{
+                text-align:center;
+            }
+
+            .message{
+                font-size:1.7rem;
+            }
+
+            .intro-row{
+                grid-template-columns:1fr;
+                text-align:center;
+            }
+
+            .actions{
+                grid-template-columns:1fr;
+                gap:16px;
+            }
+
+            .action-card,
+            .action-card:last-child{
+                grid-column:auto;
+                min-height:105px;
+                justify-content:flex-start;
+                text-align:left;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- =============================================
+         BANDE DU HAUT
+    ============================================== -->
+
+    <header class="site-header">
+
+        <div class="header-inner">
+
+            <a
+                href="{% url 'terrain' %}"
+                class="brand"
+                aria-label="Retour à la page des thèmes"
+            >
+
+                <img
+                    src="{% static 'accueil/images/logo.png' %}"
+                    alt="Logo Santé Prévention Terrain"
+                    class="brand-logo"
+                >
+
+                <span class="brand-text">
+
+                    <span class="brand-name">
+                        Santé Prévention Terrain
+                    </span>
+
+                    <span class="brand-subtitle">
+                        Se débrouiller
+                    </span>
+
+                </span>
+
+            </a>
+
+            <nav
+                class="main-nav"
+                aria-label="Navigation Se débrouiller"
+            >
+
+                <a
+                    href="{% url 'voyagerleger' %}"
+                    class="nav-button"
+                >
+                    <span aria-hidden="true">🧳</span>
+                    Voyager léger
+                </a>
+
+                <a
+                    href="{% url 'argent' %}"
+                    class="nav-button"
+                >
+                    <span aria-hidden="true">💰</span>
+                    Gagner de l'argent
+                </a>
+
+                <a
+                    href="{% url 'bricoler' %}"
+                    class="nav-button"
+                >
+                    <span aria-hidden="true">🔨</span>
+                    Bricoler soi-même
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+    <!-- =============================================
+         CONTENU
+    ============================================== -->
+
+    <main class="page-container">
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="intro-row">
+
+                    <div
+                        class="illustration"
+                        role="img"
+                        aria-label="Illustration Se débrouiller"
+                    ></div>
+
+                    <div>
+
+                        <div class="message">
+                            Si tu veux te libérer, libère quelqu'un d'autre.
+                        </div>
+
+                        <p class="message-placeholder">
+                            Être libre, ça passe selon moi par la débrouille.
+                            Qui n'a jamais pesté en attendant un électricien,
+                            un plombier ou un réparateur ? Évidemment, on ne
+                            peut pas être spécialiste de tout, mais avoir des
+                            bases et savoir se débrouiller permet souvent
+                            d'être non seulement plus efficace, de gagner du
+                            temps, mais surtout de ne dépendre de personne.
+                            Je pense que la débrouille permet de se rapprocher
+                            de cette liberté qu'on rêve tous de toucher du bout
+                            des doigts. Dans cette partie, je ne peux que
+                            partager mon expérience de vie. Elle ne pourra
+                            jamais être complète, car je ne vais parler que de
+                            ce que je connais. En l'occurrence, le voyage et
+                            les différents bricolages auxquels j'ai été
+                            confronté. Je ne peux pas ici vous refaire un
+                            Google ou un Wikipédia et, de toute façon, vous
+                            êtes assez grand pour aller chercher quelque chose
+                            de pointu vous-même. Je ne peux que vous partager
+                            les quelques expériences auxquelles j'ai été
+                            confronté. Bonne lecture.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="actions">
+
+                    <a
+                        href="{% url 'voyagerleger' %}"
+                        class="action-card"
+                    >
+
+                        <span
+                            class="action-icon"
+                            aria-hidden="true"
+                        >
+                            🧳
+                        </span>
+
+                        <span class="action-text">
+                            Voyager léger
+                        </span>
+
+                    </a>
+
+                    <a
+                        href="{% url 'argent' %}"
+                        class="action-card"
+                    >
+
+                        <span
+                            class="action-icon"
+                            aria-hidden="true"
+                        >
+                            💰
+                        </span>
+
+                        <span class="action-text">
+                            Gagner de l'argent
+                        </span>
+
+                    </a>
+
+                    <a
+                        href="{% url 'bricoler' %}"
+                        class="action-card"
+                    >
+
+                        <span
+                            class="action-icon"
+                            aria-hidden="true"
+                        >
+                            🔨
+                        </span>
+
+                        <span class="action-text">
+                            Bricoler soi-même
+                        </span>
+
+                    </a>
+
+                </div>
+
+                <div class="return-area">
+
+                    <a
+                        href="{% url 'terrain' %}"
+                        class="return-button"
+                    >
+                        ← Retour aux thèmes
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

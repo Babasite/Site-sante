@@ -1,0 +1,281 @@
+{% extends "accueil/base.html" %}
+{% load static %}
+
+{% block title %}
+Fiche sport
+{% endblock %}
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'accueil/css/fiche_sport.css' %}"
+>
+{% endblock %}
+
+{% block content %}
+
+<main class="fiche-page">
+
+    <section
+        id="zone-chargement"
+        class="fiche-etat"
+    >
+        <div class="fiche-loader"></div>
+
+        <h2>
+            Chargement de la fiche…
+        </h2>
+
+        <p>
+            Récupération des informations du sport.
+        </p>
+    </section>
+
+    <section
+        id="message-erreur"
+        class="fiche-etat fiche-erreur"
+        hidden
+    >
+        <h2>
+            Impossible d'afficher cette discipline
+        </h2>
+
+        <p id="message-erreur-texte">
+            Une erreur est survenue.
+        </p>
+
+        <a
+            class="fiche-bouton"
+            href="{% url 'bouger_resultat' %}"
+        >
+            Retour aux résultats
+        </a>
+    </section>
+
+    <div
+        id="contenu-fiche"
+        hidden
+    >
+
+        <section class="fiche-entete">
+
+            <div class="fiche-conteneur">
+
+                <p
+                    id="sport-famille"
+                    class="fiche-famille"
+                >
+                </p>
+
+                <h1 id="sport-nom">
+                </h1>
+
+                <p
+                    id="sport-description"
+                    class="fiche-description"
+                >
+                </p>
+
+            </div>
+
+        </section>
+
+        <section class="fiche-section">
+
+            <div class="fiche-conteneur">
+
+                <h2>
+                    Capacités développées
+                </h2>
+
+                <div class="fiche-grille-notes">
+
+                    <div class="fiche-note">
+                        <span>Cardio</span>
+                        <strong id="sport-cardio"></strong>
+                    </div>
+
+                    <div class="fiche-note">
+                        <span>Force</span>
+                        <strong id="sport-force"></strong>
+                    </div>
+
+                    <div class="fiche-note">
+                        <span>Technique</span>
+                        <strong id="sport-technique"></strong>
+                    </div>
+
+                    <div class="fiche-note">
+                        <span>Souplesse</span>
+                        <strong id="sport-souplesse"></strong>
+                    </div>
+
+                    <div class="fiche-note">
+                        <span>Coordination</span>
+                        <strong id="sport-coordination"></strong>
+                    </div>
+
+                    <div class="fiche-note">
+                        <span>Équilibre</span>
+                        <strong id="sport-equilibre"></strong>
+                    </div>
+
+                    <div class="fiche-note">
+                        <span>Contact</span>
+                        <strong id="sport-contact"></strong>
+                    </div>
+
+                    <div class="fiche-note">
+                        <span>Compétition</span>
+                        <strong id="sport-competition"></strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="fiche-section">
+
+            <div class="fiche-conteneur">
+
+                <div class="fiche-double">
+
+                    <article>
+
+                        <h2>
+                            Développe
+                        </h2>
+
+                        <div id="sport-developpe"></div>
+
+                    </article>
+
+                    <article>
+
+                        <h2>
+                            Objectifs
+                        </h2>
+
+                        <div id="sport-objectifs"></div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="fiche-section">
+
+            <div class="fiche-conteneur">
+
+                <div class="fiche-double">
+
+                    <article>
+
+                        <h2>
+                            Idéal pour
+                        </h2>
+
+                        <div id="sport-ideal-pour"></div>
+
+                    </article>
+
+                    <article>
+
+                        <h2>
+                            Qualités recommandées
+                        </h2>
+
+                        <div id="sport-qualites"></div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="fiche-section">
+
+            <div class="fiche-conteneur">
+
+                <div class="fiche-double">
+
+                    <article>
+
+                        <h2>
+                            Matériel
+                        </h2>
+
+                        <p id="sport-materiel"></p>
+
+                    </article>
+
+                    <article>
+
+                        <h2>
+                            À éviter si…
+                        </h2>
+
+                        <div id="sport-eviter-si"></div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="fiche-section">
+
+            <div class="fiche-conteneur">
+
+                <h2>
+                    Contre-indications
+                </h2>
+
+                <div id="sport-contre-indications"></div>
+
+            </div>
+
+        </section>
+
+        <section class="fiche-section">
+
+            <div class="fiche-conteneur fiche-actions">
+
+                <a
+                    class="fiche-bouton"
+                    href="{% url 'bouger_resultat' %}"
+                >
+                    ← Retour aux résultats
+                </a>
+
+                <a
+                    class="fiche-bouton fiche-bouton-secondaire"
+                    href="{% url 'bouger_questionnaire' %}"
+                >
+                    Refaire le questionnaire
+                </a>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script src="{% static 'accueil/js/fiche_sport.js' %}"></script>
+
+{% endblock %}

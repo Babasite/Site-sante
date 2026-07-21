@@ -1,0 +1,161 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pourquoi il appelle ça Santé Prévention Terrain ?</title>
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            background:#efe3c3;
+            font-family:Georgia, serif;
+            overflow-x:hidden;
+        }
+
+        h1{
+            text-align:center;
+            padding:40px 20px;
+            color:#5b3410;
+            font-size:3rem;
+            text-shadow:2px 2px 5px rgba(0,0,0,.2);
+        }
+        h2{
+            text-align:center;
+            padding:30px 10px;
+            color:#5b3410;
+            font-size:1.5rem;
+            text-shadow:2px 2px 5px rgba(0,0,0,.2);
+        }
+
+        .container{
+            width:90%;
+            max-width:1000px;
+            margin:auto;
+        }
+
+        .planche{
+            margin:50px 0;
+            opacity:0;
+            transform:translateY(60px);
+            animation:apparition 1s forwards;
+        }
+
+        .planche:nth-child(1){animation-delay:0.2s;}
+        .planche:nth-child(2){animation-delay:0.5s;}
+        .planche:nth-child(3){animation-delay:0.8s;}
+        .planche:nth-child(4){animation-delay:1.1s;}
+
+        .planche img{
+            width:100%;
+            display:block;
+            border-radius:12px;
+            box-shadow:0 10px 25px rgba(0,0,0,.3);
+            transition:0.4s;
+        }
+
+        .planche img:hover{
+            transform:scale(1.02);
+        }
+
+        @keyframes apparition{
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+        }
+
+        .fin{
+            text-align:center;
+            padding:80px 20px;
+        }
+
+        .fin h3{
+            color:#5b3410;
+            margin-bottom:20px;
+        }
+
+        .porte{
+            display:inline-block;
+            font-size:90px;
+            text-decoration:none;
+            transition:0.3s;
+        }
+
+        .porte:hover{
+            transform:rotate(-15deg) scale(1.15);
+        }
+
+        .porte:active{
+            transform:scale(.9);
+        }
+
+        .texte{
+            margin-top:20px;
+            color:#6b4a27;
+            font-size:18px;
+        }
+        .logo-menu {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 200px; /* Agrandi de 100 % */
+    height: auto;
+}
+    </style>
+</head>
+
+<body>
+    <!-- Logo -->
+ <a href="/" title="Cliquer pour revenir à l'accueil">
+<img class="logo-menu"
+     src="{% static 'accueil/images/logo.png' %}"
+     alt="Retour à l'accueil">
+</a>
+
+<h1>" Santé-Prévention-Terrain "</h1>
+<h2>Pourquoi ce nom de site ?</h2>
+
+<div class="container">
+
+    <div class="planche">
+        <img src="{% static 'accueil/images/BD1.png' %}" alt="BD1">
+    </div>
+
+    <div class="planche">
+        <img src="{% static 'accueil/images/BD2.png' %}" alt="BD2">
+    </div>
+
+    <div class="planche">
+        <img src="{% static 'accueil/images/BD3.png' %}" alt="BD3">
+    </div>
+
+    <div class="planche">
+        <img src="{% static 'accueil/images/BD4.png' %}" alt="BD4">
+    </div>
+
+</div>
+
+<div class="fin">
+
+    <h3>Go go go !!! 🤠</h3>
+
+    <a href="/" class="porte" title="Retour à l'accueil">
+        🚪
+    </a>
+
+    <p class="texte">
+        Cliquez sur la porte pour revenir à l'accueil.
+    </p>
+
+</div>
+
+</body>
+</html>

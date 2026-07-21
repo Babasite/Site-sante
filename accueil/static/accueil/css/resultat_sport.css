@@ -1,0 +1,516 @@
+.resultats-page {
+    min-height: 100vh;
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(217, 131, 59, 0.12),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at top left,
+            rgba(55, 107, 77, 0.13),
+            transparent 34%
+        ),
+        #f7f2e7;
+    color: #2f382f;
+}
+
+.resultats-conteneur {
+    width: min(1180px, calc(100% - 40px));
+    margin: 0 auto;
+}
+
+.resultats-entete {
+    padding: 72px 0 54px;
+    text-align: center;
+}
+
+.resultats-sur-titre {
+    margin: 0 0 10px;
+    color: #376b4d;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+}
+
+.resultats-entete h1 {
+    max-width: 850px;
+    margin: 0 auto;
+    color: #214c35;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    line-height: 1.08;
+}
+
+.resultats-introduction {
+    max-width: 760px;
+    margin: 22px auto 0;
+    color: #5f695f;
+    font-size: 1.05rem;
+    line-height: 1.75;
+}
+
+.resultats-etat {
+    width: min(760px, calc(100% - 40px));
+    margin: 20px auto 70px;
+    padding: 52px 34px;
+    border: 1px solid rgba(55, 107, 77, 0.16);
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 18px 46px rgba(49, 63, 47, 0.12);
+    text-align: center;
+}
+
+.resultats-etat h2 {
+    margin: 0 0 12px;
+    color: #214c35;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(1.55rem, 4vw, 2.2rem);
+}
+
+.resultats-etat p {
+    max-width: 600px;
+    margin: 0 auto;
+    color: #657066;
+}
+
+.resultats-chargement__cercle {
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 24px;
+    border: 6px solid #dfe7dd;
+    border-top-color: #376b4d;
+    border-radius: 50%;
+    animation: resultatsRotation 0.85s linear infinite;
+}
+
+.resultats-erreur__icone {
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #f6dfdc;
+    color: #a03a32;
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+.resultats-erreur__actions {
+    margin-top: 28px;
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.resultats-contenu {
+    padding-bottom: 70px;
+}
+
+.resultats-section {
+    padding: 35px 0;
+}
+
+.resultats-section--sports {
+    padding-top: 44px;
+}
+
+.resultats-titre-section {
+    margin-bottom: 28px;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.resultats-titre-section h2 {
+    margin: 0;
+    color: #214c35;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(1.8rem, 4vw, 2.7rem);
+    line-height: 1.15;
+}
+
+.resultats-titre-section__texte {
+    max-width: 480px;
+    margin: 0;
+    color: #687269;
+    text-align: right;
+}
+
+.resultats-compteur {
+    margin: 0;
+    color: #376b4d;
+    font-weight: 800;
+    text-align: right;
+}
+
+.profil-grille {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.profil-carte {
+    min-width: 0;
+    padding: 22px;
+    border: 1px solid rgba(55, 107, 77, 0.14);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 10px 28px rgba(52, 65, 50, 0.08);
+}
+
+.profil-carte__nom {
+    margin: 0 0 12px;
+    color: #405044;
+    font-size: 0.92rem;
+}
+
+.profil-carte__valeur {
+    margin: 0 0 13px;
+    color: #214c35;
+    font-size: 1.55rem;
+    font-weight: 900;
+}
+
+.profil-carte__barre {
+    width: 100%;
+    height: 8px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #e2e8df;
+}
+
+.profil-carte__progression {
+    display: block;
+    min-width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(
+        90deg,
+        #376b4d,
+        #6d9b79
+    );
+}
+
+.recommandations-liste {
+    display: grid;
+    gap: 20px;
+}
+
+.recommandation-carte {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr) 190px;
+    align-items: center;
+    gap: 24px;
+    padding: 26px;
+    border: 1px solid rgba(55, 107, 77, 0.15);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 14px 34px rgba(53, 66, 50, 0.09);
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.recommandation-carte:hover {
+    transform: translateY(-3px);
+    border-color: rgba(55, 107, 77, 0.3);
+    box-shadow: 0 18px 42px rgba(53, 66, 50, 0.13);
+}
+
+.recommandation-carte__rang {
+    width: 58px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    background: #edf4ee;
+    color: #214c35;
+    font-size: 1.45rem;
+    font-weight: 900;
+}
+
+.recommandation-carte__contenu {
+    min-width: 0;
+}
+
+.recommandation-carte__contenu h3 {
+    margin: 0;
+    color: #214c35;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.65rem;
+    line-height: 1.2;
+}
+
+.recommandation-carte__famille {
+    margin: 7px 0 12px;
+    color: #d27632;
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.recommandation-carte__description {
+    margin: 0;
+    color: #606b62;
+    line-height: 1.65;
+}
+
+.recommandation-carte__raisons {
+    margin: 16px 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+}
+
+.recommandation-carte__raison {
+    padding: 7px 11px;
+    border-radius: 999px;
+    background: #edf3eb;
+    color: #3d654a;
+    font-size: 0.8rem;
+    font-weight: 750;
+}
+
+.recommandation-carte__score {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    text-align: center;
+}
+
+.recommandation-carte__pourcentage {
+    display: block;
+    color: #214c35;
+    font-size: 2rem;
+    font-weight: 950;
+    line-height: 1;
+}
+
+.recommandation-carte__libelle {
+    display: block;
+    margin-top: 6px;
+    color: #758076;
+    font-size: 0.75rem;
+    font-weight: 750;
+    text-transform: uppercase;
+}
+
+.recommandation-carte__lien {
+    display: inline-flex;
+    min-height: 46px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    border-radius: 12px;
+    background: #376b4d;
+    color: #ffffff;
+    font-weight: 850;
+    text-decoration: none;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.recommandation-carte__lien:hover,
+.recommandation-carte__lien:focus-visible {
+    transform: translateY(-2px);
+    background: #214c35;
+}
+
+.resultats-prudence {
+    display: grid;
+    grid-template-columns: 58px minmax(0, 1fr);
+    gap: 22px;
+    padding: 28px;
+    border: 1px solid rgba(185, 113, 51, 0.23);
+    border-radius: 20px;
+    background: #fff7ea;
+}
+
+.resultats-prudence__icone {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    background: #d9833b;
+    color: #ffffff;
+    font-size: 1.7rem;
+    font-weight: 900;
+}
+
+.resultats-prudence h2 {
+    margin: 0 0 8px;
+    color: #6d431f;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.45rem;
+}
+
+.resultats-prudence p {
+    margin: 0;
+    color: #765c45;
+    line-height: 1.7;
+}
+
+.resultats-actions {
+    margin-top: 28px;
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.resultats-bouton {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 22px;
+    border-radius: 12px;
+    font-weight: 850;
+    text-decoration: none;
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.resultats-bouton:hover,
+.resultats-bouton:focus-visible {
+    transform: translateY(-2px);
+}
+
+.resultats-bouton--principal {
+    background: #376b4d;
+    color: #ffffff;
+}
+
+.resultats-bouton--principal:hover,
+.resultats-bouton--principal:focus-visible {
+    background: #214c35;
+}
+
+.resultats-bouton--secondaire {
+    border: 1px solid rgba(55, 107, 77, 0.22);
+    background: #ffffff;
+    color: #376b4d;
+}
+
+.resultats-bouton--secondaire:hover,
+.resultats-bouton--secondaire:focus-visible {
+    border-color: #376b4d;
+    background: #edf4ee;
+}
+
+@keyframes resultatsRotation {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 980px) {
+    .profil-grille {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .recommandation-carte {
+        grid-template-columns: 64px minmax(0, 1fr);
+    }
+
+    .recommandation-carte__score {
+        grid-column: 2;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        text-align: left;
+    }
+
+    .recommandation-carte__lien {
+        min-width: 150px;
+    }
+}
+
+@media (max-width: 720px) {
+    .resultats-conteneur {
+        width: min(100% - 24px, 1180px);
+    }
+
+    .resultats-entete {
+        padding: 48px 0 36px;
+    }
+
+    .resultats-titre-section {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .resultats-titre-section__texte,
+    .resultats-compteur {
+        max-width: none;
+        text-align: left;
+    }
+
+    .recommandation-carte {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding: 22px;
+    }
+
+    .recommandation-carte__rang {
+        width: 50px;
+        height: 50px;
+    }
+
+    .recommandation-carte__score {
+        grid-column: auto;
+    }
+
+    .resultats-prudence {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 520px) {
+    .profil-grille {
+        grid-template-columns: 1fr;
+    }
+
+    .resultats-etat {
+        width: calc(100% - 24px);
+        padding: 38px 20px;
+    }
+
+    .recommandation-carte__score {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+
+    .recommandation-carte__lien {
+        width: 100%;
+    }
+
+    .resultats-actions,
+    .resultats-erreur__actions {
+        flex-direction: column;
+    }
+
+    .resultats-bouton {
+        width: 100%;
+    }
+}
