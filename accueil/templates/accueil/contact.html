@@ -1,0 +1,217 @@
+{% extends "accueil/base.html" %}
+
+
+{% block logo_return %}{% url 'home' %}{% endblock %}
+{% block title %}Contact | Santé Prévention Terrain{% endblock %}
+{% block page_title %}Nous contacter{% endblock %}
+
+{% block header_actions %}
+<a class="spt-shell-action" href="{% url 'home' %}">← Accueil</a>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .contact-page {
+        width: min(900px, 92%);
+        margin: 46px auto;
+    }
+    .contact-card {
+        padding: clamp(24px, 5vw, 42px);
+        border: 1px solid rgba(55, 107, 77, .15);
+        border-radius: 22px;
+        background: #fff;
+        box-shadow: 0 12px 30px rgba(53, 67, 50, .13);
+    }
+    .contact-heading {
+        margin: 0 0 10px;
+        color: #214c35;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(1.7rem, 4vw, 2.25rem);
+        text-align: center;
+    }
+    .contact-intro {
+        max-width: 680px;
+        margin: 0 auto 30px;
+        color: #556158;
+        line-height: 1.65;
+        text-align: center;
+    }
+    .contact-alert {
+        margin: 0 0 24px;
+        padding: 20px;
+        border-radius: 16px;
+        text-align: center;
+    }
+    .contact-alert--success {
+        border: 2px solid #4f8c62;
+        background: #eef8f0;
+        color: #214c35;
+    }
+    .contact-alert--error {
+        border: 2px solid #b6403a;
+        background: #fff0ee;
+        color: #7a2420;
+    }
+    .contact-alert__icon {
+        width: 62px;
+        height: 62px;
+        margin: 0 auto 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #4f8c62;
+        color: #fff;
+        font-size: 2rem;
+        font-weight: 900;
+    }
+    .contact-alert h2 { margin: 0 0 7px; font-family: Georgia, "Times New Roman", serif; }
+    .contact-alert p { margin: 0; line-height: 1.5; }
+    .contact-form { display: grid; gap: 20px; }
+    .contact-field { display: grid; gap: 8px; }
+    .contact-field label { color: #214c35; font-weight: 800; }
+    .contact-field input,
+    .contact-field textarea {
+        width: 100%;
+        padding: 13px 15px;
+        border: 1px solid #cbd6cc;
+        border-radius: 12px;
+        background: #fffdf8;
+        color: #2f382f;
+        font: inherit;
+        transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .contact-field textarea { min-height: 190px; resize: vertical; }
+    .contact-field input:focus,
+    .contact-field textarea:focus {
+        outline: none;
+        border-color: #376b4d;
+        background: #fff;
+        box-shadow: 0 0 0 4px rgba(55, 107, 77, .14);
+    }
+    .contact-required { color: #9b302b; }
+    .contact-honeypot { position: absolute !important; left: -9999px !important; width: 1px !important; height: 1px !important; overflow: hidden !important; }
+    .contact-submit {
+        justify-self: center;
+        min-width: 220px;
+        min-height: 48px;
+        padding: 12px 28px;
+        border: 0;
+        border-radius: 999px;
+        background: #376b4d;
+        color: #fff;
+        font: inherit;
+        font-size: 1rem;
+        font-weight: 800;
+        cursor: pointer;
+        box-shadow: 0 9px 20px rgba(55, 107, 77, .22);
+        transition: transform .2s ease, background .2s ease, opacity .2s ease;
+    }
+    .contact-submit:hover:not(:disabled),
+    .contact-submit:focus-visible:not(:disabled) {
+        transform: translateY(-2px);
+        background: #214c35;
+    }
+    .contact-submit:disabled { cursor: not-allowed; opacity: .76; }
+    .contact-submit.is-loading::after {
+        content: "";
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        margin-left: 10px;
+        border: 2px solid rgba(255, 255, 255, .42);
+        border-top-color: #fff;
+        border-radius: 50%;
+        vertical-align: -3px;
+        animation: contact-spin .8s linear infinite;
+    }
+    .contact-privacy {
+        margin: 26px 0 0;
+        color: #667168;
+        font-size: .93rem;
+        line-height: 1.5;
+        text-align: center;
+    }
+    @keyframes contact-spin { to { transform: rotate(360deg); } }
+    @media (max-width: 560px) {
+        .contact-page { margin: 24px auto; }
+        .contact-submit { width: 100%; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="contact-page">
+    <section class="contact-card" aria-labelledby="contact-title">
+        <h2 class="contact-heading" id="contact-title">Une question ou une suggestion ?</h2>
+        <p class="contact-intro">
+            Signalez une erreur, proposez une amélioration ou envoyez simplement un message.
+            Votre adresse électronique restera confidentielle et servira uniquement à vous répondre.
+        </p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="contact-alert contact-alert--{% if message.tags == 'success' %}success{% else %}error{% endif %}" role="{% if message.tags == 'success' %}status{% else %}alert{% endif %}">
+                    {% if message.tags == 'success' %}
+                        <div class="contact-alert__icon" aria-hidden="true">✓</div>
+                        <h2>Merci !</h2>
+                    {% endif %}
+                    <p>{{ message }}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post" class="contact-form" id="contactForm">
+            {% csrf_token %}
+
+            <div class="contact-honeypot" aria-hidden="true">
+                <label for="website">Site internet</label>
+                <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+            </div>
+
+            <div class="contact-field">
+                <label for="nom">Nom <span class="contact-required" aria-hidden="true">*</span></label>
+                <input type="text" id="nom" name="nom" maxlength="120" autocomplete="name" value="{{ form_data.nom }}" required>
+            </div>
+
+            <div class="contact-field">
+                <label for="email">Adresse e-mail <span class="contact-required" aria-hidden="true">*</span></label>
+                <input type="email" id="email" name="email" maxlength="254" autocomplete="email" value="{{ form_data.email }}" required>
+            </div>
+
+            <div class="contact-field">
+                <label for="sujet">Sujet <span class="contact-required" aria-hidden="true">*</span></label>
+                <input type="text" id="sujet" name="sujet" maxlength="160" value="{{ form_data.sujet }}" required>
+            </div>
+
+            <div class="contact-field">
+                <label for="message">Votre message <span class="contact-required" aria-hidden="true">*</span></label>
+                <textarea id="message" name="message" maxlength="10000" required>{{ form_data.message }}</textarea>
+            </div>
+
+            <button class="contact-submit" id="contactSubmit" type="submit">Envoyer le message</button>
+        </form>
+
+        <p class="contact-privacy">
+            L'adresse de réception n'est jamais affichée sur le site. Les informations saisies ne sont utilisées que pour traiter votre demande.
+        </p>
+    </section>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("contactForm");
+    const button = document.getElementById("contactSubmit");
+    if (!form || !button) return;
+
+    form.addEventListener("submit", function () {
+        if (!form.checkValidity()) return;
+        button.disabled = true;
+        button.textContent = "Envoi en cours…";
+        button.classList.add("is-loading");
+    });
+});
+</script>
+{% endblock %}

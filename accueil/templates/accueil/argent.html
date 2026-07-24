@@ -1,0 +1,534 @@
+{% extends "accueil/base.html" %}
+
+{% block logo_return %}{% url 'sedebrouiller' %}{% endblock %}
+{% load static %}
+
+{% block title %}Gagner de l'argent | Santé Prévention Terrain{% endblock %}
+{% block page_title %}Gagner de l'argent{% endblock %}
+{% block header_actions %}<a class="spt-shell-action" href="{% url 'sedebrouiller' %}">Se débrouiller</a>{% endblock %}
+
+{% block extra_css %}<style>
+:root{
+            --fond-principal:#efe3c3;
+            --fond-clair:#fffaf0;
+            --vert-principal:#43a047;
+            --vert-fonce:#2e7d32;
+            --vert-tres-fonce:#1b5e20;
+            --vert-clair:#dfeadb;
+            --texte:#2f382f;
+            --texte-clair:#667066;
+            --blanc:#ffffff;
+            --ombre:0 12px 30px rgba(53,67,50,.15);
+            --ombre-forte:0 18px 45px rgba(53,67,50,.24);
+        }
+
+        *{
+            box-sizing:border-box;
+            margin:0;
+            padding:0;
+        }
+
+        html{
+            scroll-behavior:smooth;
+        }
+
+        body{
+            min-height:100vh;
+            overflow-x:hidden;
+            background:var(--fond-principal);
+            color:var(--texte);
+            font-family:Arial, Helvetica, sans-serif;
+            line-height:1.7;
+        }
+
+        a{
+            color:inherit;
+            text-decoration:none;
+        }
+
+        img{
+            display:block;
+            max-width:100%;
+        }
+
+        ::selection{
+            background:var(--vert-principal);
+            color:var(--blanc);
+        }
+
+        /* =============================================
+           EN-TÊTE
+        ============================================= */
+
+        .site-header{
+            width:100%;
+            border-bottom:1px solid rgba(55,107,77,.18);
+            background:rgba(239,227,195,.96);
+            box-shadow:0 6px 24px rgba(62,72,55,.08);
+        }
+
+        .header-inner{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:30px;
+            width:min(1400px,94%);
+            min-height:94px;
+            margin:0 auto;
+        }
+
+        .brand{
+            display:flex;
+            align-items:center;
+            gap:15px;
+        }
+
+        .brand-logo{
+            width:78px;
+            height:78px;
+            object-fit:contain;
+            filter:drop-shadow(0 6px 8px rgba(45,80,57,.15));
+        }
+
+        .brand-text{
+            display:flex;
+            flex-direction:column;
+            line-height:1.05;
+        }
+
+        .brand-name{
+            color:var(--vert-tres-fonce);
+            font-family:Georgia, "Times New Roman", serif;
+            font-size:1.4rem;
+            font-weight:800;
+        }
+
+        .brand-subtitle{
+            margin-top:6px;
+            color:var(--texte-clair);
+            font-size:.78rem;
+            font-weight:700;
+            letter-spacing:.12em;
+            text-transform:uppercase;
+        }
+
+        .header-button{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            min-height:44px;
+            padding:10px 18px;
+            border-radius:999px;
+            background:var(--vert-principal);
+            color:var(--blanc);
+            font-size:.92rem;
+            font-weight:800;
+            box-shadow:0 8px 18px rgba(67,160,71,.22);
+            transition:
+                transform .25s ease,
+                background .25s ease,
+                box-shadow .25s ease;
+        }
+
+        .header-button:hover,
+        .header-button:focus-visible{
+            transform:translateY(-2px);
+            background:var(--vert-fonce);
+            box-shadow:0 12px 24px rgba(46,125,50,.28);
+        }
+
+        /* =============================================
+           CONTENU
+        ============================================= */
+
+        .page-container{
+            width:min(1100px,92%);
+            margin:38px auto 70px;
+        }
+
+        .main-card{
+            position:relative;
+            overflow:hidden;
+            padding:42px;
+            border:1px solid rgba(55,107,77,.14);
+            border-radius:30px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,250,240,.98),
+                    rgba(223,234,219,.94)
+                );
+            box-shadow:var(--ombre);
+        }
+
+        .main-card::before{
+            content:"";
+            position:absolute;
+            top:-120px;
+            right:-100px;
+            width:320px;
+            height:320px;
+            border-radius:50%;
+            background:rgba(67,160,71,.08);
+        }
+
+        .main-content{
+            position:relative;
+            z-index:2;
+        }
+
+        .page-title{
+            margin-bottom:28px;
+            color:var(--vert-tres-fonce);
+            font-family:Georgia, "Times New Roman", serif;
+            font-size:2rem;
+            font-weight:700;
+            line-height:1.2;
+            text-align:center;
+        }
+
+        .intro-row{
+            display:grid;
+            grid-template-columns:300px minmax(0,1fr);
+            gap:42px;
+            align-items:center;
+        }
+
+        .illustration{
+            width:300px;
+            height:300px;
+            overflow:hidden;
+            border:11px solid rgba(255,255,255,.88);
+            border-radius:22px;
+            background-image:
+                url("{% static 'accueil/images/argent.png' %}");
+            background-position:center;
+            background-repeat:no-repeat;
+            background-size:cover;
+            box-shadow:0 22px 46px rgba(46,125,50,.20);
+            transition:
+                transform .3s ease,
+                box-shadow .3s ease;
+        }
+
+        .illustration:hover{
+            transform:translateY(-5px);
+            box-shadow:0 28px 55px rgba(46,125,50,.28);
+        }
+
+        .intro-text{
+            font-size:1.05rem;
+        }
+
+        .intro-text p + p{
+            margin-top:16px;
+        }
+
+        .intro-opening{
+            color:var(--vert-tres-fonce);
+            font-family:Georgia, "Times New Roman", serif;
+            font-size:1.45rem;
+            font-weight:700;
+            line-height:1.45;
+        }
+
+        .test-area{
+            margin-top:34px;
+            text-align:center;
+        }
+
+        .test-button{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            gap:12px;
+            min-height:62px;
+            padding:16px 28px;
+            border-radius:18px;
+            background:var(--vert-principal);
+            color:var(--blanc);
+            font-size:1.08rem;
+            font-weight:850;
+            box-shadow:0 12px 26px rgba(46,125,50,.26);
+            transition:
+                transform .25s ease,
+                background .25s ease,
+                box-shadow .25s ease;
+        }
+
+        .test-button:hover,
+        .test-button:focus-visible{
+            transform:translateY(-4px);
+            background:var(--vert-fonce);
+            box-shadow:var(--ombre-forte);
+        }
+
+        .test-icon{
+            font-size:1.55rem;
+        }
+
+        /* =============================================
+           DEUXIÈME PARTIE
+        ============================================= */
+
+        .secondary-card{
+            margin-top:30px;
+            padding:36px 40px;
+            border:1px solid rgba(55,107,77,.14);
+            border-radius:28px;
+            background:rgba(255,250,240,.90);
+            box-shadow:var(--ombre);
+        }
+
+        .secondary-title{
+            margin-bottom:16px;
+            color:var(--vert-tres-fonce);
+            font-family:Georgia, "Times New Roman", serif;
+            font-size:1.5rem;
+            font-weight:700;
+            text-align:center;
+        }
+
+        .secondary-text{
+            max-width:900px;
+            margin:0 auto;
+            font-size:1.05rem;
+        }
+
+        .secondary-text p + p{
+            margin-top:16px;
+        }
+
+        .return-area{
+            margin-top:30px;
+            text-align:center;
+        }
+
+        .return-button{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            gap:8px;
+            padding:11px 24px;
+            border:1px solid rgba(55,107,77,.20);
+            border-radius:999px;
+            background:rgba(255,255,255,.62);
+            color:var(--vert-fonce);
+            font-weight:800;
+            transition:
+                transform .25s ease,
+                background .25s ease;
+        }
+
+        .return-button:hover,
+        .return-button:focus-visible{
+            transform:translateY(-2px);
+            background:rgba(255,255,255,.90);
+        }
+
+        /* =============================================
+           TABLETTE
+        ============================================= */
+
+        @media(max-width:850px){
+
+            .intro-row{
+                grid-template-columns:240px minmax(0,1fr);
+                gap:30px;
+            }
+
+            .illustration{
+                width:240px;
+                height:240px;
+            }
+
+        }
+
+        /* =============================================
+           MOBILE
+        ============================================= */
+
+        @media(max-width:650px){
+
+            .header-inner{
+                flex-direction:column;
+                justify-content:center;
+                gap:14px;
+                padding:14px 0 18px;
+            }
+
+            .header-button{
+                width:100%;
+            }
+
+            .page-container{
+                width:94%;
+                margin-top:22px;
+            }
+
+            .main-card{
+                padding:30px 18px;
+                border-radius:24px;
+            }
+
+            .page-title{
+                margin-bottom:24px;
+                font-size:1.7rem;
+            }
+
+            .intro-row{
+                grid-template-columns:1fr;
+                gap:26px;
+            }
+
+            .illustration{
+                width:220px;
+                height:220px;
+                margin:0 auto;
+            }
+
+            .intro-text{
+                text-align:left;
+            }
+
+            .intro-opening{
+                font-size:1.3rem;
+                text-align:center;
+            }
+
+            .test-button{
+                width:100%;
+                padding:15px 18px;
+                font-size:1rem;
+            }
+
+            .secondary-card{
+                padding:28px 20px;
+                border-radius:24px;
+            }
+
+            .secondary-title{
+                font-size:1.35rem;
+            }
+
+        }
+</style>{% endblock %}
+
+{% block content %}
+<!-- =============================================
+         EN-TÊTE
+    ============================================== -->
+
+    
+
+    <!-- =============================================
+         CONTENU PRINCIPAL
+    ============================================== -->
+
+    <main class="page-container">
+
+        <section class="main-card">
+
+            <div class="main-content">
+
+                <h1 class="page-title">
+                    Gagner de l'argent
+                </h1>
+
+                <div class="intro-row">
+
+                    <div
+                        class="illustration"
+                        role="img"
+                        aria-label="Illustration provisoire de la rubrique Gagner de l'argent"
+                    ></div>
+
+                    <div class="intro-text">
+
+                        <p class="intro-opening">
+                            Pour gagner de l'argent, le plus simple est
+                            d'utiliser un gros mot : « travailler ».
+                        </p>
+
+                        <p>
+                            Je vous propose de faire ci-dessous un petit test
+                            pour voir si votre voie actuelle vous correspond.
+                        </p>
+
+                        <p>
+                            Trouver un travail adapté à sa personnalité, à ses
+                            qualités et à ses envies peut permettre de mieux
+                            vivre son quotidien et d'éviter de passer des
+                            années dans une activité qui ne nous convient pas.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="test-area">
+
+                    <a
+                        href="{% url 'travailler' %}"
+                        class="test-button"
+                    >
+                        <span
+                            class="test-icon"
+                            aria-hidden="true"
+                        >
+                            💼
+                        </span>
+
+                        Pour quel travail je suis fait ?
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="secondary-card">
+
+            <h2 class="secondary-title">
+                D'autres façons de gagner de l'argent
+            </h2>
+
+            <div class="secondary-text">
+
+                <p>
+                    Maintenant, il existe d'autres façons de gagner un peu
+                    d'argent pour survivre, voire même pour en vivre.
+                </p>
+
+                <p>
+                    Ces solutions nécessiteront cependant toujours une
+                    certaine forme de travail de votre part : du temps, de
+                    l'organisation, des connaissances, de la patience ou
+                    parfois un investissement de départ.
+                </p>
+
+                <p>
+                    Il ne s'agit pas de vous promettre de devenir riche du
+                    jour au lendemain, mais de présenter différentes pistes
+                    qui peuvent permettre de compléter ses revenus ou, dans
+                    certains cas, de construire une véritable activité.
+                </p>
+
+            </div>
+
+        </section>
+
+        <div class="return-area">
+
+            <a
+                href="{% url 'sedebrouiller' %}"
+                class="return-button"
+            >
+                ← Retour à Se débrouiller
+            </a>
+
+        </div>
+
+    </main>
+{% endblock %}

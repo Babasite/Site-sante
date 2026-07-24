@@ -1,0 +1,459 @@
+{% extends "accueil/base.html" %}
+
+{% block logo_return %}{% url 'veille' %}{% endblock %}
+{% load static %}
+
+{% block title %}Résumé de la veille scientifique{% endblock %}
+{% block page_title %}Résultats de la veille{% endblock %}
+{% block header_actions %}<a class="spt-shell-action" href="{% url 'veille' %}">Nouvelle veille</a>{% endblock %}
+
+{% block extra_css %}<style>
+body {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fafafa;
+        }
+
+        .entete {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            margin: 0;
+            color: #003366;
+        }
+
+        h2 {
+            margin-top: 35px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .date-veille {
+            margin-top: 8px;
+            color: #666;
+        }
+
+        .bouton-pdf {
+            display: inline-block;
+            padding: 10px 14px;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            background: #00695c;
+            font-weight: bold;
+            font-size: 0.9em;
+            white-space: nowrap;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .bouton-pdf:hover {
+            background: #004d40;
+            color: white;
+        }
+
+        .bouton-pdf-indisponible {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        .resume {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-left: 5px solid #0b6efd;
+            background: #f4f8fc;
+            white-space: pre-line;
+        }
+
+        .convergence {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-left: 5px solid #198754;
+            background: #f5fbf7;
+            white-space: pre-line;
+        }
+
+        .statistiques {
+            width: 100%;
+            margin-bottom: 35px;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        .statistiques th,
+        .statistiques td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .statistiques th {
+            width: 55%;
+            background: #f1f1f1;
+        }
+
+        .article {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .article h3 {
+            margin-top: 0;
+            color: #183153;
+        }
+
+        .source {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .qualification {
+            margin: 16px 0 18px;
+            padding: 14px 16px;
+            border: 1px solid #dce4ea;
+            border-radius: 7px;
+            background: #f8fafc;
+        }
+
+        .qualification p {
+            margin: 7px 0;
+        }
+
+        .qualification strong {
+            color: #183153;
+        }
+
+        .importance-priorite {
+            color: #b42318;
+            font-weight: bold;
+        }
+
+        .importance-importante {
+            color: #b54708;
+            font-weight: bold;
+        }
+
+        .importance-surveillance {
+            color: #8a6100;
+            font-weight: bold;
+        }
+
+        .importance-utile {
+            color: #067647;
+            font-weight: bold;
+        }
+
+        .importance-documentaire {
+            color: #667085;
+            font-weight: bold;
+        }
+
+        .resume-original {
+            white-space: pre-line;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .actions a,
+        .actions button {
+            display: inline-block;
+            padding: 9px 13px;
+            border-radius: 6px;
+            font-size: 0.95em;
+            cursor: pointer;
+        }
+
+        .lire {
+            border: 1px solid #0b6efd;
+            color: white;
+            background: #0b6efd;
+            text-decoration: none;
+        }
+
+        .lire:hover {
+            background: #095ed7;
+        }
+
+        .traduire {
+            border: 1px solid #003366;
+            color: #003366;
+            background: white;
+        }
+
+        .traduire:hover {
+            background: #eef4fa;
+        }
+
+        .traduire:disabled {
+            opacity: 0.65;
+            cursor: wait;
+        }
+
+        .traduction {
+            display: none;
+            margin-top: 20px;
+            padding: 17px;
+            border-left: 4px solid #6f42c1;
+            background: #f8f5fc;
+        }
+
+        .traduction h4 {
+            margin-bottom: 6px;
+            color: #5f3596;
+        }
+
+        .traduction p {
+            margin-top: 0;
+            white-space: pre-line;
+        }
+
+        .erreur-traduction {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            border-left: 4px solid #dc3545;
+            color: #842029;
+            background: #f8d7da;
+        }
+
+        .message-vide {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+        }
+
+        @media (max-width: 700px) {
+            .entete {
+                display: block;
+            }
+
+            .bouton-pdf {
+                margin-top: 15px;
+            }
+        }
+</style>{% endblock %}
+
+{% block content %}
+{% include "accueil/includes/barre_redacteur.html" %}
+{% if messages %}<div class="messages-redacteur">{% for message in messages %}<p class="message-redacteur">{{ message }}</p>{% endfor %}</div>{% endif %}
+
+<div class="entete">
+    <div>
+        <h1>Veille scientifique</h1>
+
+        {% if date_veille %}
+            <p class="date-veille">
+                Veille du
+                {{ date_veille|date:"d/m/Y à H:i" }}
+            </p>
+        {% endif %}
+    </div>
+
+    {% if veille_id %}
+        <a
+            class="bouton-pdf"
+            href="{% url 'exporter_veille_pdf' veille_id %}">
+            Export PDF
+        </a>
+    {% else %}
+        <span
+            class="bouton-pdf bouton-pdf-indisponible"
+            title="Cette veille doit être enregistrée avant l'export.">
+            Export PDF
+        </span>
+    {% endif %}
+</div>
+
+<div class="resume">
+    <h2>Le Journal du jour</h2>
+
+    {{ veille.resume_affiche }}
+    {% if user.is_authenticated and user.is_staff %}
+        <p><a class="bouton-redacteur" href="{% url 'modifier_resume' veille.id %}">✏ Modifier le résumé</a></p>
+    {% endif %}
+</div>
+
+{% if convergence %}
+    <div class="convergence">
+        <h2>Convergence des sources</h2>
+
+        {{ convergence }}
+    </div>
+{% endif %}
+
+<h2>Tableau de la veille</h2>
+
+<table class="statistiques">
+    <tr>
+        <th>Sources interrogées</th>
+        <td>
+            {{ sources_interrogees|default:"Non disponible" }}
+        </td>
+    </tr>
+
+    <tr>
+        <th>Articles récupérés</th>
+        <td>
+            {{ articles_recuperes|default:"Non disponible" }}
+        </td>
+    </tr>
+
+    <tr>
+        <th>Articles retenus</th>
+        <td>
+            {{ nombre_articles|default:resultats|length }}
+        </td>
+    </tr>
+
+    <tr>
+        <th>Doublons supprimés</th>
+        <td>
+            {{ doublons_supprimes|default:"Non disponible" }}
+        </td>
+    </tr>
+
+    <tr>
+        <th>Durée totale</th>
+        <td>
+            {% if duree_secondes %}
+                {{ duree_secondes|floatformat:1 }}
+                seconde(s)
+            {% else %}
+                Non disponible
+            {% endif %}
+        </td>
+    </tr>
+</table>
+
+<h2>Détails des nouveautés</h2>
+
+{% for article in resultats %}
+
+    <article class="article">
+        <h3 class="titre-original">
+            {{ article.titre_affiche }}
+        </h3>
+
+        <p class="source">
+            <strong>Source :</strong>
+            {{ article.source }}
+        </p>
+
+        {% if article.date_publication %}
+            <p>
+                <strong>Date :</strong>
+                {{ article.date_publication }}
+            </p>
+        {% endif %}
+
+        {% if article.categories or article.one_health or article.preuve or article.niveau_importance %}
+            <div class="qualification">
+
+                {% if article.categories %}
+                    <p>
+                        <strong>🏷 Catégories :</strong>
+                        {{ article.categories|join:" • " }}
+                    </p>
+                {% endif %}
+
+                {% if article.one_health %}
+                    <p>
+                        <strong>🌍 One Health :</strong>
+                        {{ article.one_health|join:" • " }}
+                    </p>
+                {% endif %}
+
+                {% if article.preuve and article.preuve != "Non déterminé" %}
+                    <p>
+                        <strong>📊 Niveau de preuve :</strong>
+                        {{ article.preuve }}
+                    </p>
+                {% endif %}
+
+                {% if article.niveau_importance %}
+                    <p>
+                        <strong>🔥 Importance :</strong>
+
+                        {% if article.niveau_importance == "Priorité élevée" %}
+                            <span class="importance-priorite">
+                                🔴 {{ article.niveau_importance }}
+                            </span>
+                        {% elif article.niveau_importance == "Important" %}
+                            <span class="importance-importante">
+                                🟠 {{ article.niveau_importance }}
+                            </span>
+                        {% elif article.niveau_importance == "À surveiller" %}
+                            <span class="importance-surveillance">
+                                🟡 {{ article.niveau_importance }}
+                            </span>
+                        {% elif article.niveau_importance == "Information utile" %}
+                            <span class="importance-utile">
+                                🟢 {{ article.niveau_importance }}
+                            </span>
+                        {% else %}
+                            <span class="importance-documentaire">
+                                ⚪ {{ article.niveau_importance }}
+                            </span>
+                        {% endif %}
+                    </p>
+                {% endif %}
+
+            </div>
+        {% endif %}
+
+        {% if article.resume_affiche %}
+            <p class="resume-original">
+                {{ article.resume_affiche }}
+            </p>
+        {% else %}
+            <p class="resume-original">
+                Aucun résumé n'est disponible.
+            </p>
+        {% endif %}
+
+        <div class="actions">
+            {% if user.is_authenticated and user.is_staff %}
+                <a class="bouton-redacteur" href="{% url 'modifier_traduction' article.id %}">✏ Modifier la traduction</a>
+            {% endif %}
+            <a
+                class="lire"
+                href="{{ article.lien }}"
+                target="_blank"
+                rel="noopener noreferrer">
+                Lire l'article
+            </a>
+        </div>
+
+        {% if article.traduction_est_automatique %}
+            <p><em>Traduction automatique non vérifiée.</em></p>
+        {% elif article.traduction_manuelle_publiee %}
+            <p><em>Traduction vérifiée manuellement.</em></p>
+        {% endif %}
+    </article>
+
+{% empty %}
+
+    <div class="message-vide">
+        Aucun article n'a été trouvé pour cette veille.
+    </div>
+
+{% endfor %}
+{% endblock %}

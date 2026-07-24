@@ -1,0 +1,392 @@
+{% extends "accueil/base.html" %}
+
+{% block logo_return %}{% url 'home' %}{% endblock %}
+{% load static %}
+
+{% block title %}Veille scientifique{% endblock %}
+{% block page_title %}Veille scientifique{% endblock %}
+
+{% block header_actions %}
+
+<a class="bouton-redacteur veille-connexion-action"
+   href="{% url 'redacteur_connexion' %}">
+    Connexion rédacteur
+</a>
+
+{% if user.is_authenticated and user.is_staff %}
+<button
+    type="submit"
+    form="form-veille"
+    id="bouton-veille"
+    class="spt-shell-action veille-header-button"
+>
+    Lancer la veille
+</button>
+{% endif %}
+
+{% if derniere_veille %}
+<a
+    class="spt-shell-action"
+    href="{% url 'detail_veille' derniere_veille.id %}"
+>
+    Dernière veille
+</a>
+
+<a
+    class="spt-shell-action veille-pdf-action"
+    href="{% url 'exporter_veille_pdf' derniere_veille.id %}"
+    title="Exporter la dernière veille en PDF"
+>
+    📄 PDF
+</a>
+{% endif %}
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#efe3c3;
+    margin:0;
+}
+
+h2{
+    color:#00796b;
+}
+
+.bloc{
+    background:white;
+    margin-top:30px;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px #ccc;
+}
+
+/* Bouton blanc comme dans la version d'origine */
+.veille-connexion-action{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-height:42px;
+    padding:10px 16px;
+    border:1px solid rgba(255,255,255,.75);
+    border-radius:8px;
+    background:white;
+    color:#00695c;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:15px;
+    font-weight:bold;
+    line-height:1.2;
+    text-decoration:none;
+    white-space:nowrap;
+    box-sizing:border-box;
+}
+
+.veille-connexion-action:hover{
+    background:#f5f5f5;
+    color:#004d40;
+}
+
+.veille-header-button{
+    margin:0;
+    font:inherit;
+    cursor:pointer;
+}
+
+.veille-header-button:disabled{
+    opacity:.65;
+    cursor:wait;
+}
+
+.veille-pdf-action{
+    white-space:nowrap;
+}
+
+.veille-page{
+    position:relative;
+    min-height:620px;
+    padding:40px;
+}
+
+.contenu{
+    width:min(850px,calc(100% - 390px));
+    margin:0;
+}
+
+/* Formulaire réel invisible, piloté par le bouton du bandeau */
+.form-veille-cache{
+    display:none;
+}
+
+.message-attente{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    padding:180px 30px 30px;
+    text-align:center;
+    background:rgba(239,227,195,.97);
+}
+
+.message-attente h2{
+    margin:0 0 30px;
+    color:#00695c;
+    font-size:34px;
+}
+
+.message-attente p{
+    max-width:760px;
+    margin:20px auto;
+    font-size:21px;
+    line-height:1.6;
+}
+
+.message-attente::after{
+    content:"";
+    display:block;
+    width:48px;
+    height:48px;
+    margin:35px auto 0;
+    border:6px solid #c8d8d4;
+    border-top-color:#00695c;
+    border-radius:50%;
+    animation:tourner 1s linear infinite;
+}
+
+@keyframes tourner{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+/* Deux colonnes pour les sources */
+.sources-grid{
+    display:flex;
+    gap:50px;
+    align-items:flex-start;
+    margin:25px 0;
+}
+
+.source-bloc{
+    flex:1;
+    min-width:0;
+}
+
+.source-bloc h3{
+    margin-top:0;
+    margin-bottom:12px;
+    color:#00695c;
+}
+
+.source-bloc ul{
+    margin-top:0;
+    padding-left:22px;
+}
+
+/* Image du perroquet : entière, plus grande et légèrement plus à gauche */
+.colonne-droite{
+    position:fixed;
+    top:70px;
+    right:70px;
+    width:420px;
+    height:calc(100vh - 70px);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    pointer-events:none;
+}
+
+.image-droite{
+    width:360px;
+    height:360px;
+    border-radius:18px;
+    background-image:url("{% static 'accueil/images/perroquet.png' %}");
+    background-size:contain;
+    background-position:center;
+    background-repeat:no-repeat;
+    box-shadow:0 12px 28px rgba(0,0,0,.18);
+}
+
+.message-redacteur{
+    padding:12px 15px;
+    border-radius:8px;
+    background:#fff;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+}
+
+pre{
+    max-width:100%;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+}
+
+@media(max-width:1100px){
+    .veille-page{
+        padding:30px 24px;
+    }
+
+    .contenu{
+        width:calc(100% - 330px);
+    }
+
+    .sources-grid{
+        gap:30px;
+    }
+
+    .colonne-droite{
+        right:20px;
+        width:300px;
+    }
+
+    .image-droite{
+        width:260px;
+        height:260px;
+    }
+}
+
+@media(max-width:820px){
+    .contenu{
+        width:100%;
+    }
+
+    .sources-grid{
+        flex-direction:column;
+        gap:20px;
+    }
+
+    .source-bloc{
+        width:100%;
+    }
+
+    .colonne-droite{
+        position:static;
+        width:100%;
+        height:auto;
+        margin-top:30px;
+        justify-content:center;
+    }
+
+    .image-droite{
+        width:min(320px,100%);
+        height:auto;
+        aspect-ratio:1;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+{% include "accueil/includes/barre_redacteur.html" %}
+
+{% if user.is_authenticated and user.is_staff %}
+<form method="post" id="form-veille" class="form-veille-cache">
+    {% csrf_token %}
+</form>
+{% endif %}
+
+<div id="message-attente" class="message-attente">
+    <h2>⏳ Patientez...</h2>
+
+    <p>
+        Je lis les publications, je supprime les doublons, je rédige le
+        résumé et je cherche les convergences...
+    </p>
+
+    <p>
+        Mon cerveau tourne en local avec seulement 8 Go de RAM,
+        alors soyez indulgent... 😅
+    </p>
+</div>
+
+<div class="veille-page">
+
+    <div class="contenu">
+
+        {% for message in messages %}
+        <p class="message-redacteur">{{ message }}</p>
+        {% endfor %}
+
+        {% if erreur %}
+        <p class="message-redacteur">{{ erreur }}</p>
+        {% endif %}
+
+        <p>
+            Cette page permet de récupérer automatiquement les nouveautés
+            provenant de :
+        </p>
+
+        <div class="sources-grid">
+
+            <div class="source-bloc">
+                <h3>Sources scientifiques</h3>
+
+                <ul>
+                    <li>PubMed</li>
+                    <li>Google Scholar</li>
+                    <li>ProMed</li>
+                    <li>Prisme</li>
+                    <li>Cochrane Library</li>
+                </ul>
+            </div>
+
+            <div class="source-bloc">
+                <h3>Agences officielles</h3>
+
+                <ul>
+                    <li>HAS</li>
+                    <li>Santé Publique France</li>
+                    <li>ANSES</li>
+                    <li>OMS</li>
+                    <li>ECDC</li>
+                    <li>CDC</li>
+                    <li>INSERM</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <h3>Gestion bibliographique</h3>
+
+        <ul>
+            <li>Zotero</li>
+        </ul>
+
+        {% if resultats %}
+        <div class="bloc">
+            <h2>Résultats</h2>
+            <pre>{{ resultats }}</pre>
+        </div>
+        {% endif %}
+
+    </div>
+
+    <div class="colonne-droite">
+        <div class="image-droite"></div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+const formulaireVeille = document.getElementById("form-veille");
+const boutonVeille = document.getElementById("bouton-veille");
+const messageAttente = document.getElementById("message-attente");
+
+if(formulaireVeille){
+    formulaireVeille.addEventListener("submit", function(){
+        if(boutonVeille){
+            boutonVeille.disabled = true;
+            boutonVeille.textContent = "Veille en cours...";
+        }
+
+        if(messageAttente){
+            messageAttente.style.display = "block";
+        }
+    });
+}
+</script>
+{% endblock %}

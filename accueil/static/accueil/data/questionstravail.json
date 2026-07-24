@@ -1,0 +1,3620 @@
+{
+  "version": "1.0.0",
+  "nom": "Questionnaire d'orientation professionnelle",
+  "description": "90 questions destinées à construire un profil utilisateur compatible avec les critères de metiers.json.",
+  "nombre_questions": 90,
+  "echelle": {
+    "minimum": 1,
+    "maximum": 5,
+    "signification": {
+      "1": "préférence très faible",
+      "2": "préférence faible",
+      "3": "préférence moyenne",
+      "4": "préférence forte",
+      "5": "préférence très forte"
+    }
+  },
+  "methode_prevue": "Pour chaque critère, calculer la moyenne des valeurs choisies, puis comparer ce profil aux valeurs de 1 à 5 de chaque métier.",
+  "questions": [
+    {
+      "id": "qt001",
+      "theme": "Relations humaines",
+      "question": "Souhaites-tu avoir beaucoup de contacts humains dans ton travail ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "relation_humaine": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "relation_humaine": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "relation_humaine": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "relation_humaine": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "relation_humaine": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt002",
+      "theme": "Relations humaines",
+      "question": "Aimerais-tu passer une grande partie de ta journée à échanger avec des personnes ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "relation_humaine": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "relation_humaine": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "relation_humaine": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "relation_humaine": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "relation_humaine": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt003",
+      "theme": "Relations humaines",
+      "question": "Le contact régulier avec le public ou des collègues est-il important pour toi ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "relation_humaine": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "relation_humaine": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "relation_humaine": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "relation_humaine": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "relation_humaine": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt004",
+      "theme": "Aide et soin",
+      "question": "Aimerais-tu aider directement des personnes en difficulté, malades ou fragiles ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "aide_soin": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "aide_soin": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "aide_soin": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "aide_soin": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "aide_soin": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt005",
+      "theme": "Aide et soin",
+      "question": "Te sentir utile au bien-être ou à la santé des autres te motive-t-il ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "aide_soin": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "aide_soin": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "aide_soin": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "aide_soin": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "aide_soin": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt006",
+      "theme": "Aide et soin",
+      "question": "Serais-tu à l'aise dans un métier centré sur l'accompagnement ou le soin ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "aide_soin": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "aide_soin": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "aide_soin": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "aide_soin": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "aide_soin": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt007",
+      "theme": "Communication",
+      "question": "Aimes-tu expliquer clairement des informations à d'autres personnes ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "communication": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "communication": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "communication": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "communication": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "communication": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt008",
+      "theme": "Communication",
+      "question": "Souhaites-tu utiliser souvent la parole ou l'écrit dans ton métier ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "communication": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "communication": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "communication": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "communication": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "communication": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt009",
+      "theme": "Communication",
+      "question": "Te sens-tu à l'aise pour présenter une idée, un service ou un projet ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "communication": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "communication": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "communication": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "communication": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "communication": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt010",
+      "theme": "Transmission",
+      "question": "Aimes-tu apprendre quelque chose à quelqu'un ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "pedagogie": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "pedagogie": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "pedagogie": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "pedagogie": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "pedagogie": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt011",
+      "theme": "Transmission",
+      "question": "Souhaites-tu guider des personnes pour les aider à progresser ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "pedagogie": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "pedagogie": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "pedagogie": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "pedagogie": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "pedagogie": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt012",
+      "theme": "Transmission",
+      "question": "Prendre le temps d'expliquer plusieurs fois te conviendrait-il ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "pedagogie": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "pedagogie": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "pedagogie": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "pedagogie": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "pedagogie": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt013",
+      "theme": "Vente et négociation",
+      "question": "Aimerais-tu convaincre un client ou défendre une proposition ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "vente_negociation": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "vente_negociation": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "vente_negociation": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "vente_negociation": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "vente_negociation": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt014",
+      "theme": "Vente et négociation",
+      "question": "La négociation et la recherche d'un accord t'attirent-elles ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "vente_negociation": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "vente_negociation": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "vente_negociation": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "vente_negociation": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "vente_negociation": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt015",
+      "theme": "Vente et négociation",
+      "question": "Te plairait-il de travailler avec des objectifs commerciaux ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "vente_negociation": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "vente_negociation": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "vente_negociation": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "vente_negociation": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "vente_negociation": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt016",
+      "theme": "Management",
+      "question": "Aimerais-tu encadrer une équipe ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "management": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "management": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "management": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "management": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "management": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt017",
+      "theme": "Management",
+      "question": "Souhaites-tu répartir le travail et suivre l'avancement d'autres personnes ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "management": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "management": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "management": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "management": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "management": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt018",
+      "theme": "Management",
+      "question": "Te sentirais-tu à l'aise pour motiver et recadrer des collaborateurs ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "management": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "management": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "management": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "management": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "management": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt019",
+      "theme": "Analyse",
+      "question": "Aimes-tu examiner des informations avant de prendre une décision ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "analyse": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "analyse": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "analyse": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "analyse": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "analyse": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt020",
+      "theme": "Analyse",
+      "question": "Souhaites-tu résoudre des problèmes complexes dans ton travail ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "analyse": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "analyse": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "analyse": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "analyse": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "analyse": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt021",
+      "theme": "Analyse",
+      "question": "Prendre du recul pour comprendre une situation te plaît-il ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "analyse": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "analyse": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "analyse": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "analyse": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "analyse": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt022",
+      "theme": "Logique et mathématiques",
+      "question": "Aimes-tu utiliser la logique, les chiffres ou les calculs ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "logique_math": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "logique_math": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "logique_math": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "logique_math": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "logique_math": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt023",
+      "theme": "Logique et mathématiques",
+      "question": "Les problèmes nécessitant un raisonnement précis t'intéressent-ils ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "logique_math": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "logique_math": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "logique_math": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "logique_math": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "logique_math": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt024",
+      "theme": "Logique et mathématiques",
+      "question": "Souhaites-tu manipuler régulièrement des données chiffrées ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "logique_math": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "logique_math": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "logique_math": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "logique_math": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "logique_math": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt025",
+      "theme": "Créativité",
+      "question": "Aimes-tu imaginer des solutions nouvelles ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "creativite": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "creativite": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "creativite": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "creativite": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "creativite": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt026",
+      "theme": "Créativité",
+      "question": "Souhaites-tu disposer d'une liberté créative dans ton métier ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "creativite": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "creativite": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "creativite": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "creativite": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "creativite": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt027",
+      "theme": "Créativité",
+      "question": "Créer un concept, un contenu ou une forme originale te motive-t-il ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "creativite": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "creativite": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "creativite": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "creativite": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "creativite": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt028",
+      "theme": "Informatique",
+      "question": "Aimerais-tu travailler souvent avec des outils informatiques avancés ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "informatique": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "informatique": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "informatique": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "informatique": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "informatique": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt029",
+      "theme": "Informatique",
+      "question": "Les logiciels, les systèmes numériques ou la programmation t'intéressent-ils ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "informatique": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "informatique": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "informatique": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "informatique": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "informatique": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt030",
+      "theme": "Informatique",
+      "question": "Souhaites-tu passer une part importante de ta journée devant un ordinateur ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "informatique": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "informatique": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "informatique": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "informatique": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "informatique": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt031",
+      "theme": "Technique",
+      "question": "Aimes-tu comprendre le fonctionnement d'un appareil ou d'un système ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "technique": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "technique": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "technique": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "technique": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "technique": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt032",
+      "theme": "Technique",
+      "question": "Souhaites-tu acquérir un savoir-faire technique précis ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "technique": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "technique": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "technique": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "technique": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "technique": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt033",
+      "theme": "Technique",
+      "question": "Diagnostiquer une panne ou un dysfonctionnement t'intéresserait-il ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "technique": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "technique": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "technique": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "technique": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "technique": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt034",
+      "theme": "Travail manuel",
+      "question": "Aimes-tu fabriquer, réparer ou installer avec tes mains ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "travail_manuel": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "travail_manuel": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "travail_manuel": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "travail_manuel": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "travail_manuel": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt035",
+      "theme": "Travail manuel",
+      "question": "Souhaites-tu utiliser régulièrement des outils ou du matériel ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "travail_manuel": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "travail_manuel": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "travail_manuel": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "travail_manuel": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "travail_manuel": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt036",
+      "theme": "Travail manuel",
+      "question": "Voir un résultat matériel concret à la fin de la journée est-il important pour toi ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "travail_manuel": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "travail_manuel": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "travail_manuel": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "travail_manuel": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "travail_manuel": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt037",
+      "theme": "Précision",
+      "question": "Aimes-tu travailler avec beaucoup de précision ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "precision": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "precision": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "precision": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "precision": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "precision": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt038",
+      "theme": "Précision",
+      "question": "Les tâches où une petite erreur peut avoir des conséquences te conviennent-elles ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "precision": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "precision": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "precision": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "precision": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "precision": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt039",
+      "theme": "Précision",
+      "question": "Prends-tu volontiers le temps de vérifier les détails de ton travail ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "precision": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "precision": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "precision": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "precision": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "precision": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt040",
+      "theme": "Organisation",
+      "question": "Aimes-tu planifier les étapes d'un travail ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "organisation": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "organisation": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "organisation": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "organisation": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "organisation": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt041",
+      "theme": "Organisation",
+      "question": "Souhaites-tu organiser des ressources, des délais ou des rendez-vous ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "organisation": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "organisation": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "organisation": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "organisation": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "organisation": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt042",
+      "theme": "Organisation",
+      "question": "Te sens-tu à l'aise avec le suivi simultané de plusieurs tâches ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "organisation": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "organisation": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "organisation": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "organisation": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "organisation": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt043",
+      "theme": "Autonomie",
+      "question": "Souhaites-tu décider toi-même de ta manière de travailler ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "autonomie": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "autonomie": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "autonomie": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "autonomie": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "autonomie": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt044",
+      "theme": "Autonomie",
+      "question": "Aimes-tu avancer sans supervision constante ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "autonomie": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "autonomie": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "autonomie": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "autonomie": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "autonomie": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt045",
+      "theme": "Autonomie",
+      "question": "Te sentirais-tu à l'aise avec une grande liberté d'organisation ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "autonomie": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "autonomie": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "autonomie": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "autonomie": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "autonomie": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt046",
+      "theme": "Travail en équipe",
+      "question": "Aimes-tu collaborer étroitement avec d'autres personnes ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "travail_equipe": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "travail_equipe": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "travail_equipe": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "travail_equipe": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "travail_equipe": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt047",
+      "theme": "Travail en équipe",
+      "question": "Souhaites-tu partager les décisions et les responsabilités avec une équipe ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "travail_equipe": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "travail_equipe": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "travail_equipe": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "travail_equipe": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "travail_equipe": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt048",
+      "theme": "Travail en équipe",
+      "question": "Le travail collectif te motive-t-il davantage que le travail solitaire ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "travail_equipe": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "travail_equipe": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "travail_equipe": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "travail_equipe": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "travail_equipe": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt049",
+      "theme": "Prise de décision",
+      "question": "Aimes-tu choisir rapidement entre plusieurs solutions ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "decision": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "decision": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "decision": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "decision": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "decision": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt050",
+      "theme": "Prise de décision",
+      "question": "Souhaites-tu avoir un rôle où tes décisions influencent directement le résultat ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "decision": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "decision": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "decision": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "decision": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "decision": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt051",
+      "theme": "Prise de décision",
+      "question": "Te sens-tu capable de trancher malgré des informations incomplètes ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "decision": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "decision": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "decision": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "decision": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "decision": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt052",
+      "theme": "Responsabilités",
+      "question": "Souhaites-tu assumer des responsabilités importantes ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "responsabilite": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "responsabilite": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "responsabilite": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "responsabilite": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "responsabilite": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt053",
+      "theme": "Responsabilités",
+      "question": "Serais-tu à l'aise si d'autres personnes comptaient sur tes décisions ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "responsabilite": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "responsabilite": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "responsabilite": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "responsabilite": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "responsabilite": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt054",
+      "theme": "Responsabilités",
+      "question": "Aimerais-tu être responsable de la qualité finale d'un travail ou d'un service ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "responsabilite": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "responsabilite": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "responsabilite": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "responsabilite": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "responsabilite": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt055",
+      "theme": "Gestion du stress",
+      "question": "Te sens-tu capable de rester efficace dans une situation tendue ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "gestion_stress": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "gestion_stress": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "gestion_stress": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "gestion_stress": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "gestion_stress": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt056",
+      "theme": "Gestion du stress",
+      "question": "Supportes-tu bien les urgences ou les imprévus ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "gestion_stress": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "gestion_stress": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "gestion_stress": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "gestion_stress": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "gestion_stress": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt057",
+      "theme": "Gestion du stress",
+      "question": "Un métier comportant régulièrement de la pression pourrait-il te convenir ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "gestion_stress": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "gestion_stress": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "gestion_stress": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "gestion_stress": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "gestion_stress": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt058",
+      "theme": "Activité physique",
+      "question": "Souhaites-tu bouger régulièrement pendant ta journée de travail ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "activite_physique": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "activite_physique": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "activite_physique": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "activite_physique": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "activite_physique": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt059",
+      "theme": "Activité physique",
+      "question": "Un métier demandant de rester debout ou de porter des charges te conviendrait-il ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "activite_physique": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "activite_physique": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "activite_physique": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "activite_physique": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "activite_physique": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt060",
+      "theme": "Activité physique",
+      "question": "Préfères-tu une activité physique à un travail principalement assis ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "activite_physique": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "activite_physique": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "activite_physique": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "activite_physique": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "activite_physique": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt061",
+      "theme": "Travail en extérieur",
+      "question": "Aimerais-tu travailler souvent dehors ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "travail_exterieur": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "travail_exterieur": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "travail_exterieur": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "travail_exterieur": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "travail_exterieur": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt062",
+      "theme": "Travail en extérieur",
+      "question": "Les variations de météo te dérangeraient-elles peu dans ton activité professionnelle ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "travail_exterieur": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "travail_exterieur": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "travail_exterieur": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "travail_exterieur": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "travail_exterieur": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt063",
+      "theme": "Travail en extérieur",
+      "question": "Préfères-tu les espaces extérieurs aux locaux fermés ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "travail_exterieur": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "travail_exterieur": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "travail_exterieur": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "travail_exterieur": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "travail_exterieur": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt064",
+      "theme": "Mobilité et déplacements",
+      "question": "Aimerais-tu te déplacer régulièrement pour ton travail ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "mobilite_deplacements": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "mobilite_deplacements": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "mobilite_deplacements": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "mobilite_deplacements": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "mobilite_deplacements": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt065",
+      "theme": "Mobilité et déplacements",
+      "question": "Changer souvent de lieu d'intervention te conviendrait-il ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "mobilite_deplacements": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "mobilite_deplacements": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "mobilite_deplacements": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "mobilite_deplacements": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "mobilite_deplacements": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt066",
+      "theme": "Mobilité et déplacements",
+      "question": "Serais-tu prêt à effectuer des trajets professionnels fréquents ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "mobilite_deplacements": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "mobilite_deplacements": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "mobilite_deplacements": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "mobilite_deplacements": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "mobilite_deplacements": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt067",
+      "theme": "Horaires irréguliers",
+      "question": "Accepterais-tu de travailler parfois le soir, la nuit ou le week-end ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "horaires_irreguliers": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "horaires_irreguliers": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "horaires_irreguliers": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "horaires_irreguliers": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "horaires_irreguliers": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt068",
+      "theme": "Horaires irréguliers",
+      "question": "Des horaires variables d'une semaine à l'autre te conviendraient-ils ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "horaires_irreguliers": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "horaires_irreguliers": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "horaires_irreguliers": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "horaires_irreguliers": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "horaires_irreguliers": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt069",
+      "theme": "Horaires irréguliers",
+      "question": "Pourrais-tu adapter ton emploi du temps aux besoins de l'activité ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "horaires_irreguliers": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "horaires_irreguliers": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "horaires_irreguliers": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "horaires_irreguliers": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "horaires_irreguliers": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt070",
+      "theme": "Contact avec les animaux",
+      "question": "Aimerais-tu travailler directement avec des animaux ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "contact_animaux": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "contact_animaux": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "contact_animaux": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "contact_animaux": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "contact_animaux": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt071",
+      "theme": "Contact avec les animaux",
+      "question": "Prendre soin, observer ou manipuler des animaux t'intéresse-t-il ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "contact_animaux": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "contact_animaux": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "contact_animaux": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "contact_animaux": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "contact_animaux": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt072",
+      "theme": "Contact avec les animaux",
+      "question": "Le contact quotidien avec des animaux serait-il motivant pour toi ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "contact_animaux": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "contact_animaux": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "contact_animaux": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "contact_animaux": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "contact_animaux": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt073",
+      "theme": "Nature et environnement",
+      "question": "Aimerais-tu travailler au contact de la nature ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "contact_nature": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "contact_nature": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "contact_nature": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "contact_nature": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "contact_nature": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt074",
+      "theme": "Nature et environnement",
+      "question": "Les plantes, les milieux naturels ou l'environnement t'intéressent-ils ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "contact_nature": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "contact_nature": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "contact_nature": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "contact_nature": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "contact_nature": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt075",
+      "theme": "Nature et environnement",
+      "question": "Contribuer à protéger ou gérer des ressources naturelles te motiverait-il ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "contact_nature": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "contact_nature": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "contact_nature": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "contact_nature": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "contact_nature": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt076",
+      "theme": "Sécurité",
+      "question": "Aimerais-tu prévenir des accidents ou protéger des personnes et des biens ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "securite": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "securite": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "securite": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "securite": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "securite": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt077",
+      "theme": "Sécurité",
+      "question": "Le respect strict de procédures de sécurité te convient-il ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "securite": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "securite": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "securite": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "securite": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "securite": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt078",
+      "theme": "Sécurité",
+      "question": "Serais-tu à l'aise avec une mission de surveillance ou de contrôle des risques ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "securite": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "securite": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "securite": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "securite": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "securite": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt079",
+      "theme": "Travail administratif",
+      "question": "Aimes-tu traiter des dossiers, formulaires ou documents ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "administratif": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "administratif": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "administratif": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "administratif": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "administratif": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt080",
+      "theme": "Travail administratif",
+      "question": "Souhaites-tu effectuer régulièrement du classement, du suivi ou de la saisie ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "administratif": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "administratif": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "administratif": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "administratif": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "administratif": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt081",
+      "theme": "Travail administratif",
+      "question": "Les procédures administratives et la tenue de dossiers te conviennent-elles ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "administratif": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "administratif": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "administratif": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "administratif": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "administratif": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt082",
+      "theme": "Recherche et sciences",
+      "question": "Aimes-tu observer, expérimenter et chercher des explications ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "recherche_science": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "recherche_science": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "recherche_science": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "recherche_science": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "recherche_science": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt083",
+      "theme": "Recherche et sciences",
+      "question": "Souhaites-tu approfondir des sujets scientifiques ou techniques ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "recherche_science": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "recherche_science": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "recherche_science": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "recherche_science": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "recherche_science": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt084",
+      "theme": "Recherche et sciences",
+      "question": "Un travail fondé sur l'étude, les essais ou la recherche t'attire-t-il ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "recherche_science": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "recherche_science": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "recherche_science": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "recherche_science": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "recherche_science": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt085",
+      "theme": "Activités artistiques",
+      "question": "Aimerais-tu exercer une activité liée à l'art ou à l'expression personnelle ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "artistique": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "artistique": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "artistique": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "artistique": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "artistique": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt086",
+      "theme": "Activités artistiques",
+      "question": "Créer des images, des textes, des sons, des objets ou des spectacles t'attire-t-il ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "artistique": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "artistique": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "artistique": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "artistique": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "artistique": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt087",
+      "theme": "Activités artistiques",
+      "question": "Souhaites-tu développer une sensibilité esthétique dans ton métier ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "artistique": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "artistique": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "artistique": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "artistique": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "artistique": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt088",
+      "theme": "Service public",
+      "question": "Aimerais-tu travailler au service de l'intérêt général ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "service_public": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "service_public": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "service_public": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "service_public": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "service_public": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt089",
+      "theme": "Service public",
+      "question": "Une mission exercée pour une collectivité ou une administration t'attire-t-elle ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "service_public": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "service_public": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "service_public": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "service_public": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "service_public": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "qt090",
+      "theme": "Service public",
+      "question": "Contribuer au fonctionnement d'un service utile à tous te motiverait-il ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "criteres": {
+            "service_public": 1
+          }
+        },
+        {
+          "label": "Peu",
+          "criteres": {
+            "service_public": 2
+          }
+        },
+        {
+          "label": "Moyennement",
+          "criteres": {
+            "service_public": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "criteres": {
+            "service_public": 4
+          }
+        },
+        {
+          "label": "Tout à fait",
+          "criteres": {
+            "service_public": 5
+          }
+        }
+      ]
+    }
+  ]
+}

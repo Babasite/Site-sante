@@ -1,0 +1,32 @@
+{% extends "accueil/base.html" %}
+
+{% block logo_return %}{% url 'veille' %}{% endblock %}
+{% load static %}
+
+{% block title %}Modifier la traduction{% endblock %}
+{% block page_title %}Modifier la traduction{% endblock %}
+{% block header_actions %}{% endblock %}
+
+{% block extra_css %}<style>
+body{max-width:900px;margin:40px auto;padding:0 20px;font-family:Arial,sans-serif;line-height:1.6;color:#333;background:#fafafa;}
+h1{color:#003366;}.carte{padding:22px;border:1px solid #ddd;border-radius:8px;background:#fff;}.original{padding:14px;background:#f4f8fc;white-space:pre-line;}
+label{display:block;margin:18px 0 6px;font-weight:bold;}input[type=text],textarea{width:100%;padding:12px;box-sizing:border-box;font:inherit;}textarea{min-height:240px;}
+.actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:18px;}button,a{padding:10px 14px;border-radius:6px;font:inherit;text-decoration:none;}
+button{border:1px solid #00695c;background:#00695c;color:white;cursor:pointer;}a{border:1px solid #666;color:#333;background:white;}
+</style>{% endblock %}
+
+{% block content %}
+<h1>Modifier la traduction</h1>
+<div class="carte">
+<h2>Texte original</h2>
+<div class="original"><strong>{{ article.titre }}</strong>\n\n{{ article.resume }}</div>
+<form method="post">{% csrf_token %}
+<label for="titre">Titre traduit manuellement</label>
+<input id="titre" type="text" name="titre_traduit_manuel" value="{{ article.titre_traduit_manuel }}">
+<label for="resume">Résumé traduit manuellement</label>
+<textarea id="resume" name="resume_traduit_manuel">{{ article.resume_traduit_manuel }}</textarea>
+<p><label><input type="checkbox" name="traduction_manuelle_publiee" {% if article.traduction_manuelle_publiee %}checked{% endif %}> Publier cette traduction sur le site</label></p>
+<div class="actions"><button type="submit">Enregistrer</button><a href="{% url 'detail_veille' article.veille_id %}">Annuler</a></div>
+</form>
+</div>
+{% endblock %}

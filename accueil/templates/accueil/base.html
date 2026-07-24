@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Santé Prévention Terrain : informations, outils et recommandations pratiques.">
+    <title>{% block title %}Santé Prévention Terrain{% endblock %}</title>
+    <style>
+        :root {
+            --spt-fond: #efe3c3;
+            --spt-vert: #376b4d;
+            --spt-vert-fonce: #214c35;
+            --spt-texte: #2f382f;
+            --spt-blanc: #ffffff;
+            --spt-bordure: rgba(55, 107, 77, .18);
+            --spt-ombre: 0 8px 24px rgba(53, 67, 50, .12);
+        }
+        *, *::before, *::after { box-sizing: border-box; }
+        html { min-height: 100%; scroll-behavior: smooth; }
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background: var(--spt-fond);
+            color: var(--spt-texte);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .spt-shell-header {
+            position: relative;
+            z-index: 1000;
+            flex-shrink: 0;
+            border-bottom: 1px solid var(--spt-bordure);
+            background: rgba(239, 227, 195, .97);
+            box-shadow: var(--spt-ombre);
+        }
+        .spt-shell-header__inner {
+            width: min(1400px, 94%);
+            min-height: 94px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            padding: 8px 0;
+        }
+        .spt-shell-brand {
+            min-width: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            color: inherit;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .spt-shell-brand__logo {
+            width: 91px;
+            height: 91px;
+            flex: 0 0 auto;
+            object-fit: contain;
+            filter: drop-shadow(0 6px 8px rgba(45, 80, 57, .15));
+        }
+        .spt-shell-brand__title {
+            margin: 0;
+            color: var(--spt-vert-fonce);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(1.25rem, 2.2vw, 1.7rem);
+            font-weight: 800;
+            line-height: 1.15;
+        }
+        .spt-shell-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .spt-shell-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 42px;
+            padding: 9px 16px;
+            border: 0;
+            border-radius: 999px;
+            background: var(--spt-vert);
+            color: var(--spt-blanc);
+            font: inherit;
+            font-size: .9rem;
+            font-weight: 750;
+            text-decoration: none;
+            box-shadow: 0 8px 18px rgba(55, 107, 77, .2);
+            transition: transform .2s ease, background .2s ease;
+        }
+        .spt-shell-action:hover, .spt-shell-action:focus-visible {
+            transform: translateY(-2px);
+            background: var(--spt-vert-fonce);
+        }
+        .spt-shell-content { flex: 1 0 auto; width: 100%; }
+        .spt-shell-footer {
+            flex-shrink: 0;
+            margin-top: auto;
+            padding: 22px 20px;
+            border-top: 1px solid rgba(255,255,255,.18);
+            background: var(--spt-vert-fonce);
+            color: var(--spt-blanc);
+        }
+        .spt-shell-footer__inner {
+            width: min(1200px, 94%);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px 30px;
+            flex-wrap: wrap;
+        }
+        .spt-shell-footer__brand { font-weight: 800; }
+        .spt-shell-footer__links {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px 18px;
+            flex-wrap: wrap;
+            font-size: .92rem;
+        }
+        .spt-shell-footer__links a {
+            color: inherit;
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 3px;
+        }
+        .spt-shell-footer__links a:hover,
+        .spt-shell-footer__links a:focus-visible { opacity: .82; }
+        .spt-shell-footer__copyright { font-size: .88rem; opacity: .9; }
+        @media (max-width: 720px) {
+            .spt-shell-header__inner { flex-direction: column; align-items: stretch; gap: 10px; padding: 10px 0 14px; }
+            .spt-shell-brand { justify-content: flex-start; }
+            .spt-shell-actions { justify-content: center; }
+            .spt-shell-footer__inner { flex-direction: column; text-align: center; }
+        }
+        @media (max-width: 480px) {
+            .spt-shell-brand__logo { width: 74px; height: 74px; }
+            .spt-shell-action { font-size: .82rem; padding: 8px 12px; }
+        }
+    </style>
+    {% include "accueil/includes/barre_redacteur_css.html" %}
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    {% include "accueil/includes/barre_redacteur.html" %}
+    <header class="spt-shell-header">
+        <div class="spt-shell-header__inner">
+            <a class="spt-shell-brand" href="{% block logo_return %}{% url 'terrain' %}{% endblock %}"
+               aria-label="Revenir à la rubrique précédente">
+                <img class="spt-shell-brand__logo" src="{% static 'accueil/images/logo.png' %}" alt="Logo Santé Prévention Terrain">
+                <h1 class="spt-shell-brand__title">{% block page_title %}Santé Prévention Terrain{% endblock %}</h1>
+            </a>
+            <div class="spt-shell-actions">{% block header_actions %}{% endblock %}</div>
+        </div>
+    </header>
+    <div class="spt-shell-content">{% block content %}{% endblock %}</div>
+    <footer class="spt-shell-footer">
+        <div class="spt-shell-footer__inner">
+            <div class="spt-shell-footer__brand">Santé Prévention Terrain</div>
+            <div class="spt-shell-footer__links" aria-label="Informations du site">
+                <span>Mentions légales</span><span>Politique de confidentialité</span><a href="{% url 'contact' %}">Contact</a>
+            </div>
+            <div class="spt-shell-footer__copyright">© 2026</div>
+        </div>
+    </footer>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

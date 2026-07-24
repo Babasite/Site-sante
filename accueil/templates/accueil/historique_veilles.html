@@ -1,0 +1,37 @@
+{% extends "accueil/base.html" %}
+
+{% block logo_return %}{% url 'veille' %}{% endblock %}
+{% load static %}
+
+{% block title %}Historique des veilles{% endblock %}
+{% block page_title %}Historique des veilles{% endblock %}
+{% block header_actions %}<a class="spt-shell-action" href="{% url 'veille' %}">Veille scientifique</a>{% endblock %}
+
+{% block extra_css %}<style>
+body{font-family:Arial,Helvetica,sans-serif;background:#efe3c3;color:#2f382f;margin:0;line-height:1.6}.page{width:min(1100px,94%);margin:35px auto 70px}h1{color:#00695c}.retour{display:inline-block;margin-bottom:18px;color:#214c35;font-weight:bold;text-decoration:none}.liste{display:grid;gap:16px}.veille-carte{background:#fff;padding:20px;border-radius:10px;box-shadow:0 0 10px #ccc}.entete{display:flex;justify-content:space-between;gap:15px;align-items:flex-start;flex-wrap:wrap}.entete h2{margin:0;color:#00796b}.statut{font-weight:bold}.terminee{color:#067647}.erreur{color:#b42318}.en_cours{color:#8a6100}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.bouton{display:inline-block;padding:8px 12px;border-radius:6px;background:#00695c;color:#fff;text-decoration:none;font-weight:bold}.bouton.secondaire{background:#fff;color:#00695c;border:1px solid #00695c}.erreur-message{padding:10px;border-left:4px solid #b42318;background:#fff1f0}
+</style>{% endblock %}
+
+{% block content %}
+{% include "accueil/includes/barre_redacteur.html" %}
+<div class="page">
+<a class="retour" href="{% url 'tableau_de_bord' %}">← Retour au tableau de bord</a>
+<h1>Historique des veilles</h1>
+<div class="liste">
+{% for veille in veilles %}
+<article class="veille-carte">
+<div class="entete"><h2>Veille du {{ veille.date_creation|date:"d/m/Y à H:i" }}</h2><span class="statut {{ veille.statut }}">{{ veille.get_statut_display }}</span></div>
+<p><strong>Articles retenus :</strong> {{ veille.nombre_articles }}</p>
+<p><strong>Résumé manuel :</strong> {% if veille.resume_manuel_publie %}publié{% else %}non publié{% endif %}</p>
+{% if veille.statut == "erreur" and veille.message_erreur %}<p class="erreur-message">{{ veille.message_erreur }}</p>{% endif %}
+<div class="actions">
+{% if veille.statut == "terminee" %}
+<a class="bouton" href="{% url 'detail_veille' veille.id %}">Ouvrir</a>
+<a class="bouton secondaire" href="{% url 'modifier_resume' veille.id %}">Modifier le résumé</a>
+<a class="bouton secondaire" href="{% url 'exporter_veille_pdf' veille.id %}">PDF</a>
+{% endif %}
+</div>
+</article>
+{% empty %}<div class="veille-carte">Aucune veille enregistrée.</div>{% endfor %}
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+MODIFICATIONS EFFECTUÉES
+=======================
+
+- Ollama et les appels à l'IA ont été retirés du code actif.
+- Le résumé de veille est maintenant généré sans IA.
+- Le résumé peut être remplacé manuellement dans l'administration Django.
+- Les titres et résumés des articles peuvent être traduits/corrigés manuellement.
+- Le site affiche le texte manuel lorsqu'il est publié, sinon le texte original.
+- Les exports PDF utilisent également les textes manuels publiés.
+
+PREMIER LANCEMENT
+=================
+
+Ouvrir un terminal dans le dossier Site-sante, puis activer l'environnement Python habituel.
+
+1. Appliquer la nouvelle migration :
+
+   python manage.py migrate
+
+2. Créer un compte administrateur si nécessaire :
+
+   python manage.py createsuperuser
+
+3. Démarrer le site pour le test :
+
+   python manage.py runserver
+
+4. Ouvrir l'administration :
+
+   http://127.0.0.1:8000/admin/
+
+UTILISATION
+===========
+
+Résumé de veille :
+- ouvrir « Veilles quotidiennes » ;
+- choisir une veille ;
+- remplir « Résumé manuel » ;
+- cocher « Publier le résumé manuel » ;
+- enregistrer.
+
+Traduction d'un article :
+- ouvrir « Articles de veille » ;
+- choisir un article ;
+- remplir le titre et/ou le résumé traduit manuellement ;
+- cocher « Publier la traduction manuelle » ;
+- enregistrer.
+
+IMPORTANT
+=========
+
+La traduction automatique légère n'est pas encore activée dans cette version :
+les champs correspondants sont préparés, mais restent vides. Cela évite toute
+IA, toute API payante et toute dépendance fragile pour la première mise en ligne.

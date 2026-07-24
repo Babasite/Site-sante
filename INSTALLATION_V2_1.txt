@@ -1,0 +1,27 @@
+SITE SANTE — V2.1 MODE REDACTEUR
+
+Cette version repart du projet fonctionnel fourni et conserve ses templates,
+sa typographie, ses couleurs et sa page Veille.
+
+Nouveautés :
+- connexion rédacteur ;
+- barre discrète visible uniquement par les comptes administrateurs ;
+- lancement de la veille réservé au rédacteur connecté ;
+- modification et publication du résumé depuis le site ;
+- modification et publication des traductions depuis le site ;
+- accès à la dernière veille enregistrée.
+
+INSTALLATION
+1. Garder une sauvegarde du dossier actuel.
+2. Décompresser ce ZIP.
+3. Ouvrir PowerShell dans le dossier qui contient manage.py.
+4. Exécuter :
+
+   python manage.py migrate
+   python manage.py runserver
+
+5. Ouvrir : http://127.0.0.1:8000/veille/
+6. Cliquer sur « Connexion rédacteur » et utiliser le compte superutilisateur.
+
+Aucune nouvelle migration n'est nécessaire, mais la commande migrate peut être
+exécutée sans risque.

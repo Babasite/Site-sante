@@ -1,0 +1,215 @@
+{
+  "version": "1.0.0",
+  "status": "definitif",
+  "locked": true,
+  "description": "Référentiel des dimensions psychologiques utilisées pour expliquer et affiner les recommandations sportives.",
+  "profils": {
+    "competition": {
+      "nom": "Esprit de compétition",
+      "description": "Goût du défi, des classements, des matchs et de la comparaison des performances.",
+      "faible": "Préfère pratiquer sans pression ni classement.",
+      "eleve": "Recherche les défis, les adversaires et les objectifs mesurables.",
+      "axes_lies": [
+        "competition"
+      ]
+    },
+    "cooperation": {
+      "nom": "Coopération",
+      "description": "Préférence pour l'entraide, la coordination collective et les objectifs communs.",
+      "faible": "Préfère être autonome et ne pas dépendre d'une équipe.",
+      "eleve": "Apprécie les rôles complémentaires et la réussite collective.",
+      "axes_lies": [
+        "coordination"
+      ]
+    },
+    "sociabilite": {
+      "nom": "Sociabilité",
+      "description": "Besoin de pratiquer avec d'autres personnes et de créer des relations.",
+      "faible": "Préfère une pratique solitaire ou discrète.",
+      "eleve": "Recherche une ambiance de groupe ou de club.",
+      "axes_lies": []
+    },
+    "discipline": {
+      "nom": "Discipline personnelle",
+      "description": "Capacité à suivre un cadre, répéter des exercices et progresser régulièrement.",
+      "faible": "Préfère une pratique libre et immédiatement accessible.",
+      "eleve": "Apprécie les méthodes structurées, les grades et la répétition.",
+      "axes_lies": [
+        "technique"
+      ]
+    },
+    "patience": {
+      "nom": "Patience",
+      "description": "Acceptation d'un apprentissage progressif et parfois long.",
+      "faible": "A besoin de résultats et de plaisir rapidement visibles.",
+      "eleve": "Accepte de travailler longtemps avant de maîtriser une technique.",
+      "axes_lies": [
+        "technique"
+      ]
+    },
+    "perseverance": {
+      "nom": "Persévérance",
+      "description": "Capacité à continuer malgré les difficultés, les échecs et les progrès lents.",
+      "faible": "A besoin d'une progression douce et encourageante.",
+      "eleve": "Transforme les difficultés en motivation.",
+      "axes_lies": [
+        "technique",
+        "competition"
+      ]
+    },
+    "creativite": {
+      "nom": "Créativité",
+      "description": "Goût de l'improvisation, de l'expression personnelle et des mouvements libres.",
+      "faible": "Préfère des règles et des gestes précisément définis.",
+      "eleve": "Recherche l'improvisation et l'expression artistique.",
+      "axes_lies": [
+        "coordination",
+        "souplesse"
+      ]
+    },
+    "strategie": {
+      "nom": "Goût de la stratégie",
+      "description": "Intérêt pour l'anticipation, la tactique et la prise de décision.",
+      "faible": "Préfère agir simplement et spontanément.",
+      "eleve": "Aime analyser, anticiper et adapter son comportement.",
+      "axes_lies": [
+        "technique",
+        "competition"
+      ]
+    },
+    "concentration": {
+      "nom": "Concentration",
+      "description": "Goût des activités exigeant précision, calme et attention durable.",
+      "faible": "Préfère une activité dynamique demandant peu d'attente.",
+      "eleve": "Apprécie les gestes précis et la maîtrise mentale.",
+      "axes_lies": [
+        "technique",
+        "equilibre",
+        "coordination"
+      ]
+    },
+    "maitrise_de_soi": {
+      "nom": "Maîtrise de soi",
+      "description": "Recherche du calme, du contrôle émotionnel et de la gestion du stress.",
+      "faible": "Recherche surtout l'action et le défoulement.",
+      "eleve": "Souhaite développer le calme et le contrôle de ses réactions.",
+      "axes_lies": [
+        "equilibre",
+        "technique"
+      ]
+    },
+    "gout_du_risque": {
+      "nom": "Goût du risque",
+      "description": "Tolérance à l'incertitude, à la vitesse, à la hauteur et aux sensations fortes.",
+      "faible": "Privilégie la sécurité et les environnements maîtrisés.",
+      "eleve": "Recherche l'adrénaline et accepte une part de risque.",
+      "axes_lies": [
+        "equilibre",
+        "coordination"
+      ]
+    },
+    "contact_physique": {
+      "nom": "Tolérance au contact physique",
+      "description": "Acceptation de la proximité, des saisies, des impacts ou de l'opposition corporelle.",
+      "faible": "Souhaite éviter le contact direct.",
+      "eleve": "Accepte ou recherche une opposition physique intense.",
+      "axes_lies": [
+        "contact"
+      ]
+    },
+    "depassement_de_soi": {
+      "nom": "Dépassement de soi",
+      "description": "Besoin de repousser ses limites physiques ou mentales.",
+      "faible": "Recherche une pratique confortable et modérée.",
+      "eleve": "Souhaite relever des défis exigeants.",
+      "axes_lies": [
+        "cardio",
+        "force",
+        "competition"
+      ]
+    },
+    "autonomie": {
+      "nom": "Autonomie",
+      "description": "Préférence pour une pratique réalisable seul et avec peu d'encadrement.",
+      "faible": "Préfère être guidé par un professeur ou un entraîneur.",
+      "eleve": "Souhaite organiser et réaliser ses séances librement.",
+      "axes_lies": []
+    },
+    "besoin_de_structure": {
+      "nom": "Besoin de structure",
+      "description": "Préférence pour des règles, des horaires, des niveaux et une progression définie.",
+      "faible": "Préfère une pratique flexible et informelle.",
+      "eleve": "Apprécie les programmes, grades et objectifs précis.",
+      "axes_lies": [
+        "technique"
+      ]
+    },
+    "sensibilite_artistique": {
+      "nom": "Sensibilité artistique",
+      "description": "Intérêt pour l'esthétique, la musique, le rythme et l'expression corporelle.",
+      "faible": "Recherche surtout l'efficacité physique ou sportive.",
+      "eleve": "Accorde beaucoup d'importance à l'expression et à l'esthétique.",
+      "axes_lies": [
+        "coordination",
+        "souplesse",
+        "equilibre"
+      ]
+    },
+    "attachement_aux_traditions": {
+      "nom": "Attachement aux traditions",
+      "description": "Intérêt pour l'histoire, les rituels, les philosophies et les codes d'une discipline.",
+      "faible": "Préfère une approche moderne et pratique.",
+      "eleve": "Apprécie les traditions, les cérémonies et les philosophies.",
+      "axes_lies": [
+        "technique"
+      ]
+    },
+    "recherche_de_bien_etre": {
+      "nom": "Recherche de bien-être",
+      "description": "Importance accordée à la détente, à la respiration et à la réduction du stress.",
+      "faible": "Recherche principalement la performance ou l'intensité.",
+      "eleve": "Privilégie l'apaisement et l'équilibre personnel.",
+      "axes_lies": [
+        "souplesse",
+        "equilibre"
+      ]
+    },
+    "besoin_de_variete": {
+      "nom": "Besoin de variété",
+      "description": "Préférence pour des séances changeantes et des situations diverses.",
+      "faible": "Apprécie la répétition et la spécialisation.",
+      "eleve": "Se lasse rapidement et recherche des exercices variés.",
+      "axes_lies": [
+        "coordination"
+      ]
+    },
+    "originalite": {
+      "nom": "Recherche d'originalité",
+      "description": "Ouverture aux disciplines rares, nouvelles ou peu connues.",
+      "faible": "Préfère une activité connue et facilement accessible.",
+      "eleve": "Souhaite découvrir une pratique atypique.",
+      "axes_lies": []
+    }
+  },
+  "echelle": {
+    "minimum": 0,
+    "maximum": 5,
+    "interpretation": {
+      "0": "Très faible",
+      "1": "Faible",
+      "2": "Plutôt faible",
+      "3": "Modéré",
+      "4": "Élevé",
+      "5": "Très élevé"
+    }
+  },
+  "utilisation": {
+    "obligatoire_pour_scoring": false,
+    "role": [
+      "Décrire les dimensions psychologiques.",
+      "Produire des explications lisibles dans les résultats.",
+      "Permettre ultérieurement un affichage détaillé du profil utilisateur."
+    ],
+    "note": "Le moteur principal peut fonctionner sans ce fichier. Ce référentiel enrichit surtout les explications."
+  }
+}

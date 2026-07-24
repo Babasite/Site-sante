@@ -1,0 +1,289 @@
+{% extends "accueil/base.html" %}
+
+{% block logo_return %}{% url 'home' %}{% endblock %}
+{% load static %}
+
+{% block title %}Découverte Santé{% endblock %}
+{% block page_title %}Terrain{% endblock %}
+{% block header_actions %}{% endblock %}
+
+{% block extra_css %}
+<style>
+body{
+    margin:0;
+    font-family:"Segoe UI", Arial, sans-serif;
+    background:#efe3c3;
+}
+
+.container{
+    padding:25px 20px 60px;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    gap:24px;
+    flex-wrap:nowrap;
+}
+
+.theme{
+    width:205px;
+    flex-shrink:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+.theme-title{
+    font-size:22px;
+    font-weight:800;
+    letter-spacing:1.5px;
+    margin-bottom:8px;
+    text-align:center;
+    text-shadow:0 2px 6px rgba(0,0,0,.2);
+}
+
+.sauver{
+    color:#d32f2f;
+}
+
+.bouger{
+    color:#1976d2;
+}
+
+.manger{
+    color:#fbc02d;
+}
+
+.sedebrouiller-title{
+    color:#43a047;
+}
+
+.title{
+    color:black;
+    font-size:16px;
+    font-weight:600;
+    text-align:center;
+    margin-bottom:15px;
+    min-height:44px;
+    width:205px;
+}
+
+.card{
+    width:205px;
+    height:205px;
+    border-radius:50%;
+    position:relative;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+    padding-bottom:19px;
+    box-sizing:border-box;
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    box-shadow:0 12px 30px rgba(0,0,0,.20);
+    transition:.35s;
+}
+
+.card:hover{
+    transform:translateY(-8px) scale(1.04);
+    box-shadow:0 20px 45px rgba(0,0,0,.28);
+}
+
+.secours{
+    background-image:url("{% static 'accueil/images/pompier.png' %}");
+}
+
+.mouvement{
+    background-image:url("{% static 'accueil/images/karate.png' %}");
+}
+
+.alimentation{
+    background-image:url("{% static 'accueil/images/miam.png' %}");
+}
+
+.sedebrouiller{
+    background-image:url("{% static 'accueil/images/sedebrouiller.png' %}");
+}
+
+.button-red,
+.button-blue,
+.button-yellow,
+.button-green{
+    display:inline-block;
+    padding:8px 19px;
+    color:white;
+    text-decoration:none;
+    border-radius:30px;
+    font-size:13px;
+    font-weight:600;
+    transition:.3s;
+    box-shadow:0 5px 14px rgba(0,0,0,.25);
+}
+
+.button-red{
+    background:#d32f2f;
+}
+
+.button-red:hover{
+    background:#b71c1c;
+    transform:scale(1.08);
+}
+
+.button-blue{
+    background:#1976d2;
+}
+
+.button-blue:hover{
+    background:#0d47a1;
+    transform:scale(1.08);
+}
+
+.button-yellow{
+    background:#fbc02d;
+    color:#333;
+}
+
+.button-yellow:hover{
+    background:#f9a825;
+    transform:scale(1.08);
+}
+
+.button-green{
+    background:#43a047;
+}
+
+.button-green:hover{
+    background:#2e7d32;
+    transform:scale(1.08);
+}
+
+@media(max-width:1150px){
+
+.container{
+    padding:20px 20px 40px;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+}
+
+@media(max-width:600px){
+
+.container{
+    padding-top:20px;
+    flex-direction:column;
+    align-items:center;
+    gap:32px;
+}
+
+.theme{
+    width:240px;
+}
+
+.title{
+    width:240px;
+    min-height:auto;
+    font-size:16px;
+}
+
+.card{
+    width:230px;
+    height:230px;
+}
+
+.theme-title{
+    font-size:22px;
+}
+
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="theme">
+
+        <div class="theme-title sauver">
+            SAUVER
+        </div>
+
+        <div class="title">
+            1er arrivé, 1er à servir
+        </div>
+
+        <div class="card secours">
+
+            <a class="button-red" href="{% url 'pompier' %}">
+                Découvrir
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="theme">
+
+        <div class="theme-title bouger">
+            BOUGER
+        </div>
+
+        <div class="title">
+            Everybody Was Kung Fu Fighting
+        </div>
+
+        <div class="card mouvement">
+
+            <a class="button-blue" href="{% url 'karate' %}">
+                Découvrir
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="theme">
+
+        <div class="theme-title manger">
+            MANGER
+        </div>
+
+        <div class="title">
+            J'ai faim !
+        </div>
+
+        <div class="card alimentation">
+
+            <a class="button-yellow" href="{% url 'miam' %}">
+                Découvrir
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="theme">
+
+        <div class="theme-title sedebrouiller-title">
+            SE DÉBROUILLER
+        </div>
+
+        <div class="title">
+            Ça, c'est pour être le plus libre possible !
+        </div>
+
+        <div class="card sedebrouiller">
+
+            <a class="button-green" href="{% url 'sedebrouiller' %}">
+                Découvrir
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

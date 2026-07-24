@@ -1,0 +1,491 @@
+{% extends "accueil/base.html" %}
+
+{% block logo_return %}{% url 'home' %}{% endblock %}
+{% load static %}
+
+{% block title %}Outils santé{% endblock %}
+{% block page_title %}Outils santé{% endblock %}
+{% block header_actions %}{% endblock %}
+
+{% block extra_css %}<style>
+* {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --blue: #005eb8;
+            --blue-dark: #004b92;
+            --blue-light: #eaf4ff;
+            --background: #efe3c3;
+            --white: #ffffff;
+            --text: #1f2933;
+            --muted: #52606d;
+            --border: #d5dde5;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            background: var(--background);
+            color: var(--text);
+        }
+
+        /* =========================
+           Bandeau supérieur
+        ========================= */
+
+        header {
+            width: 100%;
+            background: var(--blue);
+            color: var(--white);
+        }
+
+        .header-content {
+            width: min(1180px, calc(100% - 40px));
+            height: 92px;
+            margin: 0 auto;
+
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .logo-link {
+            flex: 0 0 auto;
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-menu {
+            display: block;
+            width: 105px;
+            max-height: 68px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .header-text {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .header-text h1 {
+            margin: 0 0 3px;
+            font-size: 28px;
+            line-height: 1.15;
+        }
+
+        .header-text p {
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.35;
+        }
+
+        /* =========================
+           Contenu principal
+        ========================= */
+
+        .container {
+            width: min(940px, calc(100% - 40px));
+            margin: 45px auto 70px;
+        }
+
+        .intro {
+            margin-bottom: 28px;
+            text-align: center;
+        }
+
+        .intro h2 {
+            margin: 0 0 10px;
+            color: var(--blue-dark);
+            font-size: 28px;
+            line-height: 1.25;
+        }
+
+        .intro p {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           Liste des outils
+        ========================= */
+
+        .tools-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .tool-link {
+            position: relative;
+            min-height: 118px;
+            padding: 22px 68px 22px 22px;
+
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--blue);
+            border-radius: 10px;
+
+            color: var(--text);
+            text-decoration: none;
+
+            box-shadow: 0 5px 15px rgba(31, 41, 51, 0.07);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                border-color 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .tool-link:hover {
+            transform: translateY(-2px);
+            background: #fbfdff;
+            border-color: #b8cce0;
+            border-left-color: var(--blue-dark);
+            box-shadow: 0 9px 22px rgba(31, 41, 51, 0.11);
+        }
+
+        .tool-link:focus-visible {
+            outline: 4px solid rgba(0, 94, 184, 0.25);
+            outline-offset: 3px;
+        }
+
+        /* =========================
+           Icônes
+        ========================= */
+
+        .tool-icon {
+            flex: 0 0 auto;
+            width: 50px;
+            height: 50px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: var(--blue-light);
+            border-radius: 10px;
+            color: var(--blue);
+        }
+
+        .tool-icon svg {
+            width: 26px;
+            height: 26px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* =========================
+           Texte
+        ========================= */
+
+        .tool-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .tool-content h3 {
+            margin: 0 0 6px;
+            color: var(--blue);
+            font-size: 21px;
+            line-height: 1.3;
+        }
+
+        .tool-content p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .tool-arrow {
+            position: absolute;
+            top: 50%;
+            right: 24px;
+            transform: translateY(-50%);
+
+            color: var(--blue);
+            font-size: 27px;
+            line-height: 1;
+
+            transition: transform 0.2s ease;
+        }
+
+        .tool-link:hover .tool-arrow {
+            transform: translate(4px, -50%);
+        }
+
+        /* =========================
+           Mention d'information
+        ========================= */
+
+        .information {
+            margin-top: 26px;
+            padding: 16px 18px;
+
+            background: rgba(255, 255, 255, 0.65);
+            border: 1px solid rgba(0, 94, 184, 0.16);
+            border-radius: 9px;
+
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.55;
+        }
+
+        .information strong {
+            color: var(--blue-dark);
+        }
+
+        /* =========================
+           Pied de page
+        ========================= */
+
+        footer {
+            padding: 25px 20px;
+            color: #64748b;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* =========================
+           Responsive
+        ========================= */
+
+        @media (max-width: 700px) {
+            .header-content {
+                width: min(100% - 24px, 1180px);
+                height: 82px;
+                gap: 18px;
+            }
+
+            .logo-menu {
+                width: 82px;
+                max-height: 58px;
+            }
+
+            .header-text h1 {
+                font-size: 23px;
+            }
+
+            .header-text p {
+                font-size: 13px;
+            }
+
+            .container {
+                width: min(100% - 24px, 940px);
+                margin-top: 32px;
+            }
+
+            .intro h2 {
+                font-size: 24px;
+            }
+
+            .intro p {
+                font-size: 15px;
+            }
+
+            .tool-link {
+                min-height: 105px;
+                padding: 18px 52px 18px 16px;
+                gap: 14px;
+            }
+
+            .tool-icon {
+                width: 44px;
+                height: 44px;
+            }
+
+            .tool-icon svg {
+                width: 23px;
+                height: 23px;
+            }
+
+            .tool-content h3 {
+                font-size: 19px;
+            }
+
+            .tool-content p {
+                font-size: 14px;
+            }
+
+            .tool-arrow {
+                right: 16px;
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-content {
+                height: 76px;
+                gap: 12px;
+            }
+
+            .logo-menu {
+                width: 70px;
+                max-height: 50px;
+            }
+
+            .header-text h1 {
+                font-size: 20px;
+            }
+
+            .header-text p {
+                display: none;
+            }
+
+            .tool-link {
+                align-items: flex-start;
+            }
+
+            .tool-icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 8px;
+            }
+
+            .tool-icon svg {
+                width: 21px;
+                height: 21px;
+            }
+        }
+</style>{% endblock %}
+
+{% block content %}
+<main class="container">
+
+        <section class="intro">
+            <h2>Comment souhaitez-vous commencer&nbsp;?</h2>
+
+            <p>
+                Faites un premier bilan rapide, accédez à une analyse plus
+                complète ou comparez des informations médicales.
+            </p>
+        </section>
+
+        <nav
+            class="tools-list"
+            aria-label="Outils santé"
+        >
+
+            <a
+                class="tool-link"
+                href="{% url 'check_up_rapide' %}"
+            >
+                <div
+                    class="tool-icon"
+                    aria-hidden="true"
+                >
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="9"></circle>
+                        <path d="M12 7v10"></path>
+                        <path d="M7 12h10"></path>
+                    </svg>
+                </div>
+
+                <div class="tool-content">
+                    <h3>Check-up rapide</h3>
+
+                    <p>
+                        Réalisez un premier bilan de vos habitudes quotidiennes
+                        en quelques minutes, sans création de compte.
+                    </p>
+                </div>
+
+                <span
+                    class="tool-arrow"
+                    aria-hidden="true"
+                >
+                    →
+                </span>
+            </a>
+
+            <a
+                class="tool-link"
+                href="{% url 'suivi_personnalise' %}"
+            >
+                <div
+                    class="tool-icon"
+                    aria-hidden="true"
+                >
+                    <svg viewBox="0 0 24 24">
+                        <path d="M4 19V9"></path>
+                        <path d="M10 19V5"></path>
+                        <path d="M16 19v-7"></path>
+                        <path d="M22 19H2"></path>
+                    </svg>
+                </div>
+
+                <div class="tool-content">
+                    <h3>Suivi personnalisé</h3>
+
+                    <p>
+                        Accédez à une analyse plus complète et suivez votre
+                        évolution dans le temps.
+                    </p>
+                </div>
+
+                <span
+                    class="tool-arrow"
+                    aria-hidden="true"
+                >
+                    →
+                </span>
+            </a>
+
+            <a
+                class="tool-link"
+                href="{% url 'healthcompare' %}"
+            >
+                <div
+                    class="tool-icon"
+                    aria-hidden="true"
+                >
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 3v18"></path>
+                        <path d="M6 6h12"></path>
+                        <path d="M5 6 2 12h6L5 6Z"></path>
+                        <path d="m19 6-3 6h6l-3-6Z"></path>
+                        <path d="M8 21h8"></path>
+                    </svg>
+                </div>
+
+                <div class="tool-content">
+                    <h3>HealthCompare</h3>
+
+                    <p>
+                        Comparez deux maladies, symptômes, traitements ou
+                        examens médicaux à partir de sources documentées.
+                    </p>
+                </div>
+
+                <span
+                    class="tool-arrow"
+                    aria-hidden="true"
+                >
+                    →
+                </span>
+            </a>
+
+        </nav>
+
+        <aside class="information">
+            <strong>Information importante :</strong>
+            ces outils ont une finalité informative et préventive. Ils ne
+            remplacent pas un avis, un examen ou un diagnostic médical.
+        </aside>
+
+    </main>
+{% endblock %}

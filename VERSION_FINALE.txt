@@ -1,0 +1,27 @@
+SANTÉ PRÉVENTION TERRAIN — VERSION FINALE
+
+Fonctions conservées :
+- design et typographie de la version de référence ;
+- lancement de la veille scientifique ;
+- affichage de la dernière veille ;
+- export PDF ;
+- questionnaires et pages publiques ;
+- résumé automatique sans IA lourde ;
+- traductions manuelles.
+
+Mode rédacteur :
+- connexion et déconnexion ;
+- modification et publication du résumé ;
+- modification et publication des traductions ;
+- tableau de bord ;
+- historique des veilles ;
+- accès protégé pour les comptes staff.
+
+Installation :
+1. Ouvrir PowerShell dans le dossier contenant manage.py.
+2. Exécuter : python manage.py migrate
+3. Exécuter : python manage.py runserver
+4. Ouvrir : http://127.0.0.1:8000/veille/
+
+Connexion rédacteur :
+http://127.0.0.1:8000/redacteur/connexion/

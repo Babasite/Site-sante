@@ -1,0 +1,381 @@
+{% extends "accueil/base.html" %}
+
+{% block logo_return %}{% url 'terrain' %}{% endblock %}
+{% load static %}
+
+{% block title %}Bouger | Santé et mouvement{% endblock %}
+{% block page_title %}Bouger{% endblock %}
+
+{% block header_actions %}
+<a class="spt-shell-action" href="{% url 'bouger_questionnaire' %}">
+    🏃 Quel est ton sport idéal ?
+</a>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    :root {
+        --bouger-fond: #efe3c3;
+        --bouger-clair: #fffaf0;
+        --bouger-vert: #376b4d;
+        --bouger-vert-fonce: #214c35;
+        --bouger-vert-clair: #dfeadb;
+        --bouger-orange: #d9833b;
+        --bouger-texte: #2f382f;
+        --bouger-gris: #667066;
+        --bouger-blanc: #ffffff;
+        --bouger-ombre: 0 12px 30px rgba(53, 67, 50, 0.13);
+        --bouger-ombre-forte: 0 18px 45px rgba(53, 67, 50, 0.2);
+        --bouger-arrondi-grand: 28px;
+        --bouger-arrondi-moyen: 20px;
+    }
+
+    .bouger-page {
+        width: min(1180px, 94%);
+        margin: 30px auto 70px;
+        color: var(--bouger-texte);
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.05rem;
+        line-height: 1.7;
+    }
+
+    .bouger-page * {
+        box-sizing: border-box;
+    }
+
+    .bouger-hero {
+        overflow: hidden;
+        border: 1px solid rgba(55, 107, 77, 0.14);
+        border-radius: var(--bouger-arrondi-grand);
+        background:
+            linear-gradient(
+                135deg,
+                rgba(255, 250, 240, 0.98),
+                rgba(224, 235, 215, 0.96)
+            );
+        box-shadow: var(--bouger-ombre);
+    }
+
+    .bouger-hero-inner {
+        display: grid;
+        grid-template-columns:
+            minmax(0, 1.08fr)
+            minmax(280px, 0.92fr);
+        gap: 34px;
+        padding: 40px;
+        align-items: center;
+    }
+
+    .bouger-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 16px;
+        padding: 8px 14px;
+        border: 1px solid rgba(55, 107, 77, 0.2);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.72);
+        color: var(--bouger-vert);
+        font-size: 0.82rem;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .bouger-title {
+        margin: 0;
+        color: var(--bouger-vert-fonce);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 2rem;
+        line-height: 1.2;
+    }
+
+    .bouger-title span {
+        color: var(--bouger-orange);
+    }
+
+    .bouger-description {
+        max-width: 720px;
+        margin-top: 18px;
+        color: #526057;
+        font-size: 1.05rem;
+        line-height: 1.7;
+    }
+
+    .bouger-advice,
+    .bouger-card {
+        padding: 30px;
+        border: 1px solid rgba(55, 107, 77, 0.13);
+        border-radius: var(--bouger-arrondi-grand);
+        background: rgba(255, 250, 240, 0.92);
+        box-shadow: var(--bouger-ombre);
+    }
+
+    .bouger-advice {
+        position: relative;
+        overflow: hidden;
+        background:
+            linear-gradient(
+                145deg,
+                rgba(255, 250, 240, 0.98),
+                rgba(223, 234, 219, 0.9)
+            );
+    }
+
+    .bouger-advice::after {
+        content: "";
+        position: absolute;
+        right: -55px;
+        bottom: -55px;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background: rgba(55, 107, 77, 0.08);
+    }
+
+    .bouger-advice > *,
+    .bouger-card > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .bouger-advice h2,
+    .bouger-card h2 {
+        margin: 0 0 14px;
+        color: var(--bouger-vert-fonce);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.5rem;
+        line-height: 1.25;
+    }
+
+    .bouger-advice p,
+    .bouger-card p {
+        margin: 0;
+        font-size: 1.05rem;
+        line-height: 1.7;
+    }
+
+    .bouger-advice p + p,
+    .bouger-card p + p {
+        margin-top: 14px;
+    }
+
+    .bouger-section {
+        margin-top: 40px;
+    }
+
+    .bouger-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px;
+        align-items: stretch;
+    }
+
+    .bouger-card-image {
+        position: relative;
+        overflow: hidden;
+        background:
+            linear-gradient(
+                rgba(255, 255, 255, 0.76),
+                rgba(255, 255, 255, 0.76)
+            ),
+            url("{% static 'accueil/images/pqbouger.png' %}");
+        background-size: cover;
+        background-position: center;
+    }
+
+    .bouger-cta {
+        margin-top: 28px;
+        padding-top: 24px;
+        border-top: 1px solid rgba(55, 107, 77, 0.14);
+        text-align: center;
+    }
+
+    .bouger-questionnaire-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: min(240px, 100%);
+        overflow: hidden;
+        border-radius: 28px;
+        box-shadow: 0 12px 26px rgba(55, 107, 77, 0.18);
+        transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease;
+    }
+
+    .bouger-questionnaire-link:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--bouger-ombre-forte);
+    }
+
+    .bouger-questionnaire-image {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+
+    .bouger-cta-note {
+        margin-top: 14px !important;
+        color: var(--bouger-vert-fonce);
+        font-size: 0.95rem !important;
+        font-style: italic;
+    }
+
+    @media (max-width: 900px) {
+        .bouger-hero-inner,
+        .bouger-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .bouger-hero-inner {
+            padding: 32px 24px;
+        }
+    }
+
+    @media (max-width: 580px) {
+        .bouger-page {
+            width: 94%;
+            margin-top: 18px;
+        }
+
+        .bouger-hero,
+        .bouger-advice,
+        .bouger-card {
+            border-radius: 22px;
+        }
+
+        .bouger-hero-inner {
+            padding: 25px 18px;
+        }
+
+        .bouger-title {
+            font-size: 1.7rem;
+        }
+
+        .bouger-advice,
+        .bouger-card {
+            padding: 23px 18px;
+        }
+
+        .bouger-advice h2,
+        .bouger-card h2 {
+            font-size: 1.4rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="bouger-page">
+
+    <section class="bouger-hero">
+        <div class="bouger-hero-inner">
+
+            <div>
+                <p class="bouger-eyebrow">🏃 Mouvement et santé</p>
+
+                <h1 class="bouger-title">
+                    Le mouvement, <span>c’est la vie.</span>
+                </h1>
+
+                <p class="bouger-description">
+                    Le corps humain est fait pour marcher, courir, grimper,
+                    porter, sauter, lancer et s’adapter. L’objectif n’est pas
+                    de devenir un champion, mais de trouver une activité que
+                    l’on aura plaisir à pratiquer pendant des années.
+                </p>
+            </div>
+
+            <aside class="bouger-advice">
+                <h2>Il n’existe pas de sport parfait</h2>
+
+                <p>
+                    Ce qui me correspond ne conviendra pas forcément à
+                    quelqu’un d’autre. L’âge, les objectifs, les douleurs
+                    éventuelles, le temps, le budget et le caractère
+                    influencent énormément le choix.
+                </p>
+
+                <p>
+                    Plutôt que de te dire « fais ce sport », cette page va
+                    t’aider à trouver plusieurs activités qui pourraient
+                    vraiment te convenir.
+                </p>
+            </aside>
+
+        </div>
+    </section>
+
+    <section class="bouger-section bouger-grid" id="introduction">
+
+        <article class="bouger-card bouger-card-image">
+            <h2>Pourquoi bouger ? Parfois je me demande aussi 😄</h2>
+
+            <p>
+                J'ai 44 piges et continue le karaté et le MMA. Ce que j'aime
+                dans le karaté, c'est son approche philosophique et
+                spirituelle (merci Ryu de Street Fighter).
+            </p>
+
+            <p>
+                Il permet de rester en bonne santé et peut être pratiqué toute
+                une vie. Il entretient mon cardio, ma coordination, mon
+                équilibre et ma proprioception, à défaut de ma souplesse
+                devenue lamentable.
+            </p>
+
+            <p>
+                Le MMA, je ne peux pas dire que je trouve l'approche santé très
+                pertinente, les impacts faisant partie de la pratique. En
+                revanche, il complète ce qui manque à mon karaté : la lutte,
+                les projections, le travail au sol et des situations de combat
+                plus libres.
+            </p>
+        </article>
+
+        <article class="bouger-card">
+            <h2>Trouvons ce qui te correspond</h2>
+
+            <p>
+                Certaines personnes veulent retrouver la forme, d’autres
+                perdre du poids, se muscler, gagner en mobilité, apprendre à
+                se défendre, rencontrer du monde ou simplement prendre du
+                plaisir.
+            </p>
+
+            <p>
+                Le meilleur sport n’est pas celui qui est à la mode. C’est
+                celui que tu auras encore envie de pratiquer dans cinq ou dix
+                ans.
+            </p>
+
+            <p>
+                Réponds à quelques questions. Tu obtiendras plusieurs idées
+                classées selon ton profil, avec une courte explication pour
+                chacune.
+            </p>
+
+            <div class="bouger-cta">
+                <a
+                    href="{% url 'bouger_questionnaire' %}"
+                    class="bouger-questionnaire-link"
+                    aria-label="Découvrir mon sport idéal"
+                >
+                    <img
+                        src="{% static 'accueil/images/boutonBouger.png' %}"
+                        alt="Commencer le questionnaire pour trouver son sport idéal"
+                        class="bouger-questionnaire-image"
+                    >
+                </a>
+
+                <p class="bouger-cta-note">
+                    Le questionnaire s’ouvre sur une page dédiée.
+                </p>
+            </div>
+        </article>
+
+    </section>
+
+</main>
+{% endblock %}

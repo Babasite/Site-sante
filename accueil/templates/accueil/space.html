@@ -1,0 +1,1574 @@
+{% extends "accueil/base.html" %}
+
+{% block logo_return %}{% url 'pompier' %}{% endblock %}
+{% load static %}
+
+{% block title %}Secour'Invaders | Santé Prévention Terrain{% endblock %}
+{% block page_title %}Secour'Invaders{% endblock %}
+
+{% block header_actions %}
+<a class="spt-shell-action" href="{% url 'pompier' %}">← Retour à Sauver</a>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .space-page {
+        --ink: #10243b;
+        --line: #d8e3ec;
+        --panel: #ffffff;
+        --blue: #0878c9;
+        --blue-dark: #07558e;
+        --red: #d92f3a;
+        --green: #168653;
+        --amber: #f3ad22;
+        max-width: 1020px;
+        margin: 0 auto;
+        padding: 5px 6px 12px;
+        color: var(--ink);
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .space-card {
+        padding: 8px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: var(--panel);
+        box-shadow: 0 12px 30px rgba(20, 61, 90, .10);
+    }
+
+    .space-hud {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 8px;
+        margin-bottom: 6px;
+    }
+
+    .space-hud-item {
+        min-height: 30px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 8px;
+        border: 1px solid #dde8f1;
+        border-radius: 12px;
+        background: #f7fbfe;
+        text-align: center;
+    }
+
+    .space-hud-label {
+        color: #64798d;
+        font-size: .64rem;
+        font-weight: 900;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+    }
+
+    .space-hud-value {
+        margin-top: 3px;
+        font-size: .9rem;
+        font-weight: 900;
+    }
+
+    .space-canvas-wrap {
+        position: relative;
+        overflow: hidden;
+        border: 4px solid #10243b;
+        border-radius: 16px;
+        background: #03101f;
+        box-shadow: inset 0 0 40px rgba(0,0,0,.45);
+    }
+
+    #spaceCanvas {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 25 / 9;
+        touch-action: none;
+    }
+
+    .space-overlay,
+    .space-quiz {
+        position: absolute;
+        inset: 0;
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 18px;
+        background: rgba(2, 10, 22, .78);
+        backdrop-filter: blur(4px);
+    }
+
+    .space-overlay[hidden],
+    .space-quiz[hidden] {
+        display: none;
+    }
+
+    .space-dialog {
+        width: min(540px, 100%);
+        padding: 22px;
+        border: 1px solid rgba(255,255,255,.28);
+        border-radius: 18px;
+        background: rgba(255,255,255,.97);
+        text-align: center;
+        box-shadow: 0 24px 60px rgba(0,0,0,.42);
+    }
+
+    .space-dialog h2 {
+        margin: 0 0 10px;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(1.45rem, 4vw, 2rem);
+    }
+
+    .space-dialog p {
+        margin: 7px 0;
+        line-height: 1.45;
+    }
+
+    .space-touch-controls,
+    .space-game-controls {
+        display: grid;
+        gap: 8px;
+        margin-top: 6px;
+    }
+
+    .space-touch-controls {
+        grid-template-columns: 1fr 1.35fr 1fr;
+    }
+
+    .space-game-controls {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .space-btn {
+        min-height: 42px;
+        border: 0;
+        border-radius: 12px;
+        font: inherit;
+        font-weight: 900;
+        cursor: pointer;
+        transition: transform .12s ease, filter .12s ease;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+    }
+
+    .space-btn:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.04);
+    }
+
+    .space-btn:disabled {
+        cursor: not-allowed;
+        opacity: .48;
+        transform: none;
+    }
+
+    .space-btn-move {
+        color: #fff;
+        background: #16324d;
+    }
+
+    .space-btn-fire {
+        color: #fff;
+        background: linear-gradient(180deg, #ef525b, #c82834);
+    }
+
+    .space-btn-start {
+        color: #fff;
+        background: linear-gradient(180deg, #1593df, #0875bd);
+    }
+
+    .space-btn-pause {
+        color: #10243b;
+        background: #f2b842;
+    }
+
+    .space-btn-restart {
+        color: #fff;
+        background: #617486;
+    }
+
+    .space-status {
+        min-height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 6px;
+        padding: 8px 12px;
+        border-radius: 10px;
+        background: #edf5fa;
+        color: #29465f;
+        font-size: .92rem;
+        font-weight: 900;
+        text-align: center;
+    }
+
+    .space-question {
+        margin: 0 0 14px;
+        font-size: 1.06rem;
+        font-weight: 900;
+        line-height: 1.45;
+        text-align: left;
+    }
+
+    .space-answers {
+        display: grid;
+        gap: 9px;
+    }
+
+    .space-answer {
+        padding: 12px 14px;
+        border: 0;
+        border-radius: 12px;
+        background: #edf5fa;
+        color: #10243b;
+        font: inherit;
+        font-weight: 850;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .space-answer.correct {
+        color: #fff;
+        background: var(--green);
+    }
+
+    .space-answer.wrong {
+        color: #fff;
+        background: var(--red);
+    }
+
+    .space-feedback {
+        min-height: 28px;
+        margin-top: 6px;
+        font-weight: 900;
+        line-height: 1.4;
+    }
+
+
+    .space-side-feedback {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        z-index: 7;
+        width: min(260px, 42%);
+        padding: 10px 12px;
+        border: 1px solid rgba(255,255,255,.35);
+        border-radius: 12px;
+        background: rgba(255,255,255,.96);
+        color: #10243b;
+        font-size: .88rem;
+        font-weight: 850;
+        line-height: 1.35;
+        box-shadow: 0 10px 30px rgba(0,0,0,.28);
+        transform: translateX(0);
+        opacity: 1;
+        transition: opacity .2s ease, transform .2s ease;
+    }
+
+    .space-side-feedback[hidden] {
+        display: none;
+    }
+
+    .space-side-feedback.good {
+        border-left: 5px solid var(--green);
+    }
+
+    .space-side-feedback.bad {
+        border-left: 5px solid var(--red);
+    }
+
+    @media (max-width: 560px) {
+        .space-side-feedback {
+            top: 8px;
+            right: 8px;
+            width: min(230px, 56%);
+            font-size: .8rem;
+        }
+    }
+
+    @media (max-width: 720px) {
+        .space-hud {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .space-hud-item:nth-child(4),
+        .space-hud-item:nth-child(5) {
+            grid-column: span 1;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .space-page {
+            padding-inline: 4px;
+        }
+
+        .space-card {
+            padding: 7px;
+        }
+
+        .space-hud {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+        }
+
+        .space-hud-item:last-child {
+            grid-column: span 2;
+        }
+
+        .space-game-controls {
+            grid-template-columns: 1fr;
+        }
+
+        .space-btn {
+            min-height: 48px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="space-page">
+    <section class="space-card" aria-label="Jeu Secour'Invaders">
+        <div class="space-hud">
+            <div class="space-hud-item">
+                <span class="space-hud-label">Score</span>
+                <span class="space-hud-value" id="scoreValue">0</span>
+            </div>
+            <div class="space-hud-item">
+                <span class="space-hud-label">Meilleur</span>
+                <span class="space-hud-value" id="bestValue">0</span>
+            </div>
+            <div class="space-hud-item">
+                <span class="space-hud-label">Vies</span>
+                <span class="space-hud-value" id="livesValue">❤️❤️❤️</span>
+            </div>
+            <div class="space-hud-item">
+                <span class="space-hud-label">Vague</span>
+                <span class="space-hud-value" id="waveValue">1</span>
+            </div>
+            <div class="space-hud-item">
+                <span class="space-hud-label">Combo</span>
+                <span class="space-hud-value" id="comboValue">x1</span>
+            </div>
+        </div>
+
+        <div class="space-canvas-wrap">
+            <canvas id="spaceCanvas" width="1000" height="360"
+                    aria-label="Zone de jeu Secour'Invaders"></canvas>
+
+            <div class="space-overlay" id="mainOverlay" hidden>
+                <div class="space-dialog" id="overlayDialog"></div>
+            </div>
+
+            <div class="space-side-feedback" id="sideFeedback" hidden></div>
+
+            <div class="space-quiz" id="quizPanel" hidden>
+                <div class="space-dialog">
+                    <h2>Question secours</h2>
+                    <p class="space-question" id="quizQuestion"></p>
+                    <div class="space-answers" id="quizAnswers"></div>
+                    <div class="space-feedback" id="quizFeedback"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="space-touch-controls" aria-label="Commandes tactiles">
+            <button class="space-btn space-btn-move" id="leftButton" type="button">⬅ Gauche</button>
+            <button class="space-btn space-btn-fire" id="fireButton" type="button">➕ Pansement</button>
+            <button class="space-btn space-btn-move" id="rightButton" type="button">Droite ➡</button>
+        </div>
+
+        <div class="space-game-controls">
+            <button class="space-btn space-btn-start" id="startButton" type="button">▶ Démarrer</button>
+            <button class="space-btn space-btn-pause" id="pauseButton" type="button" disabled>⏸ Pause</button>
+            <button class="space-btn space-btn-restart" id="restartButton" type="button">🔄 Recommencer</button>
+        </div>
+
+        <div class="space-status" id="statusText">
+            Prêt pour la mission.
+        </div>
+    </section>
+</main>
+
+<script src="{% static 'accueil/pompier/js/questions.js' %}"></script>
+<script>
+(() => {
+    "use strict";
+
+    const BEST_KEY = "spt_space_best_score_v2";
+
+    const canvas = document.getElementById("spaceCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const scoreValue = document.getElementById("scoreValue");
+    const bestValue = document.getElementById("bestValue");
+    const livesValue = document.getElementById("livesValue");
+    const waveValue = document.getElementById("waveValue");
+    const comboValue = document.getElementById("comboValue");
+    const statusText = document.getElementById("statusText");
+
+    const mainOverlay = document.getElementById("mainOverlay");
+    const overlayDialog = document.getElementById("overlayDialog");
+    const quizPanel = document.getElementById("quizPanel");
+    const quizQuestion = document.getElementById("quizQuestion");
+    const quizAnswers = document.getElementById("quizAnswers");
+    const quizFeedback = document.getElementById("quizFeedback");
+    const sideFeedback = document.getElementById("sideFeedback");
+
+    const startButton = document.getElementById("startButton");
+    const pauseButton = document.getElementById("pauseButton");
+    const restartButton = document.getElementById("restartButton");
+    const leftButton = document.getElementById("leftButton");
+    const fireButton = document.getElementById("fireButton");
+    const rightButton = document.getElementById("rightButton");
+
+    const W = canvas.width;
+    const H = canvas.height;
+    const DANGER_Y = H - 66;
+
+    const keys = { left: false, right: false };
+
+    const fallbackQuestions = [
+        {
+            q: "Une personne est inconsciente mais respire normalement. Que fais-tu ?",
+            answers: [
+                "Je la mets en PLS et j’alerte",
+                "Je lui donne à boire",
+                "Je la laisse seule",
+                "Je la fais marcher"
+            ],
+            correct: 0,
+            explanation: "Une victime inconsciente qui respire normalement doit être placée en PLS, puis surveillée en attendant les secours."
+        },
+        {
+            q: "Une victime est inconsciente et ne respire plus. Que faut-il faire ?",
+            answers: [
+                "Alerter, commencer les compressions thoraciques et demander un DAE",
+                "Attendre",
+                "La faire marcher",
+                "Lui donner à boire"
+            ],
+            correct: 0,
+            explanation: "Il faut alerter, commencer immédiatement les compressions thoraciques et utiliser un DAE dès que possible."
+        }
+    ];
+
+    function normalizeQuestion(questionData) {
+        if (!questionData || typeof questionData !== "object") return null;
+
+        const q = questionData.question ?? questionData.texte ?? questionData.text ?? questionData.q ?? "";
+        let answers = [];
+        let correct = 0;
+
+        if (typeof questionData.bonneReponse === "string" && Array.isArray(questionData.mauvaisesReponses)) {
+            answers = [questionData.bonneReponse, ...questionData.mauvaisesReponses].filter(Boolean);
+            correct = 0;
+        } else {
+            answers = (questionData.answers ?? questionData.reponses ?? questionData.options ?? []).map(answer =>
+                typeof answer === "string"
+                    ? answer
+                    : (answer?.text ?? answer?.texte ?? answer?.label ?? "")
+            );
+
+            correct = questionData.correct ?? questionData.correctIndex ?? questionData.answer ?? 0;
+            if (typeof correct === "string") {
+                const matchingIndex = answers.findIndex(answer =>
+                    answer.trim().toLowerCase() === correct.trim().toLowerCase()
+                );
+                correct = matchingIndex >= 0 ? matchingIndex : Number(correct);
+            }
+        }
+
+        correct = Number(correct);
+        if (!q || answers.length < 2 || !Number.isInteger(correct) || correct < 0 || correct >= answers.length) {
+            return null;
+        }
+
+        return {
+            q,
+            answers: answers.slice(0, 4),
+            correct,
+            explanation: questionData.explication ?? questionData.explanation ?? ""
+        };
+    }
+
+    function getQuestionSource() {
+        const possibleSources = [
+            window.SAUVE_QUI_PEUT_QUESTIONS,
+            window.questions,
+            window.QUESTIONS,
+            window.pompierQuestions,
+            window.questionsPompier,
+            window.quizQuestions
+        ];
+
+        for (const source of possibleSources) {
+            if (!Array.isArray(source) || !source.length) continue;
+            const normalized = source.map(normalizeQuestion).filter(Boolean);
+            if (normalized.length) return normalized;
+        }
+
+        return fallbackQuestions;
+    }
+
+    const questions = getQuestionSource();
+
+    const state = {
+        running: false,
+        paused: false,
+        gameOver: false,
+        score: 0,
+        best: Number(localStorage.getItem(BEST_KEY) || 0),
+        lives: 3,
+        wave: 1,
+        combo: 1,
+        killsSinceQuiz: 0,
+        quizTimer: 0,
+        totalKills: 0,
+        shots: [],
+        enemyShots: [],
+        enemies: [],
+        particles: [],
+        stars: [],
+        bonuses: [],
+        enemyDirection: 1,
+        enemyStepTimer: 0,
+        enemyStepDelay: 820,
+        enemyFireTimer: 0,
+        enemyFireDelay: 1450,
+        lastTime: 0,
+        lastShot: 0,
+        shieldUntil: 0,
+        rapidUntil: 0,
+        doubleUntil: 0,
+        shakeUntil: 0,
+        flashUntil: 0,
+        feedbackTimer: null
+    };
+
+    const player = {
+        x: W / 2 - 36,
+        y: H - 54,
+        width: 72,
+        height: 38,
+        speed: 400
+    };
+
+    function initStars() {
+        state.stars = Array.from({ length: 90 }, () => ({
+            x: Math.random() * W,
+            y: Math.random() * H,
+            r: .4 + Math.random() * 1.5,
+            speed: 6 + Math.random() * 20,
+            alpha: .2 + Math.random() * .75
+        }));
+    }
+
+    function resetState() {
+        state.running = true;
+        state.paused = false;
+        state.gameOver = false;
+        state.score = 0;
+        state.lives = 3;
+        state.wave = 1;
+        state.combo = 1;
+        state.killsSinceQuiz = 0;
+        state.quizTimer = 0;
+        state.totalKills = 0;
+        state.shots = [];
+        state.enemyShots = [];
+        state.enemies = [];
+        state.particles = [];
+        state.bonuses = [];
+        state.shieldUntil = 0;
+        state.rapidUntil = 0;
+        state.doubleUntil = 0;
+        state.shakeUntil = 0;
+        state.flashUntil = 0;
+        player.x = W / 2 - player.width / 2;
+        spawnWave();
+        mainOverlay.hidden = true;
+        quizPanel.hidden = true;
+        sideFeedback.hidden = true;
+        pauseButton.disabled = false;
+        pauseButton.textContent = "⏸ Pause";
+        startButton.disabled = true;
+        setStatus("Mission lancée.");
+        updateHud();
+        state.lastTime = performance.now();
+        requestAnimationFrame(loop);
+    }
+
+    function restartGame() {
+        resetState();
+    }
+
+    function togglePause() {
+        if (!state.running || state.gameOver || !quizPanel.hidden) return;
+
+        state.paused = !state.paused;
+        pauseButton.textContent = state.paused ? "▶ Reprendre" : "⏸ Pause";
+        mainOverlay.hidden = !state.paused;
+
+        if (state.paused) {
+            overlayDialog.innerHTML = "<h2>⏸ Mission en pause</h2><p>Appuie sur « Reprendre » pour continuer.</p>";
+            setStatus("Jeu en pause.");
+        } else {
+            mainOverlay.hidden = true;
+            state.lastTime = performance.now();
+            setStatus("Mission reprise.");
+        }
+    }
+
+    function setStatus(text) {
+        statusText.textContent = text;
+    }
+
+    function updateBest() {
+        if (state.score <= state.best) return;
+        state.best = state.score;
+        localStorage.setItem(BEST_KEY, String(state.best));
+    }
+
+    function updateHud() {
+        updateBest();
+        scoreValue.textContent = state.score;
+        bestValue.textContent = state.best;
+        livesValue.textContent = state.lives > 0 ? "❤️".repeat(state.lives) : "—";
+        waveValue.textContent = state.wave;
+        comboValue.textContent = `x${state.combo}`;
+    }
+
+    function spawnWave() {
+        state.enemies = [];
+        const rows = Math.min(3 + Math.floor((state.wave - 1) / 3), 4);
+        const cols = 11;
+        const gapX = 88;
+        const gapY = 61;
+        const startX = (W - ((cols - 1) * gapX)) / 2;
+        const startY = 0;
+        const types = ["fire", "car", "fracture", "blood", "electric", "water", "smoke", "poison"];
+
+        for (let row = 0; row < rows; row++) {
+            for (let col = 0; col < cols; col++) {
+                const kind = types[(row + col + state.wave) % types.length];
+                state.enemies.push({
+                    x: startX + col * gapX - 22,
+                    y: startY + row * gapY,
+                    width: 44,
+                    height: 42,
+                    kind,
+                    pulse: Math.random() * Math.PI * 2,
+                    alive: true,
+                    points: 10 + types.indexOf(kind) * 2
+                });
+            }
+        }
+
+        state.enemyDirection = 1;
+        state.enemyStepTimer = 0;
+        state.enemyStepDelay = Math.max(240, 790 - (state.wave - 1) * 58);
+        state.enemyFireTimer = 0;
+        state.enemyFireDelay = Math.max(430, 1550 - (state.wave - 1) * 105);
+        setStatus(`Vague ${state.wave}.`);
+    }
+
+    function shoot() {
+        if (!state.running || state.paused || state.gameOver || !quizPanel.hidden) return;
+
+        const now = performance.now();
+        const delay = now < state.rapidUntil ? 135 : 290;
+        if (now - state.lastShot < delay) return;
+
+        state.lastShot = now;
+        state.shakeUntil = now + 100;
+        state.shots.push({
+            x: player.x + player.width / 2,
+            y: player.y - 4,
+            width: 25,
+            height: 25,
+            speed: 620,
+            rotation: 0,
+            trail: []
+        });
+    }
+
+    function fireEnemyShot() {
+        if (!state.enemies.length) return;
+
+        // Seuls les ennemis les plus bas ont une ligne de tir dégagée.
+        const shooters = state.enemies.filter(enemy => {
+            const cx = enemy.x + enemy.width / 2;
+            return !state.enemies.some(other =>
+                other !== enemy &&
+                other.y > enemy.y &&
+                Math.abs((other.x + other.width / 2) - cx) < enemy.width * .75
+            );
+        });
+
+        const enemy = shooters[Math.floor(Math.random() * shooters.length)];
+        if (!enemy) return;
+
+        const startX = enemy.x + enemy.width / 2;
+        const startY = enemy.y + enemy.height;
+        const targetX = player.x + player.width / 2;
+        const targetY = player.y + player.height / 2;
+        const dy = Math.max(1, targetY - startY);
+        const aimStrength = Math.min(.42, .12 + state.wave * .025);
+        const vx = ((targetX - startX) / dy) * (145 + state.wave * 7) * aimStrength;
+
+        state.enemyShots.push({
+            x: startX,
+            y: startY,
+            width: 14,
+            height: 20,
+            vx,
+            vy: 155 + state.wave * 11,
+            kind: enemy.kind,
+            rotation: 0
+        });
+    }
+
+    function loseLife(message) {
+        const now = performance.now();
+        if (now < state.shieldUntil) return;
+
+        state.lives -= 1;
+        state.combo = 1;
+        state.shieldUntil = now + 1800;
+        state.flashUntil = now + 250;
+        updateHud();
+
+        if (state.lives <= 0) {
+            endGame(message || "La mission est terminée.");
+            return;
+        }
+
+        setStatus(`${message} Bouclier temporaire activé.`);
+    }
+
+    function endGame(message) {
+        state.running = false;
+        state.paused = false;
+        state.gameOver = true;
+        updateBest();
+        updateHud();
+
+        startButton.disabled = false;
+        pauseButton.disabled = true;
+        pauseButton.textContent = "⏸ Pause";
+        mainOverlay.hidden = false;
+
+        const recordText = state.score >= state.best && state.score > 0
+            ? "<p><strong>🏆 Nouveau meilleur score !</strong></p>"
+            : "";
+
+        overlayDialog.innerHTML = `
+            <h2>Fin de mission</h2>
+            <p>${message}</p>
+            <p><strong>Score : ${state.score}</strong></p>
+            ${recordText}
+            <p>Utilise « Démarrer » ou « Recommencer » pour rejouer.</p>
+        `;
+        setStatus("Mission terminée.");
+    }
+
+    function openQuiz() {
+        state.paused = true;
+        quizPanel.hidden = false;
+        pauseButton.disabled = true;
+        quizFeedback.textContent = "";
+
+        const item = questions[Math.floor(Math.random() * questions.length)];
+        quizQuestion.textContent = item.q;
+        quizAnswers.innerHTML = "";
+
+        item.answers.forEach((answer, index) => {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "space-answer";
+            button.textContent = answer;
+            button.addEventListener("click", () => answerQuiz(button, index, item));
+            quizAnswers.appendChild(button);
+        });
+    }
+
+    function showSideFeedback(message, type = "good", duration = 3600) {
+        clearTimeout(state.feedbackTimer);
+        sideFeedback.className = `space-side-feedback ${type}`;
+        sideFeedback.textContent = message;
+        sideFeedback.hidden = false;
+
+        state.feedbackTimer = setTimeout(() => {
+            sideFeedback.hidden = true;
+        }, duration);
+    }
+
+    function answerQuiz(clicked, selected, item) {
+        const buttons = [...quizAnswers.querySelectorAll("button")];
+        buttons.forEach(button => button.disabled = true);
+        buttons[item.correct].classList.add("correct");
+
+        if (selected === item.correct) {
+            state.score += 150;
+            state.combo = Math.min(6, state.combo + 1);
+            state.shieldUntil = performance.now() + 6000;
+            showSideFeedback(`✅ Bonne réponse · +150 points · Bouclier activé`, "good");
+        } else {
+            clicked.classList.add("wrong");
+            state.lives -= 1;
+            state.combo = 1;
+            showSideFeedback(`❌ Mauvaise réponse · ${item.explanation}`, "bad", 4800);
+        }
+
+        updateHud();
+
+        setTimeout(() => {
+            quizPanel.hidden = true;
+            pauseButton.disabled = false;
+
+            if (state.lives <= 0) {
+                endGame("Les trois vies ont été perdues.");
+                return;
+            }
+
+            state.paused = false;
+            state.lastTime = performance.now();
+            setStatus("Mission reprise.");
+        }, 450);
+    }
+
+    function makeExplosion(x, y) {
+        for (let i = 0; i < 16; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const speed = 55 + Math.random() * 150;
+            state.particles.push({
+                x, y,
+                vx: Math.cos(angle) * speed,
+                vy: Math.sin(angle) * speed,
+                life: 1,
+                size: 2 + Math.random() * 4
+            });
+        }
+    }
+
+    function maybeDropBonus(x, y) {
+        if (Math.random() > .14) return;
+        const kinds = ["life", "shield", "double", "rapid"];
+        state.bonuses.push({
+            x, y,
+            width: 30,
+            height: 30,
+            kind: kinds[Math.floor(Math.random() * kinds.length)],
+            speed: 95
+        });
+    }
+
+    function hitTest(a, b) {
+        return (
+            a.x < b.x + b.width &&
+            a.x + a.width > b.x &&
+            a.y < b.y + b.height &&
+            a.y + a.height > b.y
+        );
+    }
+
+    function update(dt, now) {
+        for (const star of state.stars) {
+            star.y += star.speed * dt;
+            if (star.y > H) {
+                star.y = -3;
+                star.x = Math.random() * W;
+            }
+        }
+
+        if (keys.left) player.x -= player.speed * dt;
+        if (keys.right) player.x += player.speed * dt;
+        player.x = Math.max(10, Math.min(W - player.width - 10, player.x));
+
+        for (const shot of state.shots) {
+            shot.trail.push({ x: shot.x, y: shot.y, life: 1 });
+            if (shot.trail.length > 8) shot.trail.shift();
+            shot.trail.forEach(p => p.life -= dt * 3.8);
+            shot.y -= shot.speed * dt;
+            shot.rotation += dt * 7;
+        }
+        state.shots = state.shots.filter(shot => shot.y > -40);
+
+        state.enemyFireTimer += dt * 1000;
+        if (state.enemyFireTimer >= state.enemyFireDelay) {
+            state.enemyFireTimer = 0;
+            fireEnemyShot();
+
+            // À partir de la vague 5, une salve supplémentaire est parfois envoyée.
+            if (state.wave >= 5 && Math.random() < Math.min(.55, state.wave * .055)) {
+                setTimeout(() => {
+                    if (state.running && !state.paused && !state.gameOver) fireEnemyShot();
+                }, 170);
+            }
+        }
+
+        for (const missile of state.enemyShots) {
+            missile.x += missile.vx * dt;
+            missile.y += missile.vy * dt;
+            missile.rotation += dt * 5;
+        }
+
+        const playerBox = {
+            x: player.x + 5,
+            y: player.y + 3,
+            width: player.width - 10,
+            height: player.height - 4
+        };
+
+        for (const missile of state.enemyShots) {
+            if (!missile.dead && hitTest(missile, playerBox)) {
+                missile.dead = true;
+                makeExplosion(missile.x, missile.y);
+                state.shakeUntil = now + 220;
+                loseLife("L'ambulance a été touchée par un missile.");
+            }
+        }
+
+        state.enemyShots = state.enemyShots.filter(missile =>
+            !missile.dead &&
+            missile.y < H + 35 &&
+            missile.x > -35 &&
+            missile.x < W + 35
+        );
+
+        state.enemyStepTimer += dt * 1000;
+        if (state.enemyStepTimer >= state.enemyStepDelay) {
+            state.enemyStepTimer = 0;
+            let edge = false;
+
+            for (const enemy of state.enemies) {
+                const nextX = enemy.x + state.enemyDirection * 22;
+                if (nextX < 12 || nextX + enemy.width > W - 12) {
+                    edge = true;
+                    break;
+                }
+            }
+
+            if (edge) {
+                state.enemyDirection *= -1;
+                state.enemies.forEach(enemy => enemy.y += 18);
+            } else {
+                state.enemies.forEach(enemy => enemy.x += state.enemyDirection * 28);
+            }
+        }
+
+        state.enemies.forEach(enemy => enemy.pulse += dt * 3);
+
+        for (const shot of state.shots) {
+            const shotBox = {
+                x: shot.x - shot.width / 2,
+                y: shot.y - shot.height / 2,
+                width: shot.width,
+                height: shot.height
+            };
+
+            for (const enemy of state.enemies) {
+                if (!enemy.alive || shot.dead) continue;
+
+                if (hitTest(shotBox, enemy)) {
+                    enemy.alive = false;
+                    shot.dead = true;
+                    state.totalKills += 1;
+                    
+
+                    const multiplier = now < state.doubleUntil ? 2 : 1;
+                    const gained = enemy.points * state.combo * multiplier;
+                    state.score += gained;
+                    state.combo = Math.min(6, state.combo + 1);
+
+                    makeExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2);
+                    maybeDropBonus(enemy.x + enemy.width / 2 - 15, enemy.y + enemy.height / 2 - 15);
+                    setStatus(`Urgence neutralisée : +${gained} points.`);
+                }
+            }
+        }
+
+        state.shots = state.shots.filter(shot => !shot.dead);
+        state.enemies = state.enemies.filter(enemy => enemy.alive);
+
+        for (const enemy of state.enemies) {
+            if (enemy.y + enemy.height >= DANGER_Y) {
+                enemy.alive = false;
+                makeExplosion(enemy.x + enemy.width / 2, DANGER_Y);
+                loseLife("Une urgence a atteint la ligne de danger.");
+            }
+        }
+        state.enemies = state.enemies.filter(enemy => enemy.alive);
+
+        for (const bonus of state.bonuses) {
+            bonus.y += bonus.speed * dt;
+            if (hitTest(bonus, player)) {
+                bonus.collected = true;
+                applyBonus(bonus.kind);
+            }
+        }
+        state.bonuses = state.bonuses.filter(bonus => !bonus.collected && bonus.y < H + 40);
+
+        for (const particle of state.particles) {
+            particle.x += particle.vx * dt;
+            particle.y += particle.vy * dt;
+            particle.vy += 85 * dt;
+            particle.life -= 1.8 * dt;
+        }
+        state.particles = state.particles.filter(p => p.life > 0);
+
+        state.quizTimer += dt;
+        if (state.quizTimer >= 10) {
+            state.quizTimer = 0;
+            openQuiz();
+            return;
+        }
+
+        if (state.enemies.length === 0) {
+            state.wave += 1;
+            state.score += 200;
+            state.combo = Math.min(6, state.combo + 1);
+            spawnWave();
+        }
+
+        updateHud();
+    }
+
+    function applyBonus(kind) {
+        const now = performance.now();
+
+        if (kind === "life") {
+            state.lives = Math.min(5, state.lives + 1);
+            setStatus("❤️ Vie supplémentaire.");
+        } else if (kind === "shield") {
+            state.shieldUntil = now + 7000;
+            setStatus("🛡 Bouclier activé.");
+        } else if (kind === "double") {
+            state.doubleUntil = now + 8000;
+            setStatus("⭐ Score doublé pendant 8 secondes.");
+        } else {
+            state.rapidUntil = now + 8000;
+            setStatus("⚡ Tir rapide pendant 8 secondes.");
+        }
+
+        updateHud();
+    }
+
+    function roundRect(x, y, width, height, radius) {
+        const r = Math.min(radius, width / 2, height / 2);
+        ctx.beginPath();
+        ctx.moveTo(x + r, y);
+        ctx.arcTo(x + width, y, x + width, y + height, r);
+        ctx.arcTo(x + width, y + height, x, y + height, r);
+        ctx.arcTo(x, y + height, x, y, r);
+        ctx.arcTo(x, y, x + width, y, r);
+        ctx.closePath();
+    }
+
+    function drawBackground(now) {
+        const gradient = ctx.createLinearGradient(0, 0, 0, H);
+        gradient.addColorStop(0, "#071a32");
+        gradient.addColorStop(1, "#02070e");
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, W, H);
+
+        for (const star of state.stars) {
+            ctx.globalAlpha = star.alpha;
+            ctx.fillStyle = "#fff";
+            ctx.beginPath();
+            ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+
+        ctx.save();
+        ctx.strokeStyle = "rgba(255, 67, 78, .88)";
+        ctx.lineWidth = 2;
+        ctx.setLineDash([12, 10]);
+        ctx.beginPath();
+        ctx.moveTo(0, DANGER_Y);
+        ctx.lineTo(W, DANGER_Y);
+        ctx.stroke();
+        ctx.restore();
+
+        ctx.fillStyle = "rgba(255,255,255,.7)";
+        ctx.font = "bold 14px Arial";
+        ctx.textAlign = "left";
+        ctx.fillText("LIGNE DE DANGER", 15, DANGER_Y - 9);
+
+        if (now < state.flashUntil) {
+            ctx.fillStyle = "rgba(255, 55, 65, .18)";
+            ctx.fillRect(0, 0, W, H);
+        }
+    }
+
+    function drawAmbulance(now) {
+        const recoil = now < state.shakeUntil ? Math.sin(now / 18) * 3 : 0;
+        const x = player.x;
+        const y = player.y + recoil;
+        const shielded = now < state.shieldUntil;
+        const siren = Math.floor(now / 180) % 2 === 0;
+
+        if (shielded) {
+            ctx.save();
+            ctx.strokeStyle = "rgba(80, 215, 255, .9)";
+            ctx.lineWidth = 5;
+            ctx.beginPath();
+            ctx.ellipse(x + player.width / 2, y + player.height / 2, player.width * .68, player.height * .92, 0, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.scale(player.width / 84, player.height / 44);
+
+        ctx.fillStyle = "#f5f7f9";
+        roundRect(4, 7, 76, 30, 8);
+        ctx.fill();
+
+        ctx.fillStyle = "#d8edf9";
+        roundRect(49, 10, 24, 14, 4);
+        ctx.fill();
+
+        ctx.fillStyle = "#e3343d";
+        ctx.fillRect(12, 18, 30, 7);
+        ctx.fillRect(23, 7, 8, 29);
+
+        ctx.fillStyle = siren ? "#2ab7ff" : "#0c5d9e";
+        ctx.fillRect(29, 2, 11, 6);
+        ctx.fillStyle = siren ? "#a9232d" : "#ff4b57";
+        ctx.fillRect(43, 2, 11, 6);
+
+        ctx.fillStyle = "#162b3c";
+        ctx.beginPath();
+        ctx.arc(20, 38, 7, 0, Math.PI * 2);
+        ctx.arc(63, 38, 7, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#e8edf1";
+        ctx.beginPath();
+        ctx.arc(20, 38, 3, 0, Math.PI * 2);
+        ctx.arc(63, 38, 3, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+    }
+
+    function drawBandage(shot) {
+        for (const p of shot.trail) {
+            ctx.globalAlpha = Math.max(0, p.life) * .18;
+            ctx.fillStyle = "#f4dfc8";
+            ctx.beginPath();
+            ctx.arc(p.x, p.y + 8, 5, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+
+        ctx.save();
+        ctx.translate(shot.x, shot.y);
+        ctx.rotate(shot.rotation);
+
+        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = "#7d5d49";
+        ctx.fillStyle = "#d9ad89";
+
+        ctx.save();
+        ctx.rotate(Math.PI / 4);
+        roundRect(-4.5, -15, 9, 30, 4);
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+
+        ctx.save();
+        ctx.rotate(-Math.PI / 4);
+        roundRect(-4.5, -15, 9, 30, 4);
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+
+        ctx.fillStyle = "#faf6f0";
+        ctx.strokeStyle = "#baa99f";
+        roundRect(-5, -5, 10, 10, 2);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.restore();
+    }
+
+    function drawEnemy(enemy, now) {
+        const cx = enemy.x + enemy.width / 2;
+        const cy = enemy.y + enemy.height / 2 + Math.sin(enemy.pulse) * 2;
+        ctx.save();
+        ctx.translate(cx, cy);
+
+        switch (enemy.kind) {
+            case "fire":
+                drawFire(now);
+                break;
+            case "car":
+                drawCar();
+                break;
+            case "fracture":
+                drawBone();
+                break;
+            case "blood":
+                drawBlood();
+                break;
+            case "electric":
+                drawElectric(now);
+                break;
+            case "water":
+                drawWater(now);
+                break;
+            case "smoke":
+                drawSmoke(now);
+                break;
+            default:
+                drawPoison();
+        }
+
+        ctx.restore();
+    }
+
+    function drawFire(now) {
+        const flicker = Math.sin(now / 85) * 3;
+        ctx.fillStyle = "#ffb01f";
+        ctx.beginPath();
+        ctx.moveTo(0, -22 - flicker);
+        ctx.bezierCurveTo(18, -6, 18, 16, 0, 23);
+        ctx.bezierCurveTo(-20, 16, -18, -7, 0, -22 - flicker);
+        ctx.fill();
+
+        ctx.fillStyle = "#f04a32";
+        ctx.beginPath();
+        ctx.moveTo(0, -10);
+        ctx.bezierCurveTo(10, 0, 9, 13, 0, 17);
+        ctx.bezierCurveTo(-10, 12, -9, 0, 0, -10);
+        ctx.fill();
+    }
+
+    function drawCar() {
+        ctx.rotate(Math.PI);
+        ctx.fillStyle = "#e23b48";
+        roundRect(-21, -12, 42, 23, 7);
+        ctx.fill();
+
+        ctx.fillStyle = "#bde1f4";
+        roundRect(-11, -8, 22, 10, 3);
+        ctx.fill();
+
+        ctx.fillStyle = "#172a3a";
+        ctx.beginPath();
+        ctx.arc(-14, 13, 6, 0, Math.PI * 2);
+        ctx.arc(14, 13, 6, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = "#fff";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(-6, -7);
+        ctx.lineTo(5, 1);
+        ctx.moveTo(5, -7);
+        ctx.lineTo(-2, 1);
+        ctx.stroke();
+    }
+
+    function drawBone() {
+        ctx.strokeStyle = "#f2eadf";
+        ctx.lineWidth = 11;
+        ctx.lineCap = "round";
+        ctx.beginPath();
+        ctx.moveTo(-14, 13);
+        ctx.lineTo(14, -13);
+        ctx.stroke();
+
+        ctx.fillStyle = "#f2eadf";
+        [[-17, 16], [-11, 18], [17, -16], [11, -18]].forEach(([x, y]) => {
+            ctx.beginPath();
+            ctx.arc(x, y, 7, 0, Math.PI * 2);
+            ctx.fill();
+        });
+
+        ctx.strokeStyle = "#cf4e55";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(-3, 4);
+        ctx.lineTo(3, -4);
+        ctx.stroke();
+    }
+
+    function drawBlood() {
+        ctx.fillStyle = "#d91f35";
+        ctx.beginPath();
+        ctx.moveTo(0, -24);
+        ctx.bezierCurveTo(17, -5, 20, 8, 0, 23);
+        ctx.bezierCurveTo(-20, 8, -17, -5, 0, -24);
+        ctx.fill();
+
+        ctx.fillStyle = "rgba(255,255,255,.7)";
+        ctx.beginPath();
+        ctx.ellipse(-6, -5, 4, 8, -.5, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    function drawElectric(now) {
+        ctx.save();
+        ctx.rotate(Math.sin(now / 100) * .06);
+        ctx.fillStyle = "#ffd633";
+        ctx.shadowColor = "#ffd633";
+        ctx.shadowBlur = 15;
+        ctx.beginPath();
+        ctx.moveTo(4, -25);
+        ctx.lineTo(-13, 1);
+        ctx.lineTo(-2, 1);
+        ctx.lineTo(-7, 24);
+        ctx.lineTo(15, -5);
+        ctx.lineTo(3, -5);
+        ctx.closePath();
+        ctx.fill();
+        ctx.restore();
+    }
+
+    function drawWater(now) {
+        ctx.strokeStyle = "#4cb8ee";
+        ctx.lineWidth = 7;
+        ctx.lineCap = "round";
+
+        for (let row = -1; row <= 1; row++) {
+            ctx.beginPath();
+            for (let x = -22; x <= 22; x += 4) {
+                const y = row * 11 + Math.sin((x + now / 30) / 6) * 3;
+                if (x === -22) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+        }
+    }
+
+    function drawSmoke(now) {
+        ctx.fillStyle = "rgba(180,190,201,.82)";
+        const t = now / 450;
+        [[-12,8,12], [2,2,15], [12,-9,11], [-5,-13,13]].forEach(([x,y,r], i) => {
+            ctx.beginPath();
+            ctx.arc(x + Math.sin(t + i) * 2, y, r, 0, Math.PI * 2);
+            ctx.fill();
+        });
+    }
+
+    function drawPoison() {
+        ctx.fillStyle = "#f5f5f5";
+        ctx.beginPath();
+        ctx.arc(0, -3, 18, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "#151d27";
+        ctx.beginPath();
+        ctx.arc(-6, -7, 3, 0, Math.PI * 2);
+        ctx.arc(6, -7, 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillRect(-4, 5, 8, 4);
+
+        ctx.strokeStyle = "#f5f5f5";
+        ctx.lineWidth = 6;
+        ctx.beginPath();
+        ctx.moveTo(-18, 12);
+        ctx.lineTo(18, 24);
+        ctx.moveTo(18, 12);
+        ctx.lineTo(-18, 24);
+        ctx.stroke();
+    }
+
+    function drawEnemyShot(missile, now) {
+        ctx.save();
+        ctx.translate(missile.x, missile.y);
+        ctx.rotate(missile.rotation);
+
+        if (missile.kind === "electric") {
+            ctx.fillStyle = "#ffe23d";
+            ctx.shadowColor = "#ffe23d";
+            ctx.shadowBlur = 10;
+            ctx.beginPath();
+            ctx.moveTo(2, -11);
+            ctx.lineTo(-6, 1);
+            ctx.lineTo(0, 1);
+            ctx.lineTo(-3, 11);
+            ctx.lineTo(7, -3);
+            ctx.lineTo(1, -3);
+            ctx.closePath();
+            ctx.fill();
+        } else if (missile.kind === "water") {
+            ctx.fillStyle = "#49b9ef";
+            ctx.beginPath();
+            ctx.moveTo(0, -11);
+            ctx.bezierCurveTo(9, -1, 8, 9, 0, 11);
+            ctx.bezierCurveTo(-8, 9, -9, -1, 0, -11);
+            ctx.fill();
+        } else if (missile.kind === "blood") {
+            ctx.fillStyle = "#d91f35";
+            ctx.beginPath();
+            ctx.moveTo(0, -11);
+            ctx.bezierCurveTo(8, -1, 8, 9, 0, 11);
+            ctx.bezierCurveTo(-8, 9, -8, -1, 0, -11);
+            ctx.fill();
+        } else if (missile.kind === "smoke" || missile.kind === "poison") {
+            ctx.fillStyle = missile.kind === "smoke"
+                ? "rgba(180,190,201,.9)"
+                : "rgba(144,214,92,.92)";
+            ctx.beginPath();
+            ctx.arc(0, 0, 9 + Math.sin(now / 90) * 2, 0, Math.PI * 2);
+            ctx.fill();
+        } else if (missile.kind === "car" || missile.kind === "fracture") {
+            ctx.fillStyle = "#a7afb7";
+            ctx.fillRect(-7, -5, 14, 10);
+            ctx.strokeStyle = "#e9eef2";
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(-5, -4);
+            ctx.lineTo(5, 4);
+            ctx.stroke();
+        } else {
+            ctx.fillStyle = "#ff6b2d";
+            ctx.shadowColor = "#ffb020";
+            ctx.shadowBlur = 10;
+            ctx.beginPath();
+            ctx.arc(0, 0, 7, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = "#ffd35a";
+            ctx.beginPath();
+            ctx.arc(-2, -2, 3, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        ctx.restore();
+    }
+
+    function drawBonus(bonus) {
+        ctx.save();
+        ctx.translate(bonus.x + 15, bonus.y + 15);
+
+        ctx.fillStyle = "rgba(255,255,255,.94)";
+        ctx.beginPath();
+        ctx.arc(0, 0, 15, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.font = "bold 18px Arial";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        const symbol = {
+            life: "♥",
+            shield: "S",
+            double: "×2",
+            rapid: "⚡"
+        }[bonus.kind];
+
+        ctx.fillStyle = bonus.kind === "life" ? "#d92f3a" : "#0878c9";
+        ctx.fillText(symbol, 0, 1);
+        ctx.restore();
+    }
+
+    function drawParticles() {
+        for (const p of state.particles) {
+            ctx.globalAlpha = Math.max(0, p.life);
+            ctx.fillStyle = p.life > .5 ? "#ffd166" : "#f05a3d";
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+    }
+
+    function draw(now = performance.now()) {
+        ctx.save();
+
+        if (now < state.shakeUntil) {
+            ctx.translate(Math.sin(now / 10) * 2, Math.cos(now / 13) * 1.5);
+        }
+
+        drawBackground(now);
+        state.enemies.forEach(enemy => drawEnemy(enemy, now));
+        state.shots.forEach(drawBandage);
+        state.enemyShots.forEach(missile => drawEnemyShot(missile, now));
+        state.bonuses.forEach(drawBonus);
+        drawParticles();
+        drawAmbulance(now);
+
+        ctx.restore();
+    }
+
+    function loop(timestamp) {
+        if (!state.running || state.gameOver) {
+            draw(timestamp);
+            return;
+        }
+
+        const dt = Math.min((timestamp - state.lastTime) / 1000, .035);
+        state.lastTime = timestamp;
+
+        if (!state.paused) update(dt, timestamp);
+        draw(timestamp);
+        requestAnimationFrame(loop);
+    }
+
+    function setHoldControl(button, keyName) {
+        const start = event => {
+            event.preventDefault();
+            keys[keyName] = true;
+        };
+        const stop = event => {
+            event.preventDefault();
+            keys[keyName] = false;
+        };
+
+        button.addEventListener("pointerdown", start);
+        button.addEventListener("pointerup", stop);
+        button.addEventListener("pointercancel", stop);
+        button.addEventListener("pointerleave", stop);
+    }
+
+    window.addEventListener("keydown", event => {
+        if (["ArrowLeft", "ArrowRight", " ", "a", "A", "d", "D", "p", "P"].includes(event.key)) {
+            event.preventDefault();
+        }
+
+        if (event.key === "ArrowLeft" || event.key.toLowerCase() === "a") keys.left = true;
+        if (event.key === "ArrowRight" || event.key.toLowerCase() === "d") keys.right = true;
+        if (event.code === "Space") shoot();
+        if (event.key.toLowerCase() === "p") togglePause();
+    });
+
+    window.addEventListener("keyup", event => {
+        if (event.key === "ArrowLeft" || event.key.toLowerCase() === "a") keys.left = false;
+        if (event.key === "ArrowRight" || event.key.toLowerCase() === "d") keys.right = false;
+    });
+
+    setHoldControl(leftButton, "left");
+    setHoldControl(rightButton, "right");
+
+    fireButton.addEventListener("pointerdown", event => {
+        event.preventDefault();
+        shoot();
+    });
+
+    startButton.addEventListener("click", resetState);
+    restartButton.addEventListener("click", restartGame);
+    pauseButton.addEventListener("click", togglePause);
+
+    canvas.addEventListener("pointermove", event => {
+        if (event.pointerType !== "touch" || !state.running || state.paused) return;
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = W / rect.width;
+        player.x = (event.clientX - rect.left) * scaleX - player.width / 2;
+        player.x = Math.max(10, Math.min(W - player.width - 10, player.x));
+    });
+
+    bestValue.textContent = state.best;
+    initStars();
+    draw();
+})();
+</script>
+{% endblock %}

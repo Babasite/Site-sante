@@ -1,0 +1,2 @@
+-r development.txt
+coverage>=7.6,<8

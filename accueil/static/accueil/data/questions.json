@@ -1,0 +1,3666 @@
+{
+  "version": "2.0.0",
+  "status": "definitif",
+  "locked": true,
+  "compatible_sports_json": "1.0.0",
+  "description": "Questionnaire adaptatif définitif pour le moteur de recommandation parmi 500 disciplines.",
+  "instructions_moteur": {
+    "nombre_total_questions": 100,
+    "nombre_cible_affiche": {
+      "min": 20,
+      "max": 30
+    },
+    "regle_selection": [
+      "Toujours afficher les questions de priorité 5.",
+      "Afficher ensuite les questions dont les conditions sont satisfaites.",
+      "Sélectionner les questions de priorité 4 puis 3 selon les réponses déjà données.",
+      "Utiliser les questions de priorité 2 uniquement pour départager des résultats proches.",
+      "Ne jamais dépasser 30 questions sauf demande explicite de l'utilisateur."
+    ],
+    "axes_sports_json": [
+      "cardio",
+      "force",
+      "technique",
+      "souplesse",
+      "equilibre",
+      "coordination",
+      "contact",
+      "competition"
+    ],
+    "scoring": {
+      "profil_initial": {
+        "cardio": 0,
+        "force": 0,
+        "technique": 0,
+        "souplesse": 0,
+        "equilibre": 0,
+        "coordination": 0,
+        "contact": 0,
+        "competition": 0
+      },
+      "normalisation_utilisateur": "Ramener chaque axe utilisateur sur une échelle de 0 à 5 avant comparaison.",
+      "score_axes": "Comparer les 8 axes utilisateur aux 8 axes de chaque discipline.",
+      "score_familles": "Ajouter les bonus et malus enregistrés dans families et exclude_families.",
+      "filtres_durs": "Appliquer les contraintes hard_* et médicales avant le classement final.",
+      "resultat": "Retourner les 10 disciplines ayant les meilleurs scores, avec une compatibilité de 0 à 100."
+    }
+  },
+  "questions": [
+    {
+      "id": "q001",
+      "theme": "Profil",
+      "question": "Quel est votre objectif principal ?",
+      "type": "single",
+      "required": true,
+      "priority": 5,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Améliorer ma santé générale",
+          "profile": {
+            "cardio": 1,
+            "force": 1,
+            "souplesse": 1,
+            "equilibre": 1
+          }
+        },
+        {
+          "label": "Perdre du poids",
+          "profile": {
+            "cardio": 3,
+            "force": 1
+          }
+        },
+        {
+          "label": "Prendre du muscle",
+          "profile": {
+            "force": 4
+          }
+        },
+        {
+          "label": "Gagner en endurance",
+          "profile": {
+            "cardio": 4
+          }
+        },
+        {
+          "label": "Me détendre et réduire mon stress",
+          "profile": {
+            "souplesse": 2,
+            "equilibre": 2,
+            "competition": -2
+          },
+          "families": {
+            "Bien-être": 4
+          }
+        },
+        {
+          "label": "Apprendre à me défendre",
+          "profile": {
+            "technique": 3,
+            "contact": 2
+          },
+          "families": {
+            "Combat": 4,
+            "Boxes": 3,
+            "Arts martiaux japonais": 3,
+            "Arts martiaux chinois": 2
+          }
+        },
+        {
+          "label": "Faire de la compétition",
+          "profile": {
+            "competition": 4
+          }
+        },
+        {
+          "label": "Découvrir une nouvelle passion",
+          "profile": {
+            "technique": 1,
+            "coordination": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "q002",
+      "theme": "Profil",
+      "question": "Quel est votre objectif secondaire ?",
+      "type": "single",
+      "required": true,
+      "priority": 4,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Améliorer mon cardio",
+          "profile": {
+            "cardio": 3
+          }
+        },
+        {
+          "label": "Développer ma force",
+          "profile": {
+            "force": 3
+          }
+        },
+        {
+          "label": "Améliorer ma souplesse",
+          "profile": {
+            "souplesse": 3
+          }
+        },
+        {
+          "label": "Développer mon équilibre",
+          "profile": {
+            "equilibre": 3
+          }
+        },
+        {
+          "label": "Améliorer ma coordination",
+          "profile": {
+            "coordination": 3
+          }
+        },
+        {
+          "label": "Apprendre une technique complexe",
+          "profile": {
+            "technique": 3
+          }
+        },
+        {
+          "label": "Rencontrer du monde",
+          "filters": {
+            "social": 3
+          }
+        },
+        {
+          "label": "Aucun objectif secondaire"
+        }
+      ]
+    },
+    {
+      "id": "q003",
+      "theme": "Profil",
+      "question": "Quelle importance accordez-vous au plaisir immédiat ?",
+      "type": "scale",
+      "required": true,
+      "priority": 2,
+      "max_display": 1,
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": {
+          "1": "Peu important",
+          "5": "Essentiel"
+        },
+        "profile_map": {
+          "1": {
+            "technique": 2
+          },
+          "2": {
+            "technique": 1
+          },
+          "4": {
+            "cardio": 1
+          },
+          "5": {
+            "cardio": 1,
+            "coordination": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "q004",
+      "theme": "Profil",
+      "question": "Préférez-vous progresser rapidement ou apprendre sur le long terme ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Voir des progrès rapidement",
+          "profile": {
+            "technique": -1
+          }
+        },
+        {
+          "label": "Construire une maîtrise sur plusieurs années",
+          "profile": {
+            "technique": 4
+          }
+        },
+        {
+          "label": "Un équilibre entre les deux",
+          "profile": {
+            "technique": 2
+          }
+        },
+        {
+          "label": "Cela m'est égal"
+        }
+      ]
+    },
+    {
+      "id": "q005",
+      "theme": "Profil",
+      "question": "Quelle place le dépassement de soi doit-il avoir ?",
+      "type": "scale",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "profile_map": {
+          "1": {
+            "competition": -2,
+            "cardio": -1
+          },
+          "2": {
+            "competition": -1
+          },
+          "4": {
+            "cardio": 2,
+            "competition": 1
+          },
+          "5": {
+            "cardio": 3,
+            "force": 2,
+            "competition": 2
+          }
+        }
+      }
+    },
+    {
+      "id": "q006",
+      "theme": "Profil",
+      "question": "Cherchez-vous surtout une activité de loisir ou une discipline structurée ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Loisir libre",
+          "profile": {
+            "competition": -2,
+            "technique": -1
+          }
+        },
+        {
+          "label": "Cours réguliers sans compétition",
+          "profile": {
+            "technique": 2,
+            "competition": -1
+          }
+        },
+        {
+          "label": "Discipline structurée avec progression",
+          "profile": {
+            "technique": 4
+          }
+        },
+        {
+          "label": "Parcours compétitif",
+          "profile": {
+            "competition": 4,
+            "technique": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "q007",
+      "theme": "Profil",
+      "question": "Aimez-vous mesurer vos performances ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Oui, avec des chronos, scores ou records",
+          "profile": {
+            "competition": 3,
+            "cardio": 1
+          },
+          "filters": {
+            "performance_tracking": 3
+          }
+        },
+        {
+          "label": "Oui, mais seulement contre moi-même",
+          "profile": {
+            "competition": 1
+          },
+          "filters": {
+            "performance_tracking": 2
+          }
+        },
+        {
+          "label": "Non, je préfère pratiquer sans mesure",
+          "profile": {
+            "competition": -3
+          }
+        },
+        {
+          "label": "Peu importe"
+        }
+      ]
+    },
+    {
+      "id": "q008",
+      "theme": "Profil",
+      "question": "Souhaitez-vous une activité utilisable dans la vie quotidienne ?",
+      "type": "single",
+      "required": true,
+      "priority": 2,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Oui, clairement",
+          "families": {
+            "Endurance": 2,
+            "Fitness": 2,
+            "Bien-être": 2,
+            "Combat": 2
+          }
+        },
+        {
+          "label": "Un peu"
+        },
+        {
+          "label": "Non, je cherche surtout une pratique sportive ou artistique"
+        },
+        {
+          "label": "Peu importe"
+        }
+      ]
+    },
+    {
+      "id": "q009",
+      "theme": "Profil",
+      "question": "Préférez-vous une activité très connue ou êtes-vous ouvert aux disciplines rares ?",
+      "type": "single",
+      "required": true,
+      "priority": 2,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Très connue",
+          "filters": {
+            "rarity_tolerance": -3
+          }
+        },
+        {
+          "label": "Plutôt connue",
+          "filters": {
+            "rarity_tolerance": -1
+          }
+        },
+        {
+          "label": "Je suis ouvert aux disciplines rares",
+          "filters": {
+            "rarity_tolerance": 3
+          }
+        },
+        {
+          "label": "Je recherche justement quelque chose d'original",
+          "filters": {
+            "rarity_tolerance": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "q010",
+      "theme": "Profil",
+      "question": "Souhaitez-vous pratiquer toute l'année ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Oui",
+          "filters": {
+            "seasonal": -3
+          }
+        },
+        {
+          "label": "Oui, mais une saisonnalité légère est acceptable",
+          "filters": {
+            "seasonal": -1
+          }
+        },
+        {
+          "label": "Non, une activité saisonnière me convient",
+          "filters": {
+            "seasonal": 3
+          }
+        },
+        {
+          "label": "Peu importe"
+        }
+      ]
+    },
+    {
+      "id": "q011",
+      "theme": "Condition physique",
+      "question": "Comment évaluez-vous votre condition physique actuelle ?",
+      "type": "single",
+      "required": true,
+      "priority": 5,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Très faible",
+          "profile": {
+            "cardio": -3,
+            "force": -2
+          },
+          "filters": {
+            "beginner_friendly": 4
+          }
+        },
+        {
+          "label": "Faible",
+          "profile": {
+            "cardio": -2,
+            "force": -1
+          },
+          "filters": {
+            "beginner_friendly": 3
+          }
+        },
+        {
+          "label": "Moyenne"
+        },
+        {
+          "label": "Bonne",
+          "profile": {
+            "cardio": 2,
+            "force": 1
+          }
+        },
+        {
+          "label": "Très bonne",
+          "profile": {
+            "cardio": 3,
+            "force": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "q012",
+      "theme": "Condition physique",
+      "question": "Combien de minutes pouvez-vous soutenir un effort modéré ?",
+      "type": "single",
+      "required": true,
+      "priority": 4,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Moins de 10 minutes",
+          "profile": {
+            "cardio": -3
+          }
+        },
+        {
+          "label": "10 à 20 minutes",
+          "profile": {
+            "cardio": -2
+          }
+        },
+        {
+          "label": "20 à 40 minutes",
+          "profile": {
+            "cardio": 0
+          }
+        },
+        {
+          "label": "40 à 60 minutes",
+          "profile": {
+            "cardio": 2
+          }
+        },
+        {
+          "label": "Plus d'une heure",
+          "profile": {
+            "cardio": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "q013",
+      "theme": "Condition physique",
+      "question": "Aimez-vous être essoufflé pendant l'effort ?",
+      "type": "scale",
+      "required": true,
+      "priority": 4,
+      "max_display": 1,
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "profile_map": {
+          "1": {
+            "cardio": -4
+          },
+          "2": {
+            "cardio": -2
+          },
+          "3": {
+            "cardio": 0
+          },
+          "4": {
+            "cardio": 2
+          },
+          "5": {
+            "cardio": 4
+          }
+        }
+      }
+    },
+    {
+      "id": "q014",
+      "theme": "Condition physique",
+      "question": "Aimez-vous les efforts explosifs et courts ?",
+      "type": "scale",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "profile_map": {
+          "1": {
+            "force": -2
+          },
+          "2": {
+            "force": -1
+          },
+          "4": {
+            "force": 2
+          },
+          "5": {
+            "force": 4
+          }
+        }
+      }
+    },
+    {
+      "id": "q015",
+      "theme": "Condition physique",
+      "question": "Aimez-vous les efforts longs et réguliers ?",
+      "type": "scale",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "profile_map": {
+          "1": {
+            "cardio": -2
+          },
+          "2": {
+            "cardio": -1
+          },
+          "4": {
+            "cardio": 2
+          },
+          "5": {
+            "cardio": 4
+          }
+        }
+      }
+    },
+    {
+      "id": "q016",
+      "theme": "Condition physique",
+      "question": "Souhaitez-vous développer principalement le haut du corps ?",
+      "type": "single",
+      "required": true,
+      "priority": 2,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Oui",
+          "profile": {
+            "force": 3
+          },
+          "families": {
+            "Force": 3,
+            "Aquatique": 1,
+            "Montagne": 1
+          }
+        },
+        {
+          "label": "Un peu",
+          "profile": {
+            "force": 1
+          }
+        },
+        {
+          "label": "Non"
+        },
+        {
+          "label": "Peu importe"
+        }
+      ]
+    },
+    {
+      "id": "q017",
+      "theme": "Condition physique",
+      "question": "Souhaitez-vous développer principalement les jambes ?",
+      "type": "single",
+      "required": true,
+      "priority": 2,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Oui",
+          "profile": {
+            "force": 2,
+            "cardio": 2
+          },
+          "families": {
+            "Cyclisme": 2,
+            "Endurance": 2,
+            "Glisse": 1
+          }
+        },
+        {
+          "label": "Un peu",
+          "profile": {
+            "force": 1
+          }
+        },
+        {
+          "label": "Non"
+        },
+        {
+          "label": "Peu importe"
+        }
+      ]
+    },
+    {
+      "id": "q018",
+      "theme": "Condition physique",
+      "question": "Souhaitez-vous améliorer votre mobilité générale ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Oui, beaucoup",
+          "profile": {
+            "souplesse": 4,
+            "equilibre": 2
+          }
+        },
+        {
+          "label": "Oui, un peu",
+          "profile": {
+            "souplesse": 2
+          }
+        },
+        {
+          "label": "Non"
+        },
+        {
+          "label": "Peu importe"
+        }
+      ]
+    },
+    {
+      "id": "q019",
+      "theme": "Condition physique",
+      "question": "Votre équilibre actuel est-il satisfaisant ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non, je veux l'améliorer",
+          "profile": {
+            "equilibre": 4
+          }
+        },
+        {
+          "label": "Il est moyen",
+          "profile": {
+            "equilibre": 2
+          }
+        },
+        {
+          "label": "Oui",
+          "profile": {
+            "equilibre": 1
+          }
+        },
+        {
+          "label": "Je ne sais pas"
+        }
+      ]
+    },
+    {
+      "id": "q020",
+      "theme": "Condition physique",
+      "question": "Votre coordination actuelle est-elle satisfaisante ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non, je veux l'améliorer",
+          "profile": {
+            "coordination": 4
+          }
+        },
+        {
+          "label": "Elle est moyenne",
+          "profile": {
+            "coordination": 2
+          }
+        },
+        {
+          "label": "Oui",
+          "profile": {
+            "coordination": 1
+          }
+        },
+        {
+          "label": "Je ne sais pas"
+        }
+      ]
+    },
+    {
+      "id": "q021",
+      "theme": "Santé",
+      "question": "Avez-vous une limitation médicale diagnostiquée ?",
+      "type": "single",
+      "required": true,
+      "priority": 5,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Oui",
+          "filters": {
+            "medical_attention": 5
+          },
+          "next_question": "q022"
+        },
+        {
+          "label": "Non"
+        },
+        {
+          "label": "Je ne sais pas",
+          "filters": {
+            "medical_attention": 2
+          }
+        }
+      ],
+      "note": "Le moteur ne remplace jamais un avis médical."
+    },
+    {
+      "id": "q022",
+      "theme": "Santé",
+      "question": "Quelle zone doit être particulièrement protégée ?",
+      "type": "multiple",
+      "required": true,
+      "priority": 5,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Dos",
+          "filters": {
+            "protect_back": 5
+          }
+        },
+        {
+          "label": "Genoux",
+          "filters": {
+            "protect_knees": 5
+          }
+        },
+        {
+          "label": "Chevilles",
+          "filters": {
+            "protect_ankles": 5
+          }
+        },
+        {
+          "label": "Épaules",
+          "filters": {
+            "protect_shoulders": 5
+          }
+        },
+        {
+          "label": "Poignets ou mains",
+          "filters": {
+            "protect_wrists": 5
+          }
+        },
+        {
+          "label": "Cervicales",
+          "filters": {
+            "protect_neck": 5
+          }
+        },
+        {
+          "label": "Système cardiovasculaire",
+          "filters": {
+            "protect_cardio": 5
+          }
+        },
+        {
+          "label": "Autre",
+          "filters": {
+            "medical_attention": 5
+          }
+        }
+      ],
+      "condition": {
+        "question_id": "q021",
+        "operator": "equals",
+        "value": "Oui"
+      }
+    },
+    {
+      "id": "q023",
+      "theme": "Santé",
+      "question": "Supportez-vous les impacts répétés ?",
+      "type": "single",
+      "required": true,
+      "priority": 4,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Très mal",
+          "profile": {
+            "contact": -4
+          },
+          "filters": {
+            "avoid_impacts": 5
+          }
+        },
+        {
+          "label": "Plutôt mal",
+          "profile": {
+            "contact": -2
+          },
+          "filters": {
+            "avoid_impacts": 3
+          }
+        },
+        {
+          "label": "Correctement"
+        },
+        {
+          "label": "Très bien",
+          "profile": {
+            "contact": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "q024",
+      "theme": "Santé",
+      "question": "Supportez-vous les chutes au sol ?",
+      "type": "single",
+      "required": true,
+      "priority": 4,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "exclude_families": {
+            "Lutte": 4,
+            "Grappling": 4
+          },
+          "filters": {
+            "avoid_falls": 5
+          }
+        },
+        {
+          "label": "Seulement avec apprentissage progressif",
+          "filters": {
+            "avoid_falls": 2
+          }
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Lutte": 2,
+            "Grappling": 2,
+            "Arts martiaux japonais": 1
+          }
+        },
+        {
+          "label": "Je ne sais pas"
+        }
+      ]
+    },
+    {
+      "id": "q025",
+      "theme": "Santé",
+      "question": "Êtes-vous à l'aise avec les rotations rapides ?",
+      "type": "single",
+      "required": true,
+      "priority": 2,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "filters": {
+            "avoid_rotations": 4
+          }
+        },
+        {
+          "label": "Un peu"
+        },
+        {
+          "label": "Oui",
+          "profile": {
+            "coordination": 2,
+            "equilibre": 2
+          }
+        },
+        {
+          "label": "Je ne sais pas"
+        }
+      ]
+    },
+    {
+      "id": "q026",
+      "theme": "Santé",
+      "question": "Êtes-vous sensible au vertige ?",
+      "type": "single",
+      "required": true,
+      "priority": 4,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Oui, fortement",
+          "exclude_families": {
+            "Aérien": 5,
+            "Montagne": 4,
+            "Cirque": 3
+          },
+          "filters": {
+            "vertigo": 5
+          }
+        },
+        {
+          "label": "Oui, légèrement",
+          "exclude_families": {
+            "Aérien": 2,
+            "Montagne": 1
+          }
+        },
+        {
+          "label": "Non",
+          "families": {
+            "Aérien": 2,
+            "Montagne": 2,
+            "Cirque": 1
+          }
+        },
+        {
+          "label": "Je ne sais pas"
+        }
+      ]
+    },
+    {
+      "id": "q027",
+      "theme": "Santé",
+      "question": "Êtes-vous à l'aise dans l'eau ?",
+      "type": "single",
+      "required": true,
+      "priority": 5,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "exclude_families": {
+            "Aquatique": 5
+          },
+          "filters": {
+            "non_swimmer": 5
+          }
+        },
+        {
+          "label": "Un peu",
+          "exclude_families": {
+            "Aquatique": 2
+          }
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Aquatique": 4
+          }
+        },
+        {
+          "label": "Très à l'aise",
+          "families": {
+            "Aquatique": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "q028",
+      "theme": "Santé",
+      "question": "Êtes-vous à l'aise dans le froid ?",
+      "type": "single",
+      "required": true,
+      "priority": 2,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "exclude_families": {
+            "Glisse": 2,
+            "Montagne": 1
+          }
+        },
+        {
+          "label": "Un peu"
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Glisse": 2,
+            "Montagne": 1
+          }
+        },
+        {
+          "label": "J'adore le froid",
+          "families": {
+            "Glisse": 4,
+            "Montagne": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "q029",
+      "theme": "Santé",
+      "question": "Avez-vous besoin d'une activité à faible impact articulaire ?",
+      "type": "single",
+      "required": true,
+      "priority": 5,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Oui absolument",
+          "families": {
+            "Aquatique": 4,
+            "Bien-être": 3
+          },
+          "filters": {
+            "low_impact": 5
+          }
+        },
+        {
+          "label": "De préférence",
+          "families": {
+            "Aquatique": 2,
+            "Bien-être": 2
+          },
+          "filters": {
+            "low_impact": 3
+          }
+        },
+        {
+          "label": "Non"
+        },
+        {
+          "label": "Je ne sais pas"
+        }
+      ]
+    },
+    {
+      "id": "q030",
+      "theme": "Santé",
+      "question": "Avez-vous besoin d'une pratique adaptée à un handicap ?",
+      "type": "single",
+      "required": true,
+      "priority": 5,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Oui",
+          "families": {
+            "Sport adapté": 8
+          },
+          "filters": {
+            "adaptive_required": 5
+          }
+        },
+        {
+          "label": "Peut-être",
+          "families": {
+            "Sport adapté": 3
+          }
+        },
+        {
+          "label": "Non"
+        },
+        {
+          "label": "Je préfère ne pas répondre"
+        }
+      ]
+    },
+    {
+      "id": "q031",
+      "theme": "Contact",
+      "question": "Quel niveau de contact acceptez-vous ?",
+      "type": "single",
+      "required": true,
+      "priority": 5,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Aucun",
+          "profile": {
+            "contact": -5
+          },
+          "exclude_families": {
+            "Boxes": 4,
+            "Combat": 4,
+            "Lutte": 3
+          }
+        },
+        {
+          "label": "Contact léger",
+          "profile": {
+            "contact": -2
+          }
+        },
+        {
+          "label": "Contact modéré",
+          "profile": {
+            "contact": 2
+          }
+        },
+        {
+          "label": "Contact complet",
+          "profile": {
+            "contact": 5
+          },
+          "families": {
+            "Boxes": 3,
+            "Combat": 3,
+            "Lutte": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "q032",
+      "theme": "Contact",
+      "question": "Acceptez-vous de recevoir des coups ?",
+      "type": "single",
+      "required": true,
+      "priority": 5,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Jamais",
+          "profile": {
+            "contact": -5
+          },
+          "exclude_families": {
+            "Boxes": 5,
+            "Combat": 4
+          }
+        },
+        {
+          "label": "Seulement en exercices contrôlés",
+          "profile": {
+            "contact": -1
+          }
+        },
+        {
+          "label": "Oui avec protections",
+          "profile": {
+            "contact": 3
+          }
+        },
+        {
+          "label": "Oui",
+          "profile": {
+            "contact": 5
+          },
+          "families": {
+            "Boxes": 3,
+            "Combat": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "q033",
+      "theme": "Contact",
+      "question": "Acceptez-vous les saisies et projections ?",
+      "type": "single",
+      "required": true,
+      "priority": 4,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "exclude_families": {
+            "Lutte": 4,
+            "Grappling": 4
+          }
+        },
+        {
+          "label": "Un peu"
+        },
+        {
+          "label": "Oui",
+          "profile": {
+            "contact": 2
+          },
+          "families": {
+            "Lutte": 4,
+            "Grappling": 4,
+            "Arts martiaux japonais": 2
+          }
+        },
+        {
+          "label": "Je les recherche",
+          "profile": {
+            "contact": 4
+          },
+          "families": {
+            "Lutte": 6,
+            "Grappling": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "q034",
+      "theme": "Contact",
+      "question": "Acceptez-vous le combat au sol ?",
+      "type": "single",
+      "required": true,
+      "priority": 4,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "exclude_families": {
+            "Grappling": 5
+          }
+        },
+        {
+          "label": "Occasionnellement",
+          "families": {
+            "Grappling": 1
+          }
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Grappling": 4,
+            "Lutte": 2
+          }
+        },
+        {
+          "label": "C'est ce que je préfère",
+          "families": {
+            "Grappling": 7
+          }
+        }
+      ]
+    },
+    {
+      "id": "q035",
+      "theme": "Contact",
+      "question": "Souhaitez-vous apprendre la self-défense ?",
+      "type": "single",
+      "required": true,
+      "priority": 4,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Oui, priorité absolue",
+          "profile": {
+            "technique": 3,
+            "contact": 2
+          },
+          "families": {
+            "Combat": 6,
+            "Boxes": 3,
+            "Arts martiaux japonais": 3
+          }
+        },
+        {
+          "label": "Oui, comme bénéfice secondaire",
+          "families": {
+            "Combat": 3,
+            "Arts martiaux japonais": 2
+          }
+        },
+        {
+          "label": "Non"
+        },
+        {
+          "label": "Peu importe"
+        }
+      ]
+    },
+    {
+      "id": "q036",
+      "theme": "Contact",
+      "question": "Êtes-vous attiré par les armes sportives ou traditionnelles ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "exclude_families": {
+            "Précision": 1
+          }
+        },
+        {
+          "label": "Un peu",
+          "families": {
+            "Précision": 1
+          }
+        },
+        {
+          "label": "Oui",
+          "profile": {
+            "technique": 2,
+            "coordination": 2
+          },
+          "families": {
+            "Précision": 4,
+            "Arts martiaux japonais": 2
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "families": {
+            "Précision": 6,
+            "Arts martiaux japonais": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "q037",
+      "theme": "Risque",
+      "question": "Quel niveau de risque acceptez-vous ?",
+      "type": "single",
+      "required": true,
+      "priority": 5,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Très faible",
+          "exclude_families": {
+            "Aérien": 5,
+            "Mécanique": 4,
+            "Combat": 3
+          },
+          "filters": {
+            "risk_tolerance": -5
+          }
+        },
+        {
+          "label": "Faible",
+          "filters": {
+            "risk_tolerance": -2
+          }
+        },
+        {
+          "label": "Modéré",
+          "filters": {
+            "risk_tolerance": 1
+          }
+        },
+        {
+          "label": "Élevé",
+          "families": {
+            "Aérien": 3,
+            "Mécanique": 2,
+            "Montagne": 2
+          },
+          "filters": {
+            "risk_tolerance": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "q038",
+      "theme": "Risque",
+      "question": "Recherchez-vous des sensations fortes ?",
+      "type": "scale",
+      "required": true,
+      "priority": 4,
+      "max_display": 1,
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "families_map": {
+          "1": {
+            "Bien-être": 3
+          },
+          "2": {
+            "Fitness": 1
+          },
+          "4": {
+            "Montagne": 2,
+            "Glisse": 2
+          },
+          "5": {
+            "Aérien": 5,
+            "Mécanique": 4,
+            "Montagne": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "q039",
+      "theme": "Risque",
+      "question": "Acceptez-vous une activité nécessitant des protections importantes ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "exclude_families": {
+            "Mécanique": 2,
+            "Combat": 2
+          }
+        },
+        {
+          "label": "Seulement des protections légères"
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Mécanique": 2,
+            "Combat": 2,
+            "Glisse": 1
+          }
+        },
+        {
+          "label": "Peu importe"
+        }
+      ]
+    },
+    {
+      "id": "q040",
+      "theme": "Risque",
+      "question": "Acceptez-vous une activité exigeant une formation de sécurité spécifique ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "exclude_families": {
+            "Aérien": 4,
+            "Montagne": 2
+          }
+        },
+        {
+          "label": "Oui si elle est courte"
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Aérien": 3,
+            "Montagne": 2,
+            "Aquatique": 1
+          }
+        },
+        {
+          "label": "Avec plaisir",
+          "families": {
+            "Aérien": 4,
+            "Montagne": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "q041",
+      "theme": "Social",
+      "question": "Préférez-vous pratiquer seul ou avec d'autres personnes ?",
+      "type": "single",
+      "required": true,
+      "priority": 5,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Seul",
+          "exclude_families": {
+            "Collectif": 5
+          },
+          "filters": {
+            "social": -4
+          }
+        },
+        {
+          "label": "À deux",
+          "filters": {
+            "social": 1
+          }
+        },
+        {
+          "label": "En petit groupe",
+          "filters": {
+            "social": 3
+          }
+        },
+        {
+          "label": "En équipe",
+          "families": {
+            "Collectif": 6
+          },
+          "filters": {
+            "social": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "q042",
+      "theme": "Social",
+      "question": "Souhaitez-vous dépendre des performances d'une équipe ?",
+      "type": "single",
+      "required": true,
+      "priority": 4,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "exclude_families": {
+            "Collectif": 5
+          }
+        },
+        {
+          "label": "Un peu"
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Collectif": 5
+          }
+        },
+        {
+          "label": "C'est essentiel",
+          "families": {
+            "Collectif": 8
+          }
+        }
+      ]
+    },
+    {
+      "id": "q043",
+      "theme": "Social",
+      "question": "Aimez-vous coopérer pour atteindre un objectif commun ?",
+      "type": "scale",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "families_map": {
+          "1": {
+            "Collectif": -4
+          },
+          "2": {
+            "Collectif": -2
+          },
+          "4": {
+            "Collectif": 3
+          },
+          "5": {
+            "Collectif": 6
+          }
+        }
+      }
+    },
+    {
+      "id": "q044",
+      "theme": "Social",
+      "question": "Aimez-vous affronter directement un adversaire ?",
+      "type": "scale",
+      "required": true,
+      "priority": 4,
+      "max_display": 1,
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "profile_map": {
+          "1": {
+            "competition": -3,
+            "contact": -1
+          },
+          "2": {
+            "competition": -1
+          },
+          "4": {
+            "competition": 2
+          },
+          "5": {
+            "competition": 4,
+            "contact": 1
+          }
+        }
+      }
+    },
+    {
+      "id": "q045",
+      "theme": "Compétition",
+      "question": "Quelle place doit avoir la compétition ?",
+      "type": "single",
+      "required": true,
+      "priority": 5,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Aucune",
+          "profile": {
+            "competition": -5
+          }
+        },
+        {
+          "label": "Optionnelle",
+          "profile": {
+            "competition": -2
+          }
+        },
+        {
+          "label": "Importante",
+          "profile": {
+            "competition": 3
+          }
+        },
+        {
+          "label": "Centrale",
+          "profile": {
+            "competition": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "q046",
+      "theme": "Compétition",
+      "question": "Aimez-vous les classements et tournois ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "profile": {
+            "competition": -3
+          }
+        },
+        {
+          "label": "Occasionnellement"
+        },
+        {
+          "label": "Oui",
+          "profile": {
+            "competition": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "profile": {
+            "competition": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "q047",
+      "theme": "Compétition",
+      "question": "Préférez-vous battre un adversaire ou battre votre propre record ?",
+      "type": "single",
+      "required": true,
+      "priority": 2,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Battre un adversaire",
+          "profile": {
+            "competition": 4
+          },
+          "families": {
+            "Boxes": 1,
+            "Raquette": 2,
+            "Collectif": 2
+          }
+        },
+        {
+          "label": "Battre mon record",
+          "profile": {
+            "competition": 2
+          },
+          "families": {
+            "Endurance": 2,
+            "Athlétisme": 2,
+            "Force": 2
+          }
+        },
+        {
+          "label": "Les deux",
+          "profile": {
+            "competition": 3
+          }
+        },
+        {
+          "label": "Ni l'un ni l'autre",
+          "profile": {
+            "competition": -4
+          }
+        }
+      ]
+    },
+    {
+      "id": "q048",
+      "theme": "Social",
+      "question": "Souhaitez-vous une forte ambiance de club ?",
+      "type": "single",
+      "required": true,
+      "priority": 2,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Oui",
+          "filters": {
+            "club_culture": 4
+          }
+        },
+        {
+          "label": "Un peu",
+          "filters": {
+            "club_culture": 2
+          }
+        },
+        {
+          "label": "Non",
+          "filters": {
+            "club_culture": -2
+          }
+        },
+        {
+          "label": "Peu importe"
+        }
+      ]
+    },
+    {
+      "id": "q049",
+      "theme": "Social",
+      "question": "Êtes-vous à l'aise avec la proximité physique ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "profile": {
+            "contact": -4
+          }
+        },
+        {
+          "label": "Un peu",
+          "profile": {
+            "contact": -1
+          }
+        },
+        {
+          "label": "Oui",
+          "profile": {
+            "contact": 2
+          }
+        },
+        {
+          "label": "Très à l'aise",
+          "profile": {
+            "contact": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "q050",
+      "theme": "Social",
+      "question": "Souhaitez-vous rencontrer régulièrement de nouvelles personnes ?",
+      "type": "single",
+      "required": true,
+      "priority": 2,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Oui",
+          "filters": {
+            "social": 4
+          }
+        },
+        {
+          "label": "Un peu",
+          "filters": {
+            "social": 2
+          }
+        },
+        {
+          "label": "Non",
+          "filters": {
+            "social": -2
+          }
+        },
+        {
+          "label": "Peu importe"
+        }
+      ]
+    },
+    {
+      "id": "q051",
+      "theme": "Technique",
+      "question": "Aimez-vous apprendre des gestes précis ?",
+      "type": "scale",
+      "required": true,
+      "priority": 5,
+      "max_display": 1,
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "profile_map": {
+          "1": {
+            "technique": -3
+          },
+          "2": {
+            "technique": -1
+          },
+          "4": {
+            "technique": 3
+          },
+          "5": {
+            "technique": 5
+          }
+        }
+      }
+    },
+    {
+      "id": "q052",
+      "theme": "Technique",
+      "question": "Aimez-vous répéter un mouvement pour le perfectionner ?",
+      "type": "scale",
+      "required": true,
+      "priority": 4,
+      "max_display": 1,
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "profile_map": {
+          "1": {
+            "technique": -3
+          },
+          "2": {
+            "technique": -1
+          },
+          "4": {
+            "technique": 3
+          },
+          "5": {
+            "technique": 5
+          }
+        }
+      }
+    },
+    {
+      "id": "q053",
+      "theme": "Technique",
+      "question": "Aimez-vous les règles complexes ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "profile": {
+            "technique": -2
+          }
+        },
+        {
+          "label": "Un peu"
+        },
+        {
+          "label": "Oui",
+          "profile": {
+            "technique": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "profile": {
+            "technique": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "q054",
+      "theme": "Technique",
+      "question": "Aimez-vous anticiper et élaborer une stratégie ?",
+      "type": "scale",
+      "required": true,
+      "priority": 4,
+      "max_display": 1,
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "profile_map": {
+          "1": {
+            "technique": -1
+          },
+          "4": {
+            "technique": 2,
+            "competition": 1
+          },
+          "5": {
+            "technique": 4,
+            "competition": 2
+          }
+        }
+      }
+    },
+    {
+      "id": "q055",
+      "theme": "Créativité",
+      "question": "Souhaitez-vous pouvoir improviser ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non, je préfère un cadre précis",
+          "profile": {
+            "technique": 3
+          }
+        },
+        {
+          "label": "Un peu"
+        },
+        {
+          "label": "Oui",
+          "profile": {
+            "coordination": 2
+          },
+          "families": {
+            "Danse": 2,
+            "Cirque": 2
+          }
+        },
+        {
+          "label": "C'est essentiel",
+          "profile": {
+            "coordination": 3
+          },
+          "families": {
+            "Danse": 5,
+            "Cirque": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "q056",
+      "theme": "Créativité",
+      "question": "La dimension artistique vous attire-t-elle ?",
+      "type": "scale",
+      "required": true,
+      "priority": 4,
+      "max_display": 1,
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "families_map": {
+          "1": {
+            "Danse": -4,
+            "Cirque": -3
+          },
+          "2": {
+            "Danse": -2
+          },
+          "4": {
+            "Danse": 4,
+            "Cirque": 2,
+            "Gymnastique": 2
+          },
+          "5": {
+            "Danse": 7,
+            "Cirque": 5,
+            "Gymnastique": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "q057",
+      "theme": "Mental",
+      "question": "Recherchez-vous une discipline favorisant le calme et la concentration ?",
+      "type": "single",
+      "required": true,
+      "priority": 4,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Oui, fortement",
+          "profile": {
+            "equilibre": 2,
+            "technique": 2,
+            "competition": -2
+          },
+          "families": {
+            "Bien-être": 6,
+            "Précision": 3,
+            "Arts martiaux japonais": 2
+          }
+        },
+        {
+          "label": "Oui, un peu",
+          "families": {
+            "Bien-être": 3,
+            "Précision": 1
+          }
+        },
+        {
+          "label": "Non"
+        },
+        {
+          "label": "Peu importe"
+        }
+      ]
+    },
+    {
+      "id": "q058",
+      "theme": "Mental",
+      "question": "Êtes-vous attiré par une philosophie ou une tradition ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non"
+        },
+        {
+          "label": "Un peu",
+          "families": {
+            "Arts martiaux japonais": 1,
+            "Arts martiaux chinois": 1,
+            "Bien-être": 1
+          }
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Arts martiaux japonais": 4,
+            "Arts martiaux chinois": 4,
+            "Bien-être": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "families": {
+            "Arts martiaux japonais": 6,
+            "Arts martiaux chinois": 6,
+            "Bien-être": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "q059",
+      "theme": "Mental",
+      "question": "Aimez-vous les activités demandant beaucoup de patience ?",
+      "type": "scale",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "profile_map": {
+          "1": {
+            "technique": -2
+          },
+          "2": {
+            "technique": -1
+          },
+          "4": {
+            "technique": 2
+          },
+          "5": {
+            "technique": 4
+          }
+        }
+      }
+    },
+    {
+      "id": "q060",
+      "theme": "Mental",
+      "question": "Comment réagissez-vous à l'échec ?",
+      "type": "single",
+      "required": true,
+      "priority": 2,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Je me décourage facilement",
+          "filters": {
+            "progressive_learning": 4
+          }
+        },
+        {
+          "label": "J'ai besoin d'encouragements",
+          "filters": {
+            "progressive_learning": 3
+          }
+        },
+        {
+          "label": "Je persévère",
+          "profile": {
+            "technique": 2,
+            "competition": 1
+          }
+        },
+        {
+          "label": "L'échec me motive",
+          "profile": {
+            "competition": 3,
+            "technique": 2
+          }
+        }
+      ]
+    },
+    {
+      "id": "q061",
+      "theme": "Environnement",
+      "question": "Où souhaitez-vous pratiquer principalement ?",
+      "type": "single",
+      "required": true,
+      "priority": 5,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "En intérieur",
+          "exclude_families": {
+            "Montagne": 2,
+            "Aérien": 2
+          },
+          "filters": {
+            "indoor": 5
+          }
+        },
+        {
+          "label": "En extérieur",
+          "families": {
+            "Endurance": 2,
+            "Montagne": 2,
+            "Cyclisme": 2
+          },
+          "filters": {
+            "outdoor": 5
+          }
+        },
+        {
+          "label": "Dans l'eau",
+          "families": {
+            "Aquatique": 8
+          }
+        },
+        {
+          "label": "En montagne",
+          "families": {
+            "Montagne": 8
+          }
+        },
+        {
+          "label": "Sur neige ou glace",
+          "families": {
+            "Glisse": 8
+          }
+        },
+        {
+          "label": "Peu importe"
+        }
+      ]
+    },
+    {
+      "id": "q062",
+      "theme": "Environnement",
+      "question": "Aimez-vous être dans la nature ?",
+      "type": "scale",
+      "required": true,
+      "priority": 4,
+      "max_display": 1,
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "families_map": {
+          "1": {
+            "Montagne": -3,
+            "Endurance": -1
+          },
+          "4": {
+            "Montagne": 3,
+            "Endurance": 2,
+            "Cyclisme": 2
+          },
+          "5": {
+            "Montagne": 6,
+            "Endurance": 3,
+            "Cyclisme": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "q063",
+      "theme": "Environnement",
+      "question": "Aimez-vous la montagne ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "exclude_families": {
+            "Montagne": 5
+          }
+        },
+        {
+          "label": "Un peu",
+          "families": {
+            "Montagne": 1
+          }
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Montagne": 5
+          }
+        },
+        {
+          "label": "C'est mon environnement préféré",
+          "families": {
+            "Montagne": 8
+          }
+        }
+      ]
+    },
+    {
+      "id": "q064",
+      "theme": "Environnement",
+      "question": "Aimez-vous la mer, les lacs ou les rivières ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "exclude_families": {
+            "Aquatique": 4
+          }
+        },
+        {
+          "label": "Un peu",
+          "families": {
+            "Aquatique": 1
+          }
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Aquatique": 5
+          }
+        },
+        {
+          "label": "C'est mon environnement préféré",
+          "families": {
+            "Aquatique": 8
+          }
+        }
+      ]
+    },
+    {
+      "id": "q065",
+      "theme": "Environnement",
+      "question": "Acceptez-vous de pratiquer sous la pluie ou dans le vent ?",
+      "type": "single",
+      "required": true,
+      "priority": 2,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "filters": {
+            "weather_tolerance": -5
+          }
+        },
+        {
+          "label": "Un peu",
+          "filters": {
+            "weather_tolerance": -2
+          }
+        },
+        {
+          "label": "Oui",
+          "filters": {
+            "weather_tolerance": 3
+          }
+        },
+        {
+          "label": "J'aime les conditions difficiles",
+          "families": {
+            "Montagne": 2,
+            "Endurance": 2
+          },
+          "filters": {
+            "weather_tolerance": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "q066",
+      "theme": "Environnement",
+      "question": "Aimez-vous la vitesse ?",
+      "type": "scale",
+      "required": true,
+      "priority": 4,
+      "max_display": 1,
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "families_map": {
+          "1": {
+            "Mécanique": -3,
+            "Glisse": -2
+          },
+          "4": {
+            "Cyclisme": 2,
+            "Glisse": 3,
+            "Mécanique": 2
+          },
+          "5": {
+            "Mécanique": 5,
+            "Glisse": 5,
+            "Cyclisme": 3
+          }
+        }
+      }
+    },
+    {
+      "id": "q067",
+      "theme": "Environnement",
+      "question": "Êtes-vous attiré par les sports aériens ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "exclude_families": {
+            "Aérien": 5
+          }
+        },
+        {
+          "label": "Un peu",
+          "families": {
+            "Aérien": 1
+          }
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Aérien": 5
+          }
+        },
+        {
+          "label": "C'est un rêve",
+          "families": {
+            "Aérien": 8
+          }
+        }
+      ]
+    },
+    {
+      "id": "q068",
+      "theme": "Environnement",
+      "question": "Êtes-vous attiré par les sports mécaniques ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "exclude_families": {
+            "Mécanique": 5
+          }
+        },
+        {
+          "label": "Un peu",
+          "families": {
+            "Mécanique": 1
+          }
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Mécanique": 5
+          }
+        },
+        {
+          "label": "Passionnément",
+          "families": {
+            "Mécanique": 8
+          }
+        }
+      ]
+    },
+    {
+      "id": "q069",
+      "theme": "Environnement",
+      "question": "Êtes-vous attiré par les animaux et les sports équestres ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "exclude_families": {
+            "Équestre": 5
+          }
+        },
+        {
+          "label": "Un peu",
+          "families": {
+            "Équestre": 1
+          }
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Équestre": 5
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "families": {
+            "Équestre": 8
+          }
+        }
+      ]
+    },
+    {
+      "id": "q070",
+      "theme": "Environnement",
+      "question": "Souhaitez-vous une activité facilement praticable près de chez vous ?",
+      "type": "single",
+      "required": true,
+      "priority": 4,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Oui absolument",
+          "filters": {
+            "accessibility": 5
+          }
+        },
+        {
+          "label": "De préférence",
+          "filters": {
+            "accessibility": 3
+          }
+        },
+        {
+          "label": "Je peux me déplacer",
+          "filters": {
+            "accessibility": -1
+          }
+        },
+        {
+          "label": "Je suis prêt à voyager",
+          "filters": {
+            "accessibility": -4
+          }
+        }
+      ]
+    },
+    {
+      "id": "q071",
+      "theme": "Budget",
+      "question": "Quel budget annuel maximum envisagez-vous ?",
+      "type": "single",
+      "required": true,
+      "priority": 5,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Moins de 100 €",
+          "filters": {
+            "budget_max": 1
+          }
+        },
+        {
+          "label": "100 à 300 €",
+          "filters": {
+            "budget_max": 2
+          }
+        },
+        {
+          "label": "300 à 600 €",
+          "filters": {
+            "budget_max": 3
+          }
+        },
+        {
+          "label": "600 à 1 200 €",
+          "filters": {
+            "budget_max": 4
+          }
+        },
+        {
+          "label": "Plus de 1 200 €",
+          "filters": {
+            "budget_max": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "q072",
+      "theme": "Budget",
+      "question": "Acceptez-vous d'acheter du matériel personnel ?",
+      "type": "single",
+      "required": true,
+      "priority": 4,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "filters": {
+            "equipment_tolerance": -5
+          }
+        },
+        {
+          "label": "Seulement du petit matériel",
+          "filters": {
+            "equipment_tolerance": -2
+          }
+        },
+        {
+          "label": "Oui, raisonnablement",
+          "filters": {
+            "equipment_tolerance": 2
+          }
+        },
+        {
+          "label": "Oui, même du matériel coûteux",
+          "filters": {
+            "equipment_tolerance": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "q073",
+      "theme": "Temps",
+      "question": "Combien de séances pouvez-vous faire chaque semaine ?",
+      "type": "single",
+      "required": true,
+      "priority": 5,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Une",
+          "filters": {
+            "sessions_per_week": 1
+          }
+        },
+        {
+          "label": "Deux",
+          "filters": {
+            "sessions_per_week": 2
+          }
+        },
+        {
+          "label": "Trois",
+          "filters": {
+            "sessions_per_week": 3
+          }
+        },
+        {
+          "label": "Quatre ou plus",
+          "filters": {
+            "sessions_per_week": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "q074",
+      "theme": "Temps",
+      "question": "Quelle durée de séance vous convient ?",
+      "type": "single",
+      "required": true,
+      "priority": 4,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Moins de 30 minutes",
+          "filters": {
+            "session_duration": 1
+          }
+        },
+        {
+          "label": "30 à 60 minutes",
+          "filters": {
+            "session_duration": 2
+          }
+        },
+        {
+          "label": "60 à 90 minutes",
+          "filters": {
+            "session_duration": 3
+          }
+        },
+        {
+          "label": "Plus de 90 minutes",
+          "filters": {
+            "session_duration": 4
+          }
+        }
+      ]
+    },
+    {
+      "id": "q075",
+      "theme": "Temps",
+      "question": "Vos horaires sont-ils réguliers ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Oui",
+          "filters": {
+            "schedule_flexibility": 0
+          }
+        },
+        {
+          "label": "Assez réguliers",
+          "filters": {
+            "schedule_flexibility": 1
+          }
+        },
+        {
+          "label": "Non",
+          "filters": {
+            "schedule_flexibility": 4
+          }
+        },
+        {
+          "label": "Très irréguliers",
+          "filters": {
+            "schedule_flexibility": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "q076",
+      "theme": "Logistique",
+      "question": "Acceptez-vous de vous inscrire dans un club ?",
+      "type": "single",
+      "required": true,
+      "priority": 4,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "filters": {
+            "club_required": -5
+          }
+        },
+        {
+          "label": "Si nécessaire",
+          "filters": {
+            "club_required": 0
+          }
+        },
+        {
+          "label": "Oui",
+          "filters": {
+            "club_required": 3
+          }
+        },
+        {
+          "label": "Je le souhaite",
+          "filters": {
+            "club_required": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "q077",
+      "theme": "Logistique",
+      "question": "Acceptez-vous de prendre une licence sportive ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "filters": {
+            "license_tolerance": -4
+          }
+        },
+        {
+          "label": "Si elle est peu coûteuse",
+          "filters": {
+            "license_tolerance": -1
+          }
+        },
+        {
+          "label": "Oui",
+          "filters": {
+            "license_tolerance": 3
+          }
+        },
+        {
+          "label": "Peu importe"
+        }
+      ]
+    },
+    {
+      "id": "q078",
+      "theme": "Logistique",
+      "question": "Acceptez-vous de partager du matériel avec un club ?",
+      "type": "single",
+      "required": true,
+      "priority": 2,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "filters": {
+            "shared_equipment": -3
+          }
+        },
+        {
+          "label": "Oui",
+          "filters": {
+            "shared_equipment": 3
+          }
+        },
+        {
+          "label": "Seulement certains équipements"
+        },
+        {
+          "label": "Peu importe"
+        }
+      ]
+    },
+    {
+      "id": "q079",
+      "theme": "Logistique",
+      "question": "Souhaitez-vous pouvoir pratiquer sans encadrement ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Oui absolument",
+          "filters": {
+            "autonomous": 5
+          }
+        },
+        {
+          "label": "De préférence",
+          "filters": {
+            "autonomous": 3
+          }
+        },
+        {
+          "label": "Non, je préfère être encadré",
+          "filters": {
+            "autonomous": -3
+          }
+        },
+        {
+          "label": "Peu importe"
+        }
+      ]
+    },
+    {
+      "id": "q080",
+      "theme": "Logistique",
+      "question": "Acceptez-vous les déplacements pour les compétitions ou événements ?",
+      "type": "single",
+      "required": true,
+      "priority": 2,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "filters": {
+            "travel_tolerance": -4
+          }
+        },
+        {
+          "label": "Occasionnellement",
+          "filters": {
+            "travel_tolerance": 1
+          }
+        },
+        {
+          "label": "Oui",
+          "filters": {
+            "travel_tolerance": 3
+          }
+        },
+        {
+          "label": "Avec plaisir",
+          "filters": {
+            "travel_tolerance": 5
+          }
+        }
+      ]
+    },
+    {
+      "id": "q081",
+      "theme": "Arts martiaux",
+      "question": "Les arts martiaux vous attirent-ils ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "families": {
+            "Arts martiaux japonais": -5,
+            "Arts martiaux chinois": -5,
+            "Arts martiaux coréens": -5,
+            "Arts martiaux vietnamiens": -5,
+            "Arts martiaux philippins": -5
+          }
+        },
+        {
+          "label": "Un peu",
+          "families": {
+            "Arts martiaux japonais": 1,
+            "Arts martiaux chinois": 1,
+            "Arts martiaux coréens": 1,
+            "Arts martiaux vietnamiens": 1,
+            "Arts martiaux philippins": 1
+          }
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Arts martiaux japonais": 5,
+            "Arts martiaux chinois": 5,
+            "Arts martiaux coréens": 5,
+            "Arts martiaux vietnamiens": 5,
+            "Arts martiaux philippins": 5
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "families": {
+            "Arts martiaux japonais": 8,
+            "Arts martiaux chinois": 8,
+            "Arts martiaux coréens": 8,
+            "Arts martiaux vietnamiens": 8,
+            "Arts martiaux philippins": 8
+          }
+        }
+      ]
+    },
+    {
+      "id": "q082",
+      "theme": "Boxes",
+      "question": "Les sports de boxe vous attirent-ils ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "families": {
+            "Boxes": -5
+          }
+        },
+        {
+          "label": "Un peu",
+          "families": {
+            "Boxes": 1
+          }
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Boxes": 7
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "families": {
+            "Boxes": 10
+          }
+        }
+      ]
+    },
+    {
+      "id": "q083",
+      "theme": "Lutte",
+      "question": "Les luttes et le grappling vous attirent-ils ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "families": {
+            "Lutte": -5,
+            "Grappling": -5
+          }
+        },
+        {
+          "label": "Un peu",
+          "families": {
+            "Lutte": 1,
+            "Grappling": 1
+          }
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Lutte": 6,
+            "Grappling": 6
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "families": {
+            "Lutte": 9,
+            "Grappling": 9
+          }
+        }
+      ]
+    },
+    {
+      "id": "q084",
+      "theme": "Collectif",
+      "question": "Les sports collectifs vous attirent-ils ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "families": {
+            "Collectif": -5
+          }
+        },
+        {
+          "label": "Un peu",
+          "families": {
+            "Collectif": 1
+          }
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Collectif": 7
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "families": {
+            "Collectif": 10
+          }
+        }
+      ]
+    },
+    {
+      "id": "q085",
+      "theme": "Raquette",
+      "question": "Les sports de raquette vous attirent-ils ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "families": {
+            "Raquette": -5
+          }
+        },
+        {
+          "label": "Un peu",
+          "families": {
+            "Raquette": 1
+          }
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Raquette": 7
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "families": {
+            "Raquette": 10
+          }
+        }
+      ]
+    },
+    {
+      "id": "q086",
+      "theme": "Endurance",
+      "question": "Les sports d'endurance vous attirent-ils ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "families": {
+            "Endurance": -5,
+            "Athlétisme": -5
+          }
+        },
+        {
+          "label": "Un peu",
+          "families": {
+            "Endurance": 1,
+            "Athlétisme": 1
+          }
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Endurance": 7,
+            "Athlétisme": 4
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "families": {
+            "Endurance": 10,
+            "Athlétisme": 7
+          }
+        }
+      ]
+    },
+    {
+      "id": "q087",
+      "theme": "Force",
+      "question": "Les sports de force vous attirent-ils ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "families": {
+            "Force": -5,
+            "Fitness": -5
+          }
+        },
+        {
+          "label": "Un peu",
+          "families": {
+            "Force": 1,
+            "Fitness": 1
+          }
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Force": 7,
+            "Fitness": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "families": {
+            "Force": 10,
+            "Fitness": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "q088",
+      "theme": "Danse",
+      "question": "La danse et les disciplines artistiques vous attirent-elles ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "families": {
+            "Danse": -5,
+            "Cirque": -5,
+            "Gymnastique": -5
+          }
+        },
+        {
+          "label": "Un peu",
+          "families": {
+            "Danse": 1,
+            "Cirque": 1,
+            "Gymnastique": 1
+          }
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Danse": 7,
+            "Cirque": 4,
+            "Gymnastique": 3
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "families": {
+            "Danse": 10,
+            "Cirque": 7,
+            "Gymnastique": 6
+          }
+        }
+      ]
+    },
+    {
+      "id": "q089",
+      "theme": "Précision",
+      "question": "Les sports de précision vous attirent-ils ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "families": {
+            "Précision": -5
+          }
+        },
+        {
+          "label": "Un peu",
+          "families": {
+            "Précision": 1
+          }
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Précision": 7
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "families": {
+            "Précision": 10
+          }
+        }
+      ]
+    },
+    {
+      "id": "q090",
+      "theme": "Glisse",
+      "question": "Les sports de glisse vous attirent-ils ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Pas du tout",
+          "families": {
+            "Glisse": -5
+          }
+        },
+        {
+          "label": "Un peu",
+          "families": {
+            "Glisse": 1
+          }
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Glisse": 7
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "families": {
+            "Glisse": 10
+          }
+        }
+      ]
+    },
+    {
+      "id": "q091",
+      "theme": "Affinage",
+      "question": "Préférez-vous une activité individuelle avec opposition ?",
+      "type": "single",
+      "required": true,
+      "priority": 2,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Oui",
+          "profile": {
+            "competition": 2
+          },
+          "families": {
+            "Raquette": 3,
+            "Boxes": 3,
+            "Combat": 2,
+            "Précision": 1
+          }
+        },
+        {
+          "label": "Non"
+        },
+        {
+          "label": "Peu importe"
+        }
+      ]
+    },
+    {
+      "id": "q092",
+      "theme": "Affinage",
+      "question": "Préférez-vous une activité individuelle sans opposition directe ?",
+      "type": "single",
+      "required": true,
+      "priority": 2,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Oui",
+          "profile": {
+            "competition": -1
+          },
+          "families": {
+            "Endurance": 3,
+            "Bien-être": 3,
+            "Fitness": 2,
+            "Précision": 2
+          }
+        },
+        {
+          "label": "Non"
+        },
+        {
+          "label": "Peu importe"
+        }
+      ]
+    },
+    {
+      "id": "q093",
+      "theme": "Affinage",
+      "question": "La musique doit-elle faire partie de la pratique ?",
+      "type": "single",
+      "required": true,
+      "priority": 2,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Oui absolument",
+          "families": {
+            "Danse": 7,
+            "Fitness": 2
+          }
+        },
+        {
+          "label": "De préférence",
+          "families": {
+            "Danse": 4,
+            "Fitness": 1
+          }
+        },
+        {
+          "label": "Non"
+        },
+        {
+          "label": "Peu importe"
+        }
+      ]
+    },
+    {
+      "id": "q094",
+      "theme": "Affinage",
+      "question": "Souhaitez-vous porter une tenue ou un uniforme traditionnel ?",
+      "type": "single",
+      "required": true,
+      "priority": 2,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Oui",
+          "families": {
+            "Arts martiaux japonais": 3,
+            "Arts martiaux chinois": 2,
+            "Arts martiaux coréens": 2
+          }
+        },
+        {
+          "label": "Non",
+          "families": {
+            "Fitness": 1,
+            "Endurance": 1
+          }
+        },
+        {
+          "label": "Peu importe"
+        }
+      ]
+    },
+    {
+      "id": "q095",
+      "theme": "Affinage",
+      "question": "Souhaitez-vous un système de grades ou de niveaux ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Oui",
+          "profile": {
+            "technique": 2
+          },
+          "families": {
+            "Arts martiaux japonais": 4,
+            "Arts martiaux coréens": 3,
+            "Arts martiaux chinois": 2
+          }
+        },
+        {
+          "label": "Pourquoi pas",
+          "profile": {
+            "technique": 1
+          }
+        },
+        {
+          "label": "Non"
+        },
+        {
+          "label": "Peu importe"
+        }
+      ]
+    },
+    {
+      "id": "q096",
+      "theme": "Affinage",
+      "question": "Aimez-vous les objets en mouvement rapide, comme une balle, un volant ou un disque ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "profile": {
+            "coordination": -2
+          }
+        },
+        {
+          "label": "Un peu",
+          "profile": {
+            "coordination": 1
+          }
+        },
+        {
+          "label": "Oui",
+          "profile": {
+            "coordination": 3
+          },
+          "families": {
+            "Raquette": 4,
+            "Collectif": 2
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "profile": {
+            "coordination": 5
+          },
+          "families": {
+            "Raquette": 6,
+            "Collectif": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "q097",
+      "theme": "Affinage",
+      "question": "Aimez-vous viser une cible ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "families": {
+            "Précision": -4
+          }
+        },
+        {
+          "label": "Un peu",
+          "families": {
+            "Précision": 1
+          }
+        },
+        {
+          "label": "Oui",
+          "profile": {
+            "technique": 2,
+            "coordination": 2
+          },
+          "families": {
+            "Précision": 5
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "profile": {
+            "technique": 3,
+            "coordination": 3
+          },
+          "families": {
+            "Précision": 8
+          }
+        }
+      ]
+    },
+    {
+      "id": "q098",
+      "theme": "Affinage",
+      "question": "Aimez-vous franchir des obstacles ?",
+      "type": "single",
+      "required": true,
+      "priority": 2,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non"
+        },
+        {
+          "label": "Un peu",
+          "families": {
+            "Activités physiques": 1,
+            "Endurance": 1
+          }
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Activités physiques": 4,
+            "Endurance": 3,
+            "Montagne": 2
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "families": {
+            "Activités physiques": 7,
+            "Endurance": 5,
+            "Montagne": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "q099",
+      "theme": "Affinage",
+      "question": "Aimez-vous rouler ou glisser sur un équipement ?",
+      "type": "single",
+      "required": true,
+      "priority": 3,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Non",
+          "families": {
+            "Cyclisme": -4,
+            "Glisse": -4
+          }
+        },
+        {
+          "label": "Un peu",
+          "families": {
+            "Cyclisme": 1,
+            "Glisse": 1
+          }
+        },
+        {
+          "label": "Oui",
+          "families": {
+            "Cyclisme": 5,
+            "Glisse": 5
+          }
+        },
+        {
+          "label": "Beaucoup",
+          "families": {
+            "Cyclisme": 8,
+            "Glisse": 8
+          }
+        }
+      ]
+    },
+    {
+      "id": "q100",
+      "theme": "Affinage",
+      "question": "Parmi ces critères, lequel est non négociable ?",
+      "type": "single",
+      "required": true,
+      "priority": 5,
+      "max_display": 1,
+      "choices": [
+        {
+          "label": "Faible risque",
+          "filters": {
+            "hard_low_risk": true
+          }
+        },
+        {
+          "label": "Aucun contact",
+          "profile": {
+            "contact": -5
+          },
+          "filters": {
+            "hard_no_contact": true
+          }
+        },
+        {
+          "label": "Petit budget",
+          "filters": {
+            "hard_low_budget": true
+          }
+        },
+        {
+          "label": "Pratique proche de chez moi",
+          "filters": {
+            "hard_accessible": true
+          }
+        },
+        {
+          "label": "Compatible avec mes limitations physiques",
+          "filters": {
+            "hard_medical_compatibility": true
+          }
+        },
+        {
+          "label": "Aucun de ces critères"
+        }
+      ]
+    }
+  ]
+}

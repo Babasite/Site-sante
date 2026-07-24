@@ -1,0 +1,13 @@
+{% if user.is_authenticated and user.is_staff %}
+<div class="barre-redacteur" role="navigation" aria-label="Mode rédacteur">
+    <strong>Mode rédacteur</strong>
+    <a href="{% url 'veille' %}">Veille</a>
+    <a href="{% url 'tableau_de_bord' %}">Tableau de bord</a>
+    <a href="{% url 'historique_veilles' %}">Historique</a>
+    <a href="/admin/">Administration</a>
+    <form method="post" action="{% url 'redacteur_deconnexion' %}">
+        {% csrf_token %}
+        <button type="submit">Déconnexion</button>
+    </form>
+</div>
+{% endif %}
