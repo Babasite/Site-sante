@@ -1,13 +1,21 @@
 {% extends "accueil/base.html" %}
 
-{% block logo_return %}{% url 'karate' %}{% endblock %}
 {% load static %}
 
-{% block page_title %}Résultats Bouger{% endblock %}
-{% block header_actions %}<a class="spt-shell-action" href="{% url 'bouger_questionnaire' %}">Refaire le questionnaire</a>{% endblock %}
+{% block logo_return %}{% url 'karate' %}{% endblock %}
 
 {% block title %}
 Mes recommandations sportives
+{% endblock %}
+
+{% block page_title %}
+Résultats Bouger
+{% endblock %}
+
+{% block header_actions %}
+<a class="spt-shell-action" href="{% url 'bouger_questionnaire' %}">
+    Refaire le questionnaire
+</a>
 {% endblock %}
 
 {% block extra_css %}
@@ -18,9 +26,11 @@ Mes recommandations sportives
 {% endblock %}
 
 {% block content %}
+
 <main class="resultats-page">
 
     <section class="resultats-entete">
+
         <div class="resultats-conteneur">
 
             <p class="resultats-sur-titre">
@@ -38,6 +48,7 @@ Mes recommandations sportives
             </p>
 
         </div>
+
     </section>
 
     <section
@@ -45,6 +56,7 @@ Mes recommandations sportives
         class="resultats-etat resultats-chargement"
         aria-live="polite"
     >
+
         <div
             class="resultats-chargement__cercle"
             aria-hidden="true"
@@ -58,6 +70,7 @@ Mes recommandations sportives
             Le moteur compare votre profil avec les différentes
             disciplines sportives.
         </p>
+
     </section>
 
     <section
@@ -66,6 +79,7 @@ Mes recommandations sportives
         aria-live="assertive"
         hidden
     >
+
         <div
             class="resultats-erreur__icone"
             aria-hidden="true"
@@ -98,6 +112,7 @@ Mes recommandations sportives
             </a>
 
         </div>
+
     </section>
 
     <div
@@ -107,11 +122,13 @@ Mes recommandations sportives
     >
 
         <section class="resultats-section">
+
             <div class="resultats-conteneur">
 
                 <div class="resultats-titre-section">
 
                     <div>
+
                         <p class="resultats-sur-titre">
                             Votre profil
                         </p>
@@ -119,6 +136,7 @@ Mes recommandations sportives
                         <h2>
                             Les dimensions principales
                         </h2>
+
                     </div>
 
                     <p class="resultats-titre-section__texte">
@@ -134,14 +152,17 @@ Mes recommandations sportives
                 ></div>
 
             </div>
+
         </section>
 
         <section class="resultats-section resultats-section--sports">
+
             <div class="resultats-conteneur">
 
                 <div class="resultats-titre-section">
 
                     <div>
+
                         <p class="resultats-sur-titre">
                             Sélection personnalisée
                         </p>
@@ -149,6 +170,7 @@ Mes recommandations sportives
                         <h2>
                             Vos meilleures correspondances
                         </h2>
+
                     </div>
 
                     <p
@@ -166,9 +188,11 @@ Mes recommandations sportives
                 ></div>
 
             </div>
+
         </section>
 
         <section class="resultats-section">
+
             <div class="resultats-conteneur">
 
                 <aside class="resultats-prudence">
@@ -181,6 +205,7 @@ Mes recommandations sportives
                     </div>
 
                     <div>
+
                         <h2>
                             Commencez progressivement
                         </h2>
@@ -194,6 +219,7 @@ Mes recommandations sportives
                             période d’inactivité, demandez conseil à
                             un professionnel de santé.
                         </p>
+
                     </div>
 
                 </aside>
@@ -217,11 +243,13 @@ Mes recommandations sportives
                 </div>
 
             </div>
+
         </section>
 
     </div>
 
 </main>
+
 {% endblock %}
 
 {% block extra_js %}

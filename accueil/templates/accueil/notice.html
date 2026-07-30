@@ -17,27 +17,61 @@
 
 body{
     background:#efe3c3;
-    font-family:Georgia, serif;
-    overflow-x:hidden;
+    font-family:var(--font-family-body);
+    overflow-x:clip;
 }
 
 .container{
     width:90%;
     max-width:1000px;
-    margin:30px auto 0;   /* le contenu remonte sous le bandeau */
+    margin:0 auto;
+}
+
+.introduction{
+    max-height:215px;
+    overflow-y:auto;
+    background:rgba(255,255,255,.55);
+    padding:24px 28px;
+    border:1px solid rgba(33,76,53,.18);
+    border-radius:14px;
+    margin-bottom:20px;
+    color:var(--color-text,#2f382f);
+    font-size:1.05rem;
+    line-height:1.85;
+    box-shadow:0 8px 20px rgba(0,0,0,.12);
+}
+
+.introduction h2{
+    color:var(--spt-vert-fonce);
+    font-family:var(--font-family-title);
+    font-size:2rem;
+    margin-bottom:15px;
+}
+
+.introduction p,
+.introduction li{
+    font-family:var(--font-family-body);
+}
+
+.introduction strong{
+    color:var(--spt-vert-fonce);
+}
+
+.introduction ul{
+    margin:15px 0 15px 30px;
 }
 
 .planche{
-    margin:50px 0;
+    margin:20px 0 50px;
     opacity:0;
     transform:translateY(60px);
     animation:apparition 1s forwards;
 }
 
-.planche:nth-child(1){animation-delay:0.2s;}
-.planche:nth-child(2){animation-delay:0.5s;}
-.planche:nth-child(3){animation-delay:0.8s;}
-.planche:nth-child(4){animation-delay:1.1s;}
+.planche:nth-of-type(2){animation-delay:0.2s;}
+.planche:nth-of-type(3){animation-delay:0.5s;}
+.planche:nth-of-type(4){animation-delay:0.8s;}
+.planche:nth-of-type(5){animation-delay:1.1s;}
 
 .planche img{
     width:100%;
@@ -58,35 +92,19 @@ body{
     }
 }
 
-.fin{
-    text-align:center;
-    padding:80px 20px;
-}
+@media(max-width:600px){
+    .introduction{
+        max-height:230px;
+        padding:20px;
+    }
 
-.fin h3{
-    color:#5b3410;
-    margin-bottom:20px;
-}
+    .introduction h2{
+        font-size:1.7rem;
+    }
 
-.porte{
-    display:inline-block;
-    font-size:90px;
-    text-decoration:none;
-    transition:.3s;
-}
-
-.porte:hover{
-    transform:rotate(-15deg) scale(1.15);
-}
-
-.porte:active{
-    transform:scale(.9);
-}
-
-.texte{
-    margin-top:20px;
-    color:#6b4a27;
-    font-size:18px;
+    .introduction{
+        font-size:1rem;
+    }
 }
 </style>
 {% endblock %}
@@ -94,6 +112,41 @@ body{
 {% block content %}
 
 <div class="container">
+
+    <div class="introduction">
+
+        <h2>Mais ça part dans tous les sens ?</h2>
+
+        <p>
+            Non :). Ce site essaie de proposer une approche globale de la santé, appelée
+            <strong>« One Health » (Une seule santé)</strong>.
+            La santé n'est pas seulement abordée comme la verrait un médecin ou un vétérinaire séparément,
+            mais comme un ensemble où l'Homme, les animaux, l'environnement et la société sont intimement liés.
+        </p>
+
+        <br>
+
+        <p><strong>Un exemple : la Covid-19.</strong></p>
+
+        <ul>
+            <li>Le médecin se demande : <em>« Quel vaccin utiliser ? »</em></li>
+            <li>Le vétérinaire pense : <em>« Le virus provient probablement des chauves-souris. »</em></li>
+            <li>L'épidémiologiste cherche où et comment l'épidémie a commencé.</li>
+            <li>L'approche <strong>One Health</strong> relie toutes ces informations : chauve-souris → humain → transmission → vaccin → information.</li>
+        </ul>
+
+        <p>
+            Une seule discipline ne peut pas répondre à elle seule. C'est en réunissant toutes les approches que l'on peut espérer comprendre l'ensemble du phénomène.
+        </p>
+
+        <br>
+
+        <p>
+            C'est cette vision que j'aimerais partager sur ce site, voilà pourquoi vous y trouverez aussi bien une Veille Sanitaire que des conseils pour rester en bonne santé et ce, dans tous les domaines. J'ai toujours été davantage attiré par une approche
+            <strong>populationnelle</strong> que strictement individuelle. C'est probablement lié à mon parcours. Il m'a appris qu'un problème de santé ne se comprend vraiment qu'en reliant les différentes pièces d'un même puzzle ...
+        </p>
+
+    </div>
 
     <div class="planche">
         <img src="{% static 'accueil/images/BD1.png' %}" alt="BD1">
@@ -110,20 +163,6 @@ body{
     <div class="planche">
         <img src="{% static 'accueil/images/BD4.png' %}" alt="BD4">
     </div>
-
-</div>
-
-<div class="fin">
-
-    <h3>Go go go !!! 🤠</h3>
-
-    <a href="/" class="porte" title="Retour à l'accueil">
-        🚪
-    </a>
-
-    <p class="texte">
-        Cliquez sur la porte pour revenir à l'accueil.
-    </p>
 
 </div>
 

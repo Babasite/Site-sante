@@ -14,15 +14,16 @@ Trouver mon activité physique
 
 <style>
     .questionnaire-page {
+        font-family:var(--font-family-body);
         min-height: 100vh;
         padding: 15px 20px 40px;
         background:
             radial-gradient(
                 circle at top left,
-                rgba(55, 107, 77, 0.12),
+                rgba(0,128,128,.10),
                 transparent 34%
             ),
-            #f6f1e4;
+            #efe3c3;
     }
 
     .questionnaire-conteneur {
@@ -32,9 +33,9 @@ Trouver mon activité physique
 
     .questionnaire-carte {
         overflow: hidden;
-        border: 1px solid rgba(55, 107, 77, 0.16);
+        border:1px solid rgba(0,128,128,.16);
         border-radius: 24px;
-        background: #ffffff;
+        background:rgba(255,250,240,.95);
         box-shadow: 0 18px 45px rgba(48, 62, 46, 0.13);
     }
 
@@ -46,7 +47,7 @@ Trouver mon activité physique
     .questionnaire-progression__barre {
         width: 0;
         height: 100%;
-        background: linear-gradient(90deg, #376b4d, #d9833b);
+        background:linear-gradient(90deg,#008080,#214C35);
         transition: width 0.3s ease;
     }
 
@@ -60,20 +61,20 @@ Trouver mon activité physique
         gap: 16px;
         margin-bottom: 28px;
         color: #697269;
-        font-size: 0.88rem;
+        font-size:0.95rem;
         font-weight: 700;
     }
 
     .questionnaire-theme {
-        color: #376b4d;
+        color:#008080;
         text-transform: uppercase;
         letter-spacing: 0.08em;
     }
 
     .questionnaire-question {
         margin: 0 0 28px;
-        color: #263729;
-        font-family: Georgia, "Times New Roman", serif;
+        color:#214C35;
+        font-family:var(--font-family-title);
         font-size: clamp(1.55rem, 4vw, 2.25rem);
         line-height: 1.25;
     }
@@ -89,7 +90,7 @@ Trouver mon activité physique
         padding: 15px 18px;
         border: 2px solid #dfe5dc;
         border-radius: 14px;
-        background: #fbfcfa;
+        background:#fffaf0;
         color: #2f382f;
         cursor: pointer;
         font-weight: 700;
@@ -103,13 +104,13 @@ Trouver mon activité physique
     .questionnaire-choix:hover,
     .questionnaire-choix:focus-visible {
         transform: translateY(-2px);
-        border-color: #6f987d;
-        background: #f1f7f2;
+        border-color:#008080;
+        background:#e1edf5;
     }
 
     .questionnaire-choix.est-selectionne {
-        border-color: #376b4d;
-        background: #e9f3ec;
+        border-color:#008080;
+        background:#e1edf5;
         color: #214c35;
     }
 
@@ -128,7 +129,7 @@ Trouver mon activité physique
 
     .questionnaire-echelle input {
         width: 100%;
-        accent-color: #376b4d;
+        accent-color:#008080;
     }
 
     .questionnaire-echelle__legendes {
@@ -169,16 +170,16 @@ Trouver mon activité physique
     }
 
     .questionnaire-bouton--principal {
-        background: #376b4d;
+        background:#008080;
         color: #ffffff;
     }
 
     .questionnaire-bouton--principal:hover {
-        background: #214c35;
+        background:#214C35;
     }
 
     .questionnaire-bouton--secondaire {
-        background: #e8ece6;
+        background:#eef5f7;
         color: #344237;
     }
 
@@ -196,7 +197,7 @@ Trouver mon activité physique
     .questionnaire-message h2 {
         margin-top: 0;
         color: #214c35;
-        font-family: Georgia, "Times New Roman", serif;
+        font-family:var(--font-family-title);
         font-size: 2rem;
     }
 
@@ -209,7 +210,7 @@ Trouver mon activité physique
         height: 54px;
         margin: 0 auto 20px;
         border: 6px solid #dce4da;
-        border-top-color: #376b4d;
+        border-top-color:#008080;
         border-radius: 50%;
         animation: questionnaireRotation 0.9s linear infinite;
     }
@@ -226,6 +227,7 @@ Trouver mon activité physique
 
     @media (max-width: 620px) {
         .questionnaire-page {
+        font-family:var(--font-family-body);
             padding: 10px 12px 40px;
         }
 

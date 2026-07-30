@@ -1,0 +1,56 @@
+/*
+=========================================================
+COLORS.CSS
+Charte graphique - Santé Prévention Terrain
+
+Vert      : Santé, confiance, nature.
+Bleu      : Professionnalisme, rigueur.
+Turquoise : One Health, transversalité.
+Beige     : Terrain, proximité, chaleur.
+=========================================================
+*/
+
+:root {
+
+    /* =====================================================
+       COULEURS D'IDENTITÉ
+    ===================================================== */
+
+    --color-primary:        #214C35;   /* Santé */
+    --color-primary-light:  #376B4D;
+    --color-primary-active: #2D6648;
+
+    --color-secondary:      #2B6FB8;   /* Professionnalisme */
+
+    --color-accent:         #008080;   /* One Health */
+
+    --color-background:     #EFE3C3;   /* Fond principal */
+
+    --color-surface:        #FFFFFF;
+
+
+    /* =====================================================
+       TEXTES
+    ===================================================== */
+
+    --color-text:           #2F382F;
+    --color-text-light:     #FFFFFF;
+
+
+    /* =====================================================
+       BORDURES
+    ===================================================== */
+
+    --color-border:         rgba(55,107,77,.18);
+
+
+    /* =====================================================
+       FONDS UTILITAIRES
+    ===================================================== */
+
+    --color-info-bg:        #E7F2FB;
+    --color-info-border:    #B7D6EE;
+
+    --color-hover:          #F5F5F5;
+
+}

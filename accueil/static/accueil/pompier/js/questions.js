@@ -227,7 +227,7 @@ window.SAUVE_QUI_PEUT_QUESTIONS = [
         "categorie": "Arrêt cardiaque"
     },
     {
-        "question": "Que faut-il faire si un défibrillateur est disponible ?",
+        "question": "Une personne ne respire plus. Que faut-il faire si un défibrillateur est disponible ?",
         "bonneReponse": "L'allumer et suivre ses consignes",
         "mauvaisesReponses": [
             "Attendre un médecin pour l'ouvrir",

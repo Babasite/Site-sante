@@ -27,6 +27,9 @@ COULEUR_CONVERGENCE = colors.HexColor("#F5FBF7")
 COULEUR_BORDURE = colors.HexColor("#D9E1E5")
 COULEUR_TEXTE_SECONDAIRE = colors.HexColor("#5F6B73")
 
+# Nombre maximal de publications affichées dans le rapport PDF.
+NOMBRE_MAX_PUBLICATIONS = 7
+
 
 def generer_pdf_veille(veille):
     """
@@ -46,8 +49,6 @@ def generer_pdf_veille(veille):
         title="Veille scientifique",
         author="Santé+",
     )
-
-    largeur_page, hauteur_page = A4
 
     cadre = Frame(
         document.leftMargin,
@@ -151,6 +152,49 @@ def _creer_styles():
             leading=15,
             textColor=colors.HexColor("#30363A"),
             alignment=TA_LEFT,
+        ),
+        "resume_executif": ParagraphStyle(
+            "ResumeExecutif",
+            parent=styles_base["BodyText"],
+            fontName="Helvetica",
+            fontSize=10,
+            leading=15,
+            textColor=colors.HexColor("#30363A"),
+            alignment=TA_LEFT,
+            backColor=COULEUR_FOND,
+            borderColor=colors.HexColor("#0B6EFD"),
+            borderWidth=1,
+            borderPadding=12,
+            spaceAfter=13,
+        ),
+        "convergence": ParagraphStyle(
+            "Convergence",
+            parent=styles_base["BodyText"],
+            fontName="Helvetica",
+            fontSize=10,
+            leading=15,
+            textColor=colors.HexColor("#30363A"),
+            alignment=TA_LEFT,
+            backColor=COULEUR_CONVERGENCE,
+            borderColor=colors.HexColor("#198754"),
+            borderWidth=1,
+            borderPadding=12,
+            spaceAfter=13,
+        ),
+        "traduction": ParagraphStyle(
+            "TraductionManuelle",
+            parent=styles_base["BodyText"],
+            fontName="Helvetica",
+            fontSize=10,
+            leading=15,
+            textColor=colors.HexColor("#30363A"),
+            alignment=TA_LEFT,
+            backColor=colors.HexColor("#F8F6FC"),
+            borderColor=colors.HexColor("#6F42C1"),
+            borderWidth=1,
+            borderPadding=10,
+            spaceBefore=7,
+            spaceAfter=7,
         ),
         "titre_article": ParagraphStyle(
             "TitreArticle",
@@ -268,6 +312,10 @@ def _ajouter_en_tete_document(elements, veille, styles):
 def _ajouter_resume(elements, veille, styles):
     """
     Ajoute le résumé exécutif.
+
+    Le résumé n'est volontairement pas placé dans un tableau :
+    un Paragraph peut commencer dans l'espace disponible sur la page
+    courante et continuer automatiquement sur la page suivante.
     """
     elements.append(
         Paragraph(
@@ -275,66 +323,38 @@ def _ajouter_resume(elements, veille, styles):
             styles["section"],
         )
     )
+    elements.append(Spacer(1, 8))
 
-    resume = veille.resume_affiche or (
-        "Aucun résumé n'est disponible pour cette veille."
+    resume = (
+        veille.resume_affiche
+        or "Aucun résumé n'est disponible pour cette veille."
     )
 
-    bloc_resume = Table(
-        [
-            [
-                Paragraph(
-                    _texte_vers_html(resume),
-                    styles["corps"],
-                )
-            ]
-        ],
-        colWidths=[17.0 * cm],
-    )
+    lignes = resume.splitlines()
 
-    bloc_resume.setStyle(
-        TableStyle(
-            [
-                (
-                    "BACKGROUND",
-                    (0, 0),
-                    (-1, -1),
-                    COULEUR_FOND,
-                ),
-                (
-                    "BOX",
-                    (0, 0),
-                    (-1, -1),
-                    0.7,
-                    COULEUR_BORDURE,
-                ),
-                (
-                    "LINEBEFORE",
-                    (0, 0),
-                    (0, -1),
-                    4,
-                    colors.HexColor("#0B6EFD"),
-                ),
-                ("LEFTPADDING", (0, 0), (-1, -1), 13),
-                ("RIGHTPADDING", (0, 0), (-1, -1), 13),
-                ("TOPPADDING", (0, 0), (-1, -1), 12),
-                ("BOTTOMPADDING", (0, 0), (-1, -1), 12),
-            ]
+    if len(lignes) > 4:
+        resume = "\n".join(lignes[2:-3]).strip()
+
+    elements.append(
+        Paragraph(
+            _texte_vers_html(resume),
+            styles["resume_executif"],
         )
     )
-
-    elements.append(bloc_resume)
-    elements.append(Spacer(1, 13))
 
 
 def _ajouter_convergence(elements, veille, styles):
     """
-    Ajoute les convergences uniquement lorsqu'elles existent.
+    Ajoute la convergence des sources uniquement lorsqu'elle existe.
+
+    Ce bloc peut lui aussi se répartir sur plusieurs pages.
     """
     convergence = (veille.convergence or "").strip()
 
     if not convergence:
         return
+
+    elements.append(Spacer(1, 12))
 
     elements.append(
         Paragraph(
@@ -343,57 +363,22 @@ def _ajouter_convergence(elements, veille, styles):
         )
     )
 
-    bloc_convergence = Table(
-        [
-            [
-                Paragraph(
-                    _texte_vers_html(convergence),
-                    styles["corps"],
-                )
-            ]
-        ],
-        colWidths=[17.0 * cm],
-    )
-
-    bloc_convergence.setStyle(
-        TableStyle(
-            [
-                (
-                    "BACKGROUND",
-                    (0, 0),
-                    (-1, -1),
-                    COULEUR_CONVERGENCE,
-                ),
-                (
-                    "BOX",
-                    (0, 0),
-                    (-1, -1),
-                    0.7,
-                    COULEUR_BORDURE,
-                ),
-                (
-                    "LINEBEFORE",
-                    (0, 0),
-                    (0, -1),
-                    4,
-                    colors.HexColor("#198754"),
-                ),
-                ("LEFTPADDING", (0, 0), (-1, -1), 13),
-                ("RIGHTPADDING", (0, 0), (-1, -1), 13),
-                ("TOPPADDING", (0, 0), (-1, -1), 12),
-                ("BOTTOMPADDING", (0, 0), (-1, -1), 12),
-            ]
+    elements.append(
+        Paragraph(
+            _texte_vers_html(convergence),
+            styles["convergence"],
         )
     )
 
-    elements.append(bloc_convergence)
-    elements.append(Spacer(1, 13))
+    elements.append(Spacer(1, 12))
 
 
 def _ajouter_statistiques(elements, veille, styles):
     """
     Ajoute le tableau récapitulatif de la collecte.
     """
+    elements.append(Spacer(1, 12))
+
     elements.append(
         Paragraph(
             "Tableau de la veille",
@@ -497,7 +482,19 @@ def _ajouter_articles(
     largeur_disponible,
 ):
     """
-    Ajoute tous les articles enregistrés dans la veille.
+    Ajoute au maximum sept publications retenues.
+
+    Pour chaque publication, le PDF affiche :
+    - le titre publié ;
+    - la source et la date ;
+    - les catégories ;
+    - les dimensions One Health ;
+    - le niveau de preuve ;
+    - le niveau d'importance ;
+    - la traduction manuelle complète lorsqu'elle est publiée ;
+    - le lien vers la publication originale.
+
+    Les résumés automatiques ne sont pas affichés.
     """
     elements.append(
         Paragraph(
@@ -506,9 +503,13 @@ def _ajouter_articles(
         )
     )
 
-    articles = veille.articles.all()
+    # Le modèle ArticleVeille possède déjà l'ordre :
+    # ordre croissant, puis score décroissant.
+    articles = list(
+        veille.articles.all()[:NOMBRE_MAX_PUBLICATIONS]
+    )
 
-    if not articles.exists():
+    if not articles:
         elements.append(
             Paragraph(
                 "Aucune publication n'a été enregistrée.",
@@ -518,75 +519,210 @@ def _ajouter_articles(
         return
 
     for numero, article in enumerate(articles, start=1):
-        titre = f"{numero}. {article.titre}"
-
-        resume = article.resume_affiche or (
-            "Aucun résumé n'est disponible."
+        _ajouter_publication(
+            elements=elements,
+            article=article,
+            numero=numero,
+            styles=styles,
+            largeur_disponible=largeur_disponible,
         )
 
-        contenu_article = [
-            Paragraph(
-                _echapper(titre),
-                styles["titre_article"],
-            ),
-            Paragraph(
-                (
-                    f"<b>Source :</b> "
-                    f"{_echapper(article.source)}"
-                ),
-                styles["meta"],
-            ),
-        ]
 
-        if article.date_publication:
-            contenu_article.append(
-                Paragraph(
-                    (
-                        f"<b>Date :</b> "
-                        f"{_echapper(article.date_publication)}"
-                    ),
-                    styles["meta"],
-                )
-            )
+def _ajouter_publication(
+    elements,
+    article,
+    numero,
+    styles,
+    largeur_disponible,
+):
+    """
+    Ajoute une publication au rapport.
+    """
+    titre = _titre_publication(article)
 
-        contenu_article.extend(
-            [
-                Spacer(1, 5),
-                Paragraph(
-                    _texte_vers_html(resume),
-                    styles["corps"],
-                ),
-                Paragraph(
-                    _creer_lien_cliquable(article.lien),
-                    styles["lien"],
-                ),
-            ]
+    elements.append(
+        Paragraph(
+            _echapper(f"{numero}. {titre}"),
+            styles["titre_article"],
+        )
+    )
+
+    _ajouter_metadonnee(
+        elements,
+        "Source",
+        article.source,
+        styles,
+    )
+
+    _ajouter_metadonnee(
+        elements,
+        "Date",
+        article.date_publication,
+        styles,
+    )
+
+    _ajouter_metadonnee(
+        elements,
+        "Catégories",
+        _liste_vers_texte(article.categories),
+        styles,
+    )
+
+    _ajouter_metadonnee(
+        elements,
+        "One Health",
+        _liste_vers_texte(article.one_health),
+        styles,
+    )
+
+    if article.preuve and article.preuve != "Non déterminé":
+        _ajouter_metadonnee(
+            elements,
+            "Niveau de preuve",
+            article.preuve,
+            styles,
         )
 
-        # Les articles sont ajoutés comme des éléments séparés plutôt que
-        # dans une cellule de tableau. Ainsi, un résumé long peut être
-        # coupé naturellement sur plusieurs pages par ReportLab.
-        # Une ligne de tableau ne peut pas être scindée et provoquait un
-        # LayoutError dès qu'un article dépassait la hauteur d'une page.
-        elements.extend(contenu_article)
-        elements.append(Spacer(1, 8))
+    _ajouter_metadonnee(
+        elements,
+        "Importance",
+        article.niveau_importance,
+        styles,
+    )
+
+    traduction = _traduction_manuelle_publiee(article)
+
+    if traduction:
         elements.append(
-            Table(
-                [[""]],
-                colWidths=[largeur_disponible],
-                rowHeights=[0.7],
-                style=TableStyle(
-                    [
-                        ("BACKGROUND", (0, 0), (-1, -1), COULEUR_BORDURE),
-                        ("LEFTPADDING", (0, 0), (-1, -1), 0),
-                        ("RIGHTPADDING", (0, 0), (-1, -1), 0),
-                        ("TOPPADDING", (0, 0), (-1, -1), 0),
-                        ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
-                    ]
-                ),
+            Paragraph(
+                "<b>Traduction manuelle publiée</b><br/>"
+                + _texte_vers_html(traduction),
+                styles["traduction"],
             )
         )
-        elements.append(Spacer(1, 12))
+
+    elements.append(
+        Paragraph(
+            _creer_lien_cliquable(article.lien),
+            styles["lien"],
+        )
+    )
+
+    _ajouter_separateur(
+        elements,
+        largeur_disponible,
+    )
+
+
+def _titre_publication(article):
+    """
+    Utilise le titre manuel lorsqu'il a été publié.
+
+    À défaut, conserve le titre original. Le titre automatique n'est
+    volontairement pas utilisé dans le PDF.
+    """
+    titre_manuel = (
+        article.titre_traduit_manuel
+        or ""
+    ).strip()
+
+    if article.traduction_manuelle_publiee and titre_manuel:
+        return titre_manuel
+
+    return article.titre or "Publication sans titre"
+
+
+def _traduction_manuelle_publiee(article):
+    """
+    Retourne la traduction manuelle uniquement si sa publication
+    a été explicitement validée dans l'interface de rédaction.
+    """
+    if not article.traduction_manuelle_publiee:
+        return ""
+
+    return (
+        article.resume_traduit_manuel
+        or ""
+    ).strip()
+
+
+def _ajouter_metadonnee(
+    elements,
+    libelle,
+    valeur,
+    styles,
+):
+    """
+    Ajoute une ligne de métadonnée seulement si elle contient
+    une valeur utile.
+    """
+    valeur = str(valeur or "").strip()
+
+    if not valeur:
+        return
+
+    elements.append(
+        Paragraph(
+            f"<b>{_echapper(libelle)} :</b> "
+            f"{_echapper(valeur)}",
+            styles["meta"],
+        )
+    )
+
+
+def _liste_vers_texte(valeurs):
+    """
+    Transforme une liste JSON en texte lisible.
+
+    La fonction accepte également une chaîne pour rester robuste
+    face à d'anciennes données enregistrées.
+    """
+    if not valeurs:
+        return ""
+
+    if isinstance(valeurs, (list, tuple, set)):
+        valeurs_nettoyees = [
+            str(valeur).strip()
+            for valeur in valeurs
+            if str(valeur).strip()
+        ]
+        return " • ".join(valeurs_nettoyees)
+
+    return str(valeurs).strip()
+
+
+def _ajouter_separateur(
+    elements,
+    largeur_disponible,
+):
+    """
+    Ajoute une ligne discrète entre deux publications.
+    """
+    elements.append(Spacer(1, 8))
+
+    elements.append(
+        Table(
+            [[""]],
+            colWidths=[largeur_disponible],
+            rowHeights=[0.7],
+            style=TableStyle(
+                [
+                    (
+                        "BACKGROUND",
+                        (0, 0),
+                        (-1, -1),
+                        COULEUR_BORDURE,
+                    ),
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 0),
+                ]
+            ),
+        )
+    )
+
+    elements.append(Spacer(1, 12))
 
 
 def _charger_logo():

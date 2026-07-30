@@ -1,0 +1,151 @@
+/*
+=========================================================
+TYPOGRAPHY.CSS
+Styles typographiques — Santé Prévention Terrain
+
+Identité :
+- Merriweather pour le reportage et l'esprit terrain.
+- Source Sans 3 pour la rigueur et la lisibilité.
+=========================================================
+*/
+
+
+/* =====================================================
+   TEXTE GÉNÉRAL
+===================================================== */
+
+html {
+    font-size: 100%;
+}
+
+body {
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--line-height-base);
+    color: var(--color-text);
+}
+
+
+/* =====================================================
+   TITRES
+===================================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 0;
+    font-family: var(--font-family-title);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-title);
+    letter-spacing: var(--letter-spacing-tight);
+}
+
+h1 {
+    font-size: clamp(
+        var(--font-size-2xl),
+        4vw,
+        var(--font-size-3xl)
+    );
+}
+
+h2 {
+    font-size: clamp(
+        var(--font-size-xl),
+        3vw,
+        var(--font-size-2xl)
+    );
+}
+
+h3 {
+    font-size: var(--font-size-lg);
+}
+
+h4 {
+    font-size: var(--font-size-md);
+}
+
+h5,
+h6 {
+    font-size: var(--font-size-base);
+}
+
+
+/* =====================================================
+   PARAGRAPHES ET LISTES
+===================================================== */
+
+p,
+ul,
+ol {
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-relaxed);
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 1em;
+}
+
+li + li {
+    margin-top: 0.3em;
+}
+
+
+/* =====================================================
+   LIENS
+===================================================== */
+
+a {
+    font-weight: var(--font-weight-semibold);
+}
+
+
+/* =====================================================
+   BOUTONS ET FORMULAIRES
+===================================================== */
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button,
+.bouton,
+.spt-shell-action {
+    font-family: var(--font-family-body);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--letter-spacing-normal);
+}
+
+
+/* =====================================================
+   PETITS TEXTES
+===================================================== */
+
+small,
+.texte-secondaire,
+.legende {
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-base);
+}
+
+
+/* =====================================================
+   STYLE ÉDITORIAL / REPORTAGE
+===================================================== */
+
+.surtitre,
+.categorie,
+.tv-article-categorie {
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--letter-spacing-wide);
+    text-transform: uppercase;
+}

@@ -1,0 +1,84 @@
+# Où j'en suis – Santé Prévention Terrain
+## 27/07/2026
+### Création du journal de bord
+Aujourd'hui, je commence la rédaction du journal de bord du projet **Santé Prévention Terrain**.
+Le projet a été créé le **8 juillet 2026** avec pour objectif de développer un site consacré à la santé, à la prévention et à la vie quotidienne, en proposant des contenus utiles, des outils interactifs et une veille scientifique destinée à rendre les connaissances accessibles.
+Ce document a pour but de conserver une trace de l'évolution du projet, des choix techniques et des décisions prises au fil du développement.
+---
+## État actuel du projet
+À ce jour, le projet est déjà bien avancé.
+### Structure générale
+Le site est développé avec **Django**.
+Une architecture modulaire est progressivement mise en place tout en conservant le fonctionnement actuel afin de ne pas casser les fonctionnalités existantes.
+Le projet est suivi avec **Git**, ce qui permet de conserver l'historique des développements.
+---
+### Identité graphique
+Une identité visuelle a été définie.
+Palette officielle :
+
+* Vert foncé : `#214C35`
+* Turquoise : `#008080`
+* Bleu principal : `#2B6FB8`
+* Bleu secondaire : `#2F80C9`
+* Beige : `#EFE3C3`
+
+Cette palette sera utilisée sur l'ensemble du site afin de conserver une identité graphique cohérente.
+---
+### Fonctionnalités déjà présentes
+Le projet comprend notamment :
+* une page d'accueil personnalisée ;
+* un logo et une identité visuelle ;
+* plusieurs rubriques consacrées à la santé et à la prévention ;
+* une rubrique consacrée aux gestes de secours ;
+* plusieurs jeux pédagogiques ;
+* une rubrique autour de l'activité physique ;
+* des outils destinés à faciliter la vie quotidienne ;
+* une veille scientifique avec stockage des articles en base de données ;
+* un espace rédacteur protégé permettant la gestion des veilles et des traductions ;
+* un export PDF des veilles.
+---
+### Orientation du projet
+Le site est conçu pour évoluer progressivement.
+L'objectif est de proposer une plateforme réunissant :
+* des conseils de prévention ;
+* des informations scientifiques fiables ;
+* des outils pratiques ;
+* des jeux éducatifs ;
+* une approche globale de la santé.
+---
+## Documentation
+À partir d'aujourd'hui, le dossier `docs/` devient la documentation officielle du projet.
+Les documents qui seront progressivement créés permettront de décrire :
+* l'architecture ;
+* les différentes applications Django ;
+* la base de données ;
+* la veille scientifique ;
+* les outils ;
+* la charte graphique ;
+* les procédures d'installation et de déploiement.
+---
+## Prochaines étapes
+Les prochaines évolutions seront ajoutées dans ce fichier sans supprimer les anciennes entrées.
+Chaque séance de développement donnera lieu à une nouvelle section datée afin de conserver un historique complet de l'évolution du projet.
+
+## 28/07/2026
+
+### Amélioration de l'interface de la veille scientifique
+
+Cette séance a principalement été consacrée à l'amélioration de l'ergonomie de la page **Veille scientifique**.
+
+La télévision affichant le journal de veille a été retravaillée afin d'obtenir un rendu plus immersif. Le positionnement des articles, les transitions entre les différentes pages du journal ainsi que l'intégration graphique avec l'image du téléviseur ont été affinés.
+
+Le personnage du reporter a également été amélioré avec l'ajout d'une bulle de dialogue de style bande dessinée. Son positionnement, son déclenchement au survol et son orientation ont été ajustés afin de donner un aspect plus naturel. Le texte a été réécrit dans un style volontairement « franglais » afin de conserver une touche humoristique tout en rappelant que les sources sont conservées dans leur langue d'origine.
+
+Un travail a également été réalisé pour empêcher le contenu principal de passer sous la télévision lorsque la page devient plus longue. L'organisation de la mise en page est désormais plus robuste et laisse un espace réservé au téléviseur.
+
+Enfin, une réflexion a été engagée sur l'amélioration de la lecture du journal de veille. L'idée retenue est l'ajout d'un bouton discret permettant de mettre en pause ou de reprendre le défilement automatique des articles. Le style graphique du bouton a été défini et son intégration dans l'interface est prévue, tandis que la logique JavaScript associée sera finalisée ultérieurement.
+
+## 29/07/2026
+
+### Réorganisation de l'architecture Django
+
+Une séance de maintenance a été consacrée à la réorganisation de l'architecture du projet afin de clarifier les responsabilités des différentes applications Django. Les vues et les routes liées à la veille scientifique ont été définitivement séparées des pages générales du site, ce qui simplifie la maintenance et l'évolution future du code. Plusieurs doublons et références obsolètes ont également été supprimés ou corrigés, permettant de retrouver une structure plus cohérente. Cette réorganisation a été accompagnée d'une vérification progressive des chemins d'accès et des dépendances entre les différentes parties de l'application afin de garantir le bon fonctionnement du site.
+
+

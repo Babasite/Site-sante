@@ -6,53 +6,22 @@
 {% block title %}Veille scientifique{% endblock %}
 {% block page_title %}Veille scientifique{% endblock %}
 
-{% block header_actions %}
-
-<a class="bouton-redacteur veille-connexion-action"
-   href="{% url 'redacteur_connexion' %}">
-    Connexion rédacteur
-</a>
-
-{% if user.is_authenticated and user.is_staff %}
-<button
-    type="submit"
-    form="form-veille"
-    id="bouton-veille"
-    class="spt-shell-action veille-header-button"
->
-    Lancer la veille
-</button>
-{% endif %}
-
-{% if derniere_veille %}
-<a
-    class="spt-shell-action"
-    href="{% url 'detail_veille' derniere_veille.id %}"
->
-    Dernière veille
-</a>
-
-<a
-    class="spt-shell-action veille-pdf-action"
-    href="{% url 'exporter_veille_pdf' derniere_veille.id %}"
-    title="Exporter la dernière veille en PDF"
->
-    📄 PDF
-</a>
-{% endif %}
-
-{% endblock %}
+{% block header_priority_actions %}{% endblock %}
+{% block header_actions %}{% endblock %}
 
 {% block extra_css %}
+
 <style>
 body{
-    font-family:Arial,Helvetica,sans-serif;
+    font-family:var(--font-family-body);
     background:#efe3c3;
     margin:0;
 }
 
 h2{
     color:#00796b;
+    font-family:var(--font-family-title);
+    font-size:2rem;
 }
 
 .bloc{
@@ -74,7 +43,7 @@ h2{
     border-radius:8px;
     background:white;
     color:#00695c;
-    font-family:Arial,Helvetica,sans-serif;
+    font-family:var(--font-family-body);
     font-size:15px;
     font-weight:bold;
     line-height:1.2;
@@ -104,14 +73,36 @@ h2{
 }
 
 .veille-page{
+    --tv-zone-reservee:760px;
     position:relative;
     min-height:620px;
-    padding:40px;
+    padding:0 40px 40px;
+    padding-right:var(--tv-zone-reservee);
+    box-sizing:border-box;
 }
 
+/*
+Bloc indépendant destiné à tout le contenu éditorial de la page.
+La place de la télévision est réservée par .veille-page : le contenu
+ne peut donc plus passer dessous, même lorsqu'il devient long.
+*/
 .contenu{
-    width:min(850px,calc(100% - 390px));
+    width:min(737px,100%);
     margin:0;
+    box-sizing:border-box;
+    padding:28px 30px;
+    background:rgba(255,255,255,.55);
+    border:1px solid rgba(0,105,92,.14);
+    border-radius:14px;
+    box-shadow:0 10px 28px rgba(52,45,27,.13);
+}
+
+.contenu > :first-child{
+    margin-top:0;
+}
+
+.contenu > :last-child{
+    margin-bottom:0;
 }
 
 /* Formulaire réel invisible, piloté par le bouton du bandeau */
@@ -174,6 +165,7 @@ h2{
 }
 
 .source-bloc h3{
+    font-family:var(--font-family-title);
     margin-top:0;
     margin-bottom:12px;
     color:#00695c;
@@ -184,28 +176,144 @@ h2{
     padding-left:22px;
 }
 
-/* Image du perroquet : entière, plus grande et légèrement plus à gauche */
+/* Image TV2 */
 .colonne-droite{
     position:fixed;
     top:70px;
-    right:70px;
+    right:183px;
     width:420px;
     height:calc(100vh - 70px);
     display:flex;
     justify-content:center;
     align-items:center;
     pointer-events:none;
+    overflow:visible;
 }
 
 .image-droite{
-    width:360px;
-    height:360px;
-    border-radius:18px;
-    background-image:url("{% static 'accueil/images/perroquet.png' %}");
+    flex-shrink:0;
+    width:820px;
+    height:820px;
+    transform:translateX(-100px);
+    background-image:url("{% static 'accueil/images/TV2.png' %}");
     background-size:contain;
     background-position:center;
     background-repeat:no-repeat;
-    box-shadow:0 12px 28px rgba(0,0,0,.18);
+    background-color:transparent;
+    border:none;
+    border-radius:0;
+    box-shadow:none;
+}
+
+
+/* Bloc d'articles posé directement sur TV2.png */
+.image-droite{
+    position:relative;
+}
+
+.tv-articles-overlay{
+    position:absolute;
+    z-index:2;
+
+    /* Coordonnées calculées sur TV2.png (1536 x 1024), affichée en contain */
+    top:21.5%;
+    left:3.2%;
+    width:48%;
+    height:48.5%;
+
+    box-sizing:border-box;
+    overflow:hidden;
+    color:#fff;
+    pointer-events:auto;
+    cursor:pointer;
+
+    /* Le fond s'efface progressivement avant le bras du reporter */
+    background:linear-gradient(
+        90deg,
+        rgba(5,20,25,.90) 0%,
+        rgba(5,20,25,.82) 60%,
+        rgba(5,20,25,.52) 82%,
+        rgba(5,20,25,.08) 100%
+    );
+    backdrop-filter:blur(3px);
+    -webkit-backdrop-filter:blur(3px);
+    border-radius:4px;
+    box-shadow:0 8px 24px rgba(0,0,0,.22);
+}
+
+.tv-article{
+    position:absolute;
+    inset:0;
+    box-sizing:border-box;
+    padding:clamp(14px,2.2vw,30px);
+    padding-right:18%;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    opacity:0;
+    visibility:hidden;
+    transform:translateX(16px);
+    transition:opacity .6s ease,transform .6s ease,visibility .6s;
+}
+
+.tv-article.is-active{
+    opacity:1;
+    visibility:visible;
+    transform:translateX(0);
+}
+
+.tv-article-categorie{
+    display:inline-block;
+    align-self:flex-start;
+    margin-bottom:9px;
+    padding:4px 8px;
+    border:1px solid rgba(255,255,255,.55);
+    border-radius:4px;
+    background:rgba(0,0,0,.20);
+    font-size:clamp(9px,1.1vw,13px);
+    font-weight:bold;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+}
+
+.tv-article h3{
+    font-family:var(--font-family-title);
+    margin:0 0 10px;
+    color:#fff;
+    font-size:clamp(15px,2vw,27px);
+    line-height:1.12;
+    text-shadow:0 2px 8px rgba(0,0,0,.75);
+}
+
+.tv-article p{
+    margin:0;
+    white-space:pre-line;
+    overflow-wrap:anywhere;
+    font-size:clamp(10px,1.18vw,15px);
+    line-height:1.42;
+    text-shadow:0 2px 7px rgba(0,0,0,.85);
+}
+
+.tv-article-indicateurs{
+    position:absolute;
+    left:clamp(14px,2.2vw,30px);
+    bottom:12px;
+    z-index:3;
+    display:flex;
+    gap:6px;
+}
+
+.tv-article-indicateur{
+    width:7px;
+    height:7px;
+    padding:0;
+    border:0;
+    border-radius:50%;
+    background:rgba(255,255,255,.45);
+}
+
+.tv-article-indicateur.is-active{
+    background:#fff;
 }
 
 .message-redacteur{
@@ -221,13 +329,17 @@ pre{
     overflow-wrap:anywhere;
 }
 
-@media(max-width:1100px){
+@media(max-width:1400px){
     .veille-page{
-        padding:30px 24px;
+        --tv-zone-reservee:620px;
+        padding:0 24px 30px;
+        padding-right:var(--tv-zone-reservee);
     }
 
     .contenu{
-        width:calc(100% - 330px);
+        width:calc(100% - 113px);
+        padding:24px;
+        transform:translateX(-35px);
     }
 
     .sources-grid{
@@ -235,19 +347,20 @@ pre{
     }
 
     .colonne-droite{
-        right:20px;
+        right:133px;
         width:300px;
-    }
-
-    .image-droite{
-        width:260px;
-        height:260px;
+        overflow:visible;
     }
 }
 
-@media(max-width:820px){
+@media(max-width:980px){
+    .veille-page{
+        padding:0 24px 24px;
+    }
+
     .contenu{
         width:100%;
+        padding:22px;
     }
 
     .sources-grid{
@@ -271,16 +384,119 @@ pre{
         width:min(320px,100%);
         height:auto;
         aspect-ratio:1;
+        transform:none;
     }
 }
+
+.actions-veille{
+    margin:25px 0 35px;
+    padding:18px 20px;
+    background:#e7f2fb;
+    border:1px solid #b7d6ee;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,.08);
+}
+
+.actions-veille h3{
+    font-family:var(--font-family-title);
+    margin:0 0 15px;
+    color:#00695c;
+}
+
+.actions-veille-barre{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    align-items:center;
+}
+
+
+/* ===== Bulle BD du reporter ===== */
+.declencheur-bulle-reporter{
+    position:fixed;
+    top:70px;
+    right:100px;
+    width:110px;
+    height:calc(100vh - 70px);
+    z-index:20;
+}
+.bulle-reporter{
+    position:absolute;
+    top:52%;
+    right:10%;
+    width:230px;
+    padding:18px 20px;
+    background:#fff;
+    color:#17211d;
+    border:3px solid #17211d;
+    border-radius:22px;
+    font:700 16px/1.35 var(--font-family-body);
+    text-align:center;
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(10px) scale(.96);
+    transition:opacity .25s,transform .25s,visibility .25s;
+    pointer-events:none;
+    filter:drop-shadow(0 7px 8px rgba(0,0,0,.28));
+}
+.bulle-reporter::before{
+ content:"";position:absolute;right:42px;top:-28px;width:0;height:0;
+ border-left:22px solid transparent;border-right:5px solid transparent;border-top:29px solid #17211d;
+ transform:rotate(168deg);
+}
+.bulle-reporter::after{
+ content:"";position:absolute;right:44px;top:-21px;width:0;height:0;
+ border-left:17px solid transparent;border-right:4px solid transparent;border-top:23px solid #fff;
+ transform:rotate(168deg);
+}
+.declencheur-bulle-reporter:hover ~ .colonne-droite .bulle-reporter{
+ opacity:1;visibility:visible;transform:translateY(0) scale(1);
+}
+@media(max-width:980px){
+ .declencheur-bulle-reporter,.bulle-reporter{display:none;}
+}
+.tv-pause-btn{
+    position:absolute;
+    top:10px;
+    right:10px;
+    z-index:10;
+    width:30px;
+    height:30px;
+    border:1px solid rgba(255,255,255,.35);
+    border-radius:50%;
+    background:rgba(255,255,255,.12);
+    color:#fff;
+    font-size:16px;
+    line-height:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    backdrop-filter:blur(3px);
+    -webkit-backdrop-filter:blur(3px);
+}
+
+.tv-pause-btn:hover{
+    background:rgba(255,255,255,.22);
+}
+
+.tv-pause-btn:focus{
+    outline:none;
+    box-shadow:0 0 0 2px rgba(255,255,255,.35);
+}
+
+.tv-pause-btn:active{
+    transform:scale(.95);
+}
+
 </style>
+
 {% endblock %}
 
 {% block content %}
 
-{% include "accueil/includes/barre_redacteur.html" %}
-
 {% if user.is_authenticated and user.is_staff %}
+
 <form method="post" id="form-veille" class="form-veille-cache">
     {% csrf_token %}
 </form>
@@ -289,92 +505,342 @@ pre{
 <div id="message-attente" class="message-attente">
     <h2>⏳ Patientez...</h2>
 
-    <p>
-        Je lis les publications, je supprime les doublons, je rédige le
-        résumé et je cherche les convergences...
-    </p>
+<p>
+    Je lis les publications, je supprime les doublons, je rédige le
+    résumé et je cherche les convergences...
+</p>
 
-    <p>
-        Mon cerveau tourne en local avec seulement 8 Go de RAM,
-        alors soyez indulgent... 😅
-    </p>
+<p>
+    Mon cerveau tourne en local avec seulement 8 Go de RAM,
+    alors soyez indulgent... 😅
+</p>
+
 </div>
 
 <div class="veille-page">
 
-    <div class="contenu">
+<div class="contenu">
 
-        {% for message in messages %}
-        <p class="message-redacteur">{{ message }}</p>
-        {% endfor %}
+    {% for message in messages %}
+    <p class="message-redacteur">{{ message }}</p>
+    {% endfor %}
 
-        {% if erreur %}
-        <p class="message-redacteur">{{ erreur }}</p>
-        {% endif %}
+    {% if erreur %}
+    <p class="message-redacteur">{{ erreur }}</p>
+    {% endif %}
 
-        <p>
-            Cette page permet de récupérer automatiquement les nouveautés
-            provenant de :
-        </p>
+    <div class="actions-veille">
+        <h3>Actions de veille</h3>
 
-        <div class="sources-grid">
+        <div class="actions-veille-barre">
 
-            <div class="source-bloc">
-                <h3>Sources scientifiques</h3>
+            {% if derniere_veille %}
+            <a class="spt-shell-action"
+               href="{% url 'detail_veille' derniere_veille.id %}">
+                Voir le journal complet
+            </a>
 
-                <ul>
-                    <li>PubMed</li>
-                    <li>Google Scholar</li>
-                    <li>ProMed</li>
-                    <li>Prisme</li>
-                    <li>Cochrane Library</li>
-                </ul>
-            </div>
+            <a class="spt-shell-action veille-pdf-action"
+               href="{% url 'exporter_veille_pdf' derniere_veille.id %}">
+                📄 PDF
+            </a>
+            {% endif %}
 
-            <div class="source-bloc">
-                <h3>Agences officielles</h3>
+            <a class="bouton-redacteur veille-connexion-action"
+               href="{% url 'redacteur_connexion' %}">
+                Connexion rédacteur
+            </a>
 
-                <ul>
-                    <li>HAS</li>
-                    <li>Santé Publique France</li>
-                    <li>ANSES</li>
-                    <li>OMS</li>
-                    <li>ECDC</li>
-                    <li>CDC</li>
-                    <li>INSERM</li>
-                </ul>
-            </div>
+            {% if user.is_authenticated and user.is_staff %}
+            <button type="submit"
+                    form="form-veille"
+                    id="bouton-veille"
+                    class="spt-shell-action veille-header-button">
+                Lancer la veille
+            </button>
+            {% endif %}
 
         </div>
+    </div>
 
-        <h3>Gestion bibliographique</h3>
+    <p>
+        Les sources analysées pour produire le journal (veille) :
+    </p>
 
-        <ul>
-            <li>Zotero</li>
-        </ul>
+    <div class="sources-grid">
 
-        {% if resultats %}
-        <div class="bloc">
-            <h2>Résultats</h2>
-            <pre>{{ resultats }}</pre>
+        <div class="source-bloc">
+            <h3>Sources scientifiques</h3>
+
+            <ul>
+                <li>PubMed</li>
+                <li>Google Scholar</li>
+                <li>ProMed</li>
+                <li>Prisme</li>
+                <li>Cochrane Library</li>
+            </ul>
         </div>
-        {% endif %}
+
+        <div class="source-bloc">
+            <h3>Agences officielles</h3>
+
+            <ul>
+                <li>HAS</li>
+                <li>Santé Publique France</li>
+                <li>ANSES</li>
+                <li>OMS</li>
+                <li>ECDC</li>
+                <li>CDC</li>
+                <li>INSERM</li>
+            </ul>
+        </div>
 
     </div>
 
-    <div class="colonne-droite">
-        <div class="image-droite"></div>
+    <h3>Gestion bibliographique</h3>
+
+    <ul>
+        <li>Zotero</li>
+    </ul>
+
+    {% if resultats %}
+    <div class="bloc">
+        <h2>Résultats</h2>
+        <pre>{{ resultats }}</pre>
     </div>
+    {% endif %}
+
+</div>
+
+<div class="declencheur-bulle-reporter" aria-hidden="true"></div>
+
+<div class="colonne-droite">
+    <div class="image-droite">
+
+        <div class="bulle-reporter">
+            Oui, je parle souvent franglais.<br>
+            Mais it's the best way to garder mes sources intactes,<br>
+            without using AI ... Et je reste atypique 😁.
+        </div>
+
+        <div class="tv-articles-overlay" id="tv-articles-overlay" aria-live="polite">
+            <div id="tv-journal-source" hidden>
+                {% if derniere_veille %}
+                    {{ derniere_veille.resume_affiche }}
+                {% else %}
+                    Aucun journal du jour n'est disponible pour le moment.
+                {% endif %}
+            </div>
+<button
+    type="button"
+    class="tv-pause-btn"
+    id="tv-pause-btn"
+    aria-label="Mettre en pause">
+    ⏸
+</button>
+            <div class="tv-article-indicateurs" aria-hidden="true"></div>
+        </div>
+
+    </div>
+</div>
 
 </div>
 
 {% endblock %}
 
 {% block extra_js %}
+
 <script>
 const formulaireVeille = document.getElementById("form-veille");
 const boutonVeille = document.getElementById("bouton-veille");
 const messageAttente = document.getElementById("message-attente");
+
+
+const tvOverlay = document.getElementById("tv-articles-overlay");
+const tvJournalSource = document.getElementById("tv-journal-source");
+const tvPauseBtn = document.getElementById("tv-pause-btn");
+
+if(tvOverlay && tvJournalSource){
+    const indicateurs = tvOverlay.querySelector(".tv-article-indicateurs");
+    const texteJournal = tvJournalSource.textContent
+        .replace(/\r\n/g, "\n")
+        .replace(/[ \t]+\n/g, "\n")
+        .trim();
+
+    function creerArticleTv(textePage, index, articleMesure){
+        const article = document.createElement("article");
+        article.className = "tv-article";
+        article.setAttribute("data-tv-article", "");
+
+        if(articleMesure){
+            article.removeAttribute("data-tv-article");
+            article.setAttribute("aria-hidden", "true");
+            article.style.opacity = "1";
+            article.style.visibility = "hidden";
+            article.style.transform = "none";
+            article.style.transition = "none";
+            article.style.justifyContent = "flex-start";
+            article.style.pointerEvents = "none";
+        }else if(index === 0){
+            article.classList.add("is-active");
+        }
+
+        const categorie = document.createElement("span");
+        categorie.className = "tv-article-categorie";
+        categorie.textContent = "Veille scientifique";
+
+        const titre = document.createElement("h3");
+        titre.textContent = (index === 0) ? "Le Journal du jour" : "";
+
+        const contenu = document.createElement("p");
+        contenu.textContent = textePage;
+
+        article.appendChild(categorie);
+        article.appendChild(titre);
+        article.appendChild(contenu);
+
+        return article;
+    }
+
+    function contenuTientDansTv(textePage, index){
+        const articleMesure = creerArticleTv(textePage, index, true);
+        tvOverlay.insertBefore(articleMesure, indicateurs);
+
+        const tient = articleMesure.scrollHeight <= articleMesure.clientHeight + 1;
+
+        articleMesure.remove();
+        return tient;
+    }
+
+    function paginerJournal(texte){
+        const paragraphes = texte
+            .split(/\n\s*\n+/)
+            .map(function(paragraphe){
+                return paragraphe
+                    .replace(/[ \t]*\n[ \t]*/g, "\n")
+                    .trim();
+            })
+            .filter(Boolean);
+
+        if(!paragraphes.length){
+            return ["Aucun journal du jour n'est disponible pour le moment."];
+        }
+
+        const pages = [];
+        let pageEnCours = "";
+
+        paragraphes.forEach(function(paragraphe){
+            const pageCandidate = pageEnCours
+                ? pageEnCours + "\n\n" + paragraphe
+                : paragraphe;
+
+            if(pageEnCours && !contenuTientDansTv(pageCandidate, pages.length)){
+                pages.push(pageEnCours);
+                pageEnCours = paragraphe;
+            }else{
+                pageEnCours = pageCandidate;
+            }
+        });
+
+        if(pageEnCours){
+            pages.push(pageEnCours);
+        }
+
+        return pages;
+    }
+
+    const pagesJournal = paginerJournal(texteJournal);
+
+    pagesJournal.forEach(function(textePage, index){
+        const article = creerArticleTv(textePage, index, false);
+        tvOverlay.insertBefore(article, indicateurs);
+    });
+
+    const tvArticles = Array.from(tvOverlay.querySelectorAll("[data-tv-article]"));
+    let articleActif = 0;
+
+    if(indicateurs && tvArticles.length > 1){
+        tvArticles.forEach(function(_, index){
+            const point = document.createElement("span");
+            point.className = "tv-article-indicateur" + (index === 0 ? " is-active" : "");
+            indicateurs.appendChild(point);
+        });
+    }
+
+    const points = indicateurs
+        ? Array.from(indicateurs.querySelectorAll(".tv-article-indicateur"))
+        : [];
+
+    if(tvArticles.length > 1){
+        let minuterieTv = null;
+        let tvEnPause = false;
+
+        function afficherArticleSuivant(){
+            tvArticles[articleActif].classList.remove("is-active");
+            if(points[articleActif]){
+                points[articleActif].classList.remove("is-active");
+            }
+
+            articleActif = (articleActif + 1) % tvArticles.length;
+
+            tvArticles[articleActif].classList.add("is-active");
+            if(points[articleActif]){
+                points[articleActif].classList.add("is-active");
+            }
+        }
+
+       function relancerMinuterieTv(){
+    if(minuterieTv){
+        window.clearInterval(minuterieTv);
+        minuterieTv = null;
+    }
+
+    if(tvEnPause){
+        return;
+    }
+
+    minuterieTv = window.setInterval(afficherArticleSuivant, 9000);
+}
+
+if(tvPauseBtn){
+    tvPauseBtn.addEventListener("click", function(e){
+        e.stopPropagation();
+
+        tvEnPause = !tvEnPause;
+
+        if(tvEnPause){
+            if(minuterieTv){
+                window.clearInterval(minuterieTv);
+                minuterieTv = null;
+            }
+            tvPauseBtn.textContent = "▶";
+            tvPauseBtn.setAttribute("aria-label", "Reprendre");
+        }else{
+            tvPauseBtn.textContent = "⏸";
+            tvPauseBtn.setAttribute("aria-label", "Mettre en pause");
+            relancerMinuterieTv();
+        }
+    });
+}
+
+        
+           tvOverlay.addEventListener("click", function(e){
+
+    if(e.target === tvPauseBtn){
+        return;
+    }
+
+    if(tvEnPause){
+        return;
+    }
+
+    afficherArticleSuivant();
+    relancerMinuterieTv();
+});
+
+        relancerMinuterieTv();
+    }
+}
 
 if(formulaireVeille){
     formulaireVeille.addEventListener("submit", function(){
@@ -389,4 +855,5 @@ if(formulaireVeille){
     });
 }
 </script>
+
 {% endblock %}

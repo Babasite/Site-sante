@@ -7,38 +7,293 @@
 {% block page_title %}Tableau de bord rédacteur{% endblock %}
 {% block header_actions %}{% endblock %}
 
-{% block extra_css %}<style>
-body{font-family:Arial,Helvetica,sans-serif;background:#efe3c3;color:#2f382f;margin:0;padding:0;line-height:1.6}
-.page{width:min(1050px,92%);margin:35px auto 70px}
-h1,h2{color:#00695c}.retour{display:inline-block;margin-bottom:18px;color:#214c35;font-weight:bold;text-decoration:none}
-.grille{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px;margin:22px 0}
-.carte,.bloc{background:#fff;padding:22px;border-radius:10px;box-shadow:0 0 10px #ccc}.nombre{font-size:2rem;font-weight:bold;color:#00695c;margin:5px 0}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}.bouton{display:inline-block;padding:10px 14px;border-radius:7px;background:#00695c;color:#fff;text-decoration:none;font-weight:bold}.bouton.secondaire{background:#fff;color:#00695c;border:1px solid #00695c}
-</style>{% endblock %}
+{% block extra_css %}
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    color: #2f382f;
+    background: #efe3c3;
+    font-family: var(--font-family-body);
+    line-height: 1.6;
+}
+
+.page {
+    width: min(1050px, 92%);
+    margin: 35px auto 70px;
+}
+
+h1,
+h2 {
+    color: #214c35;
+    font-family: var(--font-family-title);
+}
+
+h1 {
+    margin: 0 0 24px;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.15;
+}
+
+h2 {
+    margin-top: 0;
+    font-size: clamp(1.45rem, 3vw, 2rem);
+}
+
+.retour {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 18px;
+    color: #214c35;
+    font-weight: 700;
+    text-decoration: none;
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.retour:hover {
+    color: #008080;
+    transform: translateX(-3px);
+}
+
+.grille {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 18px;
+    margin: 22px 0 28px;
+}
+
+.carte,
+.bloc {
+    border: 1px solid rgba(33, 76, 53, 0.12);
+    border-radius: 16px;
+    background: #fffaf0;
+    box-shadow: 0 12px 28px rgba(33, 76, 53, 0.14);
+}
+
+.carte {
+    padding: 22px;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.carte:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 32px rgba(33, 76, 53, 0.18);
+}
+
+.carte > div {
+    color: #4f6255;
+    font-size: 0.98rem;
+    font-weight: 700;
+}
+
+.nombre {
+    margin: 5px 0 0;
+    color: #008080;
+    font-family: var(--font-family-title);
+    font-size: 2.15rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.bloc {
+    padding: 26px;
+}
+
+.bloc p {
+    margin: 10px 0;
+}
+
+.bloc strong {
+    color: #214c35;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.bouton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 10px 16px;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    color: #ffffff;
+    background: linear-gradient(135deg, #008080, #214c35);
+    box-shadow: 0 8px 18px rgba(33, 76, 53, 0.18);
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.bouton:hover {
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 11px 22px rgba(33, 76, 53, 0.24);
+}
+
+.bouton.secondaire {
+    border-color: #008080;
+    color: #006f6f;
+    background: #fffaf0;
+    box-shadow: none;
+}
+
+.bouton.secondaire:hover {
+    color: #214c35;
+    background: #e1edf5;
+}
+
+@media (max-width: 600px) {
+    .page {
+        width: min(100% - 28px, 1050px);
+        margin-top: 24px;
+    }
+
+    .grille {
+        grid-template-columns: 1fr;
+    }
+
+    .carte,
+    .bloc {
+        padding: 20px;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .bouton {
+        width: 100%;
+    }
+}
+</style>
+{% endblock %}
 
 {% block content %}
-{% include "accueil/includes/barre_redacteur.html" %}
 <div class="page">
-<a class="retour" href="{% url 'veille' %}">← Retour à la veille</a>
-<h1>Tableau de bord rédacteur</h1>
-<div class="grille">
-<div class="carte"><div>Veilles terminées</div><p class="nombre">{{ statistiques.nombre_veilles }}</p></div>
-<div class="carte"><div>Articles enregistrés</div><p class="nombre">{{ statistiques.nombre_articles }}</p></div>
-<div class="carte"><div>Traductions publiées</div><p class="nombre">{{ statistiques.nombre_traductions_publiees }}</p></div>
-<div class="carte"><div>Veilles en erreur</div><p class="nombre">{{ statistiques.nombre_erreurs }}</p></div>
-</div>
-<div class="bloc">
-<h2>Dernière veille</h2>
-{% if derniere_veille %}
-<p><strong>Date :</strong> {{ derniere_veille.date_creation|date:"d/m/Y à H:i" }}</p>
-<p><strong>Articles :</strong> {{ statistiques.articles_derniere_veille }}</p>
-<p><strong>Traductions publiées :</strong> {{ statistiques.traductions_derniere_veille }} / {{ statistiques.articles_derniere_veille }}</p>
-<p><strong>Résumé manuel :</strong> {% if derniere_veille.resume_manuel_publie %}publié{% else %}non publié{% endif %}</p>
-<div class="actions">
-<a class="bouton" href="{% url 'detail_veille' derniere_veille.id %}">Ouvrir la veille</a>
-<a class="bouton secondaire" href="{% url 'modifier_resume' derniere_veille.id %}">Modifier le résumé</a>
-<a class="bouton secondaire" href="{% url 'exporter_veille_pdf' derniere_veille.id %}">Exporter en PDF</a>
-</div>
-{% else %}<p>Aucune veille terminée pour le moment.</p>{% endif %}
-</div>
+
+    <a class="retour" href="{% url 'veille' %}">
+        ← Retour à la veille
+    </a>
+
+    <h1>
+        Tableau de bord rédacteur
+    </h1>
+
+    <div class="grille">
+
+        <div class="carte">
+            <div>Veilles terminées</div>
+            <p class="nombre">
+                {{ statistiques.nombre_veilles }}
+            </p>
+        </div>
+
+        <div class="carte">
+            <div>Articles enregistrés</div>
+            <p class="nombre">
+                {{ statistiques.nombre_articles }}
+            </p>
+        </div>
+
+        <div class="carte">
+            <div>Traductions publiées</div>
+            <p class="nombre">
+                {{ statistiques.nombre_traductions_publiees }}
+            </p>
+        </div>
+
+        <div class="carte">
+            <div>Veilles en erreur</div>
+            <p class="nombre">
+                {{ statistiques.nombre_erreurs }}
+            </p>
+        </div>
+
+    </div>
+
+    <div class="bloc">
+
+        <h2>
+            Dernière veille
+        </h2>
+
+        {% if derniere_veille %}
+
+            <p>
+                <strong>Date :</strong>
+                {{ derniere_veille.date_creation|date:"d/m/Y à H:i" }}
+            </p>
+
+            <p>
+                <strong>Articles :</strong>
+                {{ statistiques.articles_derniere_veille }}
+            </p>
+
+            <p>
+                <strong>Traductions publiées :</strong>
+                {{ statistiques.traductions_derniere_veille }}
+                /
+                {{ statistiques.articles_derniere_veille }}
+            </p>
+
+            <p>
+                <strong>Résumé manuel :</strong>
+                {% if derniere_veille.resume_manuel_publie %}
+                    publié
+                {% else %}
+                    non publié
+                {% endif %}
+            </p>
+
+            <div class="actions">
+
+                <a
+                    class="bouton"
+                    href="{% url 'detail_veille' derniere_veille.id %}"
+                >
+                    Ouvrir la veille
+                </a>
+
+                <a
+                    class="bouton secondaire"
+                    href="{% url 'modifier_resume' derniere_veille.id %}"
+                >
+                    Modifier le résumé
+                </a>
+
+                <a
+                    class="bouton secondaire"
+                    href="{% url 'exporter_veille_pdf' derniere_veille.id %}"
+                >
+                    Exporter en PDF
+                </a>
+
+            </div>
+
+        {% else %}
+
+            <p>
+                Aucune veille terminée pour le moment.
+            </p>
+
+        {% endif %}
+
+    </div>
+
 </div>
 {% endblock %}

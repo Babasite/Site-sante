@@ -1,18 +1,31 @@
 """
-URL configuration for config project.
+===============================================================================
+ROUTEUR PRINCIPAL DE L'APPLICATION DJANGO
+===============================================================================
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/6.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import: from my_app import views
-    2. Add a URL to urlpatterns: path("", views.home, name="home")
-Class-based views
-    1. Add an import: from other_app.views import Home
-    2. Add a URL to urlpatterns: path("", Home.as_view(), name="home")
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns: path("blog/", include("blog.urls"))
+Ce fichier est le point d'entrée des URL du projet.
+
+Son unique responsabilité est de répartir les routes entre les différentes
+applications. Il ne doit jamais contenir les routes métier directement.
+
+Répartition actuelle :
+
+    accueil/
+        → pages générales du site
+
+    apps/monitoring/
+        → veille scientifique
+
+    apps/recommendations/
+        → recommandations d'activité physique
+
+IMPORTANT
+---------
+Si une nouvelle fonctionnalité est créée, ajouter ses routes dans le fichier
+urls.py de son application, puis inclure ce fichier ici avec include().
+
+Ce fichier doit rester le plus simple possible.
+===============================================================================
 """
 
 from django.contrib import admin
@@ -20,8 +33,23 @@ from django.urls import include, path
 
 
 urlpatterns = [
+    # -------------------------------------------------------------------------
+    # Administration Django
+    # -------------------------------------------------------------------------
     path("admin/", admin.site.urls),
+
+    # -------------------------------------------------------------------------
+    # Pages générales
+    # -------------------------------------------------------------------------
     path("", include("accueil.urls")),
+
+    # -------------------------------------------------------------------------
+    # Veille scientifique
+    # -------------------------------------------------------------------------
     path("", include("apps.monitoring.urls")),
+
+    # -------------------------------------------------------------------------
+    # Recommandations
+    # -------------------------------------------------------------------------
     path("", include("apps.recommendations.urls")),
 ]

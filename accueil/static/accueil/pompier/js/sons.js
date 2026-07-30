@@ -3,110 +3,371 @@
    Gestion centralisée des sons du site
    ========================================================== */
 
-const Sons = {
-    clic: new Audio("/static/accueil/sons/clic.mp3"),
-    bonneReponse: new Audio("/static/accueil/sons/bonne_reponse.mp3"),
-    mauvaiseReponse: new Audio("/static/accueil/sons/mauvaise_reponse.mp3"),
-    victoire: new Audio("/static/accueil/sons/victoire.mp3"),
-    defaite: new Audio("/static/accueil/sons/defaite.mp3"),
-    bonus: new Audio("/static/accueil/sons/bonus.mp3"),
-    explosion: new Audio("/static/accueil/sons/explosion.mp3"),
-    erreur: new Audio("/static/accueil/sons/erreur.mp3"),
-    chrono: new Audio("/static/accueil/sons/chrono.mp3"),
-    niveau: new Audio("/static/accueil/sons/niveau.mp3")
-};
+(() => {
+    "use strict";
 
-/* -----------------------------
-   Réglages généraux
------------------------------- */
+    /* ----------------------------------------------------------
+       Liste des sons disponibles
+       ---------------------------------------------------------- */
 
-Object.values(Sons).forEach(son => {
-    son.preload = "auto";
-});
+    const Sons = {
+        clic: new Audio("/static/accueil/sons/clic.mp3"),
+        bonneReponse: new Audio("/static/accueil/sons/bonne_reponse.mp3"),
+        mauvaiseReponse: new Audio("/static/accueil/sons/mauvaise_reponse.mp3"),
+        victoire: new Audio("/static/accueil/sons/victoire.mp3"),
+        defaite: new Audio("/static/accueil/sons/defaite.mp3"),
+        bonus: new Audio("/static/accueil/sons/bonus.mp3"),
+        explosion: new Audio("/static/accueil/sons/explosion.mp3"),
+        erreur: new Audio("/static/accueil/sons/erreur.mp3"),
+        chrono: new Audio("/static/accueil/sons/chrono.mp3"),
+        niveau: new Audio("/static/accueil/sons/niveau.mp3")
+    };
 
-/* -----------------------------
-   Jouer un son
------------------------------- */
+    /* ----------------------------------------------------------
+       Volume général
+       Valeur comprise entre 0 et 1
+       ---------------------------------------------------------- */
 
-function jouerSon(nom, volume = 1) {
+    let volumeGeneral = 1;
 
-    const son = Sons[nom];
+    /* ----------------------------------------------------------
+       État sonore général
+       ---------------------------------------------------------- */
 
-    if (!son)
-        return;
+    let sonsActives = true;
 
-    son.pause();
-    son.currentTime = 0;
-    son.volume = volume;
+    /* ----------------------------------------------------------
+       Sécuriser une valeur de volume entre 0 et 1
+       ---------------------------------------------------------- */
 
-    son.play().catch(() => {});
-}
+    function normaliserVolume(volume) {
+        const valeur = Number(volume);
 
-/* -----------------------------
-   Jouer sans couper le précédent
------------------------------- */
+        if (Number.isNaN(valeur)) {
+            return 1;
+        }
 
-function jouerSonMultiple(nom, volume = 1) {
+        return Math.min(1, Math.max(0, valeur));
+    }
 
-    const original = Sons[nom];
+    /* ----------------------------------------------------------
+       Préchargement et réglages initiaux
+       ---------------------------------------------------------- */
 
-    if (!original)
-        return;
+    Object.values(Sons).forEach((son) => {
+        son.preload = "auto";
+        son.volume = volumeGeneral;
 
-    const son = original.cloneNode();
+        try {
+            son.load();
+        } catch (erreur) {
+            console.warn("Impossible de précharger un son :", erreur);
+        }
+    });
 
-    son.volume = volume;
+    /* ----------------------------------------------------------
+       Vérifier qu'un son existe
+       ---------------------------------------------------------- */
 
-    son.play().catch(() => {});
-}
+    function obtenirSon(nom) {
+        const son = Sons[nom];
 
-/* -----------------------------
-   Arrêter un son
------------------------------- */
+        if (!son) {
+            console.warn(`Son inconnu : ${nom}`);
+            return null;
+        }
 
-function arreterSon(nom) {
+        return son;
+    }
 
-    const son = Sons[nom];
+    /* ----------------------------------------------------------
+       Jouer un son en recommençant depuis le début
 
-    if (!son)
-        return;
+       Exemples :
+       jouerSon("clic");
+       jouerSon("explosion", 0.6);
+       ---------------------------------------------------------- */
 
-    son.pause();
-    son.currentTime = 0;
-}
+    function jouerSon(nom, volume = 1) {
+        if (!sonsActives) {
+            return;
+        }
 
-/* -----------------------------
-   Arrêter tous les sons
------------------------------- */
+        const son = obtenirSon(nom);
 
-function arreterTousLesSons() {
+        if (!son) {
+            return;
+        }
 
-    Object.values(Sons).forEach(son => {
+        const volumeFinal =
+            normaliserVolume(volume) * normaliserVolume(volumeGeneral);
+
         son.pause();
         son.currentTime = 0;
-    });
+        son.volume = volumeFinal;
 
-}
+        const lecture = son.play();
 
-/* -----------------------------
-   Modifier le volume d'un son
------------------------------- */
+        if (lecture !== undefined) {
+            lecture.catch((erreur) => {
+                /*
+                 * Les navigateurs peuvent bloquer les sons avant
+                 * la première interaction de l'utilisateur.
+                 */
+                console.debug(
+                    `Lecture du son "${nom}" bloquée ou impossible :`,
+                    erreur
+                );
+            });
+        }
+    }
 
-function volumeSon(nom, volume) {
+    /* ----------------------------------------------------------
+       Jouer un son sans couper une lecture déjà en cours
 
-    if (Sons[nom])
-        Sons[nom].volume = volume;
+       Recommandé pour :
+       - les tirs rapides ;
+       - les explosions ;
+       - plusieurs bonus successifs.
 
-}
+       Exemples :
+       jouerSonMultiple("clic", 0.3);
+       jouerSonMultiple("explosion", 0.7);
+       ---------------------------------------------------------- */
 
-/* -----------------------------
-   Modifier le volume global
------------------------------- */
+    function jouerSonMultiple(nom, volume = 1) {
+        if (!sonsActives) {
+            return;
+        }
 
-function volumeGlobal(volume) {
+        const original = obtenirSon(nom);
 
-    Object.values(Sons).forEach(son => {
-        son.volume = volume;
-    });
+        if (!original) {
+            return;
+        }
 
-}
+        const son = original.cloneNode(true);
+
+        son.volume =
+            normaliserVolume(volume) * normaliserVolume(volumeGeneral);
+
+        const lecture = son.play();
+
+        if (lecture !== undefined) {
+            lecture.catch((erreur) => {
+                console.debug(
+                    `Lecture multiple du son "${nom}" impossible :`,
+                    erreur
+                );
+            });
+        }
+
+        /*
+         * Une fois terminé, le clone peut être libéré
+         * automatiquement par le navigateur.
+         */
+        son.addEventListener(
+            "ended",
+            () => {
+                son.remove();
+            },
+            { once: true }
+        );
+    }
+
+    /* ----------------------------------------------------------
+       Jouer un son en boucle
+
+       Exemple :
+       jouerSonEnBoucle("chrono", 0.4);
+       ---------------------------------------------------------- */
+
+    function jouerSonEnBoucle(nom, volume = 1) {
+        if (!sonsActives) {
+            return;
+        }
+
+        const son = obtenirSon(nom);
+
+        if (!son) {
+            return;
+        }
+
+        son.pause();
+        son.currentTime = 0;
+        son.loop = true;
+        son.volume =
+            normaliserVolume(volume) * normaliserVolume(volumeGeneral);
+
+        const lecture = son.play();
+
+        if (lecture !== undefined) {
+            lecture.catch((erreur) => {
+                console.debug(
+                    `Lecture en boucle du son "${nom}" impossible :`,
+                    erreur
+                );
+            });
+        }
+    }
+
+    /* ----------------------------------------------------------
+       Arrêter un son
+       ---------------------------------------------------------- */
+
+    function arreterSon(nom) {
+        const son = obtenirSon(nom);
+
+        if (!son) {
+            return;
+        }
+
+        son.pause();
+        son.currentTime = 0;
+        son.loop = false;
+    }
+
+    /* ----------------------------------------------------------
+       Mettre un son en pause sans revenir au début
+       ---------------------------------------------------------- */
+
+    function pauseSon(nom) {
+        const son = obtenirSon(nom);
+
+        if (!son) {
+            return;
+        }
+
+        son.pause();
+    }
+
+    /* ----------------------------------------------------------
+       Reprendre un son mis en pause
+       ---------------------------------------------------------- */
+
+    function reprendreSon(nom) {
+        if (!sonsActives) {
+            return;
+        }
+
+        const son = obtenirSon(nom);
+
+        if (!son) {
+            return;
+        }
+
+        const lecture = son.play();
+
+        if (lecture !== undefined) {
+            lecture.catch((erreur) => {
+                console.debug(
+                    `Reprise du son "${nom}" impossible :`,
+                    erreur
+                );
+            });
+        }
+    }
+
+    /* ----------------------------------------------------------
+       Arrêter tous les sons
+       ---------------------------------------------------------- */
+
+    function arreterTousLesSons() {
+        Object.values(Sons).forEach((son) => {
+            son.pause();
+            son.currentTime = 0;
+            son.loop = false;
+        });
+    }
+
+    /* ----------------------------------------------------------
+       Modifier le volume d'un son précis
+       ---------------------------------------------------------- */
+
+    function volumeSon(nom, volume) {
+        const son = obtenirSon(nom);
+
+        if (!son) {
+            return;
+        }
+
+        son.volume =
+            normaliserVolume(volume) * normaliserVolume(volumeGeneral);
+    }
+
+    /* ----------------------------------------------------------
+       Modifier le volume général
+       ---------------------------------------------------------- */
+
+    function volumeGlobal(volume) {
+        volumeGeneral = normaliserVolume(volume);
+
+        Object.values(Sons).forEach((son) => {
+            son.volume = volumeGeneral;
+        });
+    }
+
+    /* ----------------------------------------------------------
+       Activer les sons
+       ---------------------------------------------------------- */
+
+    function activerSons() {
+        sonsActives = true;
+    }
+
+    /* ----------------------------------------------------------
+       Désactiver les sons
+       ---------------------------------------------------------- */
+
+    function desactiverSons() {
+        sonsActives = false;
+        arreterTousLesSons();
+    }
+
+    /* ----------------------------------------------------------
+       Activer ou désactiver les sons
+       Retourne true lorsque les sons sont activés
+       ---------------------------------------------------------- */
+
+    function basculerSons() {
+        sonsActives = !sonsActives;
+
+        if (!sonsActives) {
+            arreterTousLesSons();
+        }
+
+        return sonsActives;
+    }
+
+    /* ----------------------------------------------------------
+       Savoir si les sons sont activés
+       ---------------------------------------------------------- */
+
+    function sonsSontActives() {
+        return sonsActives;
+    }
+
+    /* ----------------------------------------------------------
+       Exposer les fonctions aux autres scripts du site
+       ---------------------------------------------------------- */
+
+    window.Sons = Sons;
+
+    window.jouerSon = jouerSon;
+    window.jouerSonMultiple = jouerSonMultiple;
+    window.jouerSonEnBoucle = jouerSonEnBoucle;
+
+    window.arreterSon = arreterSon;
+    window.arreterTousLesSons = arreterTousLesSons;
+
+    window.pauseSon = pauseSon;
+    window.reprendreSon = reprendreSon;
+
+    window.volumeSon = volumeSon;
+    window.volumeGlobal = volumeGlobal;
+
+    window.activerSons = activerSons;
+    window.desactiverSons = desactiverSons;
+    window.basculerSons = basculerSons;
+    window.sonsSontActives = sonsSontActives;
+})();

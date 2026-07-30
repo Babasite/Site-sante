@@ -1,204 +1,354 @@
+{% extends "accueil/base.html" %}
 {% load static %}
-<!--
-Pour commencer: ouvrir raccourci visual studio code,
-file,openfolder, C...site santé (pour ouvrir manage py),
-lancer ds terminal avec "python manage.py runserver",
-ouvrir google à "http://127.0.0.1:8000/",
 
-pour chat GPT:
-"J'ai installé Python et Django.
-J'ai créé un projet django appelé Sitesante avec
-le dossier config et le fichier manage.py.
-Les migrations de Django ont été exécutées et le serveur
-fonctionne (python manage.py runserver).
+{% block logo_return %}{% url 'home' %}{% endblock %}
 
-Je veux continuer à développer mon site SantéPréventionTerrain"
+{% block title %}Santé Prévention Terrain{% endblock %}
+{% block page_title %}Santé Prévention Terrain{% endblock %}
+{% block header_actions %}{% endblock %}
 
-Ne pas oublier de faire des "ctrl s"
-Mon chemin images:"{% static 'accueil/images/BD.png'%}"
-Pour dézoomer: ctrl+maj+P puis taper Zoom Out ds barre de recherche en haut.
--->
-
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<title>Santé Prévention Terrain</title>
+{% block extra_css %}
 <style>
-/* le CSS commence ci-dessous*/
-body{
-    margin:0;
-    font-family:Arial, Helvetica, sans-serif;
-    background:#efe3c3; /*couleur du fond beige*/
-}
-/* ===== MENU DU HAUT ===== */
-header{
-    background:#efe3c3;
-    padding:10px 25px;
-    height:70px;
-    position:relative;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    box-shadow:0 2px 10px lightgray;
-}
-/* logo, c'est les caractéristiques du titre*/
-.logo{
-    font-size:30px;
-    font-weight:bold;
-    color:#0b1a8a;
-}
-nav{
-    display:flex;
-    align-items:center;
-}
-nav a{
-    margin:10px;
-    text-decoration:none;
-    color:#333;
-    font-weight:bold;
-}
-.logo-menu{
-    position: absolute;
-    width:200px;  /*taille*/
-    height:auto;
-    right: 116px; /*gauche droite*/
-    top: 394px;   /*hauteur*/
-    z-index: 999;
-}
-/* ===== BANDEAU LEOPARD ===== */
+/* =========================================================
+   BANNIÈRE
+========================================================= */
+
 .hero{
+    min-height:230px;
+    padding:35px 50px;
+    margin:0;
+    box-sizing:content-box;
+    display:block;
+    color:#efe3c3;
     background:
-    linear-gradient(
-        to right,
-        #0b4f8a 0%,
-        #0b4f8a 40%,
-        rgba(11,79,138,0.85) 25%,
-        rgba(11,79,138,0.35) 100%
-    ),
-    url("{% static 'accueil/images/leopard.png' %}");
+        linear-gradient(
+            to right,
+            #008080 0%,
+            #008080 12%,
+            rgba(0,128,128,.98) 24%,
+            rgba(0,128,128,.95) 36%,
+            rgba(0,128,128,.90) 48%,
+            rgba(0,128,128,.82) 60%,
+            rgba(0,128,128,.70) 72%,
+            rgba(0,128,128,.52) 82%,
+            rgba(0,128,128,.32) 90%,
+            rgba(0,128,128,.15) 96%,
+            rgba(0,128,128,0) 100%
+        ),
+        url("{% static 'accueil/images/leopard.png' %}");
     background-repeat:no-repeat;
     background-size:cover;
-    background-position: 65% center;
-    color:white;
-    padding:35px 50px;
-    min-height:230px;
-    margin: 0;
-    display:block;
+    background-position:65% center;
 }
+
 .hero h1{
-    font-size:42px;
-    display:inline-block; /* nécessaire pour la rotation */
-    animation: rotationOuverture 4s ease-in-out 1;
-    transform-origin: center;
+    display:inline-block;
+    margin-top:75px;
+    color:white;
+    font-size:25px;
+    animation:rotationOuverture 4s ease-in-out 1;
+    transform-origin:center;
 }
-@keyframes rotationOuverture {
-    0% {
-        transform: rotateY(0deg);
-        opacity: 0;
+
+@keyframes rotationOuverture{
+    0%{
+        transform:rotateY(0);
+        opacity:0;
     }
-    50% {
-        opacity: 1;
+
+    50%{
+        opacity:1;
     }
-    100% {
-        transform: rotateY(360deg);
-        opacity: 1;
+
+    100%{
+        transform:rotateY(360deg);
+        opacity:1;
     }
 }
-.hero p{
-    font-size:20px;
-}
+
+
+/* =========================================================
+   BOUTON CACHÉ
+========================================================= */
+
 .bouton{
-    background:white;
-    color:#0d6efd;
     padding:12px 28px;
+    color:#214C35;
+    background:#efe3c3;
     border-radius:30px;
     font-weight:bold;
     text-decoration:none;
+    visibility:hidden;
+    pointer-events:none;
 }
-/* ===== CARTES DU BAS ===== */
+
+
+/* =========================================================
+   ZONE INDÉPENDANTE SOUS LA BANNIÈRE
+========================================================= */
+
+.zone-inferieure{
+    position:relative;
+    height:135px;
+    background:#efe3c3;
+}
+
+
+/* =========================================================
+   CARTES
+========================================================= */
+
 .cartes{
+    position:absolute;
+    top:-22px;
+    left:0;
+    width:100%;
+    height:125px;
     display:flex;
     justify-content:center;
+    align-items:flex-start;
     gap:50px;
-    margin:35px;
-    flex-wrap:wrap;
+    z-index:2;
 }
+
 .carte{
+    position:relative;
     width:300px;
+    height:100px;
     padding:20px;
-}
-.carte h2{
-    color:#0b4f8a;
-    font-size:25px;
-}
-.carte p{
-    font-size:18px;
-}
-/* ===== FOOTER ===== */
-footer{
-    background:#0b1a8a;
-    color:white;
+    box-sizing:content-box;
+    color:#2F80C9;
     text-align:center;
-    padding:15px;
-    margin-top:30px;
-    width: 100%;
-    box-sizing: border-box;
-    display: block;
+    text-decoration:none;
+}
+
+.carte:visited,
+.carte:hover{
+    color:#2F80C9;
+}
+
+
+/* =========================================================
+   TITRES DES CARTES
+========================================================= */
+
+.carte h2{
+    position:absolute;
+    top:46px;
+    left:-450px;
+    right:20px;
+    margin:0;
+    color:#2B6FB8;
+    font-size:22px;
+    font-weight:bold;
+    line-height:1.25;
+    text-align:center;
+}
+
+
+/* =========================================================
+   PASTILLES
+========================================================= */
+
+.carte p{
+    position:absolute;
+    top:67px;
+    left:20px;
+    margin:0;
+    padding:5px 10px;
+    color:#efe3c3;
+    background:#214C35;
+    border-radius:12px;
+    font-size:12px;
+    line-height:1.2;
+    white-space:nowrap;
+    visibility:hidden;
+}
+
+.carte-veille p{
+    top:67px;
+    left:20px;
+}
+
+.carte-outils p{
+    top:67px;
+    left:20px;
+}
+
+
+/* =========================================================
+   IMAGES DES CARTES
+========================================================= */
+
+.image-veille{
+    position:absolute;
+    top:-46px;
+    left:-490px;
+    width:300px;
+    height:auto;
+    z-index:3;
+}
+
+.image-bilan{
+    position:absolute;
+    top:20px;
+    left:-40px;
+    width:70px;
+    height:auto;
+    z-index:3;
+}
+
+
+/* =========================================================
+   LIGNE VERTE
+========================================================= */
+
+.ligne-verte{
+    position:absolute;
+    top:100px;
+    left:0;
+    width:calc(100% - 165px);
+    height:24px;
+    background:#214C35;
+    border-radius:0 6px 6px 0;
+    z-index:1;
+}
+
+
+/* =========================================================
+   LOGO IMAGE
+========================================================= */
+
+.lien-logo{
+    position:absolute;
+    top:4px;
+    right:65px;
+    width:200px;
+    z-index:999;
+}
+
+.logo-menu{
+    display:block;
+    width:200px;
+    height:auto;
+}
+
+
+/* =========================================================
+   PETITS ÉCRANS
+========================================================= */
+
+@media screen and (max-width:750px){
+    .hero{
+        padding:35px 25px;
+    }
+
+    .hero h1{
+        font-size:34px;
+    }
+
+    .zone-inferieure{
+        height:270px;
+    }
+
+    .cartes{
+        top:0;
+        height:auto;
+        flex-direction:column;
+        align-items:center;
+        gap:0;
+    }
+
+    .carte{
+        height:80px;
+    }
+
+    .ligne-verte{
+        top:220px;
+        width:calc(100% - 100px);
+    }
+
+    .lien-logo{
+        top:160px;
+        right:20px;
+        width:120px;
+    }
+
+    .logo-menu{
+        width:120px;
+    }
+}
+
+
+/* =========================================================
+   IMAGE SECOURIR
+========================================================= */
+
+.image-secourir{
+    position:absolute;
+    top:-26px;
+    left:800px;
+    width:200px;
+    height:auto;
+    transform:rotate(-10deg);
+    z-index:4;
 }
 </style>
-</head>
-<body>
-    <!-- Partie HTML ci-dessous-->
-<header>
-<div class="logo">
-Santé Prévention Terrain
-</div>
-<nav>
-<a href="{% url 'notice' %}">Accueil (Pourquoi?)</a> <!--on remplit les href="#" après avoir fait views.py et urls.py -->
-<a href="{% url 'outils' %}">Outils santé</a>
-<a href="{% url 'veille' %}">Veille scientifique</a>
-<a href="{% url 'terrain' %}">Terrain</a>
-<div class="apropos-logo">
-<a href="{% url 'apropos' %}">À propos</a>
-</div>
-</nav>
-<!--Insertion de mon logo perso monde-->
-<a href="/"title="Appuyer ici vous permettra de revenir sur cette page ">
-<img class="logo-menu"
-src="{% static 'accueil/images/logo.png'%}"
-alt="logo">
-</a>
-</header>
+{% endblock %}
+
+{% block content %}
 <section class="hero">
-<h1>Prenez soin de vous, chaque jour.</h1>
-<p>Bienvenue sur votre espace Santé
-<br>Prévention Terrain.</p>
-<a class="bouton"
- href="{% url 'notice' %}">Découvrir le site</a>
+    <h1>
+        Une vision de terrain pour une santé globale.
+    </h1>
+
+    <a class="bouton" href="{% url 'notice' %}">
+        Découvrir le site
+    </a>
 </section>
-<div class="cartes">
-<a href="{% url 'veille' %}"
-class="carte">
-<h2>
-Votre Journal sur la santé 📺
-</h2>
-<p>
-(= Veille scientifique)
-</p>
-</a>
-<a href="{% url 'outils' %}" class="carte">
-<h2>
-Faire un Bilan de votre santé 🥼
-</h2>
-<p>
-(= Outils Santé)
-</p>
-</div>
-<footer>
-Santé Prévention Terrain @2026
-</footer>
-</body>
-</html>
-<!--pas toucher, page d'accueil-->
+
+<section class="zone-inferieure">
+    <div class="cartes">
+        <a href="{% url 'veille' %}" class="carte carte-veille">
+            <img
+                class="image-veille"
+                src="{% static 'accueil/images/tele.png' %}"
+                alt="Télé"
+            >
+
+            <h2>
+                Votre Journal sur la santé<br>
+                ←
+            </h2>
+
+            <p>
+                (= Veille scientifique)
+            </p>
+        </a>
+    </div>
+
+    <a href="{% url 'pompier' %}">
+        <img
+            class="image-secourir"
+            src="{% static 'accueil/images/secourir.png' %}"
+            alt="Secourir"
+        >
+    </a>
+
+    <div class="ligne-verte"></div>
+
+    <a
+        class="lien-logo"
+        href="{% url 'home' %}"
+        aria-label="Retour à l'accueil"
+    >
+        <img
+            class="logo-menu"
+            src="{% static 'accueil/images/logo.png' %}"
+            alt="Logo Santé Prévention Terrain"
+        >
+    </a>
+</section>
+{% endblock %}
+*\turquoise : #008080 , bleu : #2B6FB8 ,
+ vert : #214C35 , beige : #EFE3C3 *\
