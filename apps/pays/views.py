@@ -39,7 +39,7 @@ def trouver_image_espece(identifiant: str) -> str | None:
     Recherche une image portant le nom de l'identifiant de l'espèce.
 
     Exemple :
-        apps/pays/static/images/moustique_tigre.png
+        apps/pays/static/images/moustique_tigre.webp
 
     Formats acceptés :
         .png, .webp, .jpg et .jpeg
@@ -151,7 +151,7 @@ def fiche_pays(request, slug):
         espece = catalogue[id_espece].copy()
 
         # Exemple de valeur obtenue :
-        # "images/moustique_tigre.png"
+        # "images/moustique_tigre.webp"
         # Si le fichier n'existe pas, la valeur reste None et le template
         # affiche automatiquement l'emoji.
         espece["image"] = trouver_image_espece(id_espece)

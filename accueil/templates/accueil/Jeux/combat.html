@@ -465,10 +465,10 @@ Réponses :
             </div>
 
             <div id="spriteSources" hidden
-                 data-reporter-idle="{% static 'accueil/images/reporter-repos.png' %}"
-                 data-reporter-attack="{% static 'accueil/images/reporter-attaque.png' %}"
-                 data-nurse-idle="{% static 'accueil/images/infirmiere-repos.png' %}"
-                 data-nurse-attack="{% static 'accueil/images/infirmiere-attaque.png' %}"></div>
+                 data-reporter-idle="{% static 'accueil/images/reporter-repos.webp' %}"
+                 data-reporter-attack="{% static 'accueil/images/reporter-attaque.webp' %}"
+                 data-nurse-idle="{% static 'accueil/images/infirmiere-repos.webp' %}"
+                 data-nurse-attack="{% static 'accueil/images/infirmiere-attaque.webp' %}"></div>
 
             <div class="combat-arena-wrap">
                 <canvas id="game" width="1000" height="550"
@@ -577,7 +577,7 @@ Réponses :
             idle:loadSprite(spriteSources.dataset.nurseIdle), attack:loadSprite(spriteSources.dataset.nurseAttack)
         }
     };
-    const droneImage=loadSprite("{% static 'accueil/images/drone.png' %}");
+    const droneImage=loadSprite("{% static 'accueil/images/drone.webp' %}");
 
     const W=canvas.width, H=canvas.height, FLOOR=430, GRAVITY=.9, keys=new Set();
 

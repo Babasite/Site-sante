@@ -743,7 +743,7 @@ def _charger_logo():
     Charge le logo du site s'il existe.
 
     Le chemin attendu correspond à :
-    accueil/static/accueil/images/logo.png
+    accueil/static/accueil/images/logo.webp
     """
     chemin_logo = (
         Path(settings.BASE_DIR)
@@ -751,7 +751,7 @@ def _charger_logo():
         / "static"
         / "accueil"
         / "images"
-        / "logo.png"
+        / "logo.webp"
     )
 
     if not chemin_logo.exists():
