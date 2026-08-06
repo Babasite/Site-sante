@@ -1,7 +1,7 @@
 # Où j'en suis – Santé Prévention Terrain
 #, ##, -, **...** : Syntaxe simple qui permet d'obtenir des titres, des listes et du texte en gras dans les outils qui affichent le Markdown (.md). Plus intéressant pour documentation que simple .txt
 ## 27/07/2026
-### Création du journal de bord
+#### Création du journal de bord
 Aujourd'hui, je commence la rédaction du journal de bord du projet **Santé Prévention Terrain**.
 Le projet a été créé le **8 juillet 2026** avec pour objectif de développer un site consacré à la santé, à la prévention et à la vie quotidienne, en proposant des contenus utiles, des outils interactifs et une veille scientifique destinée à rendre les connaissances accessibles.
 Ce document a pour but de conserver une trace de l'évolution du projet, des choix techniques et des décisions prises au fil du développement.
@@ -250,3 +250,56 @@ Le SPT repose maintenant sur :
 - un système de notation recalibré ;
 - une priorité des sources évitant les écrasements de données ;
 - une meilleure cohérence entre la note obtenue et la capacité du pays à préserver la santé.
+
+## 06/08/2026
+
+Reprise des template depuis hier pour un rendu plus moderne sans gros bouton et moins Boomer
+
+## Phase 2 – Sécurisation de Django (terminée)
+
+Objectif : préparer le projet à une mise en ligne sans modifier les fonctionnalités du site.
+
+### Sauvegarde
+- Sauvegarde complète du projet avant toute modification.
+- Création d'une branche Git `sauvegarde-avant-nettoyage`.
+
+### Configuration des environnements
+- `manage.py` utilise désormais `config.settings.development` pour le développement local.
+- `config/wsgi.py` utilise `config.settings.production` pour la production.
+- `config/asgi.py` utilise également `config.settings.production`.
+
+Cela permet de séparer clairement le développement et la mise en ligne.
+
+### Vérification de la configuration de production
+Mise en place et validation des protections suivantes :
+
+- SECRET_KEY obligatoire.
+- ALLOWED_HOSTS obligatoire.
+- HTTPS prévu.
+- Cookies de session sécurisés.
+- Cookies CSRF sécurisés.
+- HSTS activé.
+- Prise en charge d'une base de données externe (PostgreSQL via `DATABASE_URL`).
+
+### Dépendances
+- Installation de `dj-database-url`.
+- Retour à la version compatible avec le projet (`2.3.0`), conformément au fichier `requirements/production.txt`.
+- Vérification de la cohérence des dépendances.
+
+### Variables d'environnement testées
+Création temporaire dans PowerShell de :
+- `DJANGO_SECRET_KEY`
+- `DJANGO_ALLOWED_HOSTS`
+
+Ces variables ne sont pas enregistrées dans le dépôt Git. Elles disparaissent à la fermeture du terminal et seront définies définitivement chez l'hébergeur lors de la mise en ligne.
+
+### Vérifications effectuées
+
+Développement :
+
+```bash
+python manage.py check
+
+La configuration de production est maintenant validée.
+Le projet est prêt à poursuivre la phase de finalisation (responsive, nettoyage, tests et préparation du déploiement).
+
