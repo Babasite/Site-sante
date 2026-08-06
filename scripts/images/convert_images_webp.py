@@ -1,11 +1,13 @@
 from pathlib import Path
 from PIL import Image
 
+RACINE = Path(__file__).resolve().parents[2]
+
 EXTENSIONS = {".png", ".jpg", ".jpeg"}
 
 DOSSIERS = [
-    Path("accueil/static"),
-    Path("apps/pays/static"),
+    RACINE / "accueil/static",
+    RACINE / "apps/pays/static",
 ]
 
 converties = 0
@@ -38,11 +40,11 @@ for dossier in DOSSIERS:
                 )
 
             converties += 1
-            print(f"✔ {fichier}")
+            print(f"✔ {fichier.relative_to(RACINE)}")
 
         except Exception as e:
             erreurs += 1
-            print(f"✖ {fichier} : {e}")
+            print(f"✖ {fichier.relative_to(RACINE)} : {e}")
 
 print()
 print(f"Converties : {converties}")
