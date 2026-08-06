@@ -303,3 +303,16 @@ python manage.py check
 La configuration de production est maintenant validée.
 Le projet est prêt à poursuivre la phase de finalisation (responsive, nettoyage, tests et préparation du déploiement).
 
+Conversion  des images lourdes
+
+les anciennes images PNG ne sont plus dans le dépôt ;
+toutes les pages utilisent des WebP ;
+J'ai un script pour convertir de nouvelles images ;
+et un script pour mettre à jour automatiquement les références si besoin ;
+Tout est versionné dans Git.
+
+Si je mets de nouvelles images, j'ai juste à executer : (pour obtenir les WebP manquants)
+python .\scripts\images\convert_images_webp.py    
+puis (pour remplacer les références)
+python .\scripts\images\remplacer_references_webp.py
+pour les convertir.

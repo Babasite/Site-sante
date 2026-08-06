@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
@@ -12,14 +13,27 @@ def env_bool(name: str, default: bool = False) -> bool:
     value = os.getenv(name)
     if value is None:
         return default
-    return value.strip().lower() in {"1", "true", "yes", "on", "oui"}
+    return value.strip().lower() in {
+        "1",
+        "true",
+        "yes",
+        "on",
+        "oui",
+    }
 
 
 def env_list(name: str, default: str = "") -> list[str]:
-    return [item.strip() for item in os.getenv(name, default).split(",") if item.strip()]
+    return [
+        item.strip()
+        for item in os.getenv(name, default).split(",")
+        if item.strip()
+    ]
 
 
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-development-only")
+SECRET_KEY = os.getenv(
+    "DJANGO_SECRET_KEY",
+    "django-insecure-development-only",
+)
 DEBUG = False
 ALLOWED_HOSTS: list[str] = []
 
@@ -78,10 +92,30 @@ DATABASES = {
 }
 
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+    {
+        "NAME": (
+            "django.contrib.auth.password_validation."
+            "UserAttributeSimilarityValidator"
+        )
+    },
+    {
+        "NAME": (
+            "django.contrib.auth.password_validation."
+            "MinimumLengthValidator"
+        )
+    },
+    {
+        "NAME": (
+            "django.contrib.auth.password_validation."
+            "CommonPasswordValidator"
+        )
+    },
+    {
+        "NAME": (
+            "django.contrib.auth.password_validation."
+            "NumericPasswordValidator"
+        )
+    },
 ]
 
 LANGUAGE_CODE = "fr-fr"
@@ -92,9 +126,12 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [
+    BASE_DIR / "static",
     BASE_DIR / "apps" / "pays" / "static",
 ]
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = (
+    "whitenoise.storage.CompressedManifestStaticFilesStorage"
+)
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
@@ -111,13 +148,33 @@ EMAIL_BACKEND = os.getenv(
     "DJANGO_EMAIL_BACKEND",
     "django.core.mail.backends.console.EmailBackend",
 )
-EMAIL_HOST = os.getenv("DJANGO_EMAIL_HOST", "smtp.gmail.com")
-EMAIL_PORT = int(os.getenv("DJANGO_EMAIL_PORT", "587"))
-EMAIL_USE_TLS = env_bool("DJANGO_EMAIL_USE_TLS", True)
-EMAIL_HOST_USER = os.getenv("DJANGO_EMAIL_HOST_USER", "")
-EMAIL_HOST_PASSWORD = os.getenv("DJANGO_EMAIL_HOST_PASSWORD", "")
+EMAIL_HOST = os.getenv(
+    "DJANGO_EMAIL_HOST",
+    "smtp.gmail.com",
+)
+EMAIL_PORT = int(
+    os.getenv(
+        "DJANGO_EMAIL_PORT",
+        "587",
+    )
+)
+EMAIL_USE_TLS = env_bool(
+    "DJANGO_EMAIL_USE_TLS",
+    True,
+)
+EMAIL_HOST_USER = os.getenv(
+    "DJANGO_EMAIL_HOST_USER",
+    "",
+)
+EMAIL_HOST_PASSWORD = os.getenv(
+    "DJANGO_EMAIL_HOST_PASSWORD",
+    "",
+)
 DEFAULT_FROM_EMAIL = os.getenv(
     "DJANGO_DEFAULT_FROM_EMAIL",
     EMAIL_HOST_USER or "webmaster@localhost",
 )
-CONTACT_EMAIL = os.getenv("DJANGO_CONTACT_EMAIL", EMAIL_HOST_USER)
+CONTACT_EMAIL = os.getenv(
+    "DJANGO_CONTACT_EMAIL",
+    EMAIL_HOST_USER,
+)
