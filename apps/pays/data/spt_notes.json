@@ -1,0 +1,32 @@
+{
+  "france": {
+    "sante_humaine": {
+      "esperance_vie": 16.8,
+      "qualite_systeme_sante": 17.5,
+      "couverture_vaccinale": 18.2,
+      "acces_soins": 15.6,
+      "sante_mentale": 14.3
+    },
+    "sante_animale": {
+      "capacite_services_veterinaires": 15.8,
+      "controle_maladies_animales": 16.4,
+      "vaccination_animale": 14.7,
+      "bien_etre_animal": 15.2,
+      "protection_faune_sauvage": 13.6
+    },
+    "ecosysteme": {
+      "qualite_air": 13.5,
+      "qualite_eau": 17.4,
+      "biodiversite": 14.8,
+      "deforestation": 16.2,
+      "traitement_eaux_usees": 15.7
+    },
+    "information_prevention": {
+      "liberte_presse": 14.9,
+      "surveillance_epidemiologique": 17.3,
+      "partage_donnees": 16.6,
+      "preparation_pandemies": 15.5,
+      "gestion_crises": 16.4
+    }
+  }
+}

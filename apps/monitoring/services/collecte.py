@@ -1,14 +1,16 @@
 """
-Façade de collecte du moteur de veille V2.
+Façade publique du moteur de collecte V2.
 
-La logique d'orchestration est centralisée dans orchestrateur.py.
-Ce module fournit des fonctions simples et compatibles avec le reste
-de l'application, sans dupliquer la logique de collecte.
+Ce module constitue l'API stable utilisée par le reste de l'application
+(Django, commandes de gestion, tests et API).
+
+Toute la logique d'orchestration est centralisée dans ``orchestrateur.py``
+afin d'éviter toute duplication et de préserver la rétrocompatibilité.
 """
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, TypeAlias
 
 from .orchestrateur import (
     collecter_articles as _collecter_articles,
@@ -19,8 +21,8 @@ from .orchestrateur import (
 )
 
 
-Article = dict[str, Any]
-RapportCollecte = dict[str, Any]
+Article: TypeAlias = dict[str, Any]
+RapportCollecte: TypeAlias = dict[str, Any]
 
 
 def collecter_articles() -> list[Article]:
@@ -37,10 +39,11 @@ def collecter_articles_avec_rapport() -> tuple[
     RapportCollecte,
 ]:
     """
-    Lance tous les collecteurs actifs.
+    Lance tous les collecteurs actifs et retourne les articles avec le rapport.
 
-    Retourne :
-        - la liste des articles ;
+    Returns:
+        Un tuple contenant :
+        - la liste des articles collectés ;
         - le rapport détaillé de collecte.
     """
     return collecter_toutes_les_sources()
@@ -48,9 +51,9 @@ def collecter_articles_avec_rapport() -> tuple[
 
 def collecter() -> list[Article]:
     """
-    Alias court de collecter_articles().
+    Alias court de :func:`collecter_articles`.
     """
-    return collecter_articles()
+    return _collecter_articles()
 
 
 __all__ = [

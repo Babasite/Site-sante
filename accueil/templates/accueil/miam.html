@@ -447,6 +447,176 @@ color:var(--vert-principal);
             font-size:1.4rem
         }
     }
+    
+    /* =========================================================
+       HARMONISATION AVEC LE RESTE DU SITE
+       Présentation uniquement : aucun contenu ni fonctionnement modifié.
+    ========================================================== */
+
+    .spt-shell-content {
+        background: #fff;
+    }
+
+    .manger-page {
+        width: min(1080px, calc(100% - 32px));
+        margin: 0 auto 70px;
+        color: var(--spt-texte);
+        font-family: var(--font-family-body);
+        font-size: 1rem;
+        line-height: 1.75;
+    }
+
+    .manger-page {
+        --vert-principal: var(--spt-vert);
+        --vert-fonce: var(--spt-vert-fonce);
+        --vert-clair: #dfeadb;
+        --orange: var(--spt-vert);
+        --texte: var(--spt-texte);
+        --texte-clair: #526057;
+    }
+
+    .hero {
+        min-height: 440px;
+        border: 2px solid var(--spt-vert);
+        border-radius: 20px;
+        box-shadow: 0 8px 24px rgba(33, 76, 53, .12);
+    }
+
+    .hero-inner {
+        min-height: 440px;
+        padding: clamp(30px, 5vw, 48px);
+    }
+
+    .hero-title {
+        font-size: clamp(1.65rem, 2.8vw, 2rem);
+    }
+
+    .hero-description,
+    .section-intro,
+    .advice-card p,
+    .season-card > p {
+        font-family: inherit;
+        font-size: clamp(1rem, 1.25vw, 1.12rem);
+        line-height: 1.75;
+    }
+
+    .section-title {
+        font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+        line-height: 1.3;
+        text-wrap: balance;
+    }
+
+    .good-eating-panel {
+        padding: clamp(22px, 3vw, 28px);
+        border: 2px solid var(--spt-vert);
+        border-radius: 20px;
+        background: var(--spt-fond);
+        box-shadow: 0 8px 24px rgba(33, 76, 53, .12);
+    }
+
+    .advice-card {
+        min-height: 0;
+        padding: 22px;
+        border: 1px solid rgba(33, 76, 53, .20);
+        border-radius: 16px;
+        background: #fff;
+    }
+
+    .advice-icon {
+        background: #dfeadb;
+    }
+
+    .advice-highlight {
+        border-left-color: var(--spt-vert);
+        background: linear-gradient(
+            90deg,
+            rgba(55, 107, 77, .13),
+            rgba(255, 255, 255, .75)
+        );
+    }
+
+    .season-card {
+        min-height: 0;
+        padding: clamp(22px, 3vw, 27px);
+        border: 1px solid rgba(33, 76, 53, .16);
+        border-radius: 20px;
+        box-shadow: 0 8px 24px rgba(33, 76, 53, .12);
+    }
+
+    .secondary-button img {
+        height: 150px;
+    }
+
+    .secondary-button span {
+        top: calc(50% + 1.15cm);
+        font-size: .9rem;
+    }
+
+    @media (max-width: 850px) {
+        .hero {
+            min-height: 420px;
+        }
+
+        .hero-inner {
+            min-height: 420px;
+        }
+
+        .secondary-button img {
+            height: 125px;
+        }
+
+        .advice-grid,
+        .seasons-grid {
+            gap: 16px;
+        }
+    }
+
+    @media (max-width: 580px) {
+        .manger-page {
+            width: calc(100% - 24px);
+            margin-top: 12px;
+        }
+
+        .sticky-pharmacy-button {
+            position: relative;
+            top: auto;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .secondary-button {
+            right: 0;
+        }
+
+        .secondary-button img {
+            height: 105px;
+        }
+
+        .secondary-button span {
+            top: calc(50% + .8cm);
+            font-size: .78rem;
+        }
+
+        .hero {
+            min-height: 500px;
+            border-radius: 18px;
+        }
+
+        .hero-inner {
+            min-height: 500px;
+            padding: 26px 18px;
+        }
+
+        .good-eating-panel,
+        .season-card {
+            border-radius: 18px;
+        }
+
+        .advice-card {
+            padding: 20px 18px;
+        }
+    }
+
     </style>
 {% endblock %}
 {% block content %}

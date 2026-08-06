@@ -46,3 +46,4 @@ from .Jtetris import *
 from .Jspace import *
 from .contact import *
 from .Jcombat import *
+from .pays import *

@@ -1,6 +1,6 @@
 """
 ===============================================================================
-URLS DU SYSTÈME DE RECOMMANDATIONS
+URLS DU SYSTÈME DE RECOMMANDATIONS (En compléments des routes générales)
 ===============================================================================
 
 Ce fichier contient uniquement les routes du module de recommandations.

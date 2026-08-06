@@ -1,0 +1,2 @@
+Le template interface pays.html a déjà été fait dans acceuil/Pays/.
+Son URL et sa View sont dans  accueil/

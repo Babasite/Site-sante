@@ -1,0 +1,552 @@
+{% extends "accueil/base.html" %}
+{% load static %}
+
+{% block title %}Capacité préservation{% endblock %}
+{% block page_title %}Capacité du pays à préserver la santé{% endblock %}
+{% block logo_return %}{% url 'terrain' %}{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ========================================================================== 
+   FICHE PAYS MODULAIRE ( Un exemple de ce qu'il y a écrit au final)
+   Chaque carte est indépendante et peut être déplacée ou redimensionnée
+   en modifiant uniquement sa classe dans les grilles ci-dessous.
+   ========================================================================== */
+
+:root{
+    --fiche-largeur:1500px;
+    --fiche-gap:18px;
+    --fiche-rayon:20px;
+    --fiche-padding:18px;
+    --fiche-bordure:var(--spt-bordure);
+    --fiche-fond:var(--spt-blanc);
+    --fiche-ombre:0 8px 22px rgba(33,76,53,.10);
+    --fiche-vert:var(--spt-vert);
+    --fiche-vert-fonce:var(--spt-vert-fonce);
+    --fiche-turquoise:var(--spt-vert-actif);
+    --fiche-beige:var(--spt-fond);
+    --fiche-texte:var(--spt-texte);
+    --fiche-texte-secondaire:rgba(47,56,47,.72);
+}
+
+.country-page{
+    width:min(var(--fiche-largeur),calc(100% - 28px));
+    margin:6px auto 40px;
+    font-family:var(--font-family-body);
+}
+
+/* Sections principales facilement déplaçables. */
+.country-section{
+    margin-bottom:22px;
+}
+
+.country-section-title{
+    margin:0 0 10px;
+    color:var(--fiche-vert-fonce);
+    font-family:var(--font-family-title);
+    font-size:clamp(18px,1.5vw,24px);
+    line-height:1.1;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+}
+
+/* Grilles indépendantes par ligne. */
+.presentation-grid{
+    display:grid;
+    grid-template-columns:minmax(240px,.9fr) minmax(420px,1.7fr) minmax(240px,.9fr);
+    gap:var(--fiche-gap);
+    align-items:stretch;
+}
+
+.presentation-stack{
+    display:grid;
+    grid-template-rows:auto auto;
+    gap:var(--fiche-gap);
+    min-width:0;
+    align-content:start;
+}
+
+.methodology-stack{
+    display:grid;
+    grid-template-rows:auto auto;
+    gap:var(--fiche-gap);
+    min-width:0;
+    align-content:start;
+}
+
+.constat-grid{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:var(--fiche-gap);
+    align-items:stretch;
+}
+
+
+/* Carte générique : chaque bloc est autonome. */
+.country-card{
+    position:relative;
+    min-width:0;
+    padding:var(--fiche-padding);
+    border:1px solid var(--fiche-bordure);
+    border-radius:var(--fiche-rayon);
+    background:rgba(255,255,255,.55);
+    box-shadow:var(--fiche-ombre);
+    overflow:hidden;
+}
+
+.country-card h1,
+.country-card h2,
+.country-card h3{
+    max-width:100%;
+    color:var(--fiche-vert-fonce);
+    font-family:var(--font-family-title);
+}
+
+.country-card h1{margin:0;font-size:clamp(30px,3vw,48px);line-height:1}
+.country-card h2{margin:0 0 12px;font-size:clamp(16px,1.25vw,21px);line-height:1.15}
+.country-card h3{margin:0;font-size:14px;line-height:1.2}
+.country-card p{margin:6px 0;color:var(--fiche-texte-secondaire);font-size:13px;line-height:1.45}
+
+/* --------------------------------------------------------------------------
+   1. PRÉSENTATION
+   -------------------------------------------------------------------------- */
+.country-identity{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    background:linear-gradient(135deg,var(--spt-blanc),rgba(239,227,195,.28));
+}
+
+
+.country-title-row{display:flex;align-items:center;gap:12px}
+.flag-france{display:grid;grid-template-columns:repeat(3,14px);width:42px;height:28px;overflow:hidden;border-radius:4px;box-shadow:0 0 0 1px rgba(0,0,0,.08)}
+.flag-france i:nth-child(1){background:#173b8f}
+.flag-france i:nth-child(2){background:#fff}
+.flag-france i:nth-child(3){background:#e43d45}
+.capital{margin-top:12px!important;font-size:14px!important}
+
+.index-card{
+    display:grid;
+    grid-template-columns:110px minmax(0,1fr);
+    gap:16px;
+    align-items:center;
+    background:#008080;
+    color:#fff;
+}
+.index-card h2,.index-card h3{color:#fff}
+.index-card p{color:#c9ddd5}
+.index-score{
+    display:grid;
+    place-items:center;
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    background:conic-gradient(#b7d6ee 0 70%,rgba(255,255,255,.18) 70%);
+}
+.index-score::before{
+    content:"";
+    grid-area:1/1;
+    width:76px;
+    height:76px;
+    border-radius:50%;
+    background: #008080;
+}
+.index-value{grid-area:1/1;z-index:1;font-size:26px;font-weight:900;line-height:1}
+.index-value small{font-size:12px}
+.index-responsibility{padding-left:12px;border-left:4px solid #b7d6ee}
+
+.actions-card{padding:12px 14px}
+.actions-card > h2{margin-bottom:7px}
+.actions-card .action-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.action-card{padding:7px 8px;border:1px solid var(--fiche-bordure);border-radius:14px;background:#fff}
+.action-card h3{display:flex;gap:7px;align-items:flex-start;margin:0 0 3px;line-height:1.12}
+.action-card p{margin:2px 0 3px;font-size:12px;line-height:1.2}
+.action-list{margin:3px 0 0;padding-left:18px;color:var(--fiche-texte-secondaire);font-size:12px;line-height:1.18}
+.action-list li{margin:0;padding:0}
+.action-card.human{border-top:5px solid #4f7f68}
+.action-card.animal{border-top:5px solid var(--fiche-turquoise)}
+.action-card.ecosystem{border-top:5px solid var(--fiche-vert)}
+
+/* --------------------------------------------------------------------------
+   2. CONSTAT
+   -------------------------------------------------------------------------- */
+.determinant-list{display:grid;gap:8px;margin-top:10px}
+.determinant-line{display:grid;grid-template-columns:1fr 38px;gap:5px;align-items:center}
+.determinant-line label{font-size:11px;font-weight:800}
+.determinant-line span{text-align:right;color:#aab6b0;font-size:11px;font-weight:900}
+.determinant-line--label-only{grid-template-columns:1fr;margin-top:8px;padding-top:8px;border-top:1px solid var(--fiche-bordure)}
+.determinant-line--label-only label{font-size:11px;font-weight:800}
+.determinant-track{grid-column:1/-1;height:5px;border-radius:99px;background:#edf1ef;overflow:hidden}
+.determinant-track i{display:block;width:62%;height:100%;background:linear-gradient(90deg,var(--fiche-beige),var(--fiche-turquoise))}
+.index-result{margin-top:10px;padding:9px;border-radius:12px;background:var(--fiche-vert-fonce);color:#fff;text-align:center;font-size:10px}
+.index-result strong{display:block;margin-top:2px;font-size:17px}
+.determinants-card{
+    align-self:start;
+    padding-bottom:11px;
+}
+.sentinels-card{align-self:start;}
+
+
+
+.timeline-chart-card{padding:7px;border:1px solid var(--fiche-bordure);border-radius:14px;background:#fff}
+.timeline-chart{position:relative;height:180px;overflow:hidden;border-radius:12px;background:linear-gradient(#dceef9,#b7d6ee)}
+.timeline-chart::before{content:"";position:absolute;inset:16px 12px 58px;background:repeating-linear-gradient(to bottom,transparent 0 34px,#e2eae6 35px 36px)}
+.timeline-chart svg{position:absolute;inset:14px 12px 56px;width:calc(100% - 24px);height:calc(100% - 70px)}
+.timeline-legend{position:absolute;left:8px;right:8px;bottom:7px;display:flex;flex-wrap:wrap;gap:4px 8px;padding:6px;border:1px solid var(--fiche-bordure);border-radius:9px;background:rgba(255,255,255,.94);font-size:7px;font-weight:800}
+.timeline-legend span{display:flex;align-items:center;gap:4px}
+.timeline-legend i{display:block;width:12px;height:3px;border-radius:99px}
+
+.chronic-diagram-layout{display:grid;grid-template-columns:90px minmax(0,1fr);gap:9px;align-items:center}
+.chronic-pie{position:relative;width:88px;aspect-ratio:1;border-radius:50%;background:conic-gradient(#29a6a1 0 22%,#367fa3 22% 39%,#245c4a 39% 57%,#d9bd76 57% 70%,#94a59e 70% 82%,#c8d4cf 82%)}
+.chronic-pie::after{content:"Maladies\A chroniques";white-space:pre;position:absolute;inset:28%;display:grid;place-items:center;border-radius:50%;background:#fff;color:var(--fiche-vert-fonce);text-align:center;font-size:8px;font-weight:900}
+.chronic-legend{display:grid;gap:4px}
+.chronic-legend-item{display:grid;grid-template-columns:8px 1fr;gap:5px;padding:5px;border:1px solid var(--fiche-bordure);border-radius:8px;background:#fff}
+.chronic-legend-item i{width:8px;height:8px;margin-top:2px;border-radius:50%}
+.chronic-legend-item h3{font-size:9px}
+.chronic-legend-item p{margin:2px 0;font-size:7px;line-height:1.2}
+
+.ecosystem-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.ecosystem-card{display:grid;grid-template-columns:24px 1fr;gap:5px;padding:6px;border:1px solid var(--fiche-bordure);border-radius:10px;background:#fff}
+.ecosystem-emoji{font-size:18px}
+.ecosystem-card h3{font-size:9px}
+.ecosystem-card p{font-size:7px;line-height:1.2}
+.emerging-heading{margin-top:12px!important}
+.emerging-grid{display:grid;gap:5px}
+.emerging-card{padding:6px;border:1px solid var(--fiche-bordure);border-left:4px solid var(--fiche-turquoise);border-radius:9px;background:#fff}
+.emerging-card h3{font-size:9px}
+.emerging-card p{font-size:7px;line-height:1.2}
+
+/* --------------------------------------------------------------------------
+   ESPÈCES SENTINELLES
+   -------------------------------------------------------------------------- */
+.sentinel-carousel{
+    position:relative;
+}
+.sentinel-viewport{
+    overflow:hidden;
+}
+.sentinel-track{
+    display:flex;
+    transition:transform .28s ease;
+}
+.sentinel-card{
+    flex:0 0 100%;
+    min-width:100%;
+    padding:12px;
+    min-height:145px;
+    border:1px solid var(--fiche-bordure);
+    border-radius:11px;
+    background:#b7d6ee;
+    box-sizing:border-box;
+}
+.sentinel-card .emoji{font-size:42px;text-align:center;line-height:1;margin:4px 0}
+.sentinel-card h3{font-size:14px;text-align:center;margin:4px 0}
+.sentinel-card p{font-size:8px;line-height:1.25}
+.sentinel-tag{
+    display:inline-block;
+    padding:3px 5px;
+    border-radius:99px;
+    background:rgba(55,107,77,.10);
+    color:#4f7f68;
+    font-size:7px;
+    font-weight:800;
+}
+.sentinel-controls{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px;
+    margin-top:6px;
+}
+.sentinel-arrow{
+    width:28px;
+    height:28px;
+    border:1px solid var(--fiche-bordure);
+    border-radius:50%;
+    background:#fff;
+    color:var(--fiche-vert-fonce);
+    font-size:16px;
+    font-weight:900;
+    cursor:pointer;
+}
+.sentinel-arrow:hover{
+    background:rgba(55,107,77,.08);
+}
+.sentinel-counter{
+    color:var(--fiche-texte-secondaire);
+    font-size:8px;
+    font-weight:800;
+}
+
+
+.source-placeholder{display:grid;gap:7px;margin-top:10px}
+.source-placeholder div{height:8px;border-radius:99px;background:#eef2f0}
+.source-placeholder div:nth-child(2n){width:78%}
+
+
+/* --------------------------------------------------------------------------
+   COMPACTAGE RÉEL DE LA PREMIÈRE LIGNE
+   Les tailles de police et les listes sont conservées. Seuls les espaces,
+   le cercle de l’index et les éléments décoratifs sont resserrés.
+   -------------------------------------------------------------------------- */
+.presentation-section{margin-bottom:7px}
+.presentation-grid{gap:8px}
+.presentation-stack{
+    gap:4px;
+}
+.methodology-stack{
+    gap:4px;
+}
+
+.presentation-section .country-card{padding:8px 10px}
+.presentation-section .country-card h2{margin-bottom:5px}
+.presentation-section .country-card p{margin:2px 0;line-height:1.25}
+
+.country-identity{min-height:58px}
+.country-identity .country-title-row{gap:8px}
+.country-identity .capital{margin-top:4px!important}
+
+.index-card{
+    grid-template-columns:66px minmax(0,1fr);
+    gap:8px;
+    min-height:95px;
+}
+.index-score{width:62px;height:62px}
+.index-score::before{width:46px;height:46px}
+.index-responsibility{padding-left:7px;border-left-width:3px}
+.index-card h2{margin-bottom:3px}
+.index-card .index-responsibility h3{line-height:1.1}
+.index-card .index-responsibility p{line-height:1.18}
+
+.actions-card{padding:8px 10px;
+    height:176px;
+    overflow:hidden;}
+.actions-card > h2{margin-bottom:4px}
+.actions-card .action-grid{gap:5px}
+.action-card{padding:5px 7px;border:1px solid var(--fiche-bordure);border-radius:14px;background:#b7d6ee}
+.action-card h3{margin-bottom:1px;line-height:1.08}
+.action-card p{margin:1px 0 2px;line-height:1.12}
+.action-list{margin:1px 0 0;line-height:1.08}
+
+.methodology-stack .country-card{padding:7px 9px}
+.methodology-stack .country-card h2{margin-bottom:3px}
+.methodology-stack .country-card p{margin:1px 0;line-height:1.15}
+.methodology-stack .source-placeholder{gap:3px;margin-top:4px;margin-bottom:-4px}
+.methodology-stack .source-placeholder div{height:4px}
+
+
+/* Alignement exact du bas des trois colonnes de la première ligne */
+@media(min-width:1151px){
+    .presentation-grid{
+        align-items:stretch;
+    }
+
+    .presentation-stack,
+    .methodology-stack{
+        height:100%;
+        grid-template-rows:auto 1fr;
+        align-content:stretch;
+    }
+
+    .actions-card{
+        height:auto;
+        align-self:stretch;
+    }
+
+    .index-card,
+    .bias-card{
+        height:auto;
+        align-self:stretch;
+    }
+}
+
+/* Responsive : les cartes restent indépendantes et se réorganisent seulement. */
+@media(max-width:1150px){
+    .presentation-grid{grid-template-columns:1fr 1fr}
+    .methodology-stack{grid-column:1/-1;grid-template-columns:1fr 1fr;grid-template-rows:auto}
+    .constat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+@media(max-width:760px){
+    .country-page{width:calc(100% - 18px)}
+    .presentation-grid,.constat-grid{grid-template-columns:1fr}
+    .presentation-stack,.methodology-stack{grid-template-columns:1fr;grid-template-rows:auto}
+    .methodology-stack{grid-column:auto}
+    .actions-card .action-grid{grid-template-columns:1fr}
+    .index-card{grid-template-columns:90px 1fr}
+    .index-score{width:82px;height:82px}
+    .index-score::before{width:62px;height:62px}
+    .sentinel-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll("[data-sentinel-carousel]").forEach(function (carousel) {
+        const track = carousel.querySelector(".sentinel-track");
+        const cards = Array.from(carousel.querySelectorAll(".sentinel-card"));
+        const previousButton = carousel.querySelector("[data-sentinel-prev]");
+        const nextButton = carousel.querySelector("[data-sentinel-next]");
+        const counter = carousel.querySelector("[data-sentinel-counter]");
+        let currentIndex = 0;
+
+        function updateCarousel() {
+            track.style.transform = "translateX(-" + (currentIndex * 100) + "%)";
+            counter.textContent = (currentIndex + 1) + " / " + cards.length;
+        }
+
+        previousButton.addEventListener("click", function () {
+            currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+            updateCarousel();
+        });
+
+        nextButton.addEventListener("click", function () {
+            currentIndex = (currentIndex + 1) % cards.length;
+            updateCarousel();
+        });
+
+        updateCarousel();
+    });
+});
+</script>
+
+{% endblock %}
+
+{% block content %}
+<div class="country-page">
+
+    <!-- LIGNE 1 : PRÉSENTATION -->
+    <section class="country-section presentation-section" aria-label="Présentation du pays">
+        <div class="presentation-grid">
+
+            <div class="presentation-stack">
+                <article class="country-card country-identity" id="country-identity">
+                    <div class="country-title-row">
+                        <h1>France</h1>
+                        <span class="flag-france" aria-label="Drapeau français"><i></i><i></i><i></i></span>
+                    </div>
+                    <p class="capital"><strong>Capitale :</strong> Paris</p>
+                </article>
+
+                <article class="country-card index-card" id="index-of-spt">
+                    <div class="index-score" aria-label="Index of SPT sur 20">
+                        <div class="index-value">— <small>/20</small></div>
+                    </div>
+                    <div>
+                        <h2>La note SPT (Santé Prévention Terrain)</h2>
+                        <div class="index-responsibility">
+                            <h3>Attention : la Santé humaine</h3>
+                            <p>Surveiller d'avantage les modes de vie, les inégalités et les risques environnementaux.</p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <article class="country-card actions-card" id="country-actions">
+                <h2>Comment améliorer la note ?</h2>
+                <div class="action-grid">
+                    <article class="action-card human">
+                        <h3>🧑 Améliorer sa santé humaine</h3>
+                        <p>Une courte orientation propre au pays.</p>
+                        <ul class="action-list"><li>Action prioritaire</li><li>Prévention concrète</li><li>Réduction d’une inégalité</li><li>Résultat attendu</li></ul>
+                    </article>
+                    <article class="action-card animal">
+                        <h3>🐾 Améliorer sa santé animale</h3>
+                        <p>Une courte orientation propre au pays.</p>
+                        <ul class="action-list"><li>Surveillance sanitaire</li><li>Prévention des zoonoses</li><li>Usage raisonné des antibiotiques</li><li>Protection de la faune</li></ul>
+                    </article>
+                    <article class="action-card ecosystem">
+                        <h3>🌿 Améliorer ses écosystèmes</h3>
+                        <p>Une courte orientation propre au pays.</p>
+                        <ul class="action-list"><li>Restaurer les milieux</li><li>Réduire les pollutions</li><li>Préserver la biodiversité</li><li>Adapter les territoires</li></ul>
+                    </article>
+                </div>
+            </article>
+
+            <div class="methodology-stack">
+                <article class="country-card sources-card" id="sources">
+                    <h2>Sources utilisées</h2>
+                    <p>OMS, Banque mondiale, IHME, FAO, WOAH, IUCN, UNICEF, Copernicus, Reporters sans frontières, Transparency International.</p>
+                    <div class="source-placeholder"><div></div>
+                </article>
+
+                <article class="country-card bias-card" id="biases">
+                    <h2>Les biais</h2>
+                    <p>Disponibilité inégale des données selon les pays. Années de référence différentes selon les indicateurs. Méthodes de collecte pouvant varier entre les sources. Un indice synthétique simplifie une réalité complexe. Contraintes techniques du site ...</p>
+                    <div class="source-placeholder"><div></div>
+                </article>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- LIGNE 2 : CONSTAT -->
+    <section class="country-section constat-section" aria-label="Données du pays">
+        <div class="constat-grid">
+
+            <article class="country-card determinants-card" id="health-determinants">
+                <h2>Pourquoi cette note ?</h2>
+                <p>Chaque indicateur reçoit un score. Leur combinaison donne la note finale.</p>
+                <div class="determinant-list">
+                    <div class="determinant-line"><label>Santé humaine</label><span>—/20</span><div class="determinant-track"><i></i></div></div>
+                    <div class="determinant-line"><label>Santé animale</label><span>—/20</span><div class="determinant-track"><i></i></div></div>
+                    <div class="determinant-line"><label>Ecosystèmes</label><span>—/20</span><div class="determinant-track"><i></i></div></div>
+                    <div class="determinant-line"><label>Information, prévention et surveillance</label><span>—/20</span><div class="determinant-track"><i></i></div></div>
+                </div>
+                <div class="index-result">Capacité du pays à préserver la santé<strong>— /100</strong></div>
+            </article>
+
+            <article class="country-card timeline-card" id="health-timeline">
+                <h2>Son évolution entre 2000 et 2026</h2>
+                <div class="timeline-chart-card">
+                    <div class="timeline-chart" role="img" aria-label="Graphique combiné de l'évolution des indicateurs de santé depuis 2000">
+                        <svg viewBox="0 0 1000 260" preserveAspectRatio="none">
+                            <path d="M0 210 C110 202 165 170 250 176 S405 132 515 137 S730 80 1000 56" fill="none" stroke="#29a6a1" stroke-width="6" stroke-linecap="round"/>
+                            <path d="M0 175 C120 184 190 152 315 160 S510 128 680 113 S855 89 1000 72" fill="none" stroke="#367fa3" stroke-width="6" stroke-linecap="round"/>
+                            <path d="M0 58 C125 75 235 102 350 114 S565 162 725 178 S890 201 1000 216" fill="none" stroke="#245c4a" stroke-width="6" stroke-linecap="round"/>
+                            <path d="M0 190 C120 170 210 140 330 134 S525 103 690 91 S870 76 1000 67" fill="none" stroke="#d9bd76" stroke-width="6" stroke-linecap="round"/>
+                            <path d="M0 84 C125 98 245 121 380 148 S615 190 765 207 S900 220 1000 229" fill="none" stroke="#a8b6b0" stroke-width="6" stroke-linecap="round"/>
+                        </svg>
+                        <div class="timeline-legend"><span><i style="background:#29a6a1"></i>Santé humaine</span><span><i style="background:#367fa3"></i>Santé animale</span><span><i style="background:#245c4a"></i>Ecosystèmes</span><span><i style="background:#d9bd76"></i>Information, prévention et surveillance</span></div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="country-card chronic-card" id="chronic-diseases">
+                <h2>Actuellement</h2>
+                <p>Les maladies chroniques : xxx<br> Les maladies émergentes : yyy<br> Son infrastructure : zzz</p>
+            </article>
+
+            <article class="country-card sentinels-card" id="sentinel-species">
+                <h2>Ses espèces sentinelles</h2>
+                <p>Une section renforcée : ce qu’elles révèlent, le lien avec l’humain et ce que le pays doit faire.</p>
+                
+                <div class="sentinel-carousel" data-sentinel-carousel>
+                    <div class="sentinel-controls">
+                        <button class="sentinel-arrow" type="button" data-sentinel-prev aria-label="Espèce précédente">‹</button>
+                        <span class="sentinel-counter" data-sentinel-counter>1 / 8</span>
+                        <button class="sentinel-arrow" type="button" data-sentinel-next aria-label="Espèce suivante">›</button>
+                    </div>
+<div class="sentinel-viewport">
+                        <div class="sentinel-track">
+                            <article class="sentinel-card"><div class="emoji">🐝</div><h3>Abeilles</h3><p>Révèlent l’état des habitats, des ressources florales et l’exposition aux pesticides.</p><span class="sentinel-tag">Alimentation · biodiversité</span></article>
+                            <article class="sentinel-card"><div class="emoji">🐸</div><h3>Amphibiens</h3><p>Signalent rapidement la pollution de l’eau et la dégradation des zones humides.</p><span class="sentinel-tag">Eau · contaminants</span></article>
+                            <article class="sentinel-card"><div class="emoji">🦇</div><h3>Chauves-souris</h3><p>Renseignent sur les insectes, les forêts, la pollution lumineuse et certains agents infectieux.</p><span class="sentinel-tag">Zoonoses · habitats</span></article>
+                            <article class="sentinel-card"><div class="emoji">🦪</div><h3>Coquillages</h3><p>Accumulation de toxines et contaminants présents dans les eaux littorales.</p><span class="sentinel-tag">Eau · alimentation</span></article>
+                            <article class="sentinel-card"><div class="emoji">🐟</div><h3>Poissons</h3><p>Indiquent la qualité écologique des rivières et la présence de polluants persistants.</p><span class="sentinel-tag">Rivières · contaminants</span></article>
+                            <article class="sentinel-card"><div class="emoji">🐦</div><h3>Oiseaux sauvages</h3><p>Leurs mortalités peuvent révéler virus, pesticides ou déséquilibres écologiques.</p><span class="sentinel-tag">Virus · biodiversité</span></article>
+                            <article class="sentinel-card"><div class="emoji">🦌</div><h3>Cervidés</h3><p>Aident à comprendre les cycles des tiques et les équilibres de la forêt.</p><span class="sentinel-tag">Tiques · forêt</span></article>
+                            <article class="sentinel-card"><div class="emoji">🐬</div><h3>Mammifères marins</h3><p>Révèlent les contaminants accumulés au sommet de la chaîne alimentaire.</p><span class="sentinel-tag">Océan · polluants</span></article>
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </article>
+
+        </div>
+    </section>
+
+
+
+</div>
+{% endblock %}

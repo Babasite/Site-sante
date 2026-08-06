@@ -2,353 +2,429 @@
 {% load static %}
 
 {% block logo_return %}{% url 'home' %}{% endblock %}
-
 {% block title %}Santé Prévention Terrain{% endblock %}
 {% block page_title %}Santé Prévention Terrain{% endblock %}
 {% block header_actions %}{% endblock %}
 
 {% block extra_css %}
 <style>
-/* =========================================================
-   BANNIÈRE
-========================================================= */
+.home-cover{
+    background:#efe3c3;
+    display:flex;
+    flex-direction:column;
+    height:100%;
+    min-height:0;
+}
 
 .hero{
-    min-height:230px;
-    padding:35px 50px;
+    flex:0 0 clamp(112px,22dvh,164px);
+    min-height:0;
     margin:0;
-    box-sizing:content-box;
-    display:block;
-    color:#efe3c3;
+    padding:clamp(18px,3dvh,30px) clamp(24px,5vw,72px);
+    display:flex;
+    align-items:flex-end;
     background:
-        linear-gradient(
-            to right,
-            #008080 0%,
-            #008080 12%,
-            rgba(0,128,128,.98) 24%,
-            rgba(0,128,128,.95) 36%,
-            rgba(0,128,128,.90) 48%,
-            rgba(0,128,128,.82) 60%,
-            rgba(0,128,128,.70) 72%,
-            rgba(0,128,128,.52) 82%,
-            rgba(0,128,128,.32) 90%,
-            rgba(0,128,128,.15) 96%,
-            rgba(0,128,128,0) 100%
-        ),
-        url("{% static 'accueil/images/leopard.png' %}");
-    background-repeat:no-repeat;
+      linear-gradient(90deg,
+        rgba(0,128,128,.82) 0%,
+        rgba(0,128,128,.42) 42%,
+        rgba(0,128,128,.08) 72%,
+        rgba(0,128,128,0) 100%),
+      url("{% static 'accueil/images/leopard.png' %}?v=2");
     background-size:cover;
-    background-position:65% center;
+    background-position:72% 38%;
 }
 
 .hero h1{
-    display:inline-block;
-    margin-top:75px;
-    color:white;
-    font-size:25px;
-    animation:rotationOuverture 4s ease-in-out 1;
-    transform-origin:center;
+    max-width:720px;
+    margin:0 auto;
+    color:#fff;
+    font-family:var(--font-family-title);
+    font-size:clamp(1.9rem,3.2vw,3.4rem);
+    line-height:1.05;
+    text-align:center;
 }
 
-@keyframes rotationOuverture{
-    0%{
-        transform:rotateY(0);
-        opacity:0;
-    }
-
-    50%{
-        opacity:1;
-    }
-
-    100%{
-        transform:rotateY(360deg);
-        opacity:1;
-    }
-}
-
-
-/* =========================================================
-   BOUTON CACHÉ
-========================================================= */
-
-.bouton{
-    padding:12px 28px;
-    color:#214C35;
+.vitrine{
+    flex:1;
+    position:relative;
+    margin:0;
+    padding:0;
+    overflow:hidden;
     background:#efe3c3;
-    border-radius:30px;
-    font-weight:bold;
-    text-decoration:none;
+}
+
+.vitrine__cadre{
+    position:absolute;
+    right:clamp(24px,3vw,40px);
+    bottom:clamp(24px,3vh,40px);
+    width:clamp(150px,16vw,220px);
+    aspect-ratio:4/3;
+    overflow:visible;
+}
+
+.vitrine__image{
+    position:absolute;
+    inset:0;
+    display:block;
+    max-width:100%;
+    max-height:100%;
+    width:auto;
+    height:auto;
+    margin:auto;
+    object-fit:contain;
+    opacity:0;
     visibility:hidden;
+    transition:opacity .8s ease-in-out;
+}
+
+.vitrine__image.is-visible{
+    opacity:1;
+    visibility:visible;
+}
+
+.vitrine__image.logo-intro{
+    transition:opacity 2.8s ease-in-out;
+}
+
+.vitrine__image--cadre{
+    border:4px solid #315f45;
+    border-radius:4px;
+    box-shadow:0 4px 12px rgba(0,0,0,.12);
+    box-sizing:border-box;
+}
+
+.vitrine__texte{
+    position:absolute;
+    right:54%;
+    bottom:calc(100% + clamp(8px,1.5vh,16px));
+    width:min(360px,50vw);
+    color:var(--spt-vert);
+    text-align:left;
+    text-shadow:none;
     pointer-events:none;
 }
 
-
-/* =========================================================
-   ZONE INDÉPENDANTE SOUS LA BANNIÈRE
-========================================================= */
-
-.zone-inferieure{
-    position:relative;
-    height:135px;
-    background:#efe3c3;
-}
-
-
-/* =========================================================
-   CARTES
-========================================================= */
-
-.cartes{
-    position:absolute;
-    top:-22px;
-    left:0;
-    width:100%;
-    height:125px;
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
-    gap:50px;
-    z-index:2;
-}
-
-.carte{
-    position:relative;
-    width:300px;
-    height:100px;
-    padding:20px;
-    box-sizing:content-box;
-    color:#2F80C9;
-    text-align:center;
-    text-decoration:none;
-}
-
-.carte:visited,
-.carte:hover{
-    color:#2F80C9;
-}
-
-
-/* =========================================================
-   TITRES DES CARTES
-========================================================= */
-
-.carte h2{
-    position:absolute;
-    top:46px;
-    left:-450px;
-    right:20px;
+.vitrine__titre,
+.vitrine__sous-titre{
     margin:0;
-    color:#2B6FB8;
-    font-size:22px;
-    font-weight:bold;
+    opacity:0;
+    transform:none;
+    transition:opacity .55s ease-out;
+}
+
+.vitrine__titre{
+    font-family:var(--font-family-title);
+    font-size:clamp(1.35rem,2vw,2rem);
+    font-weight:700;
+    line-height:1.05;
+}
+
+.vitrine__sous-titre{
+    min-height:1.25em;
+    margin-top:.35rem;
+    font-family:var(--font-family-body);
+    font-size:clamp(.92rem,1.2vw,1.18rem);
+    font-weight:600;
     line-height:1.25;
-    text-align:center;
 }
 
-
-/* =========================================================
-   PASTILLES
-========================================================= */
-
-.carte p{
-    position:absolute;
-    top:67px;
-    left:20px;
-    margin:0;
-    padding:5px 10px;
-    color:#efe3c3;
-    background:#214C35;
-    border-radius:12px;
-    font-size:12px;
-    line-height:1.2;
-    white-space:nowrap;
-    visibility:hidden;
+.vitrine__titre.is-visible,
+.vitrine__sous-titre.is-visible{
+    opacity:1;
+    transform:none;
 }
 
-.carte-veille p{
-    top:67px;
-    left:20px;
+@media(max-width:900px){
+.vitrine__cadre{
+    width:clamp(145px,22vw,190px);
 }
 
-.carte-outils p{
-    top:67px;
-    left:20px;
+.vitrine__texte{
+    right:48%;
+    width:min(320px,56vw);
+}
 }
 
-
-/* =========================================================
-   IMAGES DES CARTES
-========================================================= */
-
-.image-veille{
-    position:absolute;
-    top:-46px;
-    left:-490px;
-    width:300px;
-    height:auto;
-    z-index:3;
+@media(max-width:650px){
+.hero{
+    flex-basis:clamp(96px,20dvh,142px);
+    min-height:0;
+    padding:clamp(14px,2.5dvh,24px) 22px;
 }
 
-.image-bilan{
-    position:absolute;
-    top:20px;
-    left:-40px;
-    width:70px;
-    height:auto;
-    z-index:3;
+.hero h1{
+    max-width:88%;
+    font-size:clamp(1.8rem,8vw,2.7rem);
 }
 
-
-/* =========================================================
-   LIGNE VERTE
-========================================================= */
-
-.ligne-verte{
-    position:absolute;
-    top:100px;
-    left:0;
-    width:calc(100% - 165px);
-    height:24px;
-    background:#214C35;
-    border-radius:0 6px 6px 0;
-    z-index:1;
+.vitrine__cadre{
+    right:10px;
+    bottom:10px;
+    width:min(150px,38vw);
 }
 
-
-/* =========================================================
-   LOGO IMAGE
-========================================================= */
-
-.lien-logo{
-    position:absolute;
-    top:4px;
-    right:65px;
-    width:200px;
-    z-index:999;
+.vitrine__texte{
+    right:38%;
+    bottom:calc(100% + 7px);
+    width:min(250px,64vw);
 }
 
-.logo-menu{
-    display:block;
-    width:200px;
-    height:auto;
+.vitrine__titre{
+    font-size:clamp(1.05rem,5vw,1.45rem);
 }
 
-
-/* =========================================================
-   PETITS ÉCRANS
-========================================================= */
-
-@media screen and (max-width:750px){
-    .hero{
-        padding:35px 25px;
-    }
-
-    .hero h1{
-        font-size:34px;
-    }
-
-    .zone-inferieure{
-        height:270px;
-    }
-
-    .cartes{
-        top:0;
-        height:auto;
-        flex-direction:column;
-        align-items:center;
-        gap:0;
-    }
-
-    .carte{
-        height:80px;
-    }
-
-    .ligne-verte{
-        top:220px;
-        width:calc(100% - 100px);
-    }
-
-    .lien-logo{
-        top:160px;
-        right:20px;
-        width:120px;
-    }
-
-    .logo-menu{
-        width:120px;
-    }
+.vitrine__sous-titre{
+    font-size:clamp(.82rem,3.8vw,1rem);
+}
 }
 
+@media(max-height:650px){
+.hero{
+    flex-basis:clamp(84px,18dvh,118px);
+    padding-block:12px;
+}
 
-/* =========================================================
-   IMAGE SECOURIR
-========================================================= */
+.hero h1{
+    font-size:clamp(1.45rem,5dvh,2.35rem);
+}
 
-.image-secourir{
-    position:absolute;
-    top:-26px;
-    left:800px;
-    width:200px;
-    height:auto;
-    transform:rotate(-10deg);
-    z-index:4;
+.vitrine__cadre{
+    width:clamp(130px,14vw,185px);
+    right:clamp(14px,2vw,28px);
+    bottom:clamp(10px,2vh,22px);
+}
+
+.vitrine__texte{
+    bottom:calc(100% + 5px);
+}
+}
+
+@media(prefers-reduced-motion:reduce){
+.vitrine__image,
+.vitrine__titre,
+.vitrine__sous-titre{
+    transition:none;
+}
 }
 </style>
 {% endblock %}
 
 {% block content %}
+<div class="home-cover">
 <section class="hero">
-    <h1>
-        Une vision de terrain pour une santé globale.
-    </h1>
-
-    <a class="bouton" href="{% url 'notice' %}">
-        Découvrir le site
-    </a>
+<h1>Une vision de terrain pour une santé globale.</h1>
 </section>
 
-<section class="zone-inferieure">
-    <div class="cartes">
-        <a href="{% url 'veille' %}" class="carte carte-veille">
-            <img
-                class="image-veille"
-                src="{% static 'accueil/images/tele.png' %}"
-                alt="Télé"
-            >
+<section class="vitrine" aria-label="Présentation des contenus du site">
+<div class="vitrine__cadre" id="vitrine-vivante">
 
-            <h2>
-                Votre Journal sur la santé<br>
-                ←
-            </h2>
+<div class="vitrine__texte" aria-live="polite">
+<p class="vitrine__titre" id="vitrine-titre"></p>
+<p class="vitrine__sous-titre" id="vitrine-sous-titre"></p>
+</div>
 
-            <p>
-                (= Veille scientifique)
-            </p>
-        </a>
-    </div>
+<img
+    class="vitrine__image"
+    id="vitrine-image"
+    src="{% static 'accueil/images/logo.png' %}"
+    alt="Santé Prévention Terrain"
+>
 
-    <a href="{% url 'pompier' %}">
-        <img
-            class="image-secourir"
-            src="{% static 'accueil/images/secourir.png' %}"
-            alt="Secourir"
-        >
-    </a>
-
-    <div class="ligne-verte"></div>
-
-    <a
-        class="lien-logo"
-        href="{% url 'home' %}"
-        aria-label="Retour à l'accueil"
-    >
-        <img
-            class="logo-menu"
-            src="{% static 'accueil/images/logo.png' %}"
-            alt="Logo Santé Prévention Terrain"
-        >
-    </a>
+</div>
 </section>
+</div>
 {% endblock %}
-*\turquoise : #008080 , bleu : #2B6FB8 ,
- vert : #214C35 , beige : #EFE3C3 *\
+
+{% block extra_js %}
+<script>
+(() => {
+    const image = document.querySelector('#vitrine-image');
+    const titre = document.querySelector('#vitrine-titre');
+    const sousTitre = document.querySelector('#vitrine-sous-titre');
+
+    if (!image || !titre || !sousTitre) return;
+
+    const slides = [
+        {
+            src: "{% static 'accueil/images/logo.png' %}",
+            alt: "Santé Prévention Terrain",
+            titre: "",
+            sousTitre: "",
+            logo: true,
+            duree: 8000
+        },
+        {
+            src: "{% static 'accueil/images/homejournal.png' %}",
+            alt: "Journal",
+            titre: "Journal",
+            sousTitre: "Suivre la veille scientifique",
+            dureeLecture: 5000
+        },
+        {
+            src: "{% static 'accueil/images/homejeux.png' %}",
+            alt: "1ers secours",
+            titre: "1ers secours",
+            sousTitre: "Rester opérationnel avec des jeux type arcade",
+            dureeLecture: 10500
+        },
+        {
+            src: "{% static 'accueil/images/homeconseils.png' %}",
+            alt: "Outils",
+            titre: "Outils",
+            sousTitre: "Conseils et tests pour rester en forme",
+            dureeLecture: 8000
+        },
+        {
+            src: "{% static 'accueil/images/homecarte.png' %}",
+            alt: "Enquête",
+            titre: "Enquête",
+            sousTitre: "Suivre une étude épidémiologique",
+            dureeLecture: 7000
+        }
+    ];
+
+    const DUREES = {
+        logo: 8000,
+        avantTitre: 1000,
+        avantSousTitre: 1500,
+        finPanneau: 10500,
+        fondu: 800,
+        pauseFinCycle: 5000
+    };
+
+    const mediaMouvementReduit = window.matchMedia(
+        '(prefers-reduced-motion: reduce)'
+    );
+
+    let generation = 0;
+
+    const attendre = (duree, idGeneration) => new Promise((resolve) => {
+        window.setTimeout(() => {
+            resolve(idGeneration === generation);
+        }, duree);
+    });
+
+    const masquerTextes = () => {
+        titre.classList.remove('is-visible');
+        sousTitre.classList.remove('is-visible');
+    };
+
+    const viderTextes = () => {
+        titre.textContent = '';
+        sousTitre.textContent = '';
+    };
+
+    const masquerTout = () => {
+        image.classList.remove('is-visible');
+        masquerTextes();
+    };
+
+    const chargerImage = (slide) => new Promise((resolve) => {
+        image.onload = () => resolve();
+        image.onerror = () => resolve();
+        image.src = slide.src;
+        image.alt = slide.alt;
+
+        if (image.complete) {
+            resolve();
+        }
+    });
+
+    const jouerSlide = async (slide, idGeneration) => {
+        masquerTout();
+        viderTextes();
+
+        await chargerImage(slide);
+        if (idGeneration !== generation) return false;
+
+        if (slide.logo) {
+            image.classList.add('logo-intro');
+            image.classList.remove('vitrine__image--cadre');
+        } else {
+            image.classList.remove('logo-intro');
+            image.classList.add('vitrine__image--cadre');
+        }
+
+        image.classList.add('is-visible');
+
+        if (slide.logo) {
+            const dureeLogo = slide.duree ?? DUREES.logo;
+
+            if (!(await attendre(dureeLogo, idGeneration))) return false;
+        } else {
+            titre.textContent = slide.titre;
+            sousTitre.textContent = slide.sousTitre;
+
+            if (!(await attendre(DUREES.avantTitre, idGeneration))) return false;
+            titre.classList.add('is-visible');
+
+            if (!(await attendre(DUREES.avantSousTitre, idGeneration))) return false;
+            sousTitre.classList.add('is-visible');
+
+            const dureeLecture = slide.dureeLecture ?? DUREES.finPanneau;
+
+            if (!(await attendre(dureeLecture, idGeneration))) return false;
+        }
+
+        if (!(await attendre(300, idGeneration))) return false;
+
+        masquerTout();
+
+        if (!(await attendre(DUREES.fondu, idGeneration))) return false;
+
+        viderTextes();
+        image.classList.remove('logo-intro');
+        return true;
+    };
+
+    const afficherVersionStatique = async () => {
+        generation += 1;
+        masquerTout();
+        viderTextes();
+
+        await chargerImage(slides[0]);
+        image.classList.remove('logo-intro');
+        image.classList.remove('vitrine__image--cadre');
+        image.classList.add('is-visible');
+    };
+
+    const lancerCycle = async () => {
+        const idGeneration = ++generation;
+
+        if (mediaMouvementReduit.matches) {
+            await afficherVersionStatique();
+            return;
+        }
+
+        while (idGeneration === generation) {
+            for (const slide of slides) {
+                const termine = await jouerSlide(slide, idGeneration);
+                if (!termine || idGeneration !== generation) return;
+            }
+
+            masquerTout();
+            viderTextes();
+
+            if (!(await attendre(DUREES.pauseFinCycle, idGeneration))) return;
+        }
+    };
+
+    document.addEventListener('visibilitychange', () => {
+        generation += 1;
+
+        if (!document.hidden) {
+            lancerCycle();
+        }
+    });
+
+    if (typeof mediaMouvementReduit.addEventListener === 'function') {
+        mediaMouvementReduit.addEventListener('change', () => {
+            generation += 1;
+            lancerCycle();
+        });
+    }
+
+    lancerCycle();
+})();
+</script>
+{% endblock %}

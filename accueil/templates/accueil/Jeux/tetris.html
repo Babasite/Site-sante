@@ -11,96 +11,826 @@
 
 {% block extra_css %}
 <style>
-:root{--jeu-carte:#111513;--jeu-rouge:#b6403a;--jeu-vert:#376b4d;--jeu-vert-fonce:#214c35;--jeu-orange:#d9833b;--jeu-texte:#f4f6f4;--jeu-gris:#667168;--jeu-bordure:rgba(255,255,255,.14);--jeu-ombre:0 8px 20px rgba(0,0,0,.34)}
-body{background:#000}.tetris-page{width:min(820px,94%);margin:2px auto 4px;padding:2px;border-radius:18px;background:#000;color:var(--jeu-texte);font-family:Arial,Helvetica,sans-serif;font-size:.92rem;line-height:1.42}.tetris-page *{box-sizing:border-box}.tetris-card{padding:4px;border:1px solid var(--jeu-bordure);border-radius:16px;background:var(--jeu-carte);box-shadow:var(--jeu-ombre)}
-.tetris-layout{display:grid;grid-template-columns:minmax(180px,.8fr) minmax(280px,280px) minmax(150px,.6fr);gap:4px;align-items:stretch}.panel{padding:6px;border:2px solid rgba(55,107,77,.22);border-radius:11px;background:linear-gradient(145deg,rgba(255,253,248,.99),rgba(226,237,222,.92));color:var(--jeu-vert-fonce);box-shadow:0 8px 20px rgba(44,57,47,.09)}
-.question-panel{display:flex;flex-direction:column;justify-content:center}.question-label{display:block;margin-bottom:7px;color:var(--jeu-vert);font-size:.66rem;font-weight:900;letter-spacing:.09em;text-transform:uppercase}.question-text{display:block;margin-bottom:9px;color:#d60000;font-family:Arial,Helvetica,sans-serif;font-size:clamp(.82rem,1.1vw,1rem);font-weight:700;line-height:1.35}.answers{display:grid;gap:5px}.answer{width:100%;padding:5px 7px;border:2px solid rgba(55,107,77,.28);border-radius:11px;background:#fff;color:#26332a;font:inherit;font-weight:800;line-height:1.25;text-align:left;cursor:pointer;transition:.16s}.answer:hover:not(:disabled){transform:translateY(-1px);border-color:var(--jeu-vert);background:#f5fbf3}.answer.correct{border-color:#2f7a49;background:#dff3e4;color:#1f6038}.answer.wrong{border-color:#b6403a;background:#f7dfdc;color:#8b2822}.feedback{min-height:16px;margin:4px 0 0;font-weight:800}.feedback.good{color:var(--jeu-vert)}.feedback.bad{color:var(--jeu-rouge)}
-.canvas-wrap{position:relative;width:min(100%,280px);margin:auto;overflow:hidden;border:2px solid #315c42;border-radius:11px;background:url("{% static 'accueil/images/afrique.png' %}") center center / cover no-repeat;box-shadow:inset 0 0 0 1px rgba(255,255,255,.7)}#tetrisCanvas{display:block;width:100%;height:auto;background:transparent;touch-action:none}.overlay{position:absolute;inset:0;display:none;align-items:center;justify-content:center;padding:12px;background:rgba(30,49,36,.76);color:#fff;text-align:center}.overlay.visible{display:flex}.overlay-box{max-width:170px;padding:8px;border-radius:11px;background:rgba(33,76,53,.96);box-shadow:var(--jeu-ombre)}.overlay-title{margin:0 0 8px;font-family:Georgia,"Times New Roman",serif;font-size:1.05rem}
-.side-panel{display:flex;flex-direction:column;gap:5px}.side-title{margin:0 0 6px;font-family:Georgia,"Times New Roman",serif;font-size:1.05rem}.next-wrap{display:flex;justify-content:center;padding:3px;border:1px solid rgba(55,107,77,.22);border-radius:11px;background:#eef5eb}#nextCanvas{display:block;width:96px;height:96px}.help{margin:0;color:#4d5d51;font-size:.64rem;line-height:1.2}.controls{display:flex;flex-wrap:wrap;justify-content:center;gap:3px;margin-top:4px}.game-button{min-width:62px;padding:4px 6px;border:0;border-radius:999px;color:#fff;font:inherit;font-size:.68rem;font-weight:800;cursor:pointer}.game-button.start{background:var(--jeu-vert)}.game-button.pause{background:var(--jeu-orange)}.game-button.restart{background:var(--jeu-rouge)}.game-button.sound{background:#315c42}
-.hud{display:grid;grid-template-columns:repeat(6,minmax(58px,1fr));gap:3px;margin-top:3px}.hud-box{min-height:30px;padding:2px 4px;border:1px solid var(--jeu-bordure);border-radius:11px;background:#f1f3ef;text-align:center}.hud-label{display:block;color:var(--jeu-gris);font-size:.66rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase}.hud-value{display:block;margin-top:1px;color:var(--jeu-vert-fonce);font-family:Georgia,"Times New Roman",serif;font-size:.72rem;font-weight:700}.mobile-controls{display:none;grid-template-columns:repeat(4,minmax(54px,70px));justify-content:center;gap:4px;margin-top:10px}.mobile-controls button{min-height:48px;border:1px solid var(--jeu-bordure);border-radius:13px;background:#f3eee2;color:var(--jeu-vert-fonce);font-size:1.2rem;font-weight:900}
-@media(max-width:700px){.tetris-layout{grid-template-columns:minmax(180px,1fr) minmax(250px,280px)}.side-panel{grid-column:1/-1;display:grid;grid-template-columns:170px 1fr;align-items:center}.hud{grid-template-columns:repeat(3,minmax(105px,1fr))}}@media(max-width:720px){.tetris-layout{grid-template-columns:1fr}.question-panel{order:1}.board-column{order:2}.side-panel{order:3;grid-column:auto;grid-template-columns:140px 1fr}.mobile-controls{display:grid}}@media(max-width:480px){.hud{grid-template-columns:repeat(2,1fr)}.game-button{min-width:0;flex:1 1 120px}.side-panel{grid-template-columns:1fr}}
+:root{
+    --jeu-carte:#111513;
+    --jeu-rouge:#b6403a;
+    --jeu-vert:#376b4d;
+    --jeu-vert-fonce:#214c35;
+    --jeu-orange:#d9833b;
+    --jeu-texte:#f4f6f4;
+    --jeu-gris:#667168;
+    --jeu-bordure:rgba(255,255,255,.14);
+    --jeu-ombre:0 8px 20px rgba(0,0,0,.34)}
+
+body{
+    background:#214C35}
+.tetris-page{
+    width:min(820px,94%);
+    margin:2px auto 4px;
+    padding:2px;
+    border-radius:18px;
+    background:#214C35;
+    color:var(--jeu-texte);
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:.92rem;
+    line-height:1.42}
+.tetris-page *{
+    box-sizing:border-box}
+.tetris-card{
+    padding:4px;
+    border:1px solid var(--jeu-bordure);
+    border-radius:16px;
+    background:var(--jeu-carte);
+    box-shadow:var(--jeu-ombre)}
+
+.tetris-layout{
+    display:grid;
+    grid-template-columns:minmax(180px,.8fr) minmax(280px,280px) minmax(150px,.6fr);
+    gap:4px;
+    align-items:stretch}
+.panel{
+    padding:6px;
+    border:2px solid rgba(55,107,77,.22);
+    border-radius:11px;
+    background:linear-gradient(145deg,rgba(255,253,248,.99),rgba(226,237,222,.92));
+    color:var(--jeu-vert-fonce);
+    box-shadow:0 8px 20px rgba(44,57,47,.09)}
+
+.question-panel{
+    display:flex;
+    flex-direction:column;
+    justify-content:center}
+.question-label{
+    display:block;
+    margin-bottom:7px;
+    color:var(--jeu-vert);
+    font-size:.66rem;
+    font-weight:900;
+    letter-spacing:.09em;
+    text-transform:uppercase}
+.question-text{
+    display:block;
+    margin-bottom:9px;
+    color:#d60000;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:clamp(.82rem,1.1vw,1rem);
+    font-weight:700;
+    line-height:1.35}
+.answers{
+    display:grid;
+    gap:5px}
+.answer{
+    width:100%;
+    padding:5px 7px;
+    border:2px solid rgba(55,107,77,.28);
+    border-radius:11px;
+    background:#fff;
+    color:#26332a;
+    font:inherit;
+    font-weight:800;
+    line-height:1.25;
+    text-align:left;
+    cursor:pointer;
+    transition:.16s}
+.answer:hover:not(:disabled){
+    transform:translateY(-1px);
+    border-color:var(--jeu-vert);
+    background:#f5fbf3}
+.answer.correct{
+    border-color:#2f7a49;
+    background:#dff3e4;
+    color:#1f6038}
+.answer.wrong{
+    border-color:#b6403a;
+    background:#f7dfdc;
+    color:#8b2822}
+.feedback{
+    min-height:16px;
+    margin:4px 0 0;
+    font-weight:800}
+.feedback.good{
+    color:var(--jeu-vert)}
+.feedback.bad{
+    color:var(--jeu-rouge)}
+
+.canvas-wrap{
+    position:relative;
+    width:min(100%,280px);
+    margin:auto;
+    overflow:hidden;
+    border:2px solid #315c42;
+    border-radius:11px;
+    background:url("{% static 'accueil/images/afrique.png' %}") center center / cover no-repeat;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.7)}
+#tetrisCanvas{
+    display:block;
+    width:100%;
+    height:auto;
+    background:transparent;
+    touch-action:none}
+.overlay{
+    position:absolute;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:12px;
+    background:rgba(30,49,36,.76);
+    color:#fff;
+    text-align:center}
+.overlay.visible{
+    display:flex}
+.overlay-box{
+    max-width:170px;
+    padding:8px;
+    border-radius:11px;
+    background:rgba(33,76,53,.96);
+    box-shadow:var(--jeu-ombre)}
+.overlay-title{
+    margin:0 0 8px;
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:1.05rem}
+
+.side-panel{
+    display:flex;
+    flex-direction:column;
+    gap:5px}
+.side-title{
+    margin:0 0 6px;
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:1.05rem}
+.next-wrap{
+    display:flex;
+    justify-content:center;
+    padding:3px;
+    border:1px solid rgba(55,107,77,.22);
+    border-radius:11px;
+    background:#eef5eb}
+#nextCanvas{
+    display:block;
+    width:96px;
+    height:96px}
+.help{
+    margin:0;
+    color:#4d5d51;
+    font-size:.64rem;
+    line-height:1.2}
+.controls{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:3px;
+    margin-top:4px}
+.game-button{
+    min-width:62px;
+    padding:4px 6px;
+    border:0;
+    border-radius:999px;
+    color:#fff;
+    font:inherit;
+    font-size:.68rem;
+    font-weight:800;
+    cursor:pointer}
+.game-button.start{
+    background:var(--jeu-vert)}
+.game-button.pause{
+    background:var(--jeu-orange)}
+.game-button.restart{
+    background:var(--jeu-rouge)}
+.game-button.sound{
+    background:#315c42}
+
+.hud{
+    display:grid;
+    grid-template-columns:repeat(6,minmax(58px,1fr));
+    gap:3px;
+    margin-top:3px}
+.hud-box{
+    min-height:30px;
+    padding:2px 4px;
+    border:1px solid var(--jeu-bordure);
+    border-radius:11px;
+    background:#f1f3ef;
+    text-align:center}
+.hud-label{
+    display:block;
+    color:var(--jeu-gris);
+    font-size:.66rem;
+    font-weight:800;
+    letter-spacing:.05em;
+    text-transform:uppercase}
+.hud-value{
+    display:block;
+    margin-top:1px;
+    color:var(--jeu-vert-fonce);
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:.72rem;
+    font-weight:700}
+.mobile-controls{
+    display:none;
+    grid-template-columns:repeat(4,minmax(54px,70px));
+    justify-content:center;
+    gap:4px;
+    margin-top:10px}
+.mobile-controls button{
+    min-height:48px;
+    border:1px solid var(--jeu-bordure);
+    border-radius:13px;
+    background:#f3eee2;
+    color:var(--jeu-vert-fonce);
+    font-size:1.2rem;
+    font-weight:900}
+
+@media(max-width:700px){
+    .tetris-layout{
+        grid-template-columns:minmax(180px,1fr) minmax(250px,280px)}
+    .side-panel{
+        grid-column:1/-1;
+        display:grid;
+        grid-template-columns:170px 1fr;
+        align-items:center}
+    .hud{
+        grid-template-columns:repeat(3,minmax(105px,1fr))}
+    }
+@media(max-width:720px){
+    .tetris-layout{
+        grid-template-columns:1fr}
+    .question-panel{
+        order:1}
+    .board-column{
+        order:2}
+    .side-panel{
+        order:3;
+        grid-column:auto;
+        grid-template-columns:140px 1fr}
+    .mobile-controls{
+        display:grid}
+    }
+@media(max-width:480px){
+    .hud{
+        grid-template-columns:repeat(2,1fr)}
+    .game-button{
+        min-width:0;
+        flex:1 1 120px}
+    .side-panel{
+        grid-template-columns:1fr}
+    }
+
 </style>
 {% endblock %}
 
 {% block content %}
-<main class="tetris-page"><section class="tetris-card"><div class="tetris-layout">
-<aside class="panel question-panel" aria-live="polite"><span class="question-label">Question <span id="questionNumber">1</span>/<span id="questionTotal">1</span></span><span class="question-text" id="question">Appuie sur « Démarrer » pour commencer.</span><div class="answers" id="answers"></div><p class="feedback" id="feedback"></p></aside>
-<div class="board-column"><div class="canvas-wrap" id="canvasWrap"><canvas id="tetrisCanvas" width="280" height="420"></canvas><div class="overlay" id="gameOverlay"><div class="overlay-box"><h2 class="overlay-title" id="overlayTitle"></h2><p id="overlayText"></p></div></div></div><div class="controls"><button class="game-button start" id="startButton">▶ Démarrer</button><button class="game-button pause" id="pauseButton">⏸ Pause</button><button class="game-button restart" id="restartButton">↻ Recommencer</button><button class="game-button sound" id="soundToggle" type="button" aria-pressed="false">🔊 Sons activés</button></div><div class="mobile-controls"><button id="moveLeft">◀</button><button id="rotate">⟳</button><button id="moveRight">▶</button><button id="drop">▼</button></div></div>
-<aside class="panel side-panel"><div><h2 class="side-title">Pièce suivante</h2><div class="next-wrap"><canvas id="nextCanvas" width="112" height="112"></canvas></div></div><div><h2 class="side-title">Règles</h2><p class="help">Bonne réponse : +150 points et retrait d’une ligne occupée. Mauvaise réponse : ajout d’une ligne parasite.</p><p class="help">Clavier : ← → déplacer, ↑ tourner, ↓ descendre, espace chute rapide, P pause.</p></div></aside>
-</div><div class="hud"><div class="hud-box"><span class="hud-label">Score</span><span class="hud-value" id="score">0</span></div><div class="hud-box"><span class="hud-label">Record</span><span class="hud-value" id="bestScore">0</span></div><div class="hud-box"><span class="hud-label">Niveau</span><span class="hud-value" id="level">1</span></div><div class="hud-box"><span class="hud-label">Lignes</span><span class="hud-value" id="lines">0</span></div><div class="hud-box"><span class="hud-label">Pièces</span><span class="hud-value" id="pieces">0</span></div><div class="hud-box"><span class="hud-label">Quiz dans</span><span class="hud-value" id="quizCountdown">3</span></div></div></section></main>
+
+<main class="tetris-page">
+<section class="tetris-card">
+<div class="tetris-layout">
+
+<aside class="panel question-panel" aria-live="polite"><span class="question-label">Question <span id="questionNumber">1</span>/<span id="questionTotal">1</span></span><span class="question-text" id="question">Appuie sur « Démarrer » pour commencer.</span>
+<div class="answers" id="answers"></div>
+
+<p class="feedback" id="feedback"></p>
+</aside>
+
+
+<div class="board-column">
+<div class="canvas-wrap" id="canvasWrap">
+<canvas id="tetrisCanvas" width="280" height="420"></canvas>
+
+<div class="overlay" id="gameOverlay">
+<div class="overlay-box">
+<h2 class="overlay-title" id="overlayTitle"></h2>
+
+<p id="overlayText"></p>
+</div>
+</div>
+</div>
+
+<div class="controls">
+<button class="game-button start" id="startButton">▶ Démarrer</button>
+
+<button class="game-button pause" id="pauseButton">⏸ Pause</button>
+
+<button class="game-button restart" id="restartButton">↻ Recommencer</button>
+
+<button class="game-button sound" id="soundToggle" type="button" aria-pressed="false">🔊 Sons activés</button>
+</div>
+
+<div class="mobile-controls">
+<button id="moveLeft">◀</button>
+
+<button id="rotate">⟳</button>
+
+<button id="moveRight">▶</button>
+
+<button id="drop">▼</button>
+</div>
+</div>
+
+
+<aside class="panel side-panel">
+<div>
+<h2 class="side-title">Pièce suivante</h2>
+
+<div class="next-wrap">
+<canvas id="nextCanvas" width="112" height="112"></canvas>
+</div>
+</div>
+
+<div>
+<h2 class="side-title">Règles</h2>
+
+<p class="help">Bonne réponse : +150 points et retrait d’une ligne occupée. Mauvaise réponse : ajout d’une ligne parasite.</p>
+
+<p class="help">Clavier : ← → déplacer, ↑ tourner, ↓ descendre, espace chute rapide, P pause.</p>
+</div>
+</aside>
+
+</div>
+
+<div class="hud">
+<div class="hud-box"><span class="hud-label">Score</span><span class="hud-value" id="score">0</span></div>
+
+<div class="hud-box"><span class="hud-label">Record</span><span class="hud-value" id="bestScore">0</span></div>
+
+<div class="hud-box"><span class="hud-label">Niveau</span><span class="hud-value" id="level">1</span></div>
+
+<div class="hud-box"><span class="hud-label">Lignes</span><span class="hud-value" id="lines">0</span></div>
+
+<div class="hud-box"><span class="hud-label">Pièces</span><span class="hud-value" id="pieces">0</span></div>
+
+<div class="hud-box"><span class="hud-label">Quiz dans</span><span class="hud-value" id="quizCountdown">3</span></div>
+</div>
+</section>
+</main>
+
 {% endblock %}
 
 {% block extra_js %}
 <script src="{% static 'accueil/pompier/js/questions.js' %}"></script>
 <script src="{% static 'accueil/pompier/js/sons.js' %}"></script>
 <script>
-(()=>{"use strict";
+(()=>{
+    "use strict";
+    
 const canvas=document.getElementById("tetrisCanvas"),ctx=canvas.getContext("2d"),nextCanvas=document.getElementById("nextCanvas"),nextCtx=nextCanvas.getContext("2d");
+    
 const COLS=10,ROWS=15,BLOCK=28,QUIZ_EVERY=3;
-const COLORS={I:"#48b8cc",J:"#4d6db7",L:"#d9833b",O:"#d6b43c",S:"#4f9a61",T:"#8b5fa8",Z:"#c84f48",garbage:"#6f7772"};
-const SHAPES={I:[[1,1,1,1]],J:[[1,0,0],[1,1,1]],L:[[0,0,1],[1,1,1]],O:[[1,1],[1,1]],S:[[0,1,1],[1,1,0]],T:[[0,1,0],[1,1,1]],Z:[[1,1,0],[0,1,1]]};
+    
+const COLORS={
+        I:"#48b8cc",J:"#4d6db7",L:"#d9833b",O:"#d6b43c",S:"#4f9a61",T:"#8b5fa8",Z:"#c84f48",garbage:"#6f7772"}
+    ;
+    
+const SHAPES={
+        I:[[1,1,1,1]],J:[[1,0,0],[1,1,1]],L:[[0,0,1],[1,1,1]],O:[[1,1],[1,1]],S:[[0,1,1],[1,1,0]],T:[[0,1,0],[1,1,1]],Z:[[1,1,0],[0,1,1]]}
+    ;
+    
 const $=id=>document.getElementById(id),scoreEl=$("score"),bestEl=$("bestScore"),levelEl=$("level"),linesEl=$("lines"),piecesEl=$("pieces"),countEl=$("quizCountdown"),questionEl=$("question"),numberEl=$("questionNumber"),totalEl=$("questionTotal"),answersEl=$("answers"),feedbackEl=$("feedback"),startBtn=$("startButton"),pauseBtn=$("pauseButton"),restartBtn=$("restartButton"),soundToggle=$("soundToggle"),overlay=$("gameOverlay"),overlayTitle=$("overlayTitle"),overlayText=$("overlayText");
-const fallback=[{question:"Une personne est inconsciente mais respire normalement. Que fais-tu ?",answers:["Je la mets en PLS et j’alerte","Je lui donne à boire","Je la laisse seule","Je la fais marcher"],correct:0},{question:"Une victime est inconsciente et ne respire plus. Que faut-il faire ?",answers:["Alerter, commencer les compressions thoraciques et demander un DAE","Attendre","La faire marcher","Lui donner à boire"],correct:0}];
-function normalize(q){if(!q||typeof q!=="object")return null;const question=q.question??q.texte??q.text??"";let answers=[],correct=0;if(typeof q.bonneReponse==="string"&&Array.isArray(q.mauvaisesReponses)){answers=[q.bonneReponse,...q.mauvaisesReponses].filter(Boolean)}else{answers=(q.answers??q.reponses??q.options??[]).map(a=>typeof a==="string"?a:(a.text??a.texte??a.label??""));correct=q.correct??q.correctIndex??q.answer??0;if(typeof correct==="string"){const i=answers.findIndex(a=>a.trim().toLowerCase()===correct.trim().toLowerCase());correct=i>=0?i:Number(correct)}}correct=Number(correct);if(!question||answers.length<2||!Number.isInteger(correct)||correct<0||correct>=answers.length)return null;return{question,answers:answers.slice(0,4),correct,explication:q.explication??""}}
-function source(){for(const c of [window.SAUVE_QUI_PEUT_QUESTIONS,window.questions,window.QUESTIONS,window.pompierQuestions,window.questionsPompier,window.quizQuestions]){if(Array.isArray(c)&&c.length){const n=c.map(normalize).filter(Boolean);if(n.length)return n}}return fallback}
-const questions=source();totalEl.textContent=questions.length;
+    
+const fallback=[{
+        question:"Une personne est inconsciente mais respire normalement. Que fais-tu ?",answers:["Je la mets en PLS et j’alerte","Je lui donne à boire","Je la laisse seule","Je la fais marcher"],correct:0}
+    ,{
+        question:"Une victime est inconsciente et ne respire plus. Que faut-il faire ?",answers:["Alerter, commencer les compressions thoraciques et demander un DAE","Attendre","La faire marcher","Lui donner à boire"],correct:0}
+    ];
+    
+function normalize(q){
+        if(!q||typeof q!=="object")return null;
+        const question=q.question??q.texte??q.text??"";
+        let answers=[],correct=0;
+        if(typeof q.bonneReponse==="string"&&Array.isArray(q.mauvaisesReponses)){
+            answers=[q.bonneReponse,...q.mauvaisesReponses].filter(Boolean)}
+        else{
+            answers=(q.answers??q.reponses??q.options??[]).map(a=>typeof a==="string"?a:(a.text??a.texte??a.label??""));
+            correct=q.correct??q.correctIndex??q.answer??0;
+            if(typeof correct==="string"){
+                const i=answers.findIndex(a=>a.trim().toLowerCase()===correct.trim().toLowerCase());
+                correct=i>=0?i:Number(correct)}
+            }
+        correct=Number(correct);
+        if(!question||answers.length<2||!Number.isInteger(correct)||correct<0||correct>=answers.length)return null;
+        return{
+            question,answers:answers.slice(0,4),correct,explication:q.explication??""}
+        }
+    
+function source(){
+        for(const c of [window.SAUVE_QUI_PEUT_QUESTIONS,window.questions,window.QUESTIONS,window.pompierQuestions,window.questionsPompier,window.quizQuestions]){
+            if(Array.isArray(c)&&c.length){
+                const n=c.map(normalize).filter(Boolean);
+                if(n.length)return n}
+            }
+        return fallback}
+    
+const questions=source();
+    totalEl.textContent=questions.length;
+    
 const SOUND_STORAGE_KEY="spt-combat-sounds-enabled";
+    
 let soundsEnabled=localStorage.getItem(SOUND_STORAGE_KEY)!=="false";
+    
 
 function playSound(name,volume=1){
+        
  if(!soundsEnabled||typeof window.jouerSon!=="function")return;
- try{window.jouerSon(name,volume);}catch(e){console.warn("Son indisponible :",name,e)}
+        
+ try{
+            window.jouerSon(name,volume);
+            }
+        catch(e){
+            console.warn("Son indisponible :",name,e)}
+        
 }
+    
 
 function updateSoundButton(){
+        
  soundToggle.textContent=soundsEnabled?"🔊 Sons activés":"🔇 Sons coupés";
+        
  soundToggle.setAttribute("aria-pressed",String(!soundsEnabled));
+        
  soundToggle.title=soundsEnabled?"Couper les sons":"Activer les sons";
+        
  if(soundsEnabled&&typeof window.activerSons==="function")window.activerSons();
+        
  if(!soundsEnabled&&typeof window.desactiverSons==="function")window.desactiverSons();
+        
 }
+    
 
 soundToggle.onclick=()=>{
+        
  soundsEnabled=!soundsEnabled;
+        
  localStorage.setItem(SOUND_STORAGE_KEY,String(soundsEnabled));
+        
  updateSoundButton();
+        
  if(soundsEnabled)playSound("clic",0.7);
-};
+        
+}
+    ;
+    
 updateSoundButton();
+    
 
-let board,current,next,score=0,best=Number(localStorage.getItem("tetrisSecoursBest")||0),level=1,lines=0,pieces=0,qIndex=0,running=false,paused=false,quiz=false,over=false,last=0,counter=0,raf=null;bestEl.textContent=best;
-const newBoard=()=>Array.from({length:ROWS},()=>Array(COLS).fill(null));
-function piece(){const types=Object.keys(SHAPES),type=types[Math.floor(Math.random()*types.length)],matrix=SHAPES[type].map(r=>[...r]);return{type,matrix,x:Math.floor((COLS-matrix[0].length)/2),y:-1}}
-function collide(p,dx=0,dy=0,m=p.matrix){for(let y=0;y<m.length;y++)for(let x=0;x<m[y].length;x++)if(m[y][x]){const bx=p.x+x+dx,by=p.y+y+dy;if(bx<0||bx>=COLS||by>=ROWS||(by>=0&&board[by][bx]))return true}return false}
-function merge(){current.matrix.forEach((r,y)=>r.forEach((v,x)=>{const by=current.y+y;if(v&&by>=0)board[by][current.x+x]=current.type}))}
-function clearLines(){let c=0;for(let y=ROWS-1;y>=0;y--)if(board[y].every(Boolean)){board.splice(y,1);board.unshift(Array(COLS).fill(null));c++;y++}if(c){score+=([0,100,300,500,800][c]||c*250)*level;lines+=c;level=Math.min(15,Math.floor(lines/8)+1)}}
-function spawn(){current=next;current.x=Math.floor((COLS-current.matrix[0].length)/2);current.y=-1;next=piece();drawNext();if(collide(current,0,1))endGame()}
-function lock(){merge();clearLines();pieces++;spawn();hud();if(!over&&pieces%QUIZ_EVERY===0)openQuiz()}
-function canPlay(){return running&&!paused&&!quiz&&!over}
-function move(dx){if(canPlay()&&!collide(current,dx,0)){current.x+=dx;draw()}}
-function rotate(){if(!canPlay())return;const m=current.matrix[0].map((_,i)=>current.matrix.map(r=>r[i]).reverse());for(const k of [0,-1,1,-2,2])if(!collide(current,k,0,m)){current.x+=k;current.matrix=m;draw();break}}
-function soft(){if(!canPlay())return;if(!collide(current,0,1)){current.y++;score++}else lock();counter=0;hud();draw()}
-function hard(){if(!canPlay())return;let d=0;while(!collide(current,0,1)){current.y++;d++}score+=d*2;lock();hud();draw()}
-function interval(){return Math.max(110,850-(level-1)*55)}
-function loop(t=0){if(!running||over)return;const delta=t-last;last=t;if(!paused&&!quiz){counter+=delta;if(counter>interval()){if(!collide(current,0,1))current.y++;else lock();counter=0}draw()}raf=requestAnimationFrame(loop)}
-function shuffled(q){const a=q.answers.map((text,i)=>({text,correct:i===q.correct}));for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-function openQuiz(){quiz=true;const q=questions[qIndex%questions.length];questionEl.textContent=q.question;numberEl.textContent=qIndex%questions.length+1;answersEl.innerHTML="";feedbackEl.textContent="";shuffled(q).forEach(choice=>{const b=document.createElement("button");b.className="answer";b.textContent=choice.text;b.onclick=()=>answer(choice.correct,b,q);answersEl.appendChild(b)});show("Question secours","Choisis une réponse dans le panneau de gauche.")}
-function answer(ok,button,q){const buttons=[...answersEl.querySelectorAll(".answer")];buttons.forEach(b=>b.disabled=true);if(ok){button.classList.add("correct");score+=150*level;removeLine();feedbackEl.textContent=q.explication?`✅ Bonne réponse. ${q.explication}`:"✅ Bonne réponse : bonus de points.";feedbackEl.className="feedback good";playSound("bonneReponse",0.8);flash("good")}else{button.classList.add("wrong");const correct=q.answers[q.correct];buttons.forEach(b=>{if(b.textContent===correct)b.classList.add("correct")});garbage();feedbackEl.textContent=`❌ La bonne réponse était : ${correct}`;feedbackEl.className="feedback bad";playSound("mauvaiseReponse",0.8);flash("bad")}qIndex=(qIndex+1)%questions.length;hud();draw();setTimeout(()=>{quiz=false;overlay.classList.remove("visible");answersEl.innerHTML="";questionEl.textContent="Continue à placer les pièces.";feedbackEl.textContent="";feedbackEl.className="feedback"},1700)}
-function garbage(){const hole=Math.floor(Math.random()*COLS);board.shift();board.push(Array.from({length:COLS},(_,i)=>i===hole?null:"garbage"));if(collide(current)){current.y--;if(collide(current))endGame()}}
-function removeLine(){for(let y=ROWS-1;y>=0;y--)if(board[y].some(Boolean)){board.splice(y,1);board.unshift(Array(COLS).fill(null));break}}
-function endGame(){running=false;over=true;cancelAnimationFrame(raf);hud();playSound("victoire",0.9);show("Partie terminée",`Score final : ${score}. Appuie sur « Recommencer » pour retenter ta chance.`)}
-function hud(){scoreEl.textContent=score;levelEl.textContent=level;linesEl.textContent=lines;piecesEl.textContent=pieces;const r=pieces%QUIZ_EVERY;countEl.textContent=r===0?QUIZ_EVERY:QUIZ_EVERY-r;if(score>best){best=score;localStorage.setItem("tetrisSecoursBest",String(best));bestEl.textContent=best}}
-function cell(c,x,y,type,size=BLOCK){const px=x*size,py=y*size;c.fillStyle=COLORS[type]||"#4f875f";c.fillRect(px+1,py+1,size-2,size-2);c.strokeStyle="rgba(20,45,30,.65)";c.strokeRect(px+1.5,py+1.5,size-3,size-3);c.fillStyle="rgba(255,255,255,.22)";c.fillRect(px+4,py+4,Math.max(2,size-10),4)}
-function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);ctx.strokeStyle="rgba(55,107,77,.12)";for(let x=0;x<=canvas.width;x+=BLOCK){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,canvas.height);ctx.stroke()}for(let y=0;y<=canvas.height;y+=BLOCK){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(canvas.width,y);ctx.stroke()}board.forEach((r,y)=>r.forEach((v,x)=>{if(v)cell(ctx,x,y,v)}));if(current&&!over){const ghost={...current,y:current.y};while(!collide(ghost,0,1))ghost.y++;ctx.save();ctx.globalAlpha=.24;ghost.matrix.forEach((r,y)=>r.forEach((v,x)=>{if(v&&ghost.y+y>=0)cell(ctx,ghost.x+x,ghost.y+y,ghost.type)}));ctx.restore();current.matrix.forEach((r,y)=>r.forEach((v,x)=>{if(v&&current.y+y>=0)cell(ctx,current.x+x,current.y+y,current.type)}))}}
-function drawNext(){nextCtx.fillStyle="#eef5eb";nextCtx.fillRect(0,0,112,112);const s=24,w=next.matrix[0].length*s,h=next.matrix.length*s,ox=Math.floor((112-w)/2/s),oy=Math.floor((112-h)/2/s);next.matrix.forEach((r,y)=>r.forEach((v,x)=>{if(v)cell(nextCtx,ox+x,oy+y,next.type,s)}))}
-function show(title,text){overlayTitle.textContent=title;overlayText.textContent=text;overlay.classList.add("visible")}
-function flash(type){const w=$("canvasWrap"),old=w.style.boxShadow;w.style.boxShadow=type==="good"?"0 0 0 6px rgba(55,107,77,.32)":"0 0 0 6px rgba(182,64,58,.34)";setTimeout(()=>w.style.boxShadow=old,220)}
-function reset(){cancelAnimationFrame(raf);board=newBoard();current=piece();next=piece();score=0;level=1;lines=0;pieces=0;qIndex=0;running=false;paused=false;quiz=false;over=false;last=0;counter=0;feedbackEl.textContent="";answersEl.innerHTML="";questionEl.textContent="Appuie sur « Démarrer » pour commencer.";pauseBtn.textContent="⏸ Pause";startBtn.textContent="▶ Démarrer";overlay.classList.remove("visible");hud();draw();drawNext()}
-startBtn.onclick=()=>{playSound("clic",0.6);if(!running&&!over){running=true;overlay.classList.remove("visible");startBtn.textContent="▶ En cours";questionEl.textContent="Place les pièces : une question arrive toutes les 3 pièces.";last=performance.now();raf=requestAnimationFrame(loop)}};
-pauseBtn.onclick=()=>{playSound("clic",0.5);if(!running||quiz||over)return;paused=!paused;pauseBtn.textContent=paused?"▶ Reprendre":"⏸ Pause";if(paused)show("Pause","");else{overlay.classList.remove("visible");last=performance.now()}};
-restartBtn.onclick=()=>{playSound("clic",0.6);reset();running=true;overlay.classList.remove("visible");startBtn.textContent="▶ En cours";questionEl.textContent="Place les pièces : une question arrive toutes les 3 pièces.";last=performance.now();raf=requestAnimationFrame(loop)};
-document.addEventListener("keydown",e=>{if(["ArrowLeft","ArrowRight","ArrowDown","ArrowUp","Space"].includes(e.code))e.preventDefault();if(e.code==="ArrowLeft")move(-1);if(e.code==="ArrowRight")move(1);if(e.code==="ArrowDown")soft();if(e.code==="ArrowUp")rotate();if(e.code==="Space")hard();if(e.code==="KeyP")pauseBtn.click()});
-$("moveLeft").onclick=()=>move(-1);$("moveRight").onclick=()=>move(1);$("rotate").onclick=rotate;$("drop").onclick=soft;reset();
-})();
+let board,current,next,score=0,best=Number(localStorage.getItem("tetrisSecoursBest")||0),level=1,lines=0,pieces=0,qIndex=0,running=false,paused=false,quiz=false,over=false,last=0,counter=0,raf=null;
+    bestEl.textContent=best;
+    
+const newBoard=()=>Array.from({
+        length:ROWS}
+    ,()=>Array(COLS).fill(null));
+    
+function piece(){
+        const types=Object.keys(SHAPES),type=types[Math.floor(Math.random()*types.length)],matrix=SHAPES[type].map(r=>[...r]);
+        return{
+            type,matrix,x:Math.floor((COLS-matrix[0].length)/2),y:-1}
+        }
+    
+function collide(p,dx=0,dy=0,m=p.matrix){
+        for(let y=0;
+        y<m.length;
+        y++)for(let x=0;
+        x<m[y].length;
+        x++)if(m[y][x]){
+            const bx=p.x+x+dx,by=p.y+y+dy;
+            if(bx<0||bx>=COLS||by>=ROWS||(by>=0&&board[by][bx]))return true}
+        return false}
+    
+function merge(){
+        current.matrix.forEach((r,y)=>r.forEach((v,x)=>{
+            const by=current.y+y;
+            if(v&&by>=0)board[by][current.x+x]=current.type}
+        ))}
+    
+function clearLines(){
+        let c=0;
+        for(let y=ROWS-1;
+        y>=0;
+        y--)if(board[y].every(Boolean)){
+            board.splice(y,1);
+            board.unshift(Array(COLS).fill(null));
+            c++;
+            y++}
+        if(c){
+            score+=([0,100,300,500,800][c]||c*250)*level;
+            lines+=c;
+            level=Math.min(15,Math.floor(lines/8)+1)}
+        }
+    
+function spawn(){
+        current=next;
+        current.x=Math.floor((COLS-current.matrix[0].length)/2);
+        current.y=-1;
+        next=piece();
+        drawNext();
+        if(collide(current,0,1))endGame()}
+    
+function lock(){
+        merge();
+        clearLines();
+        pieces++;
+        spawn();
+        hud();
+        if(!over&&pieces%QUIZ_EVERY===0)openQuiz()}
+    
+function canPlay(){
+        return running&&!paused&&!quiz&&!over}
+    
+function move(dx){
+        if(canPlay()&&!collide(current,dx,0)){
+            current.x+=dx;
+            draw()}
+        }
+    
+function rotate(){
+        if(!canPlay())return;
+        const m=current.matrix[0].map((_,i)=>current.matrix.map(r=>r[i]).reverse());
+        for(const k of [0,-1,1,-2,2])if(!collide(current,k,0,m)){
+            current.x+=k;
+            current.matrix=m;
+            draw();
+            break}
+        }
+    
+function soft(){
+        if(!canPlay())return;
+        if(!collide(current,0,1)){
+            current.y++;
+            score++}
+        else lock();
+        counter=0;
+        hud();
+        draw()}
+    
+function hard(){
+        if(!canPlay())return;
+        let d=0;
+        while(!collide(current,0,1)){
+            current.y++;
+            d++}
+        score+=d*2;
+        lock();
+        hud();
+        draw()}
+    
+function interval(){
+        return Math.max(110,850-(level-1)*55)}
+    
+function loop(t=0){
+        if(!running||over)return;
+        const delta=t-last;
+        last=t;
+        if(!paused&&!quiz){
+            counter+=delta;
+            if(counter>interval()){
+                if(!collide(current,0,1))current.y++;
+                else lock();
+                counter=0}
+            draw()}
+        raf=requestAnimationFrame(loop)}
+    
+function shuffled(q){
+        const a=q.answers.map((text,i)=>({
+            text,correct:i===q.correct}
+        ));
+        for(let i=a.length-1;
+        i>0;
+        i--){
+            const j=Math.floor(Math.random()*(i+1));
+            [a[i],a[j]]=[a[j],a[i]]}
+        return a}
+    
+function openQuiz(){
+        quiz=true;
+        const q=questions[qIndex%questions.length];
+        questionEl.textContent=q.question;
+        numberEl.textContent=qIndex%questions.length+1;
+        answersEl.innerHTML="";
+        feedbackEl.textContent="";
+        shuffled(q).forEach(choice=>{
+            const b=document.createElement("button");
+            b.className="answer";
+            b.textContent=choice.text;
+            b.onclick=()=>answer(choice.correct,b,q);
+            answersEl.appendChild(b)}
+        );
+        show("Question secours","Choisis une réponse dans le panneau de gauche.")}
+    
+function answer(ok,button,q){
+        const buttons=[...answersEl.querySelectorAll(".answer")];
+        buttons.forEach(b=>b.disabled=true);
+        if(ok){
+            button.classList.add("correct");
+            score+=150*level;
+            removeLine();
+            feedbackEl.textContent=q.explication?`✅ Bonne réponse. ${q.explication}`:"✅ Bonne réponse : bonus de points.";
+            feedbackEl.className="feedback good";
+            playSound("bonneReponse",0.8);
+            flash("good")}
+        else{
+            button.classList.add("wrong");
+            const correct=q.answers[q.correct];
+            buttons.forEach(b=>{
+                if(b.textContent===correct)b.classList.add("correct")}
+            );
+            garbage();
+            feedbackEl.textContent=`❌ La bonne réponse était : ${correct}`;
+            feedbackEl.className="feedback bad";
+            playSound("mauvaiseReponse",0.8);
+            flash("bad")}
+        qIndex=(qIndex+1)%questions.length;
+        hud();
+        draw();
+        setTimeout(()=>{
+            quiz=false;
+            overlay.classList.remove("visible");
+            answersEl.innerHTML="";
+            questionEl.textContent="Continue à placer les pièces.";
+            feedbackEl.textContent="";
+            feedbackEl.className="feedback"}
+        ,1700)}
+    
+function garbage(){
+        const hole=Math.floor(Math.random()*COLS);
+        board.shift();
+        board.push(Array.from({
+            length:COLS}
+        ,(_,i)=>i===hole?null:"garbage"));
+        if(collide(current)){
+            current.y--;
+            if(collide(current))endGame()}
+        }
+    
+function removeLine(){
+        for(let y=ROWS-1;
+        y>=0;
+        y--)if(board[y].some(Boolean)){
+            board.splice(y,1);
+            board.unshift(Array(COLS).fill(null));
+            break}
+        }
+    
+function endGame(){
+        running=false;
+        over=true;
+        cancelAnimationFrame(raf);
+        hud();
+        playSound("victoire",0.9);
+        show("Partie terminée",`Score final : ${score}. Appuie sur « Recommencer » pour retenter ta chance.`)}
+    
+function hud(){
+        scoreEl.textContent=score;
+        levelEl.textContent=level;
+        linesEl.textContent=lines;
+        piecesEl.textContent=pieces;
+        const r=pieces%QUIZ_EVERY;
+        countEl.textContent=r===0?QUIZ_EVERY:QUIZ_EVERY-r;
+        if(score>best){
+            best=score;
+            localStorage.setItem("tetrisSecoursBest",String(best));
+            bestEl.textContent=best}
+        }
+    
+function cell(c,x,y,type,size=BLOCK){
+        const px=x*size,py=y*size;
+        c.fillStyle=COLORS[type]||"#4f875f";
+        c.fillRect(px+1,py+1,size-2,size-2);
+        c.strokeStyle="rgba(20,45,30,.65)";
+        c.strokeRect(px+1.5,py+1.5,size-3,size-3);
+        c.fillStyle="rgba(255,255,255,.22)";
+        c.fillRect(px+4,py+4,Math.max(2,size-10),4)}
+    
+function draw(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.strokeStyle="rgba(55,107,77,.12)";
+        for(let x=0;
+        x<=canvas.width;
+        x+=BLOCK){
+            ctx.beginPath();
+            ctx.moveTo(x,0);
+            ctx.lineTo(x,canvas.height);
+            ctx.stroke()}
+        for(let y=0;
+        y<=canvas.height;
+        y+=BLOCK){
+            ctx.beginPath();
+            ctx.moveTo(0,y);
+            ctx.lineTo(canvas.width,y);
+            ctx.stroke()}
+        board.forEach((r,y)=>r.forEach((v,x)=>{
+            if(v)cell(ctx,x,y,v)}
+        ));
+        if(current&&!over){
+            const ghost={
+                ...current,y:current.y}
+            ;
+            while(!collide(ghost,0,1))ghost.y++;
+            ctx.save();
+            ctx.globalAlpha=.24;
+            ghost.matrix.forEach((r,y)=>r.forEach((v,x)=>{
+                if(v&&ghost.y+y>=0)cell(ctx,ghost.x+x,ghost.y+y,ghost.type)}
+            ));
+            ctx.restore();
+            current.matrix.forEach((r,y)=>r.forEach((v,x)=>{
+                if(v&&current.y+y>=0)cell(ctx,current.x+x,current.y+y,current.type)}
+            ))}
+        }
+    
+function drawNext(){
+        nextCtx.fillStyle="#eef5eb";
+        nextCtx.fillRect(0,0,112,112);
+        const s=24,w=next.matrix[0].length*s,h=next.matrix.length*s,ox=Math.floor((112-w)/2/s),oy=Math.floor((112-h)/2/s);
+        next.matrix.forEach((r,y)=>r.forEach((v,x)=>{
+            if(v)cell(nextCtx,ox+x,oy+y,next.type,s)}
+        ))}
+    
+function show(title,text){
+        overlayTitle.textContent=title;
+        overlayText.textContent=text;
+        overlay.classList.add("visible")}
+    
+function flash(type){
+        const w=$("canvasWrap"),old=w.style.boxShadow;
+        w.style.boxShadow=type==="good"?"0 0 0 6px rgba(55,107,77,.32)":"0 0 0 6px rgba(182,64,58,.34)";
+        setTimeout(()=>w.style.boxShadow=old,220)}
+    
+function reset(){
+        cancelAnimationFrame(raf);
+        board=newBoard();
+        current=piece();
+        next=piece();
+        score=0;
+        level=1;
+        lines=0;
+        pieces=0;
+        qIndex=0;
+        running=false;
+        paused=false;
+        quiz=false;
+        over=false;
+        last=0;
+        counter=0;
+        feedbackEl.textContent="";
+        answersEl.innerHTML="";
+        questionEl.textContent="Appuie sur « Démarrer » pour commencer.";
+        pauseBtn.textContent="⏸ Pause";
+        startBtn.textContent="▶ Démarrer";
+        overlay.classList.remove("visible");
+        hud();
+        draw();
+        drawNext()}
+    
+startBtn.onclick=()=>{
+        playSound("clic",0.6);
+        if(!running&&!over){
+            running=true;
+            overlay.classList.remove("visible");
+            startBtn.textContent="▶ En cours";
+            questionEl.textContent="Place les pièces : une question arrive toutes les 3 pièces.";
+            last=performance.now();
+            raf=requestAnimationFrame(loop)}
+        }
+    ;
+    
+pauseBtn.onclick=()=>{
+        playSound("clic",0.5);
+        if(!running||quiz||over)return;
+        paused=!paused;
+        pauseBtn.textContent=paused?"▶ Reprendre":"⏸ Pause";
+        if(paused)show("Pause","");
+        else{
+            overlay.classList.remove("visible");
+            last=performance.now()}
+        }
+    ;
+    
+restartBtn.onclick=()=>{
+        playSound("clic",0.6);
+        reset();
+        running=true;
+        overlay.classList.remove("visible");
+        startBtn.textContent="▶ En cours";
+        questionEl.textContent="Place les pièces : une question arrive toutes les 3 pièces.";
+        last=performance.now();
+        raf=requestAnimationFrame(loop)}
+    ;
+    
+document.addEventListener("keydown",e=>{
+        if(["ArrowLeft","ArrowRight","ArrowDown","ArrowUp","Space"].includes(e.code))e.preventDefault();
+        if(e.code==="ArrowLeft")move(-1);
+        if(e.code==="ArrowRight")move(1);
+        if(e.code==="ArrowDown")soft();
+        if(e.code==="ArrowUp")rotate();
+        if(e.code==="Space")hard();
+        if(e.code==="KeyP")pauseBtn.click()}
+    );
+    
+$("moveLeft").onclick=()=>move(-1);
+    $("moveRight").onclick=()=>move(1);
+    $("rotate").onclick=rotate;
+    $("drop").onclick=soft;
+    reset();
+    
+}
+)();
+
 </script>
 {% endblock %}

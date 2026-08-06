@@ -54,6 +54,10 @@ urlpatterns = [
     path("combat/", views.combat, name="combat"),
     path("karate/", views.karate, name="karate"),
 
+    # PAYS
+
+    path("pays/<slug:pays>/", views.pays, name="pays"),
+
     # =========================================================================
     # VIE QUOTIDIENNE
     # =========================================================================

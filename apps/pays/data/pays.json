@@ -1,0 +1,1247 @@
+{
+  "afghanistan": {
+    "code": "af",
+    "nom": "Afghanistan",
+    "capitale": "Kabul"
+  },
+  "albania": {
+    "code": "al",
+    "nom": "Albania",
+    "capitale": "Tirana"
+  },
+  "algeria": {
+    "code": "dz",
+    "nom": "Algeria",
+    "capitale": "Alger"
+  },
+  "american-samoa": {
+    "code": "as",
+    "nom": "American Samoa",
+    "capitale": "Pago Pago"
+  },
+  "andorra": {
+    "code": "ad",
+    "nom": "Andorra",
+    "capitale": "Andorre-la-Vieille"
+  },
+  "angola": {
+    "code": "ao",
+    "nom": "Angola",
+    "capitale": "Luanda"
+  },
+  "anguilla": {
+    "code": "ai",
+    "nom": "Anguilla",
+    "capitale": "The Valley"
+  },
+  "antarctica": {
+    "code": "aq",
+    "nom": "Antarctica",
+    "capitale": "Aucune capitale officielle"
+  },
+  "antigua-and-barbuda": {
+    "code": "ag",
+    "nom": "Antigua and Barbuda",
+    "capitale": "Saint John's"
+  },
+  "argentina": {
+    "code": "ar",
+    "nom": "Argentina",
+    "capitale": "Buenos Aires"
+  },
+  "armenia": {
+    "code": "am",
+    "nom": "Armenia",
+    "capitale": "Erevan"
+  },
+  "aruba": {
+    "code": "aw",
+    "nom": "Aruba",
+    "capitale": "Oranjestad"
+  },
+  "australia": {
+    "code": "au",
+    "nom": "Australia",
+    "capitale": "Canberra"
+  },
+  "austria": {
+    "code": "at",
+    "nom": "Austria",
+    "capitale": "Vienne"
+  },
+  "azerbaijan": {
+    "code": "az",
+    "nom": "Azerbaijan",
+    "capitale": "Baku"
+  },
+  "bahamas": {
+    "code": "bs",
+    "nom": "Bahamas",
+    "capitale": "Nassau"
+  },
+  "bahrain": {
+    "code": "bh",
+    "nom": "Bahrain",
+    "capitale": "Manama"
+  },
+  "bangladesh": {
+    "code": "bd",
+    "nom": "Bangladesh",
+    "capitale": "Dhaka"
+  },
+  "barbados": {
+    "code": "bb",
+    "nom": "Barbados",
+    "capitale": "Bridgetown"
+  },
+  "belarus": {
+    "code": "by",
+    "nom": "Belarus",
+    "capitale": "Minsk"
+  },
+  "belgium": {
+    "code": "be",
+    "nom": "Belgium",
+    "capitale": "Bruxelles"
+  },
+  "belize": {
+    "code": "bz",
+    "nom": "Belize",
+    "capitale": "Belmopan"
+  },
+  "benin": {
+    "code": "bj",
+    "nom": "Benin",
+    "capitale": "Porto-Novo"
+  },
+  "bermuda": {
+    "code": "bm",
+    "nom": "Bermuda",
+    "capitale": "Hamilton"
+  },
+  "bhutan": {
+    "code": "bt",
+    "nom": "Bhutan",
+    "capitale": "Thimphu"
+  },
+  "bolivia-plurinational-state-of": {
+    "code": "bo",
+    "nom": "Bolivia, Plurinational State of",
+    "capitale": "Sucre"
+  },
+  "bonaire-sint-eustatius-and-saba": {
+    "code": "bq",
+    "nom": "Bonaire, Sint Eustatius and Saba",
+    "capitale": "Kralendijk / Oranjestad / The Bottom"
+  },
+  "bosnia-and-herzegovina": {
+    "code": "ba",
+    "nom": "Bosnia and Herzegovina",
+    "capitale": "Sarajevo"
+  },
+  "botswana": {
+    "code": "bw",
+    "nom": "Botswana",
+    "capitale": "Gaborone"
+  },
+  "bouvet-island": {
+    "code": "bv",
+    "nom": "Bouvet Island",
+    "capitale": "Aucune capitale officielle"
+  },
+  "brazil": {
+    "code": "br",
+    "nom": "Brazil",
+    "capitale": "Brasília"
+  },
+  "british-indian-ocean-territory": {
+    "code": "io",
+    "nom": "British Indian Ocean Territory",
+    "capitale": "Diego Garcia"
+  },
+  "brunei-darussalam": {
+    "code": "bn",
+    "nom": "Brunei Darussalam",
+    "capitale": "Bandar Seri Begawan"
+  },
+  "bulgaria": {
+    "code": "bg",
+    "nom": "Bulgaria",
+    "capitale": "Sofia"
+  },
+  "burkina-faso": {
+    "code": "bf",
+    "nom": "Burkina Faso",
+    "capitale": "Ouagadougou"
+  },
+  "burundi": {
+    "code": "bi",
+    "nom": "Burundi",
+    "capitale": "Gitega"
+  },
+  "cabo-verde": {
+    "code": "cv",
+    "nom": "Cabo Verde",
+    "capitale": "Praia"
+  },
+  "cambodia": {
+    "code": "kh",
+    "nom": "Cambodia",
+    "capitale": "Phnom Penh"
+  },
+  "cameroon": {
+    "code": "cm",
+    "nom": "Cameroon",
+    "capitale": "Yaoundé"
+  },
+  "canada": {
+    "code": "ca",
+    "nom": "Canada",
+    "capitale": "Ottawa"
+  },
+  "cayman-islands": {
+    "code": "ky",
+    "nom": "Cayman Islands",
+    "capitale": "George Town"
+  },
+  "central-african-republic": {
+    "code": "cf",
+    "nom": "Central African Republic",
+    "capitale": "Bangui"
+  },
+  "chad": {
+    "code": "td",
+    "nom": "Chad",
+    "capitale": "N'Djamena"
+  },
+  "chile": {
+    "code": "cl",
+    "nom": "Chile",
+    "capitale": "Santiago"
+  },
+  "china": {
+    "code": "cn",
+    "nom": "China",
+    "capitale": "Pékin"
+  },
+  "christmas-island": {
+    "code": "cx",
+    "nom": "Christmas Island",
+    "capitale": "Flying Fish Cove"
+  },
+  "cocos-(keeling)-islands": {
+    "code": "cc",
+    "nom": "Cocos (Keeling) Islands",
+    "capitale": "West Island"
+  },
+  "colombia": {
+    "code": "co",
+    "nom": "Colombia",
+    "capitale": "Bogotá"
+  },
+  "comoros": {
+    "code": "km",
+    "nom": "Comoros",
+    "capitale": "Moroni"
+  },
+  "congo": {
+    "code": "cg",
+    "nom": "Congo",
+    "capitale": "Brazzaville"
+  },
+  "democratic-republic-of-the-congo": {
+    "code": "cd",
+    "nom": "République démocratique du Congo",
+    "capitale": "Kinshasa"
+  },
+  "cook-islands": {
+    "code": "ck",
+    "nom": "Cook Islands",
+    "capitale": "Avarua"
+  },
+  "costa-rica": {
+    "code": "cr",
+    "nom": "Costa Rica",
+    "capitale": "San José"
+  },
+  "croatia": {
+    "code": "hr",
+    "nom": "Croatia",
+    "capitale": "Zagreb"
+  },
+  "cuba": {
+    "code": "cu",
+    "nom": "Cuba",
+    "capitale": "La Havane"
+  },
+  "curaçao": {
+    "code": "cw",
+    "nom": "Curaçao",
+    "capitale": "Willemstad"
+  },
+  "cyprus": {
+    "code": "cy",
+    "nom": "Cyprus",
+    "capitale": "Nicosie"
+  },
+  "czechia": {
+    "code": "cz",
+    "nom": "Czechia",
+    "capitale": "Prague"
+  },
+  "côte-divoire": {
+    "code": "ci",
+    "nom": "Côte d'Ivoire",
+    "capitale": "Yamoussoukro"
+  },
+  "denmark": {
+    "code": "dk",
+    "nom": "Denmark",
+    "capitale": "Copenhague"
+  },
+  "djibouti": {
+    "code": "dj",
+    "nom": "Djibouti",
+    "capitale": "Djibouti"
+  },
+  "dominica": {
+    "code": "dm",
+    "nom": "Dominica",
+    "capitale": "Roseau"
+  },
+  "dominican-republic": {
+    "code": "do",
+    "nom": "Dominican Republic",
+    "capitale": "Santo Domingo"
+  },
+  "ecuador": {
+    "code": "ec",
+    "nom": "Ecuador",
+    "capitale": "Quito"
+  },
+  "egypt": {
+    "code": "eg",
+    "nom": "Egypt",
+    "capitale": "Le Caire"
+  },
+  "el-salvador": {
+    "code": "sv",
+    "nom": "El Salvador",
+    "capitale": "San Salvador"
+  },
+  "equatorial-guinea": {
+    "code": "gq",
+    "nom": "Equatorial Guinea",
+    "capitale": "Malabo"
+  },
+  "eritrea": {
+    "code": "er",
+    "nom": "Eritrea",
+    "capitale": "Asmara"
+  },
+  "estonia": {
+    "code": "ee",
+    "nom": "Estonia",
+    "capitale": "Tallinn"
+  },
+  "eswatini": {
+    "code": "sz",
+    "nom": "Eswatini",
+    "capitale": "Mbabane / Lobamba"
+  },
+  "ethiopia": {
+    "code": "et",
+    "nom": "Ethiopia",
+    "capitale": "Addis Ababa"
+  },
+  "falkland-islands-(malvinas)": {
+    "code": "fk",
+    "nom": "Falkland Islands (Malvinas)",
+    "capitale": "Stanley"
+  },
+  "faroe-islands": {
+    "code": "fo",
+    "nom": "Faroe Islands",
+    "capitale": "Tórshavn"
+  },
+  "fiji": {
+    "code": "fj",
+    "nom": "Fiji",
+    "capitale": "Suva"
+  },
+  "finland": {
+    "code": "fi",
+    "nom": "Finland",
+    "capitale": "Helsinki"
+  },
+  "france": {
+    "code": "fr",
+    "nom": "France",
+    "capitale": "Paris"
+  },
+  "french-guiana": {
+    "code": "gf",
+    "nom": "French Guiana",
+    "capitale": "Cayenne"
+  },
+  "french-polynesia": {
+    "code": "pf",
+    "nom": "French Polynesia",
+    "capitale": "Papeetē"
+  },
+  "french-southern-territories": {
+    "code": "tf",
+    "nom": "French Southern Territories",
+    "capitale": "Port-aux-Français"
+  },
+  "gabon": {
+    "code": "ga",
+    "nom": "Gabon",
+    "capitale": "Libreville"
+  },
+  "gambia": {
+    "code": "gm",
+    "nom": "Gambia",
+    "capitale": "Banjul"
+  },
+  "georgia": {
+    "code": "ge",
+    "nom": "Georgia",
+    "capitale": "Tbilisi"
+  },
+  "germany": {
+    "code": "de",
+    "nom": "Germany",
+    "capitale": "Berlin"
+  },
+  "ghana": {
+    "code": "gh",
+    "nom": "Ghana",
+    "capitale": "Accra"
+  },
+  "gibraltar": {
+    "code": "gi",
+    "nom": "Gibraltar",
+    "capitale": "Gibraltar"
+  },
+  "greece": {
+    "code": "gr",
+    "nom": "Greece",
+    "capitale": "Athènes"
+  },
+  "greenland": {
+    "code": "gl",
+    "nom": "Greenland",
+    "capitale": "Nuuk"
+  },
+  "grenada": {
+    "code": "gd",
+    "nom": "Grenada",
+    "capitale": "St. George's"
+  },
+  "guadeloupe": {
+    "code": "gp",
+    "nom": "Guadeloupe",
+    "capitale": "Basse-Terre"
+  },
+  "guam": {
+    "code": "gu",
+    "nom": "Guam",
+    "capitale": "Hagåtña"
+  },
+  "guatemala": {
+    "code": "gt",
+    "nom": "Guatemala",
+    "capitale": "Guatemala City"
+  },
+  "guernsey": {
+    "code": "gg",
+    "nom": "Guernsey",
+    "capitale": "St. Peter Port"
+  },
+  "guinea": {
+    "code": "gn",
+    "nom": "Guinea",
+    "capitale": "Conakry"
+  },
+  "guinea-bissau": {
+    "code": "gw",
+    "nom": "Guinea-Bissau",
+    "capitale": "Bissau"
+  },
+  "guyana": {
+    "code": "gy",
+    "nom": "Guyana",
+    "capitale": "Georgetown"
+  },
+  "haiti": {
+    "code": "ht",
+    "nom": "Haiti",
+    "capitale": "Port-au-Prince"
+  },
+  "heard-island-and-mcdonald-islands": {
+    "code": "hm",
+    "nom": "Heard Island and McDonald Islands",
+    "capitale": "Aucune capitale officielle"
+  },
+  "holy-see-(vatican-city-state)": {
+    "code": "va",
+    "nom": "Holy See (Vatican City State)",
+    "capitale": "Cité du Vatican"
+  },
+  "honduras": {
+    "code": "hn",
+    "nom": "Honduras",
+    "capitale": "Tegucigalpa"
+  },
+  "hong-kong": {
+    "code": "hk",
+    "nom": "Hong Kong",
+    "capitale": "City of Victoria"
+  },
+  "hungary": {
+    "code": "hu",
+    "nom": "Hungary",
+    "capitale": "Budapest"
+  },
+  "iceland": {
+    "code": "is",
+    "nom": "Iceland",
+    "capitale": "Reykjavik"
+  },
+  "india": {
+    "code": "in",
+    "nom": "India",
+    "capitale": "New Delhi"
+  },
+  "indonesia": {
+    "code": "id",
+    "nom": "Indonesia",
+    "capitale": "Jakarta"
+  },
+  "iran-islamic-republic-of": {
+    "code": "ir",
+    "nom": "Iran, Islamic Republic of",
+    "capitale": "Tehran"
+  },
+  "iraq": {
+    "code": "iq",
+    "nom": "Iraq",
+    "capitale": "Bagdad"
+  },
+  "ireland": {
+    "code": "ie",
+    "nom": "Ireland",
+    "capitale": "Dublin"
+  },
+  "isle-of-man": {
+    "code": "im",
+    "nom": "Isle of Man",
+    "capitale": "Douglas"
+  },
+  "israel": {
+    "code": "il",
+    "nom": "Israel",
+    "capitale": "Jérusalem"
+  },
+  "italy": {
+    "code": "it",
+    "nom": "Italy",
+    "capitale": "Rome"
+  },
+  "jamaica": {
+    "code": "jm",
+    "nom": "Jamaica",
+    "capitale": "Kingston"
+  },
+  "japan": {
+    "code": "jp",
+    "nom": "Japan",
+    "capitale": "Tokyo"
+  },
+  "jersey": {
+    "code": "je",
+    "nom": "Jersey",
+    "capitale": "Saint Helier"
+  },
+  "jordan": {
+    "code": "jo",
+    "nom": "Jordan",
+    "capitale": "Amman"
+  },
+  "kazakhstan": {
+    "code": "kz",
+    "nom": "Kazakhstan",
+    "capitale": "Astana"
+  },
+  "kenya": {
+    "code": "ke",
+    "nom": "Kenya",
+    "capitale": "Nairobi"
+  },
+  "kiribati": {
+    "code": "ki",
+    "nom": "Kiribati",
+    "capitale": "South Tarawa"
+  },
+  "korea-democratic-peoples-republic-of": {
+    "code": "kp",
+    "nom": "Korea, Democratic People's Republic of",
+    "capitale": "Pyongyang"
+  },
+  "korea-republic-of": {
+    "code": "kr",
+    "nom": "Korea, Republic of",
+    "capitale": "Seoul"
+  },
+  "kuwait": {
+    "code": "kw",
+    "nom": "Kuwait",
+    "capitale": "Kuwait City"
+  },
+  "kyrgyzstan": {
+    "code": "kg",
+    "nom": "Kyrgyzstan",
+    "capitale": "Bishkek"
+  },
+  "lao-peoples-democratic-republic": {
+    "code": "la",
+    "nom": "Lao People's Democratic Republic",
+    "capitale": "Vientiane"
+  },
+  "latvia": {
+    "code": "lv",
+    "nom": "Latvia",
+    "capitale": "Riga"
+  },
+  "lebanon": {
+    "code": "lb",
+    "nom": "Lebanon",
+    "capitale": "Beirut"
+  },
+  "lesotho": {
+    "code": "ls",
+    "nom": "Lesotho",
+    "capitale": "Maseru"
+  },
+  "liberia": {
+    "code": "lr",
+    "nom": "Liberia",
+    "capitale": "Monrovia"
+  },
+  "libya": {
+    "code": "ly",
+    "nom": "Libya",
+    "capitale": "Tripoli"
+  },
+  "liechtenstein": {
+    "code": "li",
+    "nom": "Liechtenstein",
+    "capitale": "Vaduz"
+  },
+  "lithuania": {
+    "code": "lt",
+    "nom": "Lithuania",
+    "capitale": "Vilnius"
+  },
+  "luxembourg": {
+    "code": "lu",
+    "nom": "Luxembourg",
+    "capitale": "Luxembourg"
+  },
+  "macao": {
+    "code": "mo",
+    "nom": "Macao",
+    "capitale": "Macao"
+  },
+  "madagascar": {
+    "code": "mg",
+    "nom": "Madagascar",
+    "capitale": "Antananarivo"
+  },
+  "malawi": {
+    "code": "mw",
+    "nom": "Malawi",
+    "capitale": "Lilongwe"
+  },
+  "malaysia": {
+    "code": "my",
+    "nom": "Malaysia",
+    "capitale": "Kuala Lumpur"
+  },
+  "maldives": {
+    "code": "mv",
+    "nom": "Maldives",
+    "capitale": "Malé"
+  },
+  "mali": {
+    "code": "ml",
+    "nom": "Mali",
+    "capitale": "Bamako"
+  },
+  "malta": {
+    "code": "mt",
+    "nom": "Malta",
+    "capitale": "Valletta"
+  },
+  "marshall-islands": {
+    "code": "mh",
+    "nom": "Marshall Islands",
+    "capitale": "Majuro"
+  },
+  "martinique": {
+    "code": "mq",
+    "nom": "Martinique",
+    "capitale": "Fort-de-France"
+  },
+  "mauritania": {
+    "code": "mr",
+    "nom": "Mauritania",
+    "capitale": "Nouakchott"
+  },
+  "mauritius": {
+    "code": "mu",
+    "nom": "Mauritius",
+    "capitale": "Port Louis"
+  },
+  "mayotte": {
+    "code": "yt",
+    "nom": "Mayotte",
+    "capitale": "Mamoudzou"
+  },
+  "mexico": {
+    "code": "mx",
+    "nom": "Mexico",
+    "capitale": "Mexico"
+  },
+  "micronesia-federated-states-of": {
+    "code": "fm",
+    "nom": "Micronesia, Federated States of",
+    "capitale": "Palikir"
+  },
+  "moldova-republic-of": {
+    "code": "md",
+    "nom": "Moldova, Republic of",
+    "capitale": "Chișinău"
+  },
+  "monaco": {
+    "code": "mc",
+    "nom": "Monaco",
+    "capitale": "Monaco"
+  },
+  "mongolia": {
+    "code": "mn",
+    "nom": "Mongolia",
+    "capitale": "Ulan Bator"
+  },
+  "montenegro": {
+    "code": "me",
+    "nom": "Montenegro",
+    "capitale": "Podgorica"
+  },
+  "montserrat": {
+    "code": "ms",
+    "nom": "Montserrat",
+    "capitale": "Plymouth"
+  },
+  "morocco": {
+    "code": "ma",
+    "nom": "Morocco",
+    "capitale": "Rabat"
+  },
+  "mozambique": {
+    "code": "mz",
+    "nom": "Mozambique",
+    "capitale": "Maputo"
+  },
+  "myanmar": {
+    "code": "mm",
+    "nom": "Myanmar",
+    "capitale": "Naypyidaw"
+  },
+  "namibia": {
+    "code": "na",
+    "nom": "Namibia",
+    "capitale": "Windhoek"
+  },
+  "nauru": {
+    "code": "nr",
+    "nom": "Nauru",
+    "capitale": "Yaren"
+  },
+  "nepal": {
+    "code": "np",
+    "nom": "Nepal",
+    "capitale": "Kathmandu"
+  },
+  "netherlands": {
+    "code": "nl",
+    "nom": "Netherlands",
+    "capitale": "Amsterdam"
+  },
+  "new-caledonia": {
+    "code": "nc",
+    "nom": "New Caledonia",
+    "capitale": "Nouméa"
+  },
+  "new-zealand": {
+    "code": "nz",
+    "nom": "New Zealand",
+    "capitale": "Wellington"
+  },
+  "nicaragua": {
+    "code": "ni",
+    "nom": "Nicaragua",
+    "capitale": "Managua"
+  },
+  "niger": {
+    "code": "ne",
+    "nom": "Niger",
+    "capitale": "Niamey"
+  },
+  "nigeria": {
+    "code": "ng",
+    "nom": "Nigeria",
+    "capitale": "Abuja"
+  },
+  "niue": {
+    "code": "nu",
+    "nom": "Niue",
+    "capitale": "Alofi"
+  },
+  "norfolk-island": {
+    "code": "nf",
+    "nom": "Norfolk Island",
+    "capitale": "Kingston"
+  },
+  "north-macedonia": {
+    "code": "mk",
+    "nom": "North Macedonia",
+    "capitale": "Skopje"
+  },
+  "northern-mariana-islands": {
+    "code": "mp",
+    "nom": "Northern Mariana Islands",
+    "capitale": "Saipan"
+  },
+  "norway": {
+    "code": "no",
+    "nom": "Norway",
+    "capitale": "Oslo"
+  },
+  "oman": {
+    "code": "om",
+    "nom": "Oman",
+    "capitale": "Muscat"
+  },
+  "pakistan": {
+    "code": "pk",
+    "nom": "Pakistan",
+    "capitale": "Islamabad"
+  },
+  "palau": {
+    "code": "pw",
+    "nom": "Palau",
+    "capitale": "Ngerulmud"
+  },
+  "palestine-state-of": {
+    "code": "ps",
+    "nom": "Palestine, State of",
+    "capitale": "Jérusalem-Est / Ramallah"
+  },
+  "panama": {
+    "code": "pa",
+    "nom": "Panama",
+    "capitale": "Panama City"
+  },
+  "papua-new-guinea": {
+    "code": "pg",
+    "nom": "Papua New Guinea",
+    "capitale": "Port Moresby"
+  },
+  "paraguay": {
+    "code": "py",
+    "nom": "Paraguay",
+    "capitale": "Asunción"
+  },
+  "peru": {
+    "code": "pe",
+    "nom": "Peru",
+    "capitale": "Lima"
+  },
+  "philippines": {
+    "code": "ph",
+    "nom": "Philippines",
+    "capitale": "Manila"
+  },
+  "pitcairn": {
+    "code": "pn",
+    "nom": "Pitcairn",
+    "capitale": "Adamstown"
+  },
+  "poland": {
+    "code": "pl",
+    "nom": "Poland",
+    "capitale": "Varsovie"
+  },
+  "portugal": {
+    "code": "pt",
+    "nom": "Portugal",
+    "capitale": "Lisbonne"
+  },
+  "puerto-rico": {
+    "code": "pr",
+    "nom": "Puerto Rico",
+    "capitale": "San Juan"
+  },
+  "qatar": {
+    "code": "qa",
+    "nom": "Qatar",
+    "capitale": "Doha"
+  },
+  "romania": {
+    "code": "ro",
+    "nom": "Romania",
+    "capitale": "Bucarest"
+  },
+  "russian-federation": {
+    "code": "ru",
+    "nom": "Russian Federation",
+    "capitale": "Moscou"
+  },
+  "rwanda": {
+    "code": "rw",
+    "nom": "Rwanda",
+    "capitale": "Kigali"
+  },
+  "réunion": {
+    "code": "re",
+    "nom": "Réunion",
+    "capitale": "Saint-Denis"
+  },
+  "saint-barthélemy": {
+    "code": "bl",
+    "nom": "Saint Barthélemy",
+    "capitale": "Gustavia"
+  },
+  "saint-helena-ascension-and-tristan-da-cunha": {
+    "code": "sh",
+    "nom": "Saint Helena, Ascension and Tristan da Cunha",
+    "capitale": "Jamestown"
+  },
+  "saint-kitts-and-nevis": {
+    "code": "kn",
+    "nom": "Saint Kitts and Nevis",
+    "capitale": "Basseterre"
+  },
+  "saint-lucia": {
+    "code": "lc",
+    "nom": "Saint Lucia",
+    "capitale": "Castries"
+  },
+  "saint-martin-(french-part)": {
+    "code": "mf",
+    "nom": "Saint Martin (French part)",
+    "capitale": "Marigot"
+  },
+  "saint-pierre-and-miquelon": {
+    "code": "pm",
+    "nom": "Saint Pierre and Miquelon",
+    "capitale": "Saint-Pierre"
+  },
+  "saint-vincent-and-the-grenadines": {
+    "code": "vc",
+    "nom": "Saint Vincent and the Grenadines",
+    "capitale": "Kingstown"
+  },
+  "samoa": {
+    "code": "ws",
+    "nom": "Samoa",
+    "capitale": "Apia"
+  },
+  "san-marino": {
+    "code": "sm",
+    "nom": "San Marino",
+    "capitale": "City of San Marino"
+  },
+  "sao-tome-and-principe": {
+    "code": "st",
+    "nom": "Sao Tome and Principe",
+    "capitale": "São Tomé"
+  },
+  "saudi-arabia": {
+    "code": "sa",
+    "nom": "Saudi Arabia",
+    "capitale": "Riyadh"
+  },
+  "senegal": {
+    "code": "sn",
+    "nom": "Senegal",
+    "capitale": "Dakar"
+  },
+  "serbia": {
+    "code": "rs",
+    "nom": "Serbia",
+    "capitale": "Belgrade"
+  },
+  "seychelles": {
+    "code": "sc",
+    "nom": "Seychelles",
+    "capitale": "Victoria"
+  },
+  "sierra-leone": {
+    "code": "sl",
+    "nom": "Sierra Leone",
+    "capitale": "Freetown"
+  },
+  "singapore": {
+    "code": "sg",
+    "nom": "Singapore",
+    "capitale": "Singapore"
+  },
+  "sint-maarten-(dutch-part)": {
+    "code": "sx",
+    "nom": "Sint Maarten (Dutch part)",
+    "capitale": "Philipsburg"
+  },
+  "slovakia": {
+    "code": "sk",
+    "nom": "Slovakia",
+    "capitale": "Bratislava"
+  },
+  "slovenia": {
+    "code": "si",
+    "nom": "Slovenia",
+    "capitale": "Ljubljana"
+  },
+  "solomon-islands": {
+    "code": "sb",
+    "nom": "Solomon Islands",
+    "capitale": "Honiara"
+  },
+  "somalia": {
+    "code": "so",
+    "nom": "Somalia",
+    "capitale": "Mogadishu"
+  },
+  "south-africa": {
+    "code": "za",
+    "nom": "South Africa",
+    "capitale": "Pretoria / Le Cap / Bloemfontein"
+  },
+  "south-georgia-and-the-south-sandwich-islands": {
+    "code": "gs",
+    "nom": "South Georgia and the South Sandwich Islands",
+    "capitale": "King Edward Point"
+  },
+  "south-sudan": {
+    "code": "ss",
+    "nom": "South Sudan",
+    "capitale": "Juba"
+  },
+  "spain": {
+    "code": "es",
+    "nom": "Spain",
+    "capitale": "Madrid"
+  },
+  "sri-lanka": {
+    "code": "lk",
+    "nom": "Sri Lanka",
+    "capitale": "Sri Jayawardenepura Kotte / Colombo"
+  },
+  "sudan": {
+    "code": "sd",
+    "nom": "Sudan",
+    "capitale": "Khartoum"
+  },
+  "suriname": {
+    "code": "sr",
+    "nom": "Suriname",
+    "capitale": "Paramaribo"
+  },
+  "svalbard-and-jan-mayen": {
+    "code": "sj",
+    "nom": "Svalbard and Jan Mayen",
+    "capitale": "Longyearbyen"
+  },
+  "sweden": {
+    "code": "se",
+    "nom": "Sweden",
+    "capitale": "Stockholm"
+  },
+  "switzerland": {
+    "code": "ch",
+    "nom": "Switzerland",
+    "capitale": "Bern"
+  },
+  "syrian-arab-republic": {
+    "code": "sy",
+    "nom": "Syrian Arab Republic",
+    "capitale": "Damas"
+  },
+  "taiwan-province-of-china": {
+    "code": "tw",
+    "nom": "Taiwan, Province of China",
+    "capitale": "Taipei"
+  },
+  "tajikistan": {
+    "code": "tj",
+    "nom": "Tajikistan",
+    "capitale": "Dushanbe"
+  },
+  "tanzania-united-republic-of": {
+    "code": "tz",
+    "nom": "Tanzania, United Republic of",
+    "capitale": "Dodoma"
+  },
+  "thailand": {
+    "code": "th",
+    "nom": "Thailand",
+    "capitale": "Bangkok"
+  },
+  "timor-leste": {
+    "code": "tl",
+    "nom": "Timor-Leste",
+    "capitale": "Dili"
+  },
+  "togo": {
+    "code": "tg",
+    "nom": "Togo",
+    "capitale": "Lomé"
+  },
+  "tokelau": {
+    "code": "tk",
+    "nom": "Tokelau",
+    "capitale": "Fakaofo"
+  },
+  "tonga": {
+    "code": "to",
+    "nom": "Tonga",
+    "capitale": "Nuku'alofa"
+  },
+  "trinidad-and-tobago": {
+    "code": "tt",
+    "nom": "Trinidad and Tobago",
+    "capitale": "Port of Spain"
+  },
+  "tunisia": {
+    "code": "tn",
+    "nom": "Tunisia",
+    "capitale": "Tunis"
+  },
+  "turkmenistan": {
+    "code": "tm",
+    "nom": "Turkmenistan",
+    "capitale": "Ashgabat"
+  },
+  "turks-and-caicos-islands": {
+    "code": "tc",
+    "nom": "Turks and Caicos Islands",
+    "capitale": "Cockburn Town"
+  },
+  "tuvalu": {
+    "code": "tv",
+    "nom": "Tuvalu",
+    "capitale": "Funafuti"
+  },
+  "türkiye": {
+    "code": "tr",
+    "nom": "Türkiye",
+    "capitale": "Ankara"
+  },
+  "uganda": {
+    "code": "ug",
+    "nom": "Uganda",
+    "capitale": "Kampala"
+  },
+  "ukraine": {
+    "code": "ua",
+    "nom": "Ukraine",
+    "capitale": "Kyiv"
+  },
+  "united-arab-emirates": {
+    "code": "ae",
+    "nom": "United Arab Emirates",
+    "capitale": "Abu Dhabi"
+  },
+  "united-kingdom": {
+    "code": "gb",
+    "nom": "United Kingdom",
+    "capitale": "Londres"
+  },
+  "united-states": {
+    "code": "us",
+    "nom": "United States",
+    "capitale": "Washington D.C."
+  },
+  "united-states-minor-outlying-islands": {
+    "code": "um",
+    "nom": "United States Minor Outlying Islands",
+    "capitale": "Aucune capitale officielle"
+  },
+  "uruguay": {
+    "code": "uy",
+    "nom": "Uruguay",
+    "capitale": "Montevideo"
+  },
+  "uzbekistan": {
+    "code": "uz",
+    "nom": "Uzbekistan",
+    "capitale": "Tashkent"
+  },
+  "vanuatu": {
+    "code": "vu",
+    "nom": "Vanuatu",
+    "capitale": "Port Vila"
+  },
+  "venezuela-bolivarian-republic-of": {
+    "code": "ve",
+    "nom": "Venezuela, Bolivarian Republic of",
+    "capitale": "Caracas"
+  },
+  "viet-nam": {
+    "code": "vn",
+    "nom": "Viet Nam",
+    "capitale": "Hanoi"
+  },
+  "virgin-islands-british": {
+    "code": "vg",
+    "nom": "Virgin Islands, British",
+    "capitale": "Road Town"
+  },
+  "virgin-islands-u.s.": {
+    "code": "vi",
+    "nom": "Virgin Islands, U.S.",
+    "capitale": "Charlotte Amalie"
+  },
+  "wallis-and-futuna": {
+    "code": "wf",
+    "nom": "Wallis and Futuna",
+    "capitale": "Mata-Utu"
+  },
+  "western-sahara": {
+    "code": "eh",
+    "nom": "Western Sahara",
+    "capitale": "El Aaiún"
+  },
+  "yemen": {
+    "code": "ye",
+    "nom": "Yemen",
+    "capitale": "Sana'a"
+  },
+  "zambia": {
+    "code": "zm",
+    "nom": "Zambia",
+    "capitale": "Lusaka"
+  },
+  "zimbabwe": {
+    "code": "zw",
+    "nom": "Zimbabwe",
+    "capitale": "Harare"
+  },
+  "åland-islands": {
+    "code": "ax",
+    "nom": "Åland Islands",
+    "capitale": "Mariehamn"
+  }
+}

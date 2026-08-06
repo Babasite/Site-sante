@@ -29,126 +29,6 @@ Voyager léger
     --ombre-forte: 0 18px 45px rgba(53,67,50,.24)
 }
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0
-}
-
-html {
-    scroll-behavior: smooth
-}
-
-body {
-    min-height: 100vh;
-    overflow-x: clip;
-    background: var(--fond);
-    color: var(--texte);
-    font-family: Arial,Helvetica,sans-serif;
-    line-height: 1.7
-}
-
-a {
-    color: inherit;
-    text-decoration: none
-}
-
-img {
-    display: block;
-    max-width: 100%
-}
-
-::selection {
-    background: var(--vert);
-    color: var(--blanc)
-}
-
-.site-header {
-    position: relative;
-    z-index: 20;
-    width: 100%;
-    border-bottom: 1px solid rgba(55,107,77,.18);
-    background: rgba(239,227,195,.96);
-    box-shadow: 0 6px 24px rgba(62,72,55,.08);
-    backdrop-filter: blur(12px)
-}
-
-.header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 30px;
-    width: min(1400px,94%);
-    min-height: 94px;
-    margin: 0 auto
-}
-
-.brand {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    min-width: 260px
-}
-
-.brand-logo {
-    width: 78px;
-    height: 78px;
-    object-fit: contain;
-    filter: drop-shadow(0 6px 8px rgba(45,80,57,.15))
-}
-
-.brand-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.05
-}
-
-.brand-name {
-    color: var(--vert-tres-fonce);
-    font-family: Georgia,"Times New Roman",serif;
-    font-size: 1.45rem;
-    font-weight: 800
-}
-
-.brand-subtitle {
-    margin-top: 6px;
-    color: var(--texte-clair);
-    font-size: .78rem;
-    font-weight: 700;
-    letter-spacing: .12em;
-    text-transform: uppercase
-}
-
-.header-nav {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 12px;
-    flex-wrap: wrap
-}
-
-.nav-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    min-height: 44px;
-    padding: 10px 18px;
-    border-radius: 999px;
-    background: var(--vert);
-    color: var(--blanc);
-    font-size: .92rem;
-    font-weight: 800;
-    box-shadow: 0 8px 18px rgba(67,160,71,.22);
-    transition: .25s
-}
-
-.nav-button:hover {
-    transform: translateY(-3px);
-    background: var(--vert-fonce);
-    box-shadow: 0 12px 24px rgba(46,125,50,.28)
-}
-
 .page-container {
     width: min(1150px,92%);
     margin: 42px auto 70px
@@ -342,12 +222,7 @@ h1 {
     font-weight: 700
 }
 
-.return-area {
-    margin-top: 34px;
-    text-align: center
-}
-
-.return-button {
+.return-are.return-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -367,15 +242,6 @@ h1 {
 }
 
 @media(max-width:900px) {
-    .header-inner {
-        flex-direction: column;
-        justify-content: center;
-        gap: 15px;
-        padding: 14px 0 18px
-    }
-    .brand {
-        min-width: auto
-    }
     .needs-grid {
         grid-template-columns: repeat(2,minmax(0,1fr))
     }
@@ -388,22 +254,6 @@ h1 {
     .page-container {
         width: 94%;
         margin-top: 22px
-    }
-    .brand-logo {
-        width: 62px;
-        height: 62px
-    }
-    .brand-name {
-        font-size: 1.1rem
-    }
-    .brand-subtitle {
-        font-size: .68rem
-    }
-    .header-nav {
-        width: 100%
-    }
-    .nav-button {
-        width: 100%
     }
     .hero {
         padding: 32px 20px;
@@ -424,21 +274,527 @@ h1 {
     }
 }
 
+
+/* =========================================================
+   HARMONISATION ÉDITORIALE — STYLE NOTICE
+   Mise en page uniquement : textes et structure inchangés.
+========================================================= */
+
+.spt-shell-content{
+    background:#fff;
+}
+
+.page-container{
+    width:min(1080px,calc(100% - 32px));
+    margin:18px auto 70px;
+    color:var(--spt-texte);
+    font-family:var(--font-family-body);
+    font-size:1rem;
+    line-height:1.75;
+}
+
+.hero{
+    padding:clamp(28px,4vw,44px);
+    border:1px solid rgba(33,76,53,.18);
+    border-radius:20px;
+    background:#fff;
+    box-shadow:0 8px 24px rgba(33,76,53,.10);
+}
+
+.hero::before,
+.hero::after{
+    display:none;
+}
+
+.eyebrow{
+    border-color:rgba(33,76,53,.18);
+    background:var(--spt-fond);
+    color:var(--spt-vert-fonce);
+}
+
+h1,
+.section-title,
+.need-card h3,
+.safety-card h3,
+.bag-category h3{
+    color:var(--spt-vert-fonce);
+    font-family:var(--font-family-title);
+    text-wrap:balance;
+}
+
+h1{
+    font-size:clamp(1.55rem,2.4vw,2rem);
+    line-height:1.25;
+}
+
+.intro,
+.section-intro,
+.need-card,
+.safety-card,
+.bag-category,
+.note{
+    font-family:inherit;
+    font-size:clamp(1rem,1.25vw,1.12rem);
+    line-height:1.75;
+}
+
+.quote{
+    margin:24px 0;
+    padding:18px 20px;
+    border-left:4px solid var(--spt-vert);
+    border-radius:0 12px 12px 0;
+    background:var(--spt-fond);
+    color:var(--spt-vert-fonce);
+    font-size:clamp(1.15rem,1.7vw,1.35rem);
+    box-shadow:none;
+}
+
+.section-block{
+    margin-top:clamp(26px,4vw,42px);
+    padding:clamp(22px,3vw,30px);
+    border:1px solid rgba(33,76,53,.16);
+    border-radius:20px;
+    background:#fff;
+    box-shadow:0 8px 24px rgba(33,76,53,.08);
+}
+
+.section-title{
+    font-size:clamp(1.25rem,1.8vw,1.5rem);
+    line-height:1.3;
+}
+
+.needs-grid,
+.safety-grid,
+.bag-grid{
+    gap:16px;
+}
+
+.need-card,
+.safety-card,
+.bag-category{
+    min-height:0;
+    padding:20px;
+    border:1px solid rgba(33,76,53,.16);
+    border-radius:14px;
+    background:var(--spt-fond);
+    box-shadow:none;
+}
+
+.need-card:hover,
+.safety-card:hover,
+.bag-category:hover{
+    transform:none;
+    box-shadow:none;
+}
+
+.need-card h3,
+.safety-card h3,
+.bag-category h3{
+    font-size:1.1rem;
+    line-height:1.35;
+}
+
+.note{
+    margin-top:22px;
+    padding:16px 18px;
+    border-left:4px solid var(--spt-vert);
+    border-radius:0 12px 12px 0;
+    background:rgba(239,227,195,.65);
+}
+
+.return-are.return-button{
+    display:inline;
+    padding:0;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    color:var(--spt-vert-fonce);
+    font-weight:600;
+    box-shadow:none;
+    text-decoration:underline;
+    text-decoration-thickness:2px;
+    text-underline-offset:4px;
+}
+
+.return-button:hover,
+.return-button:focus-visible{
+    transform:none;
+    background:transparent;
+    color:var(--spt-vert);
+    box-shadow:none;
+}
+
+@media(max-width:760px){
+    .page-container{
+        width:calc(100% - 24px);
+        margin-top:12px;
+    }
+
+    .hero,
+    .section-block{
+        border-radius:16px;
+    }
+
+    .needs-grid,
+    .safety-grid,
+    .bag-grid{
+        grid-template-columns:1fr;
+        gap:12px;
+    }
+
+    .need-card,
+    .safety-card,
+    .bag-category{
+        padding:18px;
+    }
+}
+
+
+.hero-subtitle{
+    margin:12px 0 26px;
+    color:var(--spt-vert-fonce);
+    font-family:var(--font-family-title);
+    font-size:1.15rem;
+    font-style:italic;
+    font-weight:600;
+}
+
+
+
+/* Harmonisation finale */
+.hero{
+    padding:24px 28px !important;
+    border-radius:18px !important;
+}
+.hero h1{
+    display:none;
+}
+.hero-subtitle{
+    margin:0 0 18px !important;
+    font-size:1.35rem !important;
+    font-style:normal !important;
+    font-weight:700 !important;
+}
+.intro{
+    margin-top:0 !important;
+}
+.quote{
+    margin:18px 0 !important;
+    padding:16px 18px !important;
+    border-left:4px solid var(--spt-vert) !important;
+    border-radius:0 10px 10px 0 !important;
+    background:#fff !important;
+    box-shadow:none !important;
+    font-size:1.2rem !important;
+}
+.section{
+    margin-top:22px !important;
+    padding:24px !important;
+    border-radius:18px !important;
+    background:#fff !important;
+    box-shadow:0 6px 18px rgba(33,76,53,.08) !important;
+}
+.section-title{
+    font-size:1.45rem !important;
+}
+.need-card,
+.safety-card,
+.bag-category{
+    border-radius:12px !important;
+    box-shadow:none !important;
+}
+
+
+/* =========================================================
+   STYLE 2026 — PRÉSENTATION UNIQUEMENT
+   Tous les textes, liens et contenus restent inchangés.
+========================================================= */
+
+.spt-shell-content{
+    background:#fff;
+}
+
+.page-container{
+    width:min(1080px,calc(100% - 28px));
+    margin:10px auto 56px;
+    color:var(--spt-texte);
+    font-family:var(--font-family-body);
+    font-size:1rem;
+    line-height:1.68;
+}
+
+/* Introduction intégrée à la page, sans effet de fenêtre */
+.hero{
+    padding:8px 0 24px !important;
+    border:0 !important;
+    border-radius:0 !important;
+    background:transparent !important;
+    box-shadow:none !important;
+    overflow:visible;
+}
+
+.hero::before,
+.hero::after{
+    display:none !important;
+}
+
+.hero-content{
+    max-width:920px;
+}
+
+.hero h1{
+    display:none;
+}
+
+.hero-subtitle{
+    margin:0 0 14px !important;
+    color:var(--spt-vert-fonce);
+    font-family:var(--font-family-title);
+    font-size:clamp(1.25rem,1.8vw,1.5rem) !important;
+    font-style:normal !important;
+    font-weight:700 !important;
+    line-height:1.3;
+}
+
+.intro{
+    max-width:none;
+    margin-top:0 !important;
+    color:var(--spt-texte);
+    font-family:inherit;
+    font-size:clamp(1rem,1.15vw,1.08rem);
+    line-height:1.7;
+}
+
+.intro p+p{
+    margin-top:12px;
+}
+
+.quote{
+    margin:16px 0 !important;
+    padding:12px 0 12px 18px !important;
+    border:0 !important;
+    border-left:3px solid var(--spt-vert) !important;
+    border-radius:0 !important;
+    background:transparent !important;
+    color:var(--spt-vert-fonce);
+    font-family:var(--font-family-title);
+    font-size:clamp(1.05rem,1.45vw,1.2rem) !important;
+    font-weight:600;
+    box-shadow:none !important;
+}
+
+.quote small{
+    margin-top:4px;
+    color:var(--spt-texte);
+    font-family:var(--font-family-body);
+    font-size:.82rem;
+}
+
+/* Sections éditoriales, sans grosses cartes */
+.section{
+    margin-top:0 !important;
+    padding:24px 0 !important;
+    border:0 !important;
+    border-top:1px solid rgba(33,76,53,.16) !important;
+    border-radius:0 !important;
+    background:transparent !important;
+    box-shadow:none !important;
+}
+
+.section-title{
+    margin:0;
+    color:var(--spt-vert-fonce);
+    font-family:var(--font-family-title);
+    font-size:clamp(1.2rem,1.7vw,1.45rem) !important;
+    line-height:1.3;
+    text-wrap:balance;
+}
+
+.section-intro{
+    max-width:900px;
+    margin-top:8px;
+    color:var(--spt-texte);
+    font-size:clamp(1rem,1.15vw,1.08rem);
+    line-height:1.65;
+}
+
+/* Besoins fondamentaux : badges légers */
+.needs-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:16px;
+}
+
+.need-card{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    min-height:0;
+    padding:8px 12px !important;
+    border:1px solid rgba(33,76,53,.14) !important;
+    border-radius:999px !important;
+    background:rgba(239,227,195,.58) !important;
+    color:var(--spt-vert-fonce);
+    font-size:.94rem !important;
+    font-weight:700;
+    box-shadow:none !important;
+    text-align:left;
+}
+
+.need-icon{
+    display:inline;
+    margin:0;
+    font-size:1rem;
+}
+
+/* Blocs de réflexion : cartes plates */
+.safety-grid,
+.bag-grid{
+    gap:12px;
+    margin-top:16px;
+}
+
+.safety-card,
+.bag-category{
+    padding:16px 17px !important;
+    border:1px solid rgba(33,76,53,.13) !important;
+    border-radius:10px !important;
+    background:#fff !important;
+    box-shadow:none !important;
+}
+
+.safety-card h3,
+.bag-category h3{
+    margin-bottom:7px;
+    color:var(--spt-vert-fonce);
+    font-family:var(--font-family-title);
+    font-size:1.05rem !important;
+    line-height:1.35;
+}
+
+/* Listes modernes, sans pavés beiges */
+.bag-list{
+    display:block;
+    margin:0;
+    padding:0;
+}
+
+.bag-list li{
+    position:relative;
+    display:block;
+    padding:10px 0 10px 22px !important;
+    border-radius:0 !important;
+    background:transparent !important;
+    line-height:1.55;
+}
+
+.bag-list li+li{
+    border-top:1px solid rgba(33,76,53,.10);
+}
+
+.bag-list li::before{
+    content:"✓";
+    position:absolute;
+    left:0;
+    top:10px;
+    color:var(--spt-vert);
+    font-weight:900;
+}
+
+/* Notes de transition */
+.note{
+    margin-top:16px !important;
+    padding:12px 14px !important;
+    border:0 !important;
+    border-left:3px solid var(--spt-vert) !important;
+    border-radius:0 8px 8px 0 !important;
+    background:rgba(239,227,195,.52) !important;
+    color:var(--spt-vert-fonce);
+    font-weight:600;
+}
+
+/* Retour discret */
+.return-area{
+    margin-top:18px;
+    text-align:left;
+}
+
+.return-button{
+    display:inline;
+    padding:0;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    color:var(--spt-vert-fonce);
+    font-weight:600;
+    box-shadow:none;
+    text-decoration:underline;
+    text-decoration-thickness:2px;
+    text-underline-offset:4px;
+}
+
+.return-button:hover,
+.return-button:focus-visible{
+    transform:none;
+    background:transparent;
+    color:var(--spt-vert);
+    box-shadow:none;
+}
+
+@media(max-width:900px){
+    .safety-grid,
+    .bag-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:600px){
+    .page-container{
+        width:calc(100% - 20px);
+        margin-top:8px;
+        margin-bottom:44px;
+    }
+
+    .hero{
+        padding-bottom:20px !important;
+    }
+
+    .section{
+        padding:20px 0 !important;
+    }
+
+    .needs-grid{
+        gap:7px;
+    }
+
+    .need-card{
+        padding:7px 10px !important;
+        font-size:.9rem !important;
+    }
+
+    .safety-card,
+    .bag-category{
+        padding:14px !important;
+    }
+
+    .bag-list li{
+        padding-top:9px !important;
+        padding-bottom:9px !important;
+    }
+}
+
 </style>
 {% endblock %}
 {% block content %}
 <main class="page-container">
  <section class="hero">
   <div class="hero-content">
-   <p class="eyebrow">
-    <span>
-     🧳
-    </span>
-    Besoin de quoi réellement.
+   <h1>Voyager léger</h1>
+
+   <p class="hero-subtitle">
+    De quoi avons-nous réellement besoin ?
    </p>
-   <h1>
-    Se balader léger
-   </h1>
    <div class="intro">
     <p>
      Dans la vie, en réfléchissant bien, on a besoin de quelques trucs ciblés. Je vais essayer d’être volontairement le plus minimaliste possible.

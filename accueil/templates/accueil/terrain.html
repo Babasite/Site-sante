@@ -9,135 +9,619 @@
 
 {% block extra_css %}
 <style>
-body{
-    margin:0;
-    font-family:var(--font-family-body);
-    background:#efe3c3;
+/* ==========================================================================
+   RÉGLAGES SIMPLES — PAGE TERRAIN
+   Modifier ici les tailles et déplacements principaux sans toucher au reste.
+   ========================================================================== */
+.terrain-page{
+    --page-max-width: 1320px;
+    --page-padding-x: 20px;
+    --page-padding-top: 14px;
+    --page-padding-bottom: 24px;
+
+    --map-width: 650px;
+    --map-height: 410px;
+    --map-move-x: 0px;
+    --map-move-y: 0px;
+
+    --theme-image-size: 96px;
+    --theme-column-width: 390px;
+    --theme-gap-y: 8px;
+    --theme-text-gap: 18px;
+
+    --title-size: 12px;
+    --subtitle-size: 14px;
+
+    min-height: calc(100vh - 130px);
+    background: #ffffff;
 }
 
-.container{
-    padding:25px 20px 60px;
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
-    gap:24px;
-    flex-wrap:nowrap;
+.terrain-layout{
+    width: min(100%, var(--page-max-width));
+    margin: 0 auto;
+    padding: var(--page-padding-top) var(--page-padding-x) var(--page-padding-bottom);
+    box-sizing: border-box;
+
+    display: grid;
+    grid-template-columns: minmax(0, var(--map-width)) minmax(280px, var(--theme-column-width));
+    column-gap: 42px;
+    align-items: start;
+    justify-content: center;
+}
+
+/* ==========================================================================
+   CARTE DU MONDE
+   ========================================================================== */
+.world-map{
+    position: relative;
+    width: 100%;
+    max-width: var(--map-width);
+    height: var(--map-height);
+    transform: translate(var(--map-move-x), var(--map-move-y));
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    background: #e7f2fb;
+    border: 3px solid var(--color-primary, #214C35);
+    border-radius: 18px;
+    box-shadow: 0 10px 28px rgba(33, 76, 53, 0.14);
+}
+
+.world-map-svg{
+    flex: 0 0 auto;
+    width: 750px;
+    height: 470px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.world-map-svg svg{
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    overflow: visible;
+}
+
+.world-map-svg svg path{
+    fill: #efe3c3 !important;
+    cursor: pointer;
+    transition: fill .2s ease;
+}
+
+.world-map-svg svg path:hover,
+.world-map-svg svg path:focus{
+    fill: #008080 !important;
+    outline: none;
+}
+
+/* Texte principal : petit, en haut à droite, sans encadré. */
+.health-global-intro{
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    width: 235px;
+    z-index: 10;
+    text-align: right;
+    pointer-events: none;
+    text-shadow: 0 1px 2px rgba(255,255,255,.9);
+}
+
+.health-global-intro h2{
+    margin: 0;
+    color: #008080;
+    font-family: var(--font-family-title);
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.health-global-intro p{
+    margin: 3px 0 0;
+    color: #008080;
+    font-size: 12px;
+    font-style: italic;
+    line-height: 1.25;
+}
+
+/* Consigne discrète : en bas à gauche de la carte, sans encadré. */
+.map-instruction{
+    position: absolute;
+    left: 18px;
+    bottom: 14px;
+    z-index: 10;
+    margin: 0;
+    color: #214C35;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.25;
+    pointer-events: none;
+    text-shadow: 0 1px 2px rgba(255,255,255,.9);
+}
+
+/* ==========================================================================
+   COLONNE DES THÈMES
+   Quatre blocs indépendants, l'un sous l'autre.
+   ========================================================================== */
+.terrain-themes{
+    display: grid;
+    gap: var(--theme-gap-y);
+    align-content: start;
 }
 
 .theme{
-    width:205px;
-    flex-shrink:0;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
+    --theme-move-x: 0px;
+    --theme-move-y: 0px;
+
+    width: 100%;
+    min-height: 96px;
+    display: grid;
+    grid-template-columns: var(--theme-image-size) minmax(0, 1fr);
+    column-gap: var(--theme-text-gap);
+    align-items: center;
+    transform: translate(var(--theme-move-x), var(--theme-move-y));
+}
+
+.theme-copy{
+    min-width: 0;
+    text-align: left;
 }
 
 .theme-title{
-    font-family:var(--font-family-title);
-    font-size:24px;
-    font-weight:800;
-    letter-spacing:1.5px;
-    margin-bottom:8px;
-    text-align:center;
-    text-shadow:0 2px 6px rgba(0,0,0,.2);
-}
-
-.sauver,.bouger,.manger,.sedebrouiller-title{
-    color:#214C35;
+    margin: 0 0 4px;
+    color: #214C35;
+    font-family: var(--font-family-title);
+    font-size: var(--title-size);
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    line-height: 1.1;
+    text-align: left;
 }
 
 .title{
-    font-family:var(--font-family-body);
-    color:black;
-    font-size:17px;
-    font-weight:600;
-    text-align:center;
-    margin-bottom:15px;
-    min-height:44px;
-    width:205px;
+    margin: 0;
+    color: #008080;
+    font-family: var(--font-family-body);
+    font-size: var(--subtitle-size);
+    font-weight: 600;
+    line-height: 1.25;
+    text-align: left;
 }
 
 .card{
-    width:205px;
-    height:205px;
-    border-radius:50%;
-    position:relative;
-    overflow:hidden;
-    display:flex;
-    justify-content:center;
-    align-items:flex-end;
-    padding-bottom:19px;
-    box-sizing:border-box;
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
-    box-shadow:0 12px 30px rgba(0,0,0,.20);
-    transition:.35s;
+    width: var(--theme-image-size);
+    height: var(--theme-image-size);
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 2px solid rgba(33, 76, 53, 0.35);
+    border-radius: 50%;
+    box-shadow: 0 6px 16px rgba(33, 76, 53, 0.14);
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
 }
 
-.card:hover{
-    transform:translateY(-8px) scale(1.04);
-    box-shadow:0 20px 45px rgba(0,0,0,.28);
+.card:hover,
+.card:focus-within{
+    transform: translateY(-3px);
+    border-color: rgba(33, 76, 53, 0.65);
+    box-shadow: 0 10px 22px rgba(33, 76, 53, 0.18);
 }
 
-.secours{background-image:url("{% static 'accueil/images/pompier.png' %}");}
-.mouvement{background-image:url("{% static 'accueil/images/karate.png' %}");}
-.alimentation{background-image:url("{% static 'accueil/images/miam.png' %}");}
-.sedebrouiller{background-image:url("{% static 'accueil/images/sedebrouiller.png' %}");}
+.secours{ background-image: url("{% static 'accueil/images/pompier.png' %}"); }
+.mouvement{ background-image: url("{% static 'accueil/images/karate.png' %}"); }
+.alimentation{ background-image: url("{% static 'accueil/images/miam.png' %}"); }
+.sedebrouiller{ background-image: url("{% static 'accueil/images/sedebrouiller.png' %}"); }
 
-.button-red,.button-blue,.button-yellow,.button-green{
-    display:inline-block;
-    padding:8px 19px;
-    color:white;
-    text-decoration:none;
-    border-radius:30px;
-    font-family:var(--font-family-body);
-    font-size:14px;
-    font-weight:600;
-    transition:.3s;
-    box-shadow:0 5px 14px rgba(0,0,0,.25);
-    background:#2B6FB8;
-}
-.button-red:hover,.button-blue:hover,.button-yellow:hover,.button-green:hover{
-    background:#1f5ea0;
-    color:white;
-    transform:scale(1.08);
+.terrain-action{
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: block;
+    border-radius: 50%;
+    font-size: 0;
+    text-decoration: none;
 }
 
-@media(max-width:1150px){
-.container{padding:20px 20px 40px;justify-content:center;flex-wrap:wrap;}
+.terrain-action:focus-visible{
+    outline: 3px solid #008080;
+    outline-offset: 4px;
 }
-@media(max-width:600px){
-.container{padding-top:20px;flex-direction:column;align-items:center;gap:32px;}
-.theme{width:240px;}
-.title{width:240px;min-height:auto;font-size:16px;}
-.card{width:230px;height:230px;}
-.theme-title{font-size:22px;}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 1100px){
+    .terrain-page{
+        --map-width: 560px;
+        --map-height: 365px;
+        --theme-column-width: 320px;
+        --theme-image-size: 88px;
+        --theme-text-gap: 15px;
+    }
+
+    .terrain-layout{
+        column-gap: 28px;
+    }
+
+    .world-map-svg{
+        width: 660px;
+        height: 414px;
+    }
+}
+
+@media (max-width: 900px){
+    .terrain-layout{
+        grid-template-columns: 1fr;
+        row-gap: 24px;
+    }
+
+    .world-map{
+        width: min(100%, 650px);
+        height: 390px;
+        justify-self: center;
+    }
+
+    .terrain-themes{
+        width: min(100%, 650px);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px 26px;
+        justify-self: center;
+    }
+
+    .theme{
+        --theme-image-size: 82px;
+        min-height: 82px;
+    }
+}
+
+@media (max-width: 620px){
+    .terrain-page{
+        --page-padding-x: 16px;
+        --page-padding-top: 16px;
+    }
+
+    .world-map{
+        height: 310px;
+    }
+
+    .world-map-svg{
+        width: 590px;
+        height: 370px;
+    }
+
+    .health-global-intro{
+        top: 10px;
+        right: 12px;
+        width: 190px;
+    }
+
+    .health-global-intro h2{ font-size: 13px; }
+    .health-global-intro p{ font-size: 11px; }
+
+    .map-instruction{
+        left: 12px;
+        bottom: 10px;
+        max-width: 180px;
+        font-size: 11px;
+    }
+
+    .terrain-themes{
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .theme{
+        --theme-image-size: 78px;
+        --theme-text-gap: 14px;
+        min-height: 78px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce){
+    .card,
+    .world-map-svg svg path{
+        transition: none;
+    }
 }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="container">
-<div class="theme">
-<div class="theme-title sauver">SAUVER</div>
-<div class="title">1er arrivé, 1er à servir</div>
-<div class="card secours"><a class="button-red" href="{% url 'pompier' %}">Découvrir</a></div>
+<div class="terrain-page">
+<div class="terrain-layout">
+
+    <div class="world-map">
+        <div
+            class="world-map-svg"
+            id="world-map-svg"
+            data-svg-url="{% static 'accueil/images/world.svg' %}"
+            aria-label="Carte interactive du monde">
+        </div>
+
+        <div class="health-global-intro">
+            <h2>Comment se porte chaque pays ?</h2>
+            <p>Une évaluation fondée sur sa santé globale.</p>
+        </div>
+
+        <p class="map-instruction">
+            Cliquez sur les différents pays de la carte.
+        </p>
+    </div>
+
+    <div class="terrain-themes">
+
+        <div class="theme theme-sauver">
+            <div class="card secours">
+                <a class="terrain-action" href="{% url 'pompier' %}">
+                    Explorer
+                </a>
+            </div>
+
+            <div class="theme-copy">
+                <div class="theme-title sauver">SAUVER</div>
+                <div class="title">1er arrivé, 1er à servir</div>
+            </div>
+        </div>
+
+        <div class="theme theme-bouger">
+            <div class="card mouvement">
+                <a class="terrain-action" href="{% url 'karate' %}">
+                    Explorer
+                </a>
+            </div>
+
+            <div class="theme-copy">
+                <div class="theme-title bouger">BOUGER</div>
+                <div class="title">Everybody Was Kung Fu Fighting</div>
+            </div>
+        </div>
+
+        <div class="theme theme-manger">
+            <div class="card alimentation">
+                <a class="terrain-action" href="{% url 'miam' %}">
+                    Explorer
+                </a>
+            </div>
+
+            <div class="theme-copy">
+                <div class="theme-title manger">MANGER</div>
+                <div class="title">J'ai faim !</div>
+            </div>
+        </div>
+
+        <div class="theme theme-sedebrouiller">
+            <div class="card sedebrouiller">
+                <a class="terrain-action" href="{% url 'sedebrouiller' %}">
+                    Explorer
+                </a>
+            </div>
+
+            <div class="theme-copy">
+                <div class="theme-title sedebrouiller-title">
+                    SE DÉBROUILLER
+                </div>
+
+                <div class="title">
+                    Une approche globale c'est ne pas se cantonner aux sujets
+                    strictement « santé ».
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 </div>
-<div class="theme">
-<div class="theme-title bouger">BOUGER</div>
-<div class="title">Everybody Was Kung Fu Fighting</div>
-<div class="card mouvement"><a class="button-blue" href="{% url 'karate' %}">Découvrir</a></div>
 </div>
-<div class="theme">
-<div class="theme-title manger">MANGER</div>
-<div class="title">J'ai faim !</div>
-<div class="card alimentation"><a class="button-yellow" href="{% url 'miam' %}">Découvrir</a></div>
-</div>
-<div class="theme">
-<div class="theme-title sedebrouiller-title">SE DÉBROUILLER</div>
-<div class="title">Une approche globale c'est ne pas se cantonner aux sujets strictement "santé".</div>
-<div class="card sedebrouiller"><a class="button-green" href="{% url 'sedebrouiller' %}">Découvrir</a></div>
-</div>
-</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+
+    const mapContainer = document.getElementById("world-map-svg");
+
+    if(!mapContainer){
+        return;
+    }
+
+    const svgUrl = mapContainer.dataset.svgUrl;
+
+    /*
+    Django crée ici une URL temporaire.
+
+    Exemple :
+    /pays/pays-placeholder/
+
+    Le texte « pays-placeholder » sera ensuite remplacé en JavaScript
+    par le nom du pays sélectionné.
+    */
+    const countryUrlTemplate =
+        "{% url 'pays' pays='pays-placeholder' %}";
+
+    /*
+    Transforme le nom anglais du pays en slug compatible avec l'URL.
+
+    Exemples :
+    France                  -> france
+    United Kingdom          -> united-kingdom
+    São Tomé and Principe   -> sao-tome-and-principe
+    Canary Islands (Spain)  -> canary-islands-spain
+    */
+    function createCountrySlug(countryName){
+
+        return countryName
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase()
+            .replace(/&/g, " and ")
+            .replace(/['’]/g, "")
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-+|-+$/g, "");
+    }
+
+    fetch(svgUrl)
+        .then(function(response){
+
+            if(!response.ok){
+                throw new Error("Impossible de charger la carte SVG.");
+            }
+
+            return response.text();
+        })
+        .then(function(svgContent){
+
+            mapContainer.innerHTML = svgContent;
+
+            const svg = mapContainer.querySelector("svg");
+
+            if(!svg){
+                return;
+            }
+
+            /*
+            Le fichier SimpleMaps utilise parfois « viewbox » en minuscules.
+            On le remplace par le véritable attribut SVG « viewBox ».
+            */
+            const incorrectViewBox = svg.getAttribute("viewbox");
+
+            if(!svg.getAttribute("viewBox") && incorrectViewBox){
+                svg.setAttribute("viewBox", incorrectViewBox);
+            }
+
+            if(!svg.getAttribute("viewBox")){
+                svg.setAttribute("viewBox", "0 0 2000 857");
+            }
+
+            svg.removeAttribute("width");
+            svg.removeAttribute("height");
+
+            svg.setAttribute("width", "100%");
+            svg.setAttribute("height", "100%");
+            svg.setAttribute(
+                "preserveAspectRatio",
+                "xMidYMid meet"
+            );
+            svg.setAttribute("role", "img");
+            svg.setAttribute(
+                "aria-label",
+                "Carte interactive du monde"
+            );
+
+            const countries = svg.querySelectorAll("path");
+
+            countries.forEach(function(country){
+
+                /*
+                Certains pays de ton world.svg utilisent une classe :
+                class="France"
+
+                D'autres utilisent :
+                name="Afghanistan"
+                id="AF"
+
+                On cherche donc d'abord la classe, ensuite le nom,
+                puis l'identifiant.
+                */
+                const countryName =
+                    country.getAttribute("class") ||
+                    country.getAttribute("name") ||
+                    country.getAttribute("id");
+
+                if(!countryName){
+                    return;
+                }
+
+                const countrySlug =
+                    createCountrySlug(countryName);
+
+                if(!countrySlug){
+                    return;
+                }
+
+                /*
+                Ajoute le nom du pays au survol de la souris.
+                Le navigateur affiche une petite infobulle native.
+                */
+                const title = document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "title"
+                );
+
+                title.textContent = countryName;
+                country.appendChild(title);
+
+                country.setAttribute(
+                    "aria-label",
+                    countryName
+                );
+
+                country.setAttribute(
+                    "tabindex",
+                    "0"
+                );
+
+                country.setAttribute(
+                    "role",
+                    "link"
+                );
+
+                /*
+                Construit l'adresse finale.
+
+                Exemple :
+                /pays/pays-placeholder/
+                devient :
+                /pays/france/
+                */
+                const countryUrl =
+                    countryUrlTemplate.replace(
+                        "pays-placeholder",
+                        countrySlug
+                    );
+
+                /*
+                Redirection lors d'un clic.
+                */
+                country.addEventListener(
+                    "click",
+                    function(){
+
+                        window.location.href = countryUrl;
+                    }
+                );
+
+                /*
+                Permet aussi d'ouvrir le pays au clavier
+                avec Entrée ou Espace.
+                */
+                country.addEventListener(
+                    "keydown",
+                    function(event){
+
+                        if(
+                            event.key === "Enter" ||
+                            event.key === " "
+                        ){
+                            event.preventDefault();
+                            window.location.href = countryUrl;
+                        }
+                    }
+                );
+
+            });
+
+        })
+        .catch(function(error){
+            console.error(error);
+        });
+
+});
+</script>
 {% endblock %}

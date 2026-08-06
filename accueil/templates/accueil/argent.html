@@ -320,6 +320,223 @@
             }
 
         }
+
+/* =========================================================
+   STYLE 2026 — PRÉSENTATION UNIQUEMENT
+   Tous les textes, liens et contenus restent inchangés.
+========================================================= */
+
+.spt-shell-content{
+    background:#fff;
+}
+
+.page-container{
+    width:min(1080px,calc(100% - 28px));
+    margin:10px auto 56px;
+    color:var(--spt-texte);
+    font-family:var(--font-family-body);
+    font-size:1rem;
+    line-height:1.68;
+}
+
+/* Introduction intégrée, sans faux encadré ni faux header */
+.main-card{
+    padding:8px 0 24px;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    box-shadow:none;
+    overflow:visible;
+}
+
+.main-card::before{
+    display:none;
+}
+
+.main-content{
+    position:relative;
+    z-index:auto;
+}
+
+.page-title{
+    display:none;
+}
+
+.intro-row{
+    grid-template-columns:minmax(190px,260px) minmax(0,1fr);
+    gap:clamp(24px,4vw,42px);
+    align-items:center;
+}
+
+.illustration{
+    width:100%;
+    height:auto;
+    aspect-ratio:1 / 1;
+    border:1px solid rgba(33,76,53,.16);
+    border-radius:12px;
+    box-shadow:none;
+    transition:none;
+}
+
+.illustration:hover{
+    transform:none;
+    box-shadow:none;
+}
+
+.intro-text{
+    color:var(--spt-texte);
+    font-family:inherit;
+    font-size:clamp(1rem,1.15vw,1.08rem);
+    line-height:1.7;
+}
+
+.intro-text p+p{
+    margin-top:12px;
+}
+
+.intro-opening{
+    color:var(--spt-vert-fonce);
+    font-family:var(--font-family-title);
+    font-size:clamp(1.2rem,1.7vw,1.45rem);
+    font-weight:700;
+    line-height:1.35;
+}
+
+/* Lien d'action sobre, pas de gros bouton */
+.test-area{
+    margin-top:20px;
+    text-align:left;
+}
+
+.test-button{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    min-height:0;
+    padding:0;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    color:var(--spt-vert-fonce);
+    font-size:1rem;
+    font-weight:700;
+    box-shadow:none;
+    text-decoration:underline;
+    text-decoration-thickness:2px;
+    text-underline-offset:4px;
+    transition:color .2s ease;
+}
+
+.test-button::before{
+    content:"→";
+    text-decoration:none;
+}
+
+.test-button:hover,
+.test-button:focus-visible{
+    transform:none;
+    background:transparent;
+    color:var(--spt-vert);
+    box-shadow:none;
+}
+
+.test-icon{
+    display:none;
+}
+
+/* Deuxième partie en section éditoriale */
+.secondary-card{
+    margin-top:0;
+    padding:24px 0;
+    border:0;
+    border-top:1px solid rgba(33,76,53,.16);
+    border-radius:0;
+    background:transparent;
+    box-shadow:none;
+}
+
+.secondary-title{
+    margin:0;
+    color:var(--spt-vert-fonce);
+    font-family:var(--font-family-title);
+    font-size:clamp(1.2rem,1.7vw,1.45rem);
+    font-weight:700;
+    line-height:1.3;
+    text-align:left;
+    text-wrap:balance;
+}
+
+.secondary-text{
+    max-width:900px;
+    margin:10px 0 0;
+    color:var(--spt-texte);
+    font-family:inherit;
+    font-size:clamp(1rem,1.15vw,1.08rem);
+    line-height:1.7;
+}
+
+.secondary-text p+p{
+    margin-top:12px;
+}
+
+/* Retour discret */
+.return-area{
+    margin-top:18px;
+    text-align:left;
+}
+
+.return-button{
+    display:inline;
+    padding:0;
+    border:0;
+    border-radius:0;
+    background:transparent;
+    color:var(--spt-vert-fonce);
+    font-weight:600;
+    box-shadow:none;
+    text-decoration:underline;
+    text-decoration-thickness:2px;
+    text-underline-offset:4px;
+}
+
+.return-button:hover,
+.return-button:focus-visible{
+    transform:none;
+    background:transparent;
+    color:var(--spt-vert);
+    box-shadow:none;
+}
+
+@media(max-width:760px){
+    .page-container{
+        width:calc(100% - 20px);
+        margin-top:8px;
+        margin-bottom:44px;
+    }
+
+    .main-card{
+        padding-bottom:20px;
+    }
+
+    .intro-row{
+        grid-template-columns:1fr;
+        gap:20px;
+    }
+
+    .illustration{
+        width:min(240px,100%);
+        margin:0 auto;
+    }
+
+    .intro-opening{
+        text-align:left;
+    }
+
+    .secondary-card{
+        padding:20px 0;
+    }
+}
+
 </style>{% endblock %}
 
 {% block content %}

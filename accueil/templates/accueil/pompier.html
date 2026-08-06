@@ -1241,6 +1241,522 @@ img{
 .jeux-fin-images img:hover{
     transform:scale(1.06);
 }
+
+/* ==========================================================================
+   RÉGLAGES SIMPLES — PAGE SAUVER
+   Modifier ici les principaux réglages visuels sans toucher au contenu.
+   ========================================================================== */
+.page-shell{
+    --sauver-page-width: 1400px;
+    --sauver-card-radius: 24px;
+    --sauver-small-radius: 16px;
+    --sauver-section-gap: 30px;
+    --sauver-shadow: 0 6px 18px rgba(33,76,53,.09);
+    --sauver-shadow-strong: 0 10px 26px rgba(33,76,53,.13);
+    --sauver-small-bg: rgba(239,227,195,.58);
+    --sauver-border: rgba(33,76,53,.14);
+}
+
+/* Fond général blanc sous le bandeau commun. */
+body{
+    background:#ffffff;
+}
+
+/* Structure générale plus légère. */
+.page-shell{
+    width:min(var(--sauver-page-width),94%);
+    margin:0 auto 56px;
+}
+
+.section,
+.vital-section,
+.special-section{
+    margin-top:var(--sauver-section-gap);
+}
+
+/* Grandes cartes : fond blanc, contour discret, ombre légère. */
+.hero,
+.hero-card,
+.content-card,
+.vital-panel,
+.special-card,
+.lesson-card,
+.case-card,
+.checklist-card,
+.mini-situation{
+    border-color:var(--sauver-border);
+    background:#ffffff;
+    box-shadow:var(--sauver-shadow);
+}
+
+.hero,
+.vital-panel{
+    border-radius:var(--sauver-card-radius);
+}
+
+.hero-card,
+.content-card,
+.special-card,
+.lesson-card,
+.case-card,
+.checklist-card,
+.mini-situation{
+    border-radius:var(--sauver-card-radius);
+}
+
+/* Petits encarts inspirés du rendu de home/base :
+   beige doux, accent turquoise/vert, sans surcharge. */
+.eyebrow,
+.notice,
+.safety-first,
+.action-box,
+.pulse-note,
+.signs,
+.do-not,
+.action-list li,
+.memory-step,
+.case-card .case-question,
+.case-card .case-answer,
+.professional-note{
+    border-color:var(--sauver-border);
+    background:var(--sauver-small-bg);
+    box-shadow:none;
+}
+
+.eyebrow{
+    color:#008080;
+    border:1px solid rgba(0,128,128,.18);
+}
+
+.notice,
+.safety-first,
+.do-not,
+.professional-note{
+    border-left-color:#008080;
+}
+
+.action-box.good,
+.action-box.alert{
+    background:var(--sauver-small-bg);
+}
+
+.action-box strong,
+.action-box.good strong,
+.action-box.alert strong,
+.signs strong,
+.pulse-note strong{
+    color:#214C35;
+}
+
+.action-list li{
+    border:1px solid rgba(33,76,53,.10);
+}
+
+.memory-step{
+    background:linear-gradient(145deg,#ffffff,rgba(239,227,195,.68));
+    box-shadow:var(--sauver-shadow);
+}
+
+/* Cartes de la chaîne vitale légèrement allégées. */
+.vital-step{
+    border-color:var(--sauver-border);
+    border-radius:var(--sauver-card-radius);
+    box-shadow:var(--sauver-shadow);
+}
+
+.special-card,
+.lesson-card,
+.case-card,
+.checklist-card{
+    box-shadow:var(--sauver-shadow);
+}
+
+/* Jeux : même contenu, mais présentation plus compacte. */
+.jeux-fin{
+    margin:12px auto 20px;
+}
+
+.jeux-fin h2{
+    margin-bottom:18px;
+    font-size:1.8rem;
+}
+
+.jeux-fin-images{
+    gap:45px;
+}
+
+.jeux-fin-images a{
+    display:block;
+    min-width:0;
+    flex:1 1 0;
+}
+
+.jeux-fin-images img{
+    width:100%;
+    max-width:260px;
+    margin:0 auto;
+    border:3px solid #214C35;
+    border-radius:14px;
+    box-shadow:var(--sauver-shadow);
+    transition:transform .2s ease, box-shadow .2s ease;
+}
+
+.jeux-fin-images img:hover{
+    transform:translateY(-3px);
+    box-shadow:var(--sauver-shadow-strong);
+}
+
+/* Responsive : les jeux restent propres sans débordement. */
+@media(max-width:900px){
+    .jeux-fin-images{
+        display:grid;
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:14px;
+    }
+
+    .jeux-fin-images img{
+        max-width:100%;
+    }
+}
+
+@media(max-width:580px){
+    .page-shell{
+        width:calc(100% - 20px);
+    }
+
+    .jeux-fin{
+        margin:8px auto 16px;
+    }
+
+    .jeux-fin h2{
+        margin-bottom:14px;
+        font-size:1.45rem;
+    }
+
+    .jeux-fin-images{
+        grid-template-columns:1fr;
+        gap:12px;
+    }
+
+    .jeux-fin-images img{
+        width:min(100%,320px);
+    }
+}
+
+
+/* ==========================================================================
+   RÉGLAGES INDIVIDUELS — IMAGES DES JEUX
+   Chaque image peut être grossie et déplacée sans modifier son cadre.
+
+   --image-zoom : 1 = taille normale, 1.05 = +5 %, 1.10 = +10 %
+   --image-x    : déplacement horizontal (positif = droite, négatif = gauche)
+   --image-y    : déplacement vertical (positif = bas, négatif = haut)
+   ========================================================================== */
+
+/* JEU 1 — Sauve qui peut */
+.jeu-1{
+    --image-zoom:1.1;
+    --image-x:0px;
+    --image-y:0px;
+}
+
+/* JEU 2 — TetriSecours */
+.jeu-2{
+    --image-zoom:1.05;
+    --image-x:0px;
+    --image-y:0px;
+}
+
+/* JEU 3 — Secour'Invaders */
+.jeu-3{
+    --image-zoom:1.05;
+    --image-x:0px;
+    --image-y:0px;
+}
+
+/* JEU 4 — Sauver ou périr */
+.jeu-4{
+    --image-zoom:1.1;
+    --image-x:0px;
+    --image-y:0px;
+}
+
+/* Le cadre reste fixe et masque uniquement ce qui dépasse. */
+.jeux-fin-images .jeu-cadre{
+    display:block;
+    min-width:0;
+    max-width:200px;
+    margin:0 auto;
+    overflow:hidden;
+    flex:0 0 200px;
+    border:3px solid #214C35;
+    border-radius:14px;
+    background:#ffffff;
+    box-shadow:var(--sauver-shadow);
+    transition:transform .2s ease, box-shadow .2s ease;
+}
+
+/* L'image se règle indépendamment à l'intérieur de son cadre. */
+.jeux-fin-images .jeu-cadre img{
+    display:block;
+    width:100%;
+    max-width:none;
+    height:auto;
+    margin:0;
+    border:0;
+    border-radius:10px;
+    box-shadow:none;
+    transform:
+        translate(var(--image-x), var(--image-y))
+        scale(var(--image-zoom));
+    transform-origin:center;
+    transition:transform .2s ease;
+}
+
+/* Le survol déplace le cadre, sans écraser les réglages de l'image. */
+.jeux-fin-images .jeu-cadre:hover{
+    transform:translateY(-3px);
+    box-shadow:var(--sauver-shadow-strong);
+}
+
+.jeux-fin-images .jeu-cadre:hover img{
+    transform:
+        translate(var(--image-x), var(--image-y))
+        scale(var(--image-zoom));
+}
+
+/* La première rangée commence directement sous le bandeau de base.html. */
+.page-shell{
+    margin-top:0;
+    padding-top:0;
+}
+
+.page-shell > .jeux-fin:first-child{
+    margin-top:0;
+    padding-top:0;
+}
+
+/* Adaptation des cadres sur tablette et téléphone. */
+@media(max-width:900px){
+    .jeux-fin-images .jeu-cadre{
+        width:100%;
+        max-width:100%;
+    }
+}
+
+@media(max-width:580px){
+    .jeux-fin-images .jeu-cadre{
+        width:min(100%,320px);
+    }
+}
+
+
+/* =========================================================
+   HARMONISATION AVEC LE RESTE DU SITE
+   Présentation uniquement : aucun texte, lien, jeu ou image modifié.
+========================================================= */
+
+.spt-shell-content{
+    background:#fff;
+}
+
+.page-shell{
+    width:min(1080px,calc(100% - 32px));
+    margin:0 auto 70px;
+    color:var(--spt-texte);
+    font-family:var(--font-family-body);
+    font-size:1rem;
+    line-height:1.75;
+}
+
+.section{
+    margin-top:18px;
+}
+
+.hero,
+.content-card,
+.vital-panel,
+.special-section,
+.other-situations,
+.lesson-card,
+.case-card,
+.checklist-card,
+.professional-note,
+.game-card,
+.jeux-fin{
+    border-color:var(--spt-vert);
+    box-shadow:0 8px 24px rgba(33,76,53,.12);
+}
+
+.hero{
+    border-width:2px;
+    border-radius:20px;
+    background:linear-gradient(
+        135deg,
+        rgba(255,255,255,.98),
+        rgba(239,227,195,.78)
+    );
+}
+
+.hero-inner{
+    gap:30px;
+    padding:clamp(28px,4vw,42px);
+}
+
+.eyebrow{
+    border-color:rgba(55,107,77,.24);
+    color:var(--spt-vert-fonce);
+}
+
+.hero-title,
+.content-card h2,
+.section-title,
+.game-card h2,
+.jeux-fin h2{
+    color:var(--spt-vert-fonce);
+    font-family:var(--font-family-title);
+    text-wrap:balance;
+}
+
+.hero-title{
+    font-size:clamp(1.7rem,3vw,2.15rem);
+    line-height:1.2;
+}
+
+.hero-description,
+.content-card p,
+.section-lead,
+.lesson-card p,
+.case-card,
+.checklist-card,
+.professional-note,
+.game-intro{
+    font-family:inherit;
+    font-size:clamp(1rem,1.25vw,1.12rem);
+    line-height:1.75;
+}
+
+.content-card,
+.vital-panel,
+.special-section,
+.other-situations,
+.professional-note,
+.game-card,
+.jeux-fin{
+    border-width:2px;
+    border-radius:20px;
+}
+
+.content-card,
+.vital-panel,
+.professional-note,
+.jeux-fin{
+    background:var(--spt-fond);
+}
+
+.public-card,
+.pro-card,
+.smur-card,
+.special-card,
+.mini-situation,
+.lesson-card,
+.case-card,
+.checklist-card,
+.hud-box,
+.question-box{
+    border-color:rgba(33,76,53,.20);
+    border-radius:16px;
+    background:#fff;
+    box-shadow:0 6px 18px rgba(33,76,53,.08);
+}
+
+.section-title,
+.content-card h2,
+.game-card h2,
+.jeux-fin h2{
+    font-size:clamp(1.25rem,1.8vw,1.5rem);
+    line-height:1.3;
+}
+
+.vital-step,
+.memory-step{
+    border-color:rgba(33,76,53,.20);
+}
+
+.step-number,
+.action-icon{
+    background:var(--spt-vert-fonce);
+}
+
+.game-button,
+.control-button.start{
+    background:var(--spt-vert-fonce);
+}
+
+.game-card{
+    background:#fff;
+}
+
+/* Les images de jeux et leurs réglages individuels restent inchangés. */
+
+@media(max-width:900px){
+    .page-shell{
+        width:calc(100% - 28px);
+    }
+
+    .intro-grid,
+    .special-grid,
+    .lesson-grid,
+    .case-grid,
+    .checklist-grid{
+        gap:16px;
+    }
+}
+
+@media(max-width:580px){
+    .page-shell{
+        width:calc(100% - 24px);
+        margin-bottom:50px;
+    }
+
+    .hero,
+    .content-card,
+    .vital-panel,
+    .special-section,
+    .other-situations,
+    .professional-note,
+    .game-card,
+    .jeux-fin{
+        border-radius:18px;
+    }
+
+    .hero-inner{
+        padding:24px 18px;
+    }
+
+    .content-card,
+    .vital-panel,
+    .special-section,
+    .other-situations,
+    .professional-note,
+    .game-card,
+    .jeux-fin{
+        padding-left:18px;
+        padding-right:18px;
+    }
+}
+
+
+/* Fond vert uniquement derrière les zones de jeux du haut et du bas. */
+.page-shell > .jeux-fin {
+    background: var(--spt-vert) !important;
+}
+
+/* Titre du bloc de jeux inférieur en blanc. */
+.page-shell > .jeux-fin h2 {
+    color: #fff !important;
+}
+
 </style>
 {% endblock %}
 
@@ -1253,19 +1769,19 @@ img{
 
         <div class="jeux-fin-images">
 
-            <a href="{% url 'jeu' %}">
+            <a class="jeu-cadre jeu-1" href="{% url 'jeu' %}">
                 <img src="{% static 'accueil/images/prserpent.png' %}" alt="Sauve qui peut">
             </a>
 
-            <a href="{% url 'tetris' %}">
+            <a class="jeu-cadre jeu-2" href="{% url 'tetris' %}">
                 <img src="{% static 'accueil/images/prtetris.png' %}" alt="TetriSecours">
             </a>
 
-            <a href="{% url 'space' %}">
+            <a class="jeu-cadre jeu-3" href="{% url 'space' %}">
                 <img src="{% static 'accueil/images/prspace.png' %}" alt="Secour'Invaders">
             </a>
 
-            <a href="{% url 'combat' %}">
+            <a class="jeu-cadre jeu-4" href="{% url 'combat' %}">
                 <img src="{% static 'accueil/images/prcombat.png' %}" alt="Sauver ou périr">
             </a>
 
@@ -1483,19 +1999,19 @@ img{
 
     <div class="jeux-fin-images">
 
-        <a href="{% url 'jeu' %}">
+        <a class="jeu-cadre jeu-1" href="{% url 'jeu' %}">
             <img src="{% static 'accueil/images/prserpent.png' %}" alt="Sauve qui peut">
         </a>
 
-        <a href="{% url 'tetris' %}">
+        <a class="jeu-cadre jeu-2" href="{% url 'tetris' %}">
             <img src="{% static 'accueil/images/prtetris.png' %}" alt="TetriSecours">
         </a>
 
-        <a href="{% url 'space' %}">
+        <a class="jeu-cadre jeu-3" href="{% url 'space' %}">
             <img src="{% static 'accueil/images/prspace.png' %}" alt="Secour'Invaders">
         </a>
 
-        <a href="{% url 'combat' %}">
+        <a class="jeu-cadre jeu-4" href="{% url 'combat' %}">
             <img src="{% static 'accueil/images/prcombat.png' %}" alt="Sauver ou périr">
         </a>
 

@@ -1,0 +1,1079 @@
+{% extends "accueil/base.html" %}
+{% load static %}
+
+{% block title %}Capacité préservation{% endblock %}
+{% block page_title %}Capacité du pays à préserver la santé{% endblock %}
+{% block logo_return %}{% url 'terrain' %}{% endblock %}
+
+{% block extra_css %}
+<style>
+/* ========================================================================== 
+   FICHE PAYS MODULAIRE
+   Chaque carte est indépendante et peut être déplacée ou redimensionnée
+   en modifiant uniquement sa classe dans les grilles ci-dessous.
+   ========================================================================== */
+
+:root{
+    --fiche-largeur:1500px;
+    --fiche-gap:18px;
+    --fiche-rayon:20px;
+    --fiche-padding:18px;
+    --fiche-bordure:var(--spt-bordure);
+    --fiche-fond:var(--spt-blanc);
+    --fiche-ombre:0 8px 22px rgba(33,76,53,.10);
+    --fiche-vert:var(--spt-vert);
+    --fiche-vert-fonce:var(--spt-vert-fonce);
+    --fiche-turquoise:var(--spt-vert-actif);
+    --fiche-beige:var(--spt-fond);
+    --fiche-texte:var(--spt-texte);
+    --fiche-texte-secondaire:rgba(47,56,47,.72);
+}
+
+.country-page{
+    width:min(var(--fiche-largeur),calc(100% - 28px));
+    margin:6px auto 40px;
+    font-family:var(--font-family-body);
+}
+
+body{
+    background:#ffffff;
+}
+
+/* Sections principales facilement déplaçables. */
+.country-section{
+    margin-bottom:22px;
+}
+
+.country-section-title{
+    margin:0 0 10px;
+    color:var(--fiche-vert-fonce);
+    font-family:var(--font-family-title);
+    font-size:clamp(18px,1.5vw,24px);
+    line-height:1.1;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+}
+
+/* Grilles indépendantes par ligne. */
+.presentation-grid{
+    display:grid;
+    grid-template-columns:minmax(240px,.9fr) minmax(420px,1.7fr) minmax(240px,.9fr);
+    gap:var(--fiche-gap);
+    align-items:stretch;
+}
+
+.presentation-stack{
+    display:grid;
+    grid-template-rows:auto auto;
+    gap:var(--fiche-gap);
+    min-width:0;
+    align-content:start;
+}
+
+.methodology-stack{
+    display:grid;
+    grid-template-rows:auto auto;
+    gap:var(--fiche-gap);
+    min-width:0;
+    align-content:start;
+}
+
+.constat-grid{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:var(--fiche-gap);
+    align-items:stretch;
+}
+
+
+/* Carte générique : chaque bloc est autonome. */
+.country-card{
+    position:relative;
+    min-width:0;
+    padding:var(--fiche-padding);
+    border:1px solid var(--fiche-bordure);
+    border-radius:var(--fiche-rayon);
+    background:rgba(255,255,255,.55);
+    box-shadow:var(--fiche-ombre);
+    overflow:hidden;
+}
+
+.country-card h1,
+.country-card h2,
+.country-card h3{
+    max-width:100%;
+    color:var(--fiche-vert-fonce);
+    font-family:var(--font-family-title);
+}
+
+.country-card h1{margin:0;font-size:clamp(30px,3vw,48px);line-height:1}
+.country-card h2{margin:0 0 12px;font-size:clamp(16px,1.25vw,21px);line-height:1.15}
+.country-card h3{margin:0;font-size:14px;line-height:1.2}
+.country-card p{margin:6px 0;color:var(--fiche-texte-secondaire);font-size:13px;line-height:1.45}
+
+/* --------------------------------------------------------------------------
+   1. PRÉSENTATION
+   -------------------------------------------------------------------------- */
+.country-identity{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    background:linear-gradient(135deg,var(--spt-blanc),rgba(239,227,195,.28));
+}
+
+
+.country-title-row{display:flex;align-items:center;gap:12px}
+.country-flag{
+    width:42px;
+    height:28px;
+    object-fit:cover;
+    border-radius:4px;
+    box-shadow:0 0 0 1px rgba(0,0,0,.08);
+}
+.capital{margin-top:12px!important;font-size:14px!important}
+
+.index-card{
+    display:grid;
+    grid-template-columns:110px minmax(0,1fr);
+    gap:16px;
+    align-items:center;
+    background:#008080;
+    color:#fff;
+}
+.index-card h2,.index-card h3{color:#fff}
+.index-card p{color:#c9ddd5}
+.index-score{
+    position:relative;
+    display:grid;
+    place-items:center;
+    width:100px;
+    height:100px;
+    overflow:visible;
+    border-radius:50%;
+    background:conic-gradient(#b7d6ee 0 70%,rgba(255,255,255,.18) 70%);
+}
+.index-score::before{
+    content:"";
+    grid-area:1/1;
+    width:76px;
+    height:76px;
+    border-radius:50%;
+    background: #008080;
+}
+.index-value{
+    grid-area:1/1;
+    z-index:1;
+    font-size:26px;
+    font-weight:900;
+    line-height:1;
+}
+.index-scale{
+    position:absolute;
+    left:calc(100% + 5px);
+    top:50%;
+    transform:translateY(-50%);
+    z-index:2;
+    font-size:12px;
+    font-weight:700;
+    line-height:1;
+    white-space:nowrap;
+}
+.index-responsibility{padding-left:12px;border-left:4px solid #b7d6ee}
+
+.actions-card{padding:12px 14px}
+.actions-card > h2{margin-bottom:7px}
+.actions-card .action-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.action-card{padding:7px 8px;border:1px solid var(--fiche-bordure);border-radius:14px;background:#fff}
+.action-card h3{display:flex;gap:7px;align-items:flex-start;margin:0 0 3px;line-height:1.12}
+.action-card p{margin:2px 0 3px;font-size:12px;line-height:1.2}
+.action-list{margin:3px 0 0;padding-left:18px;color:var(--fiche-texte-secondaire);font-size:12px;line-height:1.18}
+.action-list li{margin:0;padding:0}
+.action-card.human{border-top:5px solid #4f7f68}
+.action-card.animal{border-top:5px solid var(--fiche-turquoise)}
+.action-card.ecosystem{border-top:5px solid var(--fiche-vert)}
+
+/* --------------------------------------------------------------------------
+   2. CONSTAT
+   -------------------------------------------------------------------------- */
+.determinant-list{display:grid;gap:8px;margin-top:10px}
+.determinant-line{display:grid;grid-template-columns:1fr 38px;gap:5px;align-items:center}
+.determinant-line label{font-size:11px;font-weight:800}
+.determinant-line span{text-align:right;color:#aab6b0;font-size:11px;font-weight:900}
+.determinant-line--label-only{grid-template-columns:1fr;margin-top:8px;padding-top:8px;border-top:1px solid var(--fiche-bordure)}
+.determinant-line--label-only label{font-size:11px;font-weight:800}
+.determinant-track{grid-column:1/-1;height:5px;border-radius:99px;background:#edf1ef;overflow:hidden}
+.determinant-track i{display:block;width:62%;height:100%;background:linear-gradient(90deg,var(--fiche-beige),var(--fiche-turquoise))}
+.index-result{margin-top:10px;padding:9px;border-radius:12px;background:var(--fiche-vert-fonce);color:#fff;text-align:center;font-size:10px}
+.index-result strong{display:block;margin-top:2px;font-size:17px}
+.determinants-card{
+    align-self:stretch;
+    padding-bottom:11px;
+}
+.sentinels-card{align-self:start;}
+
+.chronic-card{
+    padding:12px 14px;
+}
+
+.chronic-card h2{
+    margin-bottom:6px;
+}
+
+.resume-table{
+    width:100%;
+    border-collapse:collapse;
+    table-layout:fixed;
+    color:var(--fiche-texte-secondaire);
+    font-size:11px;
+    line-height:1.05;
+}
+
+.resume-table td{
+    padding:2px 4px;
+    border:1px solid rgba(47,56,47,.18);
+    vertical-align:middle;
+}
+
+.resume-table tr:first-child td{
+    border-top:1px solid rgba(47,56,47,.18);
+}
+
+.resume-table{
+    border:1px solid rgba(47,56,47,.18);
+}
+
+.resume-table td:first-child{
+    width:64%;
+    padding-right:6px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    font-weight:700;
+}
+
+.resume-table td:last-child{
+    width:36%;
+    text-align:right;
+    white-space:nowrap;
+}
+
+.resume-table em{
+    font-weight:400;
+}
+
+
+
+
+.timeline-chart-card{padding:7px;border:1px solid var(--fiche-bordure);border-radius:14px;background:#fff}
+.timeline-chart{
+    position:relative;
+    height:230px;
+    overflow:hidden;
+    border-radius:12px;
+    background:linear-gradient(#dceef9,#b7d6ee);
+}
+.timeline-chart svg{
+    position:absolute;
+    inset:8px 8px 52px;
+    width:calc(100% - 16px);
+    height:calc(100% - 60px);
+}
+.timeline-grid-line{
+    stroke:rgba(47,56,47,.18);
+    stroke-width:1;
+}
+.timeline-axis-line{
+    stroke:rgba(47,56,47,.65);
+    stroke-width:1.5;
+}
+.timeline-axis-label{
+    fill:var(--fiche-texte);
+    font-size:12px;
+    font-weight:800;
+}
+.timeline-point-label{
+    fill:var(--fiche-texte);
+    font-size:11px;
+    font-weight:900;
+}
+.timeline-line{
+    fill:none;
+    stroke-width:4;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.timeline-point{
+    stroke:#fff;
+    stroke-width:2;
+}
+.timeline-legend{
+    position:absolute;
+    left:8px;
+    right:8px;
+    bottom:7px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:4px 10px;
+    padding:4px 8px;
+    border:1px solid var(--fiche-bordure);
+    border-radius:9px;
+    background:rgba(255,255,255,.94);
+    font-size:10px;
+    font-weight:700;
+}
+.timeline-legend span{display:flex;align-items:center;gap:5px}
+.timeline-legend i{display:block;width:18px;height:4px;border-radius:99px;flex:none}
+
+.chronic-diagram-layout{display:grid;grid-template-columns:90px minmax(0,1fr);gap:9px;align-items:center}
+.chronic-pie{position:relative;width:88px;aspect-ratio:1;border-radius:50%;background:conic-gradient(#29a6a1 0 22%,#367fa3 22% 39%,#245c4a 39% 57%,#d9bd76 57% 70%,#94a59e 70% 82%,#c8d4cf 82%)}
+.chronic-pie::after{content:"Maladies\A chroniques";white-space:pre;position:absolute;inset:28%;display:grid;place-items:center;border-radius:50%;background:#fff;color:var(--fiche-vert-fonce);text-align:center;font-size:8px;font-weight:900}
+.chronic-legend{display:grid;gap:4px}
+.chronic-legend-item{display:grid;grid-template-columns:8px 1fr;gap:5px;padding:5px;border:1px solid var(--fiche-bordure);border-radius:8px;background:#fff}
+.chronic-legend-item i{width:8px;height:8px;margin-top:2px;border-radius:50%}
+.chronic-legend-item h3{font-size:9px}
+.chronic-legend-item p{margin:2px 0;font-size:7px;line-height:1.2}
+
+.ecosystem-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.ecosystem-card{display:grid;grid-template-columns:24px 1fr;gap:5px;padding:10px 14px;border:1px solid var(--fiche-bordure);border-radius:10px;background:#fff}
+.ecosystem-emoji{font-size:18px}
+.ecosystem-card h3{font-size:9px}
+.ecosystem-card p{font-size:7px;line-height:1.2}
+.emerging-heading{margin-top:12px!important}
+.emerging-grid{display:grid;gap:5px}
+.emerging-card{padding:10px 14px;border:1px solid var(--fiche-bordure);border-left:4px solid var(--fiche-turquoise);border-radius:9px;background:#fff}
+.emerging-card h3{font-size:9px}
+.emerging-card p{font-size:7px;line-height:1.2}
+
+/* --------------------------------------------------------------------------
+   ESPÈCES SENTINELLES
+   -------------------------------------------------------------------------- */
+.sentinel-carousel{
+    position:relative;
+}
+.sentinel-viewport{
+    overflow:hidden;
+}
+.sentinel-track{
+    display:flex;
+    transition:transform .28s ease;
+}
+.sentinel-card{
+    flex:0 0 100%;
+    min-width:100%;
+    padding:12px;
+    min-height:145px;
+    border:1px solid var(--fiche-bordure);
+    border-radius:11px;
+    background:rgba(255,255,255,.55);
+    box-sizing:border-box;
+}
+.sentinel-card .emoji{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:48px;
+    margin:4px 0;
+    font-size:50px;
+    line-height:1;
+    overflow:visible;
+}
+.sentinel-card .emoji img{
+    width:84px;
+    height:84px;
+    object-fit:contain;
+    position:relative;
+    z-index:0;
+}
+.sentinel-card h3{position:relative;z-index:10;font-size:14px;text-align:center;margin:4px 0}
+.sentinel-card p{font-size:12px;line-height:1.25}
+.sentinel-tag{
+    display:inline-block;
+    padding:3px 5px;
+    border-radius:99px;
+    background:rgba(55,107,77,.10);
+    color:#4f7f68;
+    font-size:13px;
+    font-weight:800;
+}
+.sentinel-controls{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px;
+    margin-top:6px;
+}
+.sentinel-arrow{
+    width:28px;
+    height:28px;
+    border:1px solid var(--fiche-bordure);
+    border-radius:50%;
+    background:#fff;
+    color:var(--fiche-vert-fonce);
+    font-size:16px;
+    font-weight:900;
+    cursor:pointer;
+}
+.sentinel-arrow:hover{
+    background:rgba(55,107,77,.08);
+}
+.sentinel-counter{
+    color:var(--fiche-texte-secondaire);
+    font-size:8px;
+    font-weight:800;
+}
+
+
+.source-placeholder{display:grid;gap:7px;margin-top:10px}
+.source-placeholder div{height:8px;border-radius:99px;background:#eef2f0}
+.source-placeholder div:nth-child(2n){width:78%}
+
+
+/* --------------------------------------------------------------------------
+   COMPACTAGE RÉEL DE LA PREMIÈRE LIGNE
+   Les tailles de police et les listes sont conservées. Seuls les espaces,
+   le cercle de l’index et les éléments décoratifs sont resserrés.
+   -------------------------------------------------------------------------- */
+.presentation-section{margin-bottom:7px}
+.presentation-grid{gap:8px}
+.presentation-stack{
+    gap:4px;
+}
+.methodology-stack{
+    gap:4px;
+}
+
+.presentation-section .country-card{padding:8px 10px}
+.presentation-section .country-card h2{margin-bottom:5px}
+.presentation-section .country-card p{margin:2px 0;line-height:1.25}
+
+.country-identity{min-height:58px}
+.country-identity .country-title-row{gap:8px}
+.country-identity .capital{margin-top:4px!important}
+
+.index-card{
+    grid-template-columns:92px minmax(0,1fr);
+    gap:8px;
+    min-height:95px;
+}
+.index-score{width:62px;height:62px}
+.index-score::before{width:46px;height:46px}
+.index-responsibility{padding-left:7px;border-left-width:3px}
+.index-card h2{margin-bottom:3px}
+.index-card .index-responsibility h3{line-height:1.1}
+.index-card .index-responsibility p{line-height:1.18}
+
+.actions-card{padding:8px 10px;
+    height:176px;
+    overflow:hidden;}
+.actions-card > h2{margin-bottom:4px}
+.actions-card .action-grid{gap:5px}
+.action-card{padding:5px 7px;border:1px solid var(--fiche-bordure);border-radius:14px;background:#b7d6ee}
+.action-grid + .action-grid .action-card{background:rgba(255,255,255,.55);}
+.action-card h3{margin-bottom:1px;line-height:1.08}
+.action-card p{margin:1px 0 2px;line-height:1.12}
+.action-list{margin:1px 0 0;line-height:1.08}
+
+.methodology-stack .country-card{padding:7px 9px}
+.methodology-stack .country-card h2{margin-bottom:3px}
+.methodology-stack .country-card p{margin:1px 0;line-height:1.15}
+.methodology-stack .source-placeholder{gap:3px;margin-top:4px;margin-bottom:-4px}
+.methodology-stack .source-placeholder div{height:4px}
+
+
+/* Alignement exact du bas des trois colonnes de la première ligne */
+@media(min-width:1151px){
+    .presentation-grid{
+        align-items:stretch;
+    }
+
+    .presentation-stack,
+    .methodology-stack{
+        height:100%;
+        grid-template-rows:auto 1fr;
+        align-content:stretch;
+    }
+
+    .actions-card{
+        height:auto;
+        align-self:stretch;
+    }
+
+    .index-card,
+    .bias-card{
+        height:auto;
+        align-self:stretch;
+    }
+}
+
+/* Responsive : les cartes restent indépendantes et se réorganisent seulement. */
+@media(max-width:1150px){
+    .presentation-grid{grid-template-columns:1fr 1fr}
+    .methodology-stack{grid-column:1/-1;grid-template-columns:1fr 1fr;grid-template-rows:auto}
+    .constat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+@media(max-width:760px){
+    .country-page{width:calc(100% - 18px)}
+    .presentation-grid,.constat-grid{grid-template-columns:1fr}
+    .presentation-stack,.methodology-stack{grid-template-columns:1fr;grid-template-rows:auto}
+    .methodology-stack{grid-column:auto}
+    .actions-card{height:auto;overflow:visible}
+    .actions-card .action-grid{grid-template-columns:1fr}
+    .index-card{grid-template-columns:90px 1fr}
+    .index-score{width:82px;height:82px}
+    .index-score::before{width:62px;height:62px}
+    .sentinel-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+</style>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll("[data-sentinel-carousel]").forEach(function (carousel) {
+        const track = carousel.querySelector(".sentinel-track");
+        const cards = Array.from(carousel.querySelectorAll(".sentinel-card"));
+        const previousButton = carousel.querySelector("[data-sentinel-prev]");
+        const nextButton = carousel.querySelector("[data-sentinel-next]");
+        const counter = carousel.querySelector("[data-sentinel-counter]");
+        let currentIndex = 0;
+
+        function updateCarousel() {
+            track.style.transform = "translateX(-" + (currentIndex * 100) + "%)";
+            counter.textContent = (currentIndex + 1) + " / " + cards.length;
+        }
+
+        previousButton.addEventListener("click", function () {
+            currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+            updateCarousel();
+        });
+
+        nextButton.addEventListener("click", function () {
+            currentIndex = (currentIndex + 1) % cards.length;
+            updateCarousel();
+        });
+
+        updateCarousel();
+    });
+
+    const graphiqueElement = document.getElementById("graphique-pays-data");
+    const svg = document.getElementById("timeline-svg");
+
+    if (graphiqueElement && svg) {
+        const graphique = JSON.parse(graphiqueElement.textContent);
+
+        const largeur = 1000;
+        const hauteur = 320;
+        const marge = {
+            gauche: 70,
+            droite: 35,
+            haut: 20,
+            bas: 55
+        };
+
+        const largeurUtile = largeur - marge.gauche - marge.droite;
+        const hauteurUtile = hauteur - marge.haut - marge.bas;
+
+        const annees = graphique.annees || [];
+
+        const series = [
+            {
+                cle: "sante_humaine",
+                couleur: "#29a6a1"
+            },
+            {
+                cle: "sante_animale",
+                couleur: "#367fa3"
+            },
+            {
+                cle: "ecosysteme",
+                couleur: "#245c4a"
+            },
+            {
+                cle: "information_prevention",
+                couleur: "#d9bd76"
+            }
+        ];
+
+        const namespace = "http://www.w3.org/2000/svg";
+
+        function creerElement(nom, attributs, texte) {
+            const element = document.createElementNS(namespace, nom);
+
+            Object.entries(attributs || {}).forEach(function (entree) {
+                element.setAttribute(entree[0], entree[1]);
+            });
+
+            if (texte !== undefined) {
+                element.textContent = texte;
+            }
+
+            return element;
+        }
+
+        function positionX(index) {
+            if (annees.length <= 1) {
+                return marge.gauche + largeurUtile / 2;
+            }
+
+            return (
+                marge.gauche
+                + (index / (annees.length - 1)) * largeurUtile
+            );
+        }
+
+        function positionY(note) {
+            const valeur = Math.max(
+                0,
+                Math.min(20, Math.round(Number(note) || 0))
+            );
+
+            return (
+                marge.haut
+                + hauteurUtile
+                - (valeur / 20) * hauteurUtile
+            );
+        }
+
+        svg.innerHTML = "";
+
+        for (let note = 0; note <= 20; note += 5) {
+            const y = positionY(note);
+
+            svg.appendChild(
+                creerElement("line", {
+                    x1: marge.gauche,
+                    y1: y,
+                    x2: largeur - marge.droite,
+                    y2: y,
+                    class: "timeline-grid-line"
+                })
+            );
+
+            svg.appendChild(
+                creerElement(
+                    "text",
+                    {
+                        x: marge.gauche - 14,
+                        y: y + 4,
+                        "text-anchor": "end",
+                        class: "timeline-axis-label"
+                    },
+                    String(note)
+                )
+            );
+        }
+
+        svg.appendChild(
+            creerElement("line", {
+                x1: marge.gauche,
+                y1: marge.haut,
+                x2: marge.gauche,
+                y2: hauteur - marge.bas,
+                class: "timeline-axis-line"
+            })
+        );
+
+        svg.appendChild(
+            creerElement("line", {
+                x1: marge.gauche,
+                y1: hauteur - marge.bas,
+                x2: largeur - marge.droite,
+                y2: hauteur - marge.bas,
+                class: "timeline-axis-line"
+            })
+        );
+
+        annees.forEach(function (annee, index) {
+            const x = positionX(index);
+
+            svg.appendChild(
+                creerElement(
+                    "text",
+                    {
+                        x: x,
+                        y: hauteur - 22,
+                        "text-anchor": "middle",
+                        class: "timeline-axis-label"
+                    },
+                    String(annee)
+                )
+            );
+        });
+
+        const valeursSeries = series.map(function (serie) {
+            return graphique[serie.cle] || [];
+        });
+
+        /*
+         * Calcule un très léger décalage visuel lorsqu'au moins
+         * deux courbes ont exactement la même note pour une année.
+         *
+         * Le décalage ne modifie jamais la note affichée.
+         */
+        const decalages = series.map(function () {
+            return annees.map(function () {
+                return 0;
+            });
+        });
+
+        annees.forEach(function (_, indexAnnee) {
+            const groupesParNote = {};
+
+            valeursSeries.forEach(function (valeurs, indexSerie) {
+                if (valeurs.length <= indexAnnee) {
+                    return;
+                }
+
+                const note = Math.max(
+                    0,
+                    Math.min(
+                        20,
+                        Math.round(
+                            Number(valeurs[indexAnnee]) || 0
+                        )
+                    )
+                );
+
+                if (!groupesParNote[note]) {
+                    groupesParNote[note] = [];
+                }
+
+                groupesParNote[note].push(indexSerie);
+            });
+
+            Object.values(groupesParNote).forEach(function (groupe) {
+                if (groupe.length <= 1) {
+                    return;
+                }
+
+                const espace = 4;
+                const centre = (groupe.length - 1) / 2;
+
+                groupe.forEach(function (indexSerie, position) {
+                    decalages[indexSerie][indexAnnee] = (
+                        (position - centre) * espace
+                    );
+                });
+            });
+        });
+
+        series.forEach(function (serie, indexSerie) {
+            const valeurs = valeursSeries[indexSerie];
+
+            if (!valeurs.length) {
+                return;
+            }
+
+            const points = valeurs.map(function (valeur, index) {
+                const x = positionX(index);
+                const y = (
+                    positionY(valeur)
+                    + (decalages[indexSerie][index] || 0)
+                );
+
+                return x + "," + y;
+            }).join(" ");
+
+            svg.appendChild(
+                creerElement("polyline", {
+                    points: points,
+                    class: "timeline-line",
+                    stroke: serie.couleur
+                })
+            );
+
+            valeurs.forEach(function (valeur, index) {
+                const note = Math.max(
+                    0,
+                    Math.min(20, Math.round(Number(valeur) || 0))
+                );
+
+                const x = positionX(index);
+                const y = (
+                    positionY(note)
+                    + (decalages[indexSerie][index] || 0)
+                );
+
+                svg.appendChild(
+                    creerElement("circle", {
+                        cx: x,
+                        cy: y,
+                        r: 6,
+                        class: "timeline-point",
+                        fill: serie.couleur
+                    })
+                );
+
+                /*
+                 * Les étiquettes sont aussi légèrement réparties
+                 * afin d'éviter qu'elles se recouvrent.
+                 */
+                const decalageEtiquette = (
+                    indexSerie % 2 === 0
+                        ? -11 - (indexSerie * 3)
+                        : 16 + (indexSerie * 3)
+                );
+
+                svg.appendChild(
+                    creerElement(
+                        "text",
+                        {
+                            x: x,
+                            y: y + decalageEtiquette,
+                            "text-anchor": "middle",
+                            class: "timeline-point-label"
+                        },
+                        String(note)
+                    )
+                );
+            });
+        });
+    }
+});
+</script>
+
+{% endblock %}
+
+{% block content %}
+<div class="country-page">
+
+    <!-- LIGNE 1 : PRÉSENTATION -->
+    <section class="country-section presentation-section" aria-label="Présentation du pays">
+        <div class="presentation-grid">
+
+            <div class="presentation-stack">
+                <article class="country-card country-identity" id="country-identity">
+                    <div class="country-title-row">
+                        <h1>{{ pays_data.nom }}</h1>
+                        <img class="country-flag" src="{{ pays_data.drapeau_url }}" alt="Drapeau de {{ pays_data.nom }}">
+                    </div>
+                    <p class="capital"><strong>Capitale :</strong> {{ pays_data.capitale }}</p>
+                </article>
+
+                <article class="country-card index-card" id="index-of-spt">
+                    <div class="index-score" aria-label="Indice SPT sur 20">
+                        <div class="index-value">{{ pays_data.note_spt_affichage|floatformat:1 }}</div>
+                        <span class="index-scale">/20</span>
+                    </div>
+                    <div>
+                        <h2>La note SPT (Santé Prévention Terrain)</h2>
+                        <div class="index-responsibility">
+                            <p class="index-note">
+    <em>Les notes SPT sont calculées à partir des données actuellement disponibles et mises à jour automatiquement.</em>
+</p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <article class="country-card actions-card" id="country-actions">
+                <h2>Comment améliorer la note ?</h2>
+                <div class="action-grid">
+
+                    <article class="action-card human">
+                        <h3>🧑 Améliorer sa santé humaine</h3>
+                        <p>{{ pays_data.orientation_sante_humaine }}</p>
+                    </article>
+
+                    <article class="action-card animal">
+                        <h3>🐾 Améliorer sa santé animale</h3>
+                        <p>{{ pays_data.orientation_sante_animale }}</p>
+                    </article>
+
+                    <article class="action-card ecosystem">
+                        <h3>🌿 Améliorer ses écosystèmes</h3>
+                        <p>{{ pays_data.orientation_ecosystemes }}</p>
+                    </article>
+
+                </div>
+
+                <div class="action-grid" style="margin-top:10px">
+
+                    <div class="action-card">
+                        <ul class="action-list">
+                            <li>Former davantage de professionnels de santé.</li>
+                            <li>Réduire les inégalités d'accès aux soins.</li>
+                            <li>Développer la prévention et le dépistage.</li>
+                        </ul>
+                    </div>
+
+                    <div class="action-card">
+                        <ul class="action-list">
+                            <li>Développer la vaccination animale.</li>
+                            <li>Améliorer la biosécurité des élevages.</li>
+                            <li>Détecter plus vite les zoonoses.</li>
+                        </ul>
+                    </div>
+
+                    <div class="action-card">
+                        <ul class="action-list">
+                            <li>Réduire les pollutions.</li>
+                            <li>Mieux traiter les eaux usées.</li>
+                            <li>Limiter la destruction des habitats naturels.</li>
+                        </ul>
+                    </div>
+
+</div>
+            </article>
+
+            <div class="methodology-stack">
+                <article class="country-card sources-card" id="sources">
+                    <h2>Sources utilisées</h2>
+                    <p>OMS, Banque mondiale, WOAH, Reporters sans frontières.</p>
+                    <div class="source-placeholder"><div></div>
+                </article>
+
+                <article class="country-card bias-card" id="biases">
+                    <h2>Les biais</h2>
+                    <p>Disponibilité inégale des données selon les pays. Années de référence différentes selon les indicateurs. Méthodes de collecte pouvant varier entre les sources. Un indice synthétique simplifie une réalité complexe. Contraintes techniques du site ...</p>
+                    <div class="source-placeholder"><div></div>
+                </article>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- LIGNE 2 : CONSTAT -->
+    <section class="country-section constat-section" aria-label="Données du pays">
+        <div class="constat-grid">
+
+            <article class="country-card determinants-card" id="health-determinants">
+                <h2>Pourquoi cette note ?</h2>
+                <p>Chaque indicateur reçoit un score. Leur combinaison donne la note finale.</p>
+                <div class="determinant-list">
+                    <div class="determinant-line"><label>Santé humaine</label><span>{{ pays_data.note_sante_humaine|floatformat:1 }}/20</span><div class="determinant-track"><i></i></div></div>
+                    <div class="determinant-line"><label>Santé animale</label><span>{{ pays_data.note_sante_animale|floatformat:1 }}/20</span><div class="determinant-track"><i></i></div></div>
+                    <div class="determinant-line"><label>Ecosystèmes</label><span>{{ pays_data.note_ecosysteme|floatformat:1 }}/20</span><div class="determinant-track"><i></i></div></div>
+                    <div class="determinant-line"><label>Information, prévention et surveillance</label><span>{{ pays_data.note_information_prevention|floatformat:1 }}/20</span><div class="determinant-track"><i></i></div></div>
+                </div>
+                <div class="index-result">Capacité du pays à préserver la santé<strong>{{ pays_data.note_finale|floatformat:1 }} /80</strong></div>
+            </article>
+
+            <article class="country-card timeline-card" id="health-timeline">
+                <h2>Son évolution entre 2000 et 2026</h2>
+
+                {{ graphique|json_script:"graphique-pays-data" }}
+
+                <div class="timeline-chart-card">
+                    <div
+                        class="timeline-chart"
+                        role="img"
+                        aria-label="Évolution des quatre piliers SPT entre 2000 et 2026"
+                    >
+                        <svg
+                            id="timeline-svg"
+                            viewBox="0 0 1000 320"
+                            preserveAspectRatio="none"
+                            aria-hidden="true"
+                        ></svg>
+
+                        <div class="timeline-legend">
+                            <span><i style="background:#29a6a1"></i>Santé humaine</span>
+                            <span><i style="background:#367fa3"></i>Santé animale</span>
+                            <span><i style="background:#245c4a"></i>Écosystèmes</span>
+                            <span><i style="background:#d9bd76"></i>Information, prévention et surveillance</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="country-card chronic-card" id="chronic-diseases">
+                <h2>Résumé des principaux indicateurs</h2>
+
+                <table class="resume-table">
+                    <tbody>
+                        <tr>
+                            <td>Espérance de vie</td>
+                            <td>{% if pays_data.valeurs_brutes.esperance_vie is not None %}{{ pays_data.valeurs_brutes.esperance_vie|floatformat:2 }} ans{% else %}<em>Non disponible</em>{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td>Couverture sanitaire</td>
+                            <td>{% if pays_data.valeurs_brutes.uhc is not None %}{{ pays_data.valeurs_brutes.uhc|floatformat:2 }} %{% else %}<em>Non disponible</em>{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td>Médecins</td>
+                            <td>{% if pays_data.valeurs_brutes.medecins is not None %}{{ pays_data.valeurs_brutes.medecins|floatformat:2 }} /1 000{% else %}<em>Non disponible</em>{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td>Maladies animales</td>
+                            <td>{% if pays_data.valeurs_brutes.maladies_animales is not None %}{{ pays_data.valeurs_brutes.maladies_animales|floatformat:2 }}{% else %}<em>Non disponible</em>{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td>Bien-être animal</td>
+                            <td>{% if pays_data.valeurs_brutes.bien_etre_animal is not None %}{{ pays_data.valeurs_brutes.bien_etre_animal|floatformat:2 }}{% else %}<em>Non disponible</em>{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td>Faune sauvage</td>
+                            <td>{% if pays_data.valeurs_brutes.faune_sauvage is not None %}{{ pays_data.valeurs_brutes.faune_sauvage|floatformat:2 }}{% else %}<em>Non disponible</em>{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td>Qualité de l'air</td>
+                            <td>{% if pays_data.valeurs_brutes.qualite_air is not None %}{{ pays_data.valeurs_brutes.qualite_air|floatformat:2 }}{% else %}<em>Non disponible</em>{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td>Eau potable</td>
+                            <td>{% if pays_data.valeurs_brutes.qualite_eau is not None %}{{ pays_data.valeurs_brutes.qualite_eau|floatformat:2 }} %{% else %}<em>Non disponible</em>{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td>Aires protégées</td>
+                            <td>{% if pays_data.valeurs_brutes.biodiversite is not None %}{{ pays_data.valeurs_brutes.biodiversite|floatformat:2 }} %{% else %}<em>Non disponible</em>{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td>Liberté de la presse</td>
+                            <td>{% if pays_data.valeurs_brutes.liberte_presse is not None %}{{ pays_data.valeurs_brutes.liberte_presse|floatformat:2 }}{% else %}<em>Non disponible</em>{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td>Surveillance épidémiologique</td>
+                            <td>{% if pays_data.valeurs_brutes.surveillance_epidemiologique is not None %}{{ pays_data.valeurs_brutes.surveillance_epidemiologique|floatformat:2 }}{% else %}<em>Non disponible</em>{% endif %}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </article>
+
+            <article class="country-card sentinels-card" id="sentinel-species">
+                <h2>Ses espèces sentinelles</h2>
+                <p>Vecteurs ou réservoirs de maladies, elles sont aussi des indicateurs de la santé des écosystèmes.</p>
+                
+                <div class="sentinel-carousel" data-sentinel-carousel>
+                    <div class="sentinel-controls">
+                        <button class="sentinel-arrow" type="button" data-sentinel-prev aria-label="Espèce précédente">‹</button>
+                        <span class="sentinel-counter" data-sentinel-counter>1 / {{ pays_data.especes_sentinelles|length }}</span>
+                        <button class="sentinel-arrow" type="button" data-sentinel-next aria-label="Espèce suivante">›</button>
+                    </div>
+<div class="sentinel-viewport">
+                        <div class="sentinel-track">
+
+                            {% for espece in pays_data.especes_sentinelles %}
+
+                            <article class="sentinel-card">
+
+                                <div class="emoji">
+                                    {% if espece.image %}
+                                        <img src="{% static espece.image %}" alt="{{ espece.nom }}">
+                                    {% else %}
+                                        {{ espece.emoji }}
+                                    {% endif %}
+                                </div>
+
+                                <h3>{{ espece.nom }}</h3>
+
+                                <p>{{ espece.description }}</p>
+
+                                <span class="sentinel-tag">{{ espece.tag }}</span>
+
+                            </article>
+
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </article>
+
+        </div>
+    </section>
+
+
+
+</div>
+{% endblock %}

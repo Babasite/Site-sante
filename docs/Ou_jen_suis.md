@@ -1,4 +1,5 @@
 # Où j'en suis – Santé Prévention Terrain
+#, ##, -, **...** : Syntaxe simple qui permet d'obtenir des titres, des listes et du texte en gras dans les outils qui affichent le Markdown (.md). Plus intéressant pour documentation que simple .txt
 ## 27/07/2026
 ### Création du journal de bord
 Aujourd'hui, je commence la rédaction du journal de bord du projet **Santé Prévention Terrain**.
@@ -81,4 +82,171 @@ Enfin, une réflexion a été engagée sur l'amélioration de la lecture du jour
 
 Une séance de maintenance a été consacrée à la réorganisation de l'architecture du projet afin de clarifier les responsabilités des différentes applications Django. Les vues et les routes liées à la veille scientifique ont été définitivement séparées des pages générales du site, ce qui simplifie la maintenance et l'évolution future du code. Plusieurs doublons et références obsolètes ont également été supprimés ou corrigés, permettant de retrouver une structure plus cohérente. Cette réorganisation a été accompagnée d'une vérification progressive des chemins d'accès et des dépendances entre les différentes parties de l'application afin de garantir le bon fonctionnement du site.
 
+## 30/07/2026
 
+Avancement dans la Veille avec création du fichier pipeline.py dans apps\monitoring\service\classification comme organisateur.
+
+Création de la carte des Pays de terrain avec organisation dans accueil\data\pays 
+
+## 31/07/2026
+Création de interface carte. Organisation finalement faite dans apps/pays et mise en place des variables à traiter. 
+
+# Journal de développement
+
+## 04/08/2026
+
+# Sources de données
+
+## WOAH
+
+### Téléchargement
+
+- Remplacement du téléchargement manuel par un fichier unique `WOAH.csv`.
+- Téléchargement enregistré dans :
+  `apps/pays/data/documents_sources/WOAH.csv`
+- Remplacement automatique de l'ancien fichier après vérification du téléchargement.
+
+### Intégration
+
+Ajout de la lecture automatique du fichier WOAH dans `actualisation_sources.py`.
+
+Les indicateurs suivants sont maintenant calculés automatiquement :
+
+- maladies_animales
+- vaccination_animale
+- faune_sauvage
+
+Mise en place d'une correspondance robuste des noms de pays entre WOAH et le projet.
+
+---
+
+## Priorité des sources
+
+Modification du système afin qu'une valeur existante ne soit plus écrasée.
+
+Ordre de priorité :
+
+1. Banque mondiale
+2. OMS
+3. WOAH
+4. Reporters sans frontières
+
+Le premier indicateur disponible est conservé.
+
+---
+
+# OMS
+
+Correction du téléchargement des indicateurs OMS.
+
+Les indicateurs utilisés sont :
+
+- Couverture sanitaire (UHC)
+- Suicide
+- PM2.5
+- Eaux usées traitées
+
+Les indicateurs SPAR restent indisponibles pour le moment.
+
+---
+
+# Calcul des notes
+
+Refonte des barèmes dans `definition_note.py`.
+
+Objectif :
+
+- obtenir des notes plus représentatives de la capacité réelle des pays à préserver la santé ;
+- éviter que les pays développés restent autour de 8/20.
+
+## Barèmes modifiés
+
+### Santé humaine
+
+- Espérance de vie
+- Nombre de médecins
+- Santé mentale
+
+### Santé animale
+
+- Maladies animales
+- Faune sauvage
+
+### Écosystèmes
+
+- Aires protégées
+- Couverture forestière
+
+Les autres barèmes restent inchangés.
+
+---
+
+# Données manquantes
+
+Modification du calcul du SPT.
+
+Avant :
+
+- chaque donnée manquante recevait automatiquement 5/20.
+
+Maintenant :
+
+- seules les données disponibles sont utilisées pour calculer la moyenne ;
+- une pénalité spécifique est appliquée selon le nombre de données manquantes.
+
+Cela évite de fausser artificiellement les notes.
+
+---
+
+# Audit du SPT
+
+Comparaison des résultats obtenus pour :
+
+- France
+- Libye
+- Japon
+
+Constats :
+
+- les notes sont désormais beaucoup plus cohérentes ;
+- la santé animale n'est plus systématiquement proche de 0 ;
+- les pays développés obtiennent des notes plus réalistes.
+
+Points restant à améliorer :
+
+- récupération des indicateurs SPAR OMS ;
+- services vétérinaires ;
+- vaccination animale ;
+- bien-être animal.
+
+---
+
+# État actuel des sources
+
+Sources effectivement utilisées :
+
+- Banque mondiale
+- OMS
+- WOAH
+- Reporters sans frontières
+
+Sources prévues mais pas encore exploitées :
+
+- SPAR (OMS)
+- UNICEF (DTP3)
+- FAO
+- IUCN
+- Copernicus
+- Transparency International
+
+---
+
+# Résultat
+
+Le SPT repose maintenant sur :
+
+- 20 indicateurs répartis en 4 piliers ;
+- des mises à jour automatiques des principales sources ;
+- un système de notation recalibré ;
+- une priorité des sources évitant les écrasements de données ;
+- une meilleure cohérence entre la note obtenue et la capacité du pays à préserver la santé.

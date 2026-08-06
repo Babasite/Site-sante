@@ -1,0 +1,756 @@
+{
+  "catalogue": [
+    {
+      "id": "abeille_domestique",
+      "nom": "Abeille domestique",
+      "categorie": "Insecte pollinisateur",
+      "emoji": "🐝",
+      "tag": "Pollinisation · pesticides",
+      "description": "Peut révéler l’état des ressources florales, des habitats et l’exposition à certains contaminants."
+    },
+    {
+      "id": "bourdon",
+      "nom": "Bourdon",
+      "categorie": "Insecte pollinisateur",
+      "emoji": "🐝",
+      "tag": "Biodiversité · climat",
+      "description": "Utile pour suivre la qualité des habitats et les effets des changements climatiques sur les pollinisateurs."
+    },
+    {
+      "id": "papillon",
+      "nom": "Papillon",
+      "categorie": "Insecte",
+      "emoji": "🦋",
+      "tag": "Habitats · biodiversité",
+      "description": "Peut signaler les changements de végétation, d’usage des sols et de qualité des habitats."
+    },
+    {
+      "id": "libellule",
+      "nom": "Libellule",
+      "categorie": "Insecte aquatique",
+      "emoji": "🪰",
+      "tag": "Zones humides · eau",
+      "description": "Peut refléter l’état écologique des mares, rivières et zones humides."
+    },
+    {
+      "id": "moustique_tigre",
+      "nom": "Moustique tigre",
+      "categorie": "Vecteur",
+      "emoji": "🦟",
+      "tag": "Vecteurs · climat",
+      "description": "Permet de suivre l’extension d’un vecteur de maladies sensibles au climat et aux mobilités."
+    },
+    {
+      "id": "moustique_anopheles",
+      "nom": "Moustique Anopheles",
+      "categorie": "Vecteur",
+      "emoji": "🦟",
+      "tag": "Paludisme · climat",
+      "description": "Peut servir à surveiller les zones favorables à la transmission du paludisme."
+    },
+    {
+      "id": "tique",
+      "nom": "Tique",
+      "categorie": "Arthropode vecteur",
+      "emoji": "🕷️",
+      "tag": "Zoonoses · forêts",
+      "description": "Peut indiquer l’évolution du risque de maladies transmises par les tiques et les changements d’habitats."
+    },
+    {
+      "id": "fourmi",
+      "nom": "Fourmi",
+      "categorie": "Insecte du sol",
+      "emoji": "🐜",
+      "tag": "Sols · perturbations",
+      "description": "Peut renseigner sur la qualité des sols, les perturbations et la fragmentation des habitats."
+    },
+    {
+      "id": "ver_de_terre",
+      "nom": "Ver de terre",
+      "categorie": "Invertébré du sol",
+      "emoji": "🪱",
+      "tag": "Sols · fertilité",
+      "description": "Indicateur fréquent de la structure, de la matière organique et de la qualité biologique des sols."
+    },
+    {
+      "id": "escargot",
+      "nom": "Escargot terrestre",
+      "categorie": "Mollusque terrestre",
+      "emoji": "🐌",
+      "tag": "Sols · métaux",
+      "description": "Peut accumuler certains contaminants et refléter l’état des milieux terrestres."
+    },
+    {
+      "id": "grenouille",
+      "nom": "Grenouille",
+      "categorie": "Amphibien",
+      "emoji": "🐸",
+      "tag": "Eau · contaminants",
+      "description": "Très sensible aux modifications de la qualité de l’eau, des habitats et du climat."
+    },
+    {
+      "id": "crapaud",
+      "nom": "Crapaud",
+      "categorie": "Amphibien",
+      "emoji": "🐸",
+      "tag": "Zones humides · routes",
+      "description": "Peut signaler la fragmentation des habitats et la dégradation des zones humides."
+    },
+    {
+      "id": "salamandre",
+      "nom": "Salamandre",
+      "categorie": "Amphibien",
+      "emoji": "🦎",
+      "tag": "Forêts · humidité",
+      "description": "Peut refléter l’état des forêts humides, des ruisseaux et des microhabitats."
+    },
+    {
+      "id": "triton",
+      "nom": "Triton",
+      "categorie": "Amphibien",
+      "emoji": "🦎",
+      "tag": "Mares · pesticides",
+      "description": "Peut servir au suivi écologique des mares et de l’exposition aux pollutions diffuses."
+    },
+    {
+      "id": "lezard",
+      "nom": "Lézard",
+      "categorie": "Reptile",
+      "emoji": "🦎",
+      "tag": "Chaleur · habitats",
+      "description": "Peut refléter les changements thermiques, l’artificialisation et la qualité des habitats ouverts."
+    },
+    {
+      "id": "tortue_eau_douce",
+      "nom": "Tortue d’eau douce",
+      "categorie": "Reptile aquatique",
+      "emoji": "🐢",
+      "tag": "Rivières · contaminants",
+      "description": "Peut accumuler certains contaminants et renseigner sur l’état des milieux aquatiques."
+    },
+    {
+      "id": "poisson_truite",
+      "nom": "Truite",
+      "categorie": "Poisson d’eau douce",
+      "emoji": "🐟",
+      "tag": "Eau froide · oxygène",
+      "description": "Sensible à la température, à l’oxygénation et à la qualité des cours d’eau."
+    },
+    {
+      "id": "saumon",
+      "nom": "Saumon",
+      "categorie": "Poisson migrateur",
+      "emoji": "🐟",
+      "tag": "Rivières · continuité",
+      "description": "Peut révéler l’état des bassins versants et la continuité écologique des rivières."
+    },
+    {
+      "id": "anguille",
+      "nom": "Anguille",
+      "categorie": "Poisson migrateur",
+      "emoji": "🐟",
+      "tag": "Continuité · pollution",
+      "description": "Peut renseigner sur la connectivité des milieux aquatiques et certaines pressions polluantes."
+    },
+    {
+      "id": "epinoche",
+      "nom": "Épinoche",
+      "categorie": "Poisson d’eau douce",
+      "emoji": "🐟",
+      "tag": "Pollution · reproduction",
+      "description": "Utilisée dans certains suivis biologiques de contamination et d’effets sur la reproduction."
+    },
+    {
+      "id": "moule_eau_douce",
+      "nom": "Moule d’eau douce",
+      "categorie": "Mollusque aquatique",
+      "emoji": "🦪",
+      "tag": "Eau · bioaccumulation",
+      "description": "Filtre l’eau et peut accumuler des contaminants, ce qui en fait un bon organisme de surveillance."
+    },
+    {
+      "id": "moule_marine",
+      "nom": "Moule marine",
+      "categorie": "Mollusque marin",
+      "emoji": "🦪",
+      "tag": "Littoral · contaminants",
+      "description": "Souvent utilisée pour suivre la contamination chimique des zones côtières."
+    },
+    {
+      "id": "huitre",
+      "nom": "Huître",
+      "categorie": "Mollusque marin",
+      "emoji": "🦪",
+      "tag": "Littoral · microbiologie",
+      "description": "Peut refléter la qualité microbiologique et chimique des eaux côtières."
+    },
+    {
+      "id": "ecrevisse",
+      "nom": "Écrevisse",
+      "categorie": "Crustacé d’eau douce",
+      "emoji": "🦞",
+      "tag": "Rivières · invasives",
+      "description": "Peut renseigner sur la qualité des eaux et la présence d’espèces invasives."
+    },
+    {
+      "id": "crabe",
+      "nom": "Crabe",
+      "categorie": "Crustacé marin",
+      "emoji": "🦀",
+      "tag": "Littoral · pollution",
+      "description": "Peut servir au suivi des contaminants et des perturbations côtières."
+    },
+    {
+      "id": "oursin",
+      "nom": "Oursin",
+      "categorie": "Invertébré marin",
+      "emoji": "🦔",
+      "tag": "Océan · acidification",
+      "description": "Peut être utilisé pour observer les effets de la pollution, du réchauffement et de l’acidification."
+    },
+    {
+      "id": "corail",
+      "nom": "Corail",
+      "categorie": "Organisme marin",
+      "emoji": "🪸",
+      "tag": "Récifs · réchauffement",
+      "description": "Très sensible au réchauffement, à l’acidification et à la qualité des eaux."
+    },
+    {
+      "id": "phoque",
+      "nom": "Phoque",
+      "categorie": "Mammifère marin",
+      "emoji": "🦭",
+      "tag": "Chaîne alimentaire · polluants",
+      "description": "Prédateur supérieur pouvant refléter l’accumulation de contaminants dans les écosystèmes marins."
+    },
+    {
+      "id": "dauphin",
+      "nom": "Dauphin",
+      "categorie": "Mammifère marin",
+      "emoji": "🐬",
+      "tag": "Océan · santé",
+      "description": "Peut indiquer l’état sanitaire des écosystèmes marins et l’exposition aux contaminants."
+    },
+    {
+      "id": "baleine",
+      "nom": "Baleine",
+      "categorie": "Mammifère marin",
+      "emoji": "🐋",
+      "tag": "Océan · climat",
+      "description": "Peut contribuer au suivi des changements océaniques, acoustiques et alimentaires."
+    },
+    {
+      "id": "loutre",
+      "nom": "Loutre",
+      "categorie": "Mammifère semi-aquatique",
+      "emoji": "🦦",
+      "tag": "Rivières · chaîne alimentaire",
+      "description": "Prédateur lié aux milieux aquatiques, utile pour apprécier leur qualité écologique globale."
+    },
+    {
+      "id": "castor",
+      "nom": "Castor",
+      "categorie": "Mammifère semi-aquatique",
+      "emoji": "🦫",
+      "tag": "Zones humides · hydrologie",
+      "description": "Ses populations et aménagements peuvent renseigner sur la dynamique des cours d’eau et zones humides."
+    },
+    {
+      "id": "herisson",
+      "nom": "Hérisson",
+      "categorie": "Mammifère terrestre",
+      "emoji": "🦔",
+      "tag": "Habitats · pesticides",
+      "description": "Peut refléter la qualité des jardins, des paysages agricoles et la disponibilité en invertébrés."
+    },
+    {
+      "id": "chauve_souris",
+      "nom": "Chauve-souris",
+      "categorie": "Mammifère volant",
+      "emoji": "🦇",
+      "tag": "Zoonoses · insectes",
+      "description": "Peut renseigner sur les populations d’insectes, l’état des habitats et certains risques zoonotiques."
+    },
+    {
+      "id": "renard",
+      "nom": "Renard",
+      "categorie": "Mammifère sauvage",
+      "emoji": "🦊",
+      "tag": "Zoonoses · territoire",
+      "description": "Peut être suivi pour certaines zoonoses et pour les changements d’occupation des territoires."
+    },
+    {
+      "id": "sanglier",
+      "nom": "Sanglier",
+      "categorie": "Mammifère sauvage",
+      "emoji": "🐗",
+      "tag": "Faune · maladies",
+      "description": "Peut contribuer à la surveillance de maladies animales et de contaminations environnementales."
+    },
+    {
+      "id": "cerf",
+      "nom": "Cerf",
+      "categorie": "Grand mammifère",
+      "emoji": "🦌",
+      "tag": "Forêts · tiques",
+      "description": "Peut refléter l’état des forêts, la pression de pâturage et les dynamiques de tiques."
+    },
+    {
+      "id": "rongeur",
+      "nom": "Rongeur sauvage",
+      "categorie": "Mammifère",
+      "emoji": "🐀",
+      "tag": "Zoonoses · urbanisation",
+      "description": "Peut être suivi pour les zoonoses, la contamination des milieux et les changements d’usage des sols."
+    },
+    {
+      "id": "rat_urbain",
+      "nom": "Rat urbain",
+      "categorie": "Mammifère urbain",
+      "emoji": "🐀",
+      "tag": "Ville · leptospirose",
+      "description": "Peut refléter les conditions sanitaires urbaines et certains risques infectieux."
+    },
+    {
+      "id": "chien",
+      "nom": "Chien",
+      "categorie": "Animal domestique",
+      "emoji": "🐕",
+      "tag": "Santé animale · zoonoses",
+      "description": "Peut servir de sentinelle pour certaines expositions environnementales et maladies partagées avec l’humain."
+    },
+    {
+      "id": "chat",
+      "nom": "Chat",
+      "categorie": "Animal domestique",
+      "emoji": "🐈",
+      "tag": "Santé animale · contaminants",
+      "description": "Peut révéler certaines expositions domestiques ou environnementales communes avec l’humain."
+    },
+    {
+      "id": "bovin",
+      "nom": "Bovin",
+      "categorie": "Animal d’élevage",
+      "emoji": "🐄",
+      "tag": "Élevage · maladies",
+      "description": "Peut contribuer à la surveillance des maladies animales, des contaminants et de la qualité des élevages."
+    },
+    {
+      "id": "porc",
+      "nom": "Porc",
+      "categorie": "Animal d’élevage",
+      "emoji": "🐖",
+      "tag": "Élevage · zoonoses",
+      "description": "Peut servir à la surveillance de certaines maladies animales et zoonotiques."
+    },
+    {
+      "id": "volaille_domestique",
+      "nom": "Volaille domestique",
+      "categorie": "Oiseau d’élevage",
+      "emoji": "🐔",
+      "tag": "Influenza · élevage",
+      "description": "Importante pour la surveillance des maladies aviaires et des conditions d’élevage."
+    },
+    {
+      "id": "abeille_ruche",
+      "nom": "Colonie d’abeilles",
+      "categorie": "Bioindicateur collectif",
+      "emoji": "🐝",
+      "tag": "Air · agriculture",
+      "description": "Une ruche peut intégrer des informations sur les ressources florales et les contaminants d’un territoire."
+    },
+    {
+      "id": "pigeon",
+      "nom": "Pigeon urbain",
+      "categorie": "Oiseau urbain",
+      "emoji": "🐦",
+      "tag": "Ville · contaminants",
+      "description": "Peut être utilisé pour suivre certaines expositions environnementales en milieu urbain."
+    },
+    {
+      "id": "moineau",
+      "nom": "Moineau",
+      "categorie": "Oiseau urbain",
+      "emoji": "🐦",
+      "tag": "Urbanisation · biodiversité",
+      "description": "Le déclin ou l’abondance peut refléter les changements d’habitat, d’alimentation et de qualité urbaine."
+    },
+    {
+      "id": "hirondelle",
+      "nom": "Hirondelle",
+      "categorie": "Oiseau insectivore",
+      "emoji": "🐦",
+      "tag": "Insectes · agriculture",
+      "description": "Peut révéler les évolutions des populations d’insectes et des paysages agricoles."
+    },
+    {
+      "id": "rapace",
+      "nom": "Rapace",
+      "categorie": "Oiseau prédateur",
+      "emoji": "🦅",
+      "tag": "Chaîne alimentaire · toxiques",
+      "description": "Prédateur supérieur pouvant accumuler certains contaminants présents dans la chaîne alimentaire."
+    },
+    {
+      "id": "vautour",
+      "nom": "Vautour",
+      "categorie": "Oiseau charognard",
+      "emoji": "🦅",
+      "tag": "Carcasses · médicaments",
+      "description": "Peut révéler la circulation de contaminants ou de médicaments vétérinaires dans les carcasses."
+    },
+    {
+      "id": "canard_sauvage",
+      "nom": "Canard sauvage",
+      "categorie": "Oiseau aquatique",
+      "emoji": "🦆",
+      "tag": "Zones humides · influenza",
+      "description": "Peut contribuer au suivi des zones humides et de certaines maladies aviaires."
+    },
+    {
+      "id": "cygne",
+      "nom": "Cygne",
+      "categorie": "Oiseau aquatique",
+      "emoji": "🦢",
+      "tag": "Eaux · maladies aviaires",
+      "description": "Peut servir de sentinelle visible pour la qualité des plans d’eau et certaines maladies aviaires."
+    },
+    {
+      "id": "mouette",
+      "nom": "Mouette",
+      "categorie": "Oiseau marin",
+      "emoji": "🐦",
+      "tag": "Littoral · déchets",
+      "description": "Peut refléter les pressions littorales, les déchets et certaines contaminations microbiologiques."
+    },
+    {
+      "id": "manchot",
+      "nom": "Manchot",
+      "categorie": "Oiseau marin",
+      "emoji": "🐧",
+      "tag": "Océan · climat",
+      "description": "Peut révéler les changements de température, de ressources alimentaires et de glace de mer."
+    },
+    {
+      "id": "ours_polaire",
+      "nom": "Ours polaire",
+      "categorie": "Grand prédateur",
+      "emoji": "🐻‍❄️",
+      "tag": "Arctique · climat",
+      "description": "Sentinelle emblématique des changements de glace, de chaîne alimentaire et de contaminants arctiques."
+    },
+    {
+      "id": "lichen",
+      "nom": "Lichen",
+      "categorie": "Organisme symbiotique",
+      "emoji": "🌿",
+      "tag": "Air · pollution",
+      "description": "Très utilisé pour suivre la qualité de l’air et les dépôts atmosphériques."
+    },
+    {
+      "id": "mousse",
+      "nom": "Mousse",
+      "categorie": "Végétal",
+      "emoji": "🌱",
+      "tag": "Air · métaux",
+      "description": "Peut accumuler des dépôts atmosphériques et servir au suivi de certains métaux et polluants."
+    },
+    {
+      "id": "algue",
+      "nom": "Algue",
+      "categorie": "Organisme aquatique",
+      "emoji": "🌿",
+      "tag": "Eutrophisation · eau",
+      "description": "Les proliférations et changements de communautés peuvent signaler l’eutrophisation et la pollution."
+    },
+    {
+      "id": "phytoplancton",
+      "nom": "Phytoplancton",
+      "categorie": "Micro-organismes aquatiques",
+      "emoji": "🦠",
+      "tag": "Eau · climat",
+      "description": "Réagit rapidement aux changements de nutriments, de température et de qualité des eaux."
+    },
+    {
+      "id": "zooplancton",
+      "nom": "Zooplancton",
+      "categorie": "Microfaune aquatique",
+      "emoji": "🦠",
+      "tag": "Chaîne alimentaire · eau",
+      "description": "Peut refléter les changements de qualité de l’eau et de fonctionnement de la chaîne alimentaire."
+    },
+    {
+      "id": "primate",
+      "nom": "Primate",
+      "categorie": "Mammifère sauvage",
+      "emoji": "🐒",
+      "tag": "Zoonoses · biodiversité",
+      "description": "Peut contribuer à la surveillance de certaines zoonoses et renseigner sur l’état des écosystèmes forestiers."
+    },
+    {
+      "id": "chameau",
+      "nom": "Chameau",
+      "categorie": "Mammifère domestique",
+      "emoji": "🐪",
+      "tag": "MERS · zoonoses",
+      "description": "Peut jouer un rôle dans la surveillance de certains agents pathogènes, notamment ceux associés au MERS."
+    },
+    {
+      "id": "oiseau_migrateur",
+      "nom": "Oiseau migrateur",
+      "categorie": "Oiseau sauvage",
+      "emoji": "🕊️",
+      "tag": "Migration · maladies aviaires",
+      "description": "Peut contribuer à la surveillance de certaines maladies aviaires et révéler les changements des habitats le long des voies migratoires."
+    },
+    {
+      "id": "pieuvre",
+      "nom": "Pieuvre",
+      "categorie": "Mollusque marin",
+      "emoji": "🐙",
+      "tag": "Neurosciences · intelligence",
+      "description": "Espèce modèle utilisée en neurosciences, cognition et comportement animal ; elle peut également renseigner sur l'état des écosystèmes marins."
+    },
+    {
+      "id": "calmar",
+      "nom": "Calmar",
+      "categorie": "Mollusque marin",
+      "emoji": "🦑",
+      "tag": "Neurobiologie · recherche",
+      "description": "Espèce modèle historique en neurobiologie, notamment grâce à son axone géant, et indicatrice des changements du milieu marin."
+    },
+    {
+      "id": "poisson_zebre",
+      "nom": "Poisson-zèbre",
+      "categorie": "Poisson d’eau douce",
+      "emoji": "🐟",
+      "tag": "Génétique · toxicologie",
+      "description": "Espèce modèle majeure en génétique, développement, toxicologie et médecine régénérative, utilisée pour étudier de nombreuses maladies humaines."
+    },
+    {
+      "id": "souris",
+      "nom": "Souris",
+      "categorie": "Mammifère de recherche",
+      "emoji": "🐁",
+      "tag": "Biomédecine · génétique",
+      "description": "Espèce modèle très utilisée en recherche biomédicale, en génétique et pour l’étude de nombreuses maladies."
+    },
+    {
+      "id": "rat_laboratoire",
+      "nom": "Rat de laboratoire",
+      "categorie": "Mammifère de recherche",
+      "emoji": "🐀",
+      "tag": "Neurosciences · pharmacologie",
+      "description": "Espèce modèle utilisée notamment en neurosciences, en physiologie, en toxicologie et en pharmacologie."
+    },
+    {
+      "id": "drosophile",
+      "nom": "Drosophile",
+      "categorie": "Insecte de recherche",
+      "emoji": "🪰",
+      "tag": "Génétique · développement",
+      "description": "Espèce modèle fondamentale pour la génétique, le développement, le vieillissement et l’étude de nombreuses fonctions biologiques."
+    },
+    {
+      "id": "nematode",
+      "nom": "Nématode",
+      "categorie": "Invertébré de recherche",
+      "emoji": "🪱",
+      "tag": "Développement · neurosciences",
+      "description": "Certains nématodes, comme C. elegans, sont des modèles majeurs pour l’étude du développement, du système nerveux et du vieillissement."
+    },
+    {
+      "id": "limule",
+      "nom": "Limule",
+      "categorie": "Arthropode marin",
+      "emoji": "🦀",
+      "tag": "Immunologie · endotoxines",
+      "description": "Son sang bleu est utilisé pour détecter les endotoxines bactériennes dans l'industrie biomédicale ; elle renseigne aussi sur l'état des milieux côtiers."
+    },
+    {
+      "id": "levure",
+      "nom": "Levure",
+      "categorie": "Micro-organisme de recherche",
+      "emoji": "🦠",
+      "tag": "Biologie cellulaire · génétique",
+      "description": "Organisme modèle essentiel pour étudier la génétique, le cycle cellulaire, le métabolisme et de nombreux mécanismes biologiques."
+    },
+    {
+      "id": "leopard",
+      "nom": "Léopard",
+      "categorie": "Grand prédateur",
+      "emoji": "🐆",
+      "tag": "Biodiversité · écosystèmes",
+      "description": "Prédateur apical et espèce parapluie dont la présence témoigne généralement d'écosystèmes riches et suffisamment vastes pour maintenir une faune diversifiée."
+    },
+    {
+      "id": "crocodile",
+      "nom": "Crocodile",
+      "categorie": "Grand reptile",
+      "emoji": "🐊",
+      "tag": "Zones humides · biodiversité",
+      "description": "Prédateur supérieur pouvant révéler la persistance de zones humides fonctionnelles et de chaînes alimentaires aquatiques structurées."
+    },
+    {
+      "id": "requin",
+      "nom": "Requin",
+      "categorie": "Grand prédateur marin",
+      "emoji": "🦈",
+      "tag": "Océan · biodiversité",
+      "description": "Prédateur apical dont la présence reflète généralement un écosystème marin fonctionnel, une chaîne alimentaire équilibrée et une bonne biodiversité."
+    },
+    {
+      "id": "elephant",
+      "nom": "Éléphant",
+      "categorie": "Grand herbivore",
+      "emoji": "🐘",
+      "tag": "Habitats · biodiversité",
+      "description": "Espèce ingénieure dont la présence dépend de vastes habitats fonctionnels et qui joue un rôle majeur dans la dynamique des écosystèmes."
+    },
+    {
+      "id": "tigre",
+      "nom": "Tigre",
+      "categorie": "Grand prédateur",
+      "emoji": "🐅",
+      "tag": "Forêts · biodiversité",
+      "description": "Prédateur apical et espèce parapluie révélant des écosystèmes forestiers étendus, riches en proies et bien préservés."
+    },
+    {
+      "id": "loup",
+      "nom": "Loup",
+      "categorie": "Grand prédateur",
+      "emoji": "🐺",
+      "tag": "Chaîne alimentaire · territoires",
+      "description": "Prédateur apical contribuant à l'équilibre des populations animales et révélateur de grands espaces naturels fonctionnels."
+    },
+    {
+      "id": "hippopotame",
+      "nom": "Hippopotame",
+      "categorie": "Grand mammifère",
+      "emoji": "🦛",
+      "tag": "Rivières · biodiversité",
+      "description": "Peut révéler le bon fonctionnement des grands fleuves et zones humides."
+    },
+    {
+      "id": "gorille",
+      "nom": "Gorille",
+      "categorie": "Grand primate",
+      "emoji": "🦍",
+      "tag": "Forêts · biodiversité",
+      "description": "Espèce parapluie des forêts tropicales dont la présence témoigne d'habitats préservés."
+    },
+    {
+      "id": "orang_outan",
+      "nom": "Orang-outan",
+      "categorie": "Grand primate",
+      "emoji": "🦧",
+      "tag": "Forêts · biodiversité",
+      "description": "Révélateur de l'état des forêts tropicales d'Asie du Sud-Est."
+    },
+    {
+      "id": "koala",
+      "nom": "Koala",
+      "categorie": "Marsupial",
+      "emoji": "🐨",
+      "tag": "Forêts · climat",
+      "description": "Espèce sensible aux incendies, à la sécheresse et à la fragmentation des habitats."
+    },
+    {
+      "id": "kangourou",
+      "nom": "Kangourou",
+      "categorie": "Marsupial",
+      "emoji": "🦘",
+      "tag": "Prairies · climat",
+      "description": "Peut renseigner sur l'état des écosystèmes australiens."
+    },
+    {
+      "id": "tapir",
+      "nom": "Tapir",
+      "categorie": "Grand herbivore",
+      "emoji": "🦣",
+      "tag": "Forêts · biodiversité",
+      "description": "Grand herbivore révélateur de forêts tropicales fonctionnelles."
+    },
+    {
+      "id": "lamantin",
+      "nom": "Lamantin",
+      "categorie": "Mammifère marin",
+      "emoji": "🦭",
+      "tag": "Eaux côtières · biodiversité",
+      "description": "Espèce sensible à la qualité des eaux côtières et des herbiers marins."
+    },
+    {
+      "id": "raie_manta",
+      "nom": "Raie manta",
+      "categorie": "Poisson cartilagineux",
+      "emoji": "🐋",
+      "tag": "Océan · biodiversité",
+      "description": "Peut refléter l'état des écosystèmes marins pélagiques."
+    },
+    {
+      "id": "meduse",
+      "nom": "Méduse",
+      "categorie": "Invertébré marin",
+      "emoji": "🪼",
+      "tag": "Océan · climat",
+      "description": "Les proliférations peuvent révéler des déséquilibres des écosystèmes marins."
+    },
+    {
+      "id": "serpent",
+      "nom": "Serpent",
+      "categorie": "Reptile",
+      "emoji": "🐍",
+      "tag": "Écosystèmes · biodiversité",
+      "description": "Prédateur révélateur de la qualité des habitats terrestres."
+    },
+    {
+      "id": "cobra",
+      "nom": "Cobra",
+      "categorie": "Serpent venimeux",
+      "emoji": "🐍",
+      "tag": "Zoonoses · biodiversité",
+      "description": "Espèce emblématique de certains écosystèmes tropicaux."
+    },
+    {
+      "id": "vipere",
+      "nom": "Vipère",
+      "categorie": "Serpent venimeux",
+      "emoji": "🐍",
+      "tag": "Habitats · biodiversité",
+      "description": "Peut refléter la qualité des milieux ouverts et forestiers."
+    },
+    {
+      "id": "varan",
+      "nom": "Varan",
+      "categorie": "Grand reptile",
+      "emoji": "🦎",
+      "tag": "Zones humides · biodiversité",
+      "description": "Prédateur indicateur d'écosystèmes tropicaux fonctionnels."
+    },
+    {
+      "id": "tortue_marine",
+      "nom": "Tortue marine",
+      "categorie": "Reptile marin",
+      "emoji": "🐢",
+      "tag": "Océan · littoral",
+      "description": "Révèle la qualité des plages de ponte et des écosystèmes marins."
+    },
+    {
+      "id": "ours",
+      "nom": "Ours",
+      "categorie": "Grand mammifère",
+      "emoji": "🐻",
+      "tag": "Forêts · montagne",
+      "description": "Espèce parapluie des grands espaces naturels."
+    },
+    {
+      "id": "lynx",
+      "nom": "Lynx",
+      "categorie": "Grand prédateur",
+      "emoji": "🐈",
+      "tag": "Forêts · biodiversité",
+      "description": "Prédateur discret révélateur de forêts fonctionnelles."
+    }
+  ]
+}
