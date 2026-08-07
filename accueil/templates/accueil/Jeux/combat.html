@@ -413,6 +413,200 @@ kbd.answer{
     background:#EFE3C3;
 }
 
+
+    /* ==========================================================
+       RÉGLAGES POUR TÉLÉPHONE VERTICAL (PORTRAIT)
+
+       Ajouter/modifier uniquement les règles à l'intérieur
+       de ce bloc permet d'adapter l'affichage vertical
+       sans toucher au code ni aux réglages d'origine du jeu.
+       Pour revenir au comportement d'origine, il suffit
+       de vider ou supprimer ce bloc.
+       ========================================================== */
+
+    @media (max-width: 480px) and (orientation: portrait) {
+
+        /* ======================================================
+           MODE TÉLÉPHONE VERTICAL
+           Modifications limitées à ce bloc.
+           Le reste du jeu et le mode horizontal restent inchangés.
+           ====================================================== */
+
+        /* Retirer le bloc des commandes du Reporter */
+        .combat-side.left .combat-control-card {
+            display: none;
+        }
+
+        /* Retirer entièrement le bloc des commandes de l'Infirmière */
+        .combat-side.right {
+            display: none;
+        }
+
+        /* Message placé sous le bouton Sons activés / Sons coupés */
+        .combat-side.left::after {
+            content: "Tournez le téléphone";
+            display: block;
+            margin-top: 10px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: #EFE3C3;
+            color: #214C35;
+            font-size: .95rem;
+            font-weight: 900;
+            text-align: center;
+        }
+
+    }
+
+
+    /* ==========================================================
+       RÉGLAGES POUR TÉLÉPHONE HORIZONTAL (PAYSAGE)
+
+       Ajouter/modifier uniquement les règles à l'intérieur
+       de ce bloc permet d'adapter l'affichage horizontal
+       sans toucher au code ni aux réglages d'origine du jeu.
+       Pour revenir au comportement d'origine, il suffit
+       de vider ou supprimer ce bloc.
+       ========================================================== */
+
+    @media (max-width: 900px) and (orientation: landscape) {
+
+        /* ======================================================
+           MODE JEU TÉLÉPHONE HORIZONTAL
+           Tout ce qui suit est ajouté uniquement ici.
+           Le code et les réglages d'origine restent inchangés.
+           ====================================================== */
+
+        /* Masquer le header du site pendant le jeu */
+        header {
+            display: none !important;
+        }
+
+        /* Le jeu occupe tout l'écran disponible */
+        .combat-page {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            width: 100vw;
+            max-width: none;
+            height: 100dvh;
+            margin: 0;
+            padding: 2px;
+            box-sizing: border-box;
+            background: #10243b;
+            overflow: hidden;
+        }
+
+        .combat-layout {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Les panneaux clavier latéraux deviennent inutiles sur téléphone */
+        .combat-side {
+            display: none;
+        }
+
+        .combat-card {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            padding: 3px;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .combat-hud {
+            flex: 0 0 auto;
+            gap: 5px;
+            margin-bottom: 3px;
+        }
+
+        .combat-player {
+            padding: 3px 5px;
+        }
+
+        .combat-name {
+            font-size: .58rem;
+        }
+
+        .combat-health {
+            height: 14px;
+        }
+
+        .combat-timer {
+            min-width: 40px;
+            padding: 2px 5px;
+            font-size: 1rem;
+            box-shadow: 0 2px 0 #214C35;
+        }
+
+        /* Étire l'arène au maximum sous les jauges de vie */
+        .combat-arena-wrap {
+            flex: 1 1 auto;
+            min-height: 0;
+            width: 100%;
+            border-width: 2px;
+            border-radius: 6px;
+        }
+
+        #game {
+            width: 100%;
+            height: 100%;
+            aspect-ratio: auto;
+        }
+
+        /* Commandes tactiles discrètes superposées à gauche et à droite */
+        .combat-touch-controls {
+            position: absolute;
+            top: 50%;
+            z-index: 20;
+            display: grid;
+            grid-template-columns: repeat(2, 30px);
+            gap: 3px;
+            transform: translateY(-50%);
+            pointer-events: none;
+            opacity: .62;
+        }
+
+        .combat-touch-controls--left {
+            left: 4px;
+        }
+
+        .combat-touch-controls--right {
+            right: 4px;
+        }
+
+        .combat-touch-key {
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            border: 1px solid rgba(255,255,255,.65);
+            border-radius: 7px;
+            background: rgba(8,17,34,.58);
+            color: #fff;
+            font: 800 .68rem Arial, sans-serif;
+            line-height: 30px;
+            text-align: center;
+            text-transform: uppercase;
+            box-shadow: 0 2px 5px rgba(0,0,0,.22);
+            pointer-events: auto;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .combat-touch-key:active,
+        .combat-touch-key.is-pressed {
+            background: rgba(0,128,128,.88);
+            opacity: 1;
+            transform: scale(.94);
+        }
+
+    }
+
 </style>
 {% endblock %}
 
@@ -1191,4 +1385,102 @@ Réponses :
     requestAnimationFrame(loop);
 })();
 </script>
+
+<script>
+/* ==========================================================
+   COMMANDES TACTILES — TÉLÉPHONE HORIZONTAL
+   Ajout indépendant : il simule les mêmes touches physiques
+   que les commandes clavier déjà utilisées par le jeu.
+   Supprimer ce bloc retire entièrement les commandes tactiles.
+   ========================================================== */
+(() => {
+    const arena = document.querySelector('.combat-arena-wrap');
+    if (!arena || document.querySelector('.combat-touch-controls')) return;
+
+    /* Sur clavier AZERTY :
+       Q -> code physique KeyA
+       D -> KeyD
+       Z -> KeyW
+       A -> KeyQ
+       E -> KeyE
+       Les chiffres utilisent Digit1...Digit0. */
+    const leftKeys = [
+        ['Q', 'KeyA', 'q'],
+        ['D', 'KeyD', 'd'],
+        ['Z', 'KeyW', 'z'],
+        ['A', 'KeyQ', 'a'],
+        ['E', 'KeyE', 'e'],
+        ['1', 'Digit1', '1'],
+        ['2', 'Digit2', '2'],
+        ['3', 'Digit3', '3'],
+        ['4', 'Digit4', '4']
+    ];
+
+    const rightKeys = [
+        ['J', 'KeyJ', 'j'],
+        ['L', 'KeyL', 'l'],
+        ['I', 'KeyI', 'i'],
+        ['U', 'KeyU', 'u'],
+        ['O', 'KeyO', 'o'],
+        ['7', 'Digit7', '7'],
+        ['8', 'Digit8', '8'],
+        ['9', 'Digit9', '9'],
+        ['0', 'Digit0', '0']
+    ];
+
+    const sendKey = (type, code, key) => {
+        window.dispatchEvent(new KeyboardEvent(type, {
+            code,
+            key,
+            bubbles: true,
+            cancelable: true
+        }));
+    };
+
+    const makeSide = (side, keys) => {
+        const controls = document.createElement('div');
+        controls.className = `combat-touch-controls combat-touch-controls--${side}`;
+        controls.setAttribute('aria-label',
+            side === 'left' ? 'Commandes tactiles du reporter' : "Commandes tactiles de l'infirmière"
+        );
+
+        keys.forEach(([label, code, key]) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'combat-touch-key';
+            button.textContent = label;
+            button.setAttribute('aria-label', `Touche ${label}`);
+
+            const press = (event) => {
+                event.preventDefault();
+                button.classList.add('is-pressed');
+                try { button.setPointerCapture(event.pointerId); } catch (_) {}
+                sendKey('keydown', code, key);
+            };
+
+            const release = (event) => {
+                event.preventDefault();
+                button.classList.remove('is-pressed');
+                sendKey('keyup', code, key);
+            };
+
+            button.addEventListener('pointerdown', press);
+            button.addEventListener('pointerup', release);
+            button.addEventListener('pointercancel', release);
+            button.addEventListener('lostpointercapture', () => {
+                button.classList.remove('is-pressed');
+                sendKey('keyup', code, key);
+            });
+
+            controls.appendChild(button);
+        });
+
+        return controls;
+    };
+
+    arena.appendChild(makeSide('left', leftKeys));
+    arena.appendChild(makeSide('right', rightKeys));
+})();
+</script>
+
 {% endblock %}
