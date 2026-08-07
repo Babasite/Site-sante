@@ -617,6 +617,40 @@ color:var(--vert-principal);
         }
     }
 
+
+    /* ==========================================================
+       RÉGLAGES POUR TÉLÉPHONE VERTICAL (PORTRAIT)
+       ========================================================== */
+
+    @media (max-width: 480px) and (orientation: portrait) {
+
+        /* Règles uniquement pour téléphone vertical */
+
+    }
+
+
+    /* ==========================================================
+       RÉGLAGES POUR TÉLÉPHONE HORIZONTAL (PAYSAGE)
+       ========================================================== */
+
+    @media (max-width: 900px) and (orientation: landscape) {
+
+        /* Remonte légèrement le bloc “T’as mal où ?”
+           tout en le gardant sticky et à droite. */
+        .sticky-pharmacy-button {
+            position: sticky;
+            top: 70px;
+            height: 0;
+            margin-bottom: 0;
+            justify-content: flex-end;
+        }
+
+        .secondary-button {
+            right: 4px;
+        }
+
+    }
+
     </style>
 {% endblock %}
 {% block content %}

@@ -208,6 +208,54 @@
 }
 }
 
+/* ==========================================================
+   RÉGLAGES POUR TÉLÉPHONE VERTICAL (PORTRAIT)
+   ========================================================== */
+
+@media (max-width: 480px) and (orientation: portrait) {
+
+    /* Met le titre principal sous le bandeau, sans modifier le HTML existant */
+    .hero{
+        position:relative;
+        margin-bottom:72px;
+    }
+
+    .hero h1{
+        position:absolute;
+        top:100%;
+        left:0;
+        width:100%;
+        max-width:none;
+        padding:14px 18px;
+        box-sizing:border-box;
+        background:#efe3c3;
+        color:var(--spt-vert-fonce);
+        font-size:1.45rem;
+        line-height:1.15;
+        text-align:center;
+    }
+
+}
+
+
+/* ==========================================================
+   RÉGLAGES POUR TÉLÉPHONE HORIZONTAL (PAYSAGE)
+   ========================================================== */
+
+@media (max-width: 900px) and (orientation: landscape) {
+
+    /* Place les textes défilants à gauche de l'image */
+    .vitrine__texte{
+        right:calc(100% + 18px);
+        bottom:50%;
+        width:min(320px,52vw);
+        transform:translateY(50%);
+        text-align:left;
+    }
+
+}
+
+
 @media(prefers-reduced-motion:reduce){
 .vitrine__image,
 .vitrine__titre,

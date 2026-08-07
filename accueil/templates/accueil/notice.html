@@ -300,6 +300,48 @@
     }
 }
 
+/* ==========================================================
+   RÉGLAGES POUR TÉLÉPHONE VERTICAL (PORTRAIT)
+   ========================================================== */
+
+@media (max-width: 480px) and (orientation: portrait) {
+
+    /* Bandeau :
+       garder uniquement le titre principal, masquer le texte secondaire. */
+    .notice-banner p{
+        display:none;
+    }
+
+    /* Partie haute :
+       garder le losange existant à sa place et uniquement le lien vers chaque page.
+       Les images et toute la mise en page restent inchangées. */
+    .notice-section__content p{
+        font-size:0;
+    }
+
+    .notice-section__content p::before{
+        font-size:13.6px;
+    }
+
+    .notice-section__content .notice-link,
+    .notice-section__content .notice-link strong{
+        font-size:1rem;
+    }
+
+}
+
+
+/* ==========================================================
+   RÉGLAGES POUR TÉLÉPHONE HORIZONTAL (PAYSAGE)
+   ========================================================== */
+
+@media (max-width: 900px) and (orientation: landscape) {
+
+    /* Règles uniquement pour téléphone horizontal */
+
+}
+
+
 @media(prefers-reduced-motion:reduce){
     .notice-section__media img,
     .notice-planche{
