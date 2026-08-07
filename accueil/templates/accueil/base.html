@@ -464,14 +464,51 @@
                 animation-iteration-count: 1 !important;
             }
         }
-    </style>
+    
+        /* ==========================================================
+           RÉGLAGES À VENIR — TÉLÉPHONE VERTICAL (PORTRAIT)
+           Zone volontairement vide : aucun effet sur l'affichage.
+           ========================================================== */
+
+        @media (max-width: 480px) and (orientation: portrait) {
+
+        }
+
+
+        /* ==========================================================
+           RÉGLAGES À VENIR — TÉLÉPHONE HORIZONTAL (PAYSAGE)
+           Zone volontairement vide : aucun effet sur l'affichage.
+           ========================================================== */
+
+        @media (max-width: 900px) and (orientation: landscape) {
+
+            /* Sur toutes les pages sauf home :
+               la bannière reste visible 1 seconde puis remonte. */
+            body:not(.spt-home-page) .spt-shell-header {
+                position: fixed;
+                top: 0;
+                right: 0;
+                left: 0;
+                width: 100%;
+                animation: spt-landscape-header-up .35s ease 1s forwards;
+            }
+
+            @keyframes spt-landscape-header-up {
+                to {
+                    transform: translateY(-100%);
+                }
+            }
+
+        }
+
+</style>
 
     {% include "accueil/includes/barre_redacteur_css.html" %}
     {% block extra_css %}{% endblock %}
 
 </head>
 
-<body>
+<body{% if request.resolver_match.url_name == 'home' %} class="spt-home-page"{% endif %}>
     {% include "accueil/includes/barre_redacteur.html" %}
 
     <header class="spt-shell-header">
