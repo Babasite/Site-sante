@@ -1,0 +1,25 @@
+{% extends "accueil/base.html" %}
+
+{% block title %}Erreur interne — Santé Prévention Terrain{% endblock %}
+
+{% block page_title %}Une erreur est survenue{% endblock %}
+
+{% block content %}
+<section style="max-width: 760px; margin: 70px auto; padding: 0 24px; text-align: center;">
+    <h2>Erreur 500</h2>
+
+    <p>
+        Une erreur interne empêche temporairement l'affichage de cette page.
+    </p>
+
+    <p>
+        Merci de réessayer dans quelques instants.
+    </p>
+
+    <p style="margin-top: 30px;">
+        <a href="{% url 'home' %}">
+            Retour à l'accueil
+        </a>
+    </p>
+</section>
+{% endblock %}

@@ -74,16 +74,25 @@
     object-fit:contain;
     opacity:0;
     visibility:hidden;
-    transition:opacity .8s ease-in-out;
+    transition:
+        opacity .8s ease-in-out,
+        visibility 0s linear .8s;
 }
 
 .vitrine__image.is-visible{
     opacity:1;
     visibility:visible;
+    transition-delay:0s;
 }
 
 .vitrine__image.logo-intro{
-    transition:opacity 2.8s ease-in-out;
+    transition:
+        opacity 2.8s ease-in-out,
+        visibility 0s linear 2.8s;
+}
+
+.vitrine__image.logo-intro.is-visible{
+    transition-delay:0s;
 }
 
 .vitrine__image--cadre{
@@ -109,7 +118,7 @@
     margin:0;
     opacity:0;
     transform:none;
-    transition:opacity .55s ease-out;
+    transition:opacity .8s ease-out;
 }
 
 .vitrine__titre{
@@ -345,12 +354,16 @@
             image.classList.add('vitrine__image--cadre');
         }
 
+        // Forcer une frame invisible avant le fondu d'entrée
+        await new Promise((resolve) => window.requestAnimationFrame(resolve));
+        if (idGeneration !== generation) return false;
+
         image.classList.add('is-visible');
 
         if (slide.logo) {
-            const dureeLogo = slide.duree ?? DUREES.logo;
-
-            if (!(await attendre(dureeLogo, idGeneration))) return false;
+            // 2,8 s d'apparition puis 1 s pleinement visible
+            if (!(await attendre(2800, idGeneration))) return false;
+            if (!(await attendre(1000, idGeneration))) return false;
         } else {
             titre.textContent = slide.titre;
             sousTitre.textContent = slide.sousTitre;
@@ -366,11 +379,14 @@
             if (!(await attendre(dureeLecture, idGeneration))) return false;
         }
 
-        if (!(await attendre(300, idGeneration))) return false;
+        if (!slide.logo) {
+            if (!(await attendre(300, idGeneration))) return false;
+        }
 
         masquerTout();
 
-        if (!(await attendre(DUREES.fondu, idGeneration))) return false;
+        const dureeFonduSortie = slide.logo ? 2800 : DUREES.fondu;
+        if (!(await attendre(dureeFonduSortie, idGeneration))) return false;
 
         viderTextes();
         image.classList.remove('logo-intro');
@@ -423,6 +439,13 @@
             lancerCycle();
         });
     }
+
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) {
+            generation += 1;
+            lancerCycle();
+        }
+    });
 
     lancerCycle();
 })();

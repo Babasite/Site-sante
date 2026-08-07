@@ -65,7 +65,7 @@
 
 .notice-section{
     display:grid;
-    grid-template-columns:minmax(150px,220px) minmax(0,1fr) minmax(150px,220px);
+    grid-template-columns:minmax(70px,140px) minmax(0,1fr) minmax(150px,220px);
     gap:clamp(24px,5vw,64px);
     align-items:center;
     margin-inline:calc(clamp(16px,4vw,44px) * -1);
@@ -85,9 +85,6 @@
     background:rgba(239,227,195,.26);
 }
 
-.notice-section:nth-child(even) .notice-section__media{
-    grid-column:1;
-}
 
 .notice-section:nth-child(even) .notice-section__content{
     grid-column:2;
@@ -156,6 +153,10 @@
     transition:
         transform .25s ease,
         box-shadow .25s ease;
+}
+
+.notice-section:nth-child(3) .notice-section__media a{
+    background:var(--spt-vert-fonce);
 }
 
 .notice-img{
@@ -355,18 +356,7 @@
             </article>
 
             <article class="notice-section">
-                <div class="notice-section__media">
-                    <a href="{% url 'pompier' %}" aria-label="Accéder aux jeux">
-                        <img
-                            class="notice-img notice-img--jeux"
-                            src="{% static 'accueil/images/guidejeux.webp' %}"
-                            alt="Accéder aux jeux"
-                            loading="lazy"
-                        >
-                    </a>
-                </div>
-
-                <div class="notice-section__content">
+<div class="notice-section__content">
                     <p>
                         Des
                         <a href="{% url 'pompier' %}" class="notice-link">
@@ -375,6 +365,17 @@
                         , pour "driller" régulièrement le principal :
                         "Pouvoir sauver une vie".
                     </p>
+                </div>
+
+<div class="notice-section__media">
+                    <a href="{% url 'pompier' %}" aria-label="Accéder aux jeux">
+                        <img
+                            class="notice-img notice-img--jeux"
+                            src="{% static 'accueil/images/guidejeux.webp' %}"
+                            alt="Accéder aux jeux"
+                            loading="lazy"
+                        >
+                    </a>
                 </div>
             </article>
 
@@ -402,18 +403,7 @@
             </article>
 
             <article class="notice-section">
-                <div class="notice-section__media">
-                    <a href="{% url 'terrain' %}" aria-label="Accéder à l'enquête One Health">
-                        <img
-                            class="notice-img notice-img--enquete"
-                            src="{% static 'accueil/images/guidecarte.webp' %}"
-                            alt="Accéder à l'enquête One Health"
-                            loading="lazy"
-                        >
-                    </a>
-                </div>
-
-                <div class="notice-section__content">
+<div class="notice-section__content">
                     <p>
                         Et une
                         <a href="{% url 'terrain' %}" class="notice-link">
@@ -423,6 +413,17 @@
                         <strong>« One Health » (Une seule santé)</strong>, tente un état des lieux
                         de notre planète.
                     </p>
+                </div>
+
+<div class="notice-section__media">
+                    <a href="{% url 'terrain' %}" aria-label="Accéder à l'enquête One Health">
+                        <img
+                            class="notice-img notice-img--enquete"
+                            src="{% static 'accueil/images/guidecarte.webp' %}"
+                            alt="Accéder à l'enquête One Health"
+                            loading="lazy"
+                        >
+                    </a>
                 </div>
             </article>
 

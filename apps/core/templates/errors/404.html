@@ -1,0 +1,25 @@
+{% extends "accueil/base.html" %}
+
+{% block title %}Page introuvable — Santé Prévention Terrain{% endblock %}
+
+{% block page_title %}Page introuvable{% endblock %}
+
+{% block content %}
+<section style="max-width: 760px; margin: 70px auto; padding: 0 24px; text-align: center;">
+    <h2>Erreur 404</h2>
+
+    <p>
+        La page demandée n'existe pas ou n'est plus disponible.
+    </p>
+
+    <p>
+        Vous pouvez revenir à l'accueil et poursuivre votre navigation.
+    </p>
+
+    <p style="margin-top: 30px;">
+        <a href="{% url 'home' %}">
+            Retour à l'accueil
+        </a>
+    </p>
+</section>
+{% endblock %}
