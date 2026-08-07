@@ -25,13 +25,7 @@ SECRET_KEY = 'django-insecure-y@9)3t5(djfvjm!-w5qre*a7ijd7yd_fvka)(l#@zzvx7-o=!i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'spterrain.fr',
-    'www.spterrain.fr',
-    'site-sante.onrender.com',
-    '127.0.0.1',
-    'localhost',
-]
+ALLOWED_HOSTS = []
 
 
 # Application definition
