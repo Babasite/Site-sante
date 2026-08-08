@@ -27,8 +27,6 @@ Les routes du système de recommandations doivent rester dans :
 
 IMPORTANT
 ---------
-Avant d'ajouter une route ici, vérifier que sa vue existe bien dans
-apps/monitoring/views.py et qu'elle concerne réellement la veille scientifique.
 ===============================================================================
 """
 
@@ -84,6 +82,14 @@ urlpatterns = [
         views.historique_veilles,
         name="historique_veilles",
     ),
+
+    # Création d'un journal manuel sans lancer la veille scientifique
+    path(
+        "redacteur/journal/nouveau/",
+        views.creer_journal_manuel,
+        name="creer_journal_manuel",
+    ),
+
     path(
         "redacteur/veille/<int:veille_id>/resume/",
         views.modifier_resume,

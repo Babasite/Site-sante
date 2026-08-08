@@ -330,6 +330,34 @@ def historique_veilles(request):
 
 
 @staff_required
+@require_POST
+def creer_journal_manuel(request):
+    """Crée un journal manuel sans lancer la veille scientifique."""
+    veille = VeilleQuotidienne.objects.create(
+        statut="terminee",
+        resume="",
+        resume_manuel="",
+        resume_manuel_publie=False,
+        convergence="",
+        nombre_articles=0,
+        sources_interrogees=0,
+        articles_recuperes=0,
+        doublons_supprimes=0,
+        duree_secondes=0,
+    )
+
+    messages.success(
+        request,
+        "Journal manuel créé. Vous pouvez maintenant rédiger le résumé.",
+    )
+
+    return redirect(
+        "modifier_resume",
+        veille_id=veille.id,
+    )
+
+
+@staff_required
 @require_http_methods(["GET", "POST"])
 def modifier_resume(request, veille_id):
     """Permet de modifier et publier le résumé manuel d'une veille."""

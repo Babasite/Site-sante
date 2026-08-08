@@ -704,6 +704,16 @@ ne peut donc plus passer dessous, même lorsqu'il devient long.
                     class="spt-shell-action veille-header-button">
                 Lancer la veille
             </button>
+
+            <form method="post"
+                  action="{% url 'creer_journal_manuel' %}"
+                  style="display:inline;">
+                {% csrf_token %}
+                <button type="submit"
+                        class="spt-shell-action veille-header-button">
+                    Créer un journal manuel
+                </button>
+            </form>
             {% endif %}
 
         </div>
