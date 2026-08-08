@@ -473,8 +473,8 @@ kbd.answer{
 
         /* ======================================================
            MODE JEU TÉLÉPHONE HORIZONTAL
-           Tout ce qui suit est ajouté uniquement ici.
-           Le code et les réglages d'origine restent inchangés.
+           Commandes tactiles en deux joysticks latéraux.
+           Le code clavier et le mode portrait restent inchangés.
            ====================================================== */
 
         /* Masquer le header du site pendant le jeu */
@@ -559,53 +559,176 @@ kbd.answer{
             object-fit: contain;
         }
 
-        /* Commandes tactiles discrètes superposées à gauche et à droite */
+        /*
+           La question reste au centre et laisse volontairement
+           une zone libre à gauche et à droite pour les joysticks.
+           Elle ne capte déjà aucun clic grâce à pointer-events:none.
+        */
+        .combat-question-panel {
+            left: 50%;
+            right: auto;
+            bottom: 5px;
+            width: calc(100% - 300px);
+            max-width: 720px;
+            padding: 7px 9px;
+            transform: translateX(-50%);
+            border-radius: 9px;
+            z-index: 6;
+        }
+
+        .combat-question-title {
+            margin-bottom: 5px;
+            font-size: clamp(.68rem, 1.55vw, .88rem);
+            line-height: 1.2;
+        }
+
+        .combat-answers {
+            gap: 4px;
+        }
+
+        .combat-answer {
+            min-height: 30px;
+            padding: 4px;
+            font-size: clamp(.56rem, 1.15vw, .72rem);
+            line-height: 1.15;
+        }
+
+        .combat-keyline {
+            display: none;
+        }
+
+        /* ======================================================
+           JOYSTICKS TACTILES
+           Reporter : Q / D / Z / A / E
+           Infirmière : J / L / I / U / O
+           ====================================================== */
+
         .combat-touch-controls {
             position: absolute;
             top: 50%;
             z-index: 20;
-            display: grid;
-            grid-template-columns: repeat(2, 30px);
-            gap: 3px;
+            width: 136px;
             transform: translateY(-50%);
             pointer-events: none;
-            opacity: .62;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         .combat-touch-controls--left {
-            left: 4px;
+            left: 7px;
         }
 
         .combat-touch-controls--right {
-            right: 4px;
+            right: 7px;
+        }
+
+        .combat-touch-joystick {
+            display: grid;
+            grid-template-columns: repeat(3, 40px);
+            grid-template-rows: repeat(3, 40px);
+            justify-content: center;
+            gap: 3px;
+            pointer-events: none;
         }
 
         .combat-touch-key {
-            width: 30px;
-            height: 30px;
+            width: 40px;
+            height: 40px;
             padding: 0;
-            border: 1px solid rgba(255,255,255,.65);
-            border-radius: 7px;
-            background: rgba(8,17,34,.58);
+            border: 1px solid rgba(255,255,255,.78);
+            border-radius: 11px;
+            background: rgba(8,17,34,.72);
             color: #fff;
-            font: 800 .68rem Arial, sans-serif;
-            line-height: 30px;
+            font: 900 .82rem Arial, sans-serif;
+            line-height: 40px;
             text-align: center;
             text-transform: uppercase;
-            box-shadow: 0 2px 5px rgba(0,0,0,.22);
+            box-shadow: 0 3px 7px rgba(0,0,0,.28);
             pointer-events: auto;
             touch-action: none;
             user-select: none;
             -webkit-user-select: none;
         }
 
-        .combat-touch-key:active,
-        .combat-touch-key.is-pressed {
-            background: rgba(0,128,128,.88);
-            opacity: 1;
-            transform: scale(.94);
+        /* Haut = saut */
+        .combat-touch-key--jump {
+            grid-column: 2;
+            grid-row: 1;
+            border-radius: 50%;
+            background: rgba(33,76,53,.84);
         }
 
+        /* Gauche / droite = déplacement */
+        .combat-touch-key--left {
+            grid-column: 1;
+            grid-row: 2;
+            border-radius: 50%;
+        }
+
+        .combat-touch-key--right {
+            grid-column: 3;
+            grid-row: 2;
+            border-radius: 50%;
+        }
+
+        /* Deux boutons d'attaque sur la rangée basse */
+        .combat-touch-key--quick {
+            grid-column: 1 / span 1;
+            grid-row: 3;
+            border-radius: 50%;
+            background: rgba(0,128,128,.76);
+        }
+
+        .combat-touch-key--strong {
+            grid-column: 3;
+            grid-row: 3;
+            border-radius: 50%;
+            background: rgba(217,47,58,.78);
+        }
+
+        .combat-touch-key:active,
+        .combat-touch-key.is-pressed {
+            background: rgba(243,173,34,.94);
+            opacity: 1;
+            transform: scale(.92);
+        }
+
+        /*
+           Les réponses restent disponibles sur téléphone :
+           1-2-3-4 côté Reporter / 7-8-9-0 côté Infirmière.
+           Elles sont plus petites et placées sous chaque joystick.
+        */
+        .combat-touch-answers {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3px;
+            margin-top: 5px;
+            pointer-events: none;
+        }
+
+        .combat-touch-answer {
+            min-width: 0;
+            height: 27px;
+            padding: 0;
+            border: 1px solid rgba(255,255,255,.62);
+            border-radius: 7px;
+            background: rgba(239,227,195,.88);
+            color: #214C35;
+            font: 900 .72rem Arial, sans-serif;
+            line-height: 27px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,.24);
+            pointer-events: auto;
+            touch-action: none;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .combat-touch-answer:active,
+        .combat-touch-answer.is-pressed {
+            background: #ffffff;
+            transform: scale(.93);
+        }
     }
 
 </style>
@@ -1390,44 +1513,21 @@ Réponses :
 <script>
 /* ==========================================================
    COMMANDES TACTILES — TÉLÉPHONE HORIZONTAL
-   Ajout indépendant : il simule les mêmes touches physiques
-   que les commandes clavier déjà utilisées par le jeu.
-   Supprimer ce bloc retire entièrement les commandes tactiles.
+   Deux joysticks latéraux qui simulent exactement les touches
+   clavier déjà utilisées par le jeu.
+
+   Reporter :
+   Q = gauche | D = droite | Z = saut | A = coup rapide | E = coup fort
+   Réponses : 1 2 3 4
+
+   Infirmière :
+   J = gauche | L = droite | I = saut | U = coup rapide | O = coup fort
+   Réponses : 7 8 9 0
    ========================================================== */
 (() => {
-    const arena = document.querySelector('.combat-arena-wrap');
-    if (!arena || document.querySelector('.combat-touch-controls')) return;
-
-    /* Sur clavier AZERTY :
-       Q -> code physique KeyA
-       D -> KeyD
-       Z -> KeyW
-       A -> KeyQ
-       E -> KeyE
-       Les chiffres utilisent Digit1...Digit0. */
-    const leftKeys = [
-        ['Q', 'KeyA', 'q'],
-        ['D', 'KeyD', 'd'],
-        ['Z', 'KeyW', 'z'],
-        ['A', 'KeyQ', 'a'],
-        ['E', 'KeyE', 'e'],
-        ['1', 'Digit1', '1'],
-        ['2', 'Digit2', '2'],
-        ['3', 'Digit3', '3'],
-        ['4', 'Digit4', '4']
-    ];
-
-    const rightKeys = [
-        ['J', 'KeyJ', 'j'],
-        ['L', 'KeyL', 'l'],
-        ['I', 'KeyI', 'i'],
-        ['U', 'KeyU', 'u'],
-        ['O', 'KeyO', 'o'],
-        ['7', 'Digit7', '7'],
-        ['8', 'Digit8', '8'],
-        ['9', 'Digit9', '9'],
-        ['0', 'Digit0', '0']
-    ];
+    const mediaLandscape = window.matchMedia(
+        '(max-width: 900px) and (orientation: landscape)'
+    );
 
     const sendKey = (type, code, key) => {
         window.dispatchEvent(new KeyboardEvent(type, {
@@ -1438,49 +1538,190 @@ Réponses :
         }));
     };
 
-    const makeSide = (side, keys) => {
-        const controls = document.createElement('div');
-        controls.className = `combat-touch-controls combat-touch-controls--${side}`;
-        controls.setAttribute('aria-label',
-            side === 'left' ? 'Commandes tactiles du reporter' : "Commandes tactiles de l'infirmière"
-        );
+    const createKeyButton = ({ label, code, key, className, ariaLabel }) => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = className;
+        button.textContent = label;
+        button.setAttribute('aria-label', ariaLabel || `Touche ${label}`);
 
-        keys.forEach(([label, code, key]) => {
-            const button = document.createElement('button');
-            button.type = 'button';
-            button.className = 'combat-touch-key';
-            button.textContent = label;
-            button.setAttribute('aria-label', `Touche ${label}`);
+        const press = (event) => {
+            event.preventDefault();
+            button.classList.add('is-pressed');
+            try { button.setPointerCapture(event.pointerId); } catch (_) {}
+            sendKey('keydown', code, key);
+        };
 
-            const press = (event) => {
-                event.preventDefault();
-                button.classList.add('is-pressed');
-                try { button.setPointerCapture(event.pointerId); } catch (_) {}
-                sendKey('keydown', code, key);
-            };
+        const release = (event) => {
+            event.preventDefault();
+            button.classList.remove('is-pressed');
+            sendKey('keyup', code, key);
+        };
 
-            const release = (event) => {
-                event.preventDefault();
-                button.classList.remove('is-pressed');
-                sendKey('keyup', code, key);
-            };
-
-            button.addEventListener('pointerdown', press);
-            button.addEventListener('pointerup', release);
-            button.addEventListener('pointercancel', release);
-            button.addEventListener('lostpointercapture', () => {
-                button.classList.remove('is-pressed');
-                sendKey('keyup', code, key);
-            });
-
-            controls.appendChild(button);
+        button.addEventListener('pointerdown', press);
+        button.addEventListener('pointerup', release);
+        button.addEventListener('pointercancel', release);
+        button.addEventListener('lostpointercapture', () => {
+            button.classList.remove('is-pressed');
+            sendKey('keyup', code, key);
         });
 
+        return button;
+    };
+
+    const makeSide = (side, config) => {
+        const controls = document.createElement('div');
+        controls.className = `combat-touch-controls combat-touch-controls--${side}`;
+        controls.setAttribute(
+            'aria-label',
+            side === 'left'
+                ? 'Joystick tactile du Reporter'
+                : "Joystick tactile de l'Infirmière"
+        );
+
+        const joystick = document.createElement('div');
+        joystick.className = 'combat-touch-joystick';
+
+        config.joystick.forEach((item) => {
+            joystick.appendChild(createKeyButton({
+                ...item,
+                className: `combat-touch-key ${item.className}`
+            }));
+        });
+
+        const answers = document.createElement('div');
+        answers.className = 'combat-touch-answers';
+
+        config.answers.forEach((item) => {
+            answers.appendChild(createKeyButton({
+                ...item,
+                className: 'combat-touch-answer'
+            }));
+        });
+
+        controls.appendChild(joystick);
+        controls.appendChild(answers);
         return controls;
     };
 
-    arena.appendChild(makeSide('left', leftKeys));
-    arena.appendChild(makeSide('right', rightKeys));
+    const configs = {
+        left: {
+            joystick: [
+                {
+                    label: 'Z',
+                    code: 'KeyW',
+                    key: 'z',
+                    className: 'combat-touch-key--jump',
+                    ariaLabel: 'Reporter : sauter, touche Z'
+                },
+                {
+                    label: 'Q',
+                    code: 'KeyA',
+                    key: 'q',
+                    className: 'combat-touch-key--left',
+                    ariaLabel: 'Reporter : aller à gauche, touche Q'
+                },
+                {
+                    label: 'D',
+                    code: 'KeyD',
+                    key: 'd',
+                    className: 'combat-touch-key--right',
+                    ariaLabel: 'Reporter : aller à droite, touche D'
+                },
+                {
+                    label: 'A',
+                    code: 'KeyQ',
+                    key: 'a',
+                    className: 'combat-touch-key--quick',
+                    ariaLabel: 'Reporter : coup rapide, touche A'
+                },
+                {
+                    label: 'E',
+                    code: 'KeyE',
+                    key: 'e',
+                    className: 'combat-touch-key--strong',
+                    ariaLabel: 'Reporter : coup fort, touche E'
+                }
+            ],
+            answers: [
+                { label: '1', code: 'Digit1', key: '1', ariaLabel: 'Reporter : réponse 1' },
+                { label: '2', code: 'Digit2', key: '2', ariaLabel: 'Reporter : réponse 2' },
+                { label: '3', code: 'Digit3', key: '3', ariaLabel: 'Reporter : réponse 3' },
+                { label: '4', code: 'Digit4', key: '4', ariaLabel: 'Reporter : réponse 4' }
+            ]
+        },
+        right: {
+            joystick: [
+                {
+                    label: 'I',
+                    code: 'KeyI',
+                    key: 'i',
+                    className: 'combat-touch-key--jump',
+                    ariaLabel: 'Infirmière : sauter, touche I'
+                },
+                {
+                    label: 'J',
+                    code: 'KeyJ',
+                    key: 'j',
+                    className: 'combat-touch-key--left',
+                    ariaLabel: 'Infirmière : aller à gauche, touche J'
+                },
+                {
+                    label: 'L',
+                    code: 'KeyL',
+                    key: 'l',
+                    className: 'combat-touch-key--right',
+                    ariaLabel: 'Infirmière : aller à droite, touche L'
+                },
+                {
+                    label: 'U',
+                    code: 'KeyU',
+                    key: 'u',
+                    className: 'combat-touch-key--quick',
+                    ariaLabel: 'Infirmière : coup rapide, touche U'
+                },
+                {
+                    label: 'O',
+                    code: 'KeyO',
+                    key: 'o',
+                    className: 'combat-touch-key--strong',
+                    ariaLabel: 'Infirmière : coup fort, touche O'
+                }
+            ],
+            answers: [
+                { label: '7', code: 'Digit7', key: '7', ariaLabel: 'Infirmière : réponse 1' },
+                { label: '8', code: 'Digit8', key: '8', ariaLabel: 'Infirmière : réponse 2' },
+                { label: '9', code: 'Digit9', key: '9', ariaLabel: 'Infirmière : réponse 3' },
+                { label: '0', code: 'Digit0', key: '0', ariaLabel: 'Infirmière : réponse 4' }
+            ]
+        }
+    };
+
+    const removeControls = () => {
+        document.querySelectorAll('.combat-touch-controls').forEach((node) => {
+            node.remove();
+        });
+    };
+
+    const installControls = () => {
+        removeControls();
+
+        if (!mediaLandscape.matches) return;
+
+        const arena = document.querySelector('.combat-arena-wrap');
+        if (!arena) return;
+
+        arena.appendChild(makeSide('left', configs.left));
+        arena.appendChild(makeSide('right', configs.right));
+    };
+
+    installControls();
+
+    if (typeof mediaLandscape.addEventListener === 'function') {
+        mediaLandscape.addEventListener('change', installControls);
+    } else if (typeof mediaLandscape.addListener === 'function') {
+        mediaLandscape.addListener(installControls);
+    }
 })();
 </script>
 

@@ -319,6 +319,93 @@
 
     @media (max-width: 900px) and (orientation: landscape) {
 
+        /* Question au-dessus, sans être recouverte par les commandes */
+        .jeu-main-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .jeu-question-panel {
+            order: 1;
+            min-height: 0;
+            padding: 8px 12px;
+        }
+
+        .jeu-question-text {
+            font-size: 1rem;
+            line-height: 1.2;
+        }
+
+        /* Plateau + pavé tactile côte à côte */
+        .jeu-board-column {
+            order: 2;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 150px;
+            grid-template-rows: auto auto;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .jeu-canvas-wrap {
+            grid-column: 1;
+            grid-row: 1;
+            min-width: 0;
+        }
+
+        #gameCanvas {
+            width: 100%;
+            min-height: 0;
+            max-height: calc(100vh - 190px);
+        }
+
+        /* Pavé directionnel compact à droite du Snake */
+        .jeu-mobile-controls {
+            grid-column: 2;
+            grid-row: 1;
+            display: grid;
+            grid-template-columns: repeat(3, 42px);
+            grid-template-rows: repeat(3, 42px);
+            justify-content: center;
+            align-content: center;
+            gap: 5px;
+            margin: 0;
+            padding: 8px;
+        }
+
+        .jeu-mobile-controls button {
+            width: 42px;
+            height: 42px;
+            padding: 0;
+            border-radius: 12px;
+            font-size: 1.15rem;
+            touch-action: manipulation;
+        }
+
+        #up {
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        #left {
+            grid-column: 1;
+            grid-row: 2;
+        }
+
+        #right {
+            grid-column: 3;
+            grid-row: 2;
+        }
+
+        #down {
+            grid-column: 2;
+            grid-row: 3;
+        }
+
+        /* Les boutons principaux restent sous le jeu */
+        .jeu-controls {
+            grid-column: 1 / -1;
+            grid-row: 2;
+            margin-top: 4px;
+        }
     }
 
 </style>
