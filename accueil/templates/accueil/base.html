@@ -505,7 +505,15 @@
 
     {% include "accueil/includes/barre_redacteur_css.html" %}
     {% block extra_css %}{% endblock %}
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7DPNLSK39D"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
+  gtag('config', 'G-7DPNLSK39D');
+</script>
 </head>
 
 <body{% if request.resolver_match.url_name == 'home' %} class="spt-home-page"{% endif %}>
