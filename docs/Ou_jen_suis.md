@@ -316,3 +316,18 @@ python .\scripts\images\convert_images_webp.py
 puis (pour remplacer les références)
 python .\scripts\images\remplacer_references_webp.py
 pour les convertir.
+
+### 07/08/2026  ####
+
+Mise en ligne sur Render et nom de domaine "spterrain" pris sur OVHcloud .
+
+Nom de domaine → OVHcloud
+Hébergement du site → Render
+Code → GitHub
+Adresse publique → spterrain.fr
+
+amélioration du CSS sur téléphone
+
+#### Fin du projet livré en 1 mois #####
+
+Amélioration périodique envisagée maintenant pour amélioration du site.

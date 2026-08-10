@@ -1,0 +1,95 @@
+FICHE RAPIDE - METTRE MES MODIFICATIONS EN LIGNE
+
+1.  VOIR CE QUE J’AI MODIFIE git status
+
+Verifier les fichiers indiques sous “modified:”.
+
+2.  AJOUTER LES MODIFICATIONS
+
+Pour envoyer TOUS les fichiers modifies : git add .
+
+Pour envoyer UN SEUL fichier : git add chemin/du/fichier.html
+
+Exemple : git add accueil/templates/accueil/Jeux/tetris.html
+
+3.  CREER LE COMMIT git commit -m “Description de mes modifications”
+
+Exemple : git commit -m “Adapte Tetris sur telephone”
+
+4.  ENVOYER SUR GITHUB git push origin main
+
+Render recupere ensuite automatiquement la nouvelle version et redeploie
+le site.
+
+5.  VERIFIER QUE TOUT EST PROPRE git status
+
+Resultat attendu :
+
+On branch main Your branch is up to date with ‘origin/main’.
+
+nothing to commit, working tree clean
+
+SEQUENCE A RETENIR
+
+git status git add . git commit -m “Description de mes modifications”
+git push origin main git status
+
+ATTENTION : “git add .” ajoute TOUS les fichiers modifies. Toujours
+regarder le premier “git status” avant de l’utiliser.
+
+###  Pour actualiser Gitub  ########
+
+FICHE RAPIDE - MODIFIER LE SITE ET ACTUALISER GITHUB
+
+1. VERIFIER LES FICHIERS MODIFIES
+
+git status
+
+Cette commande montre les fichiers que j’ai modifies. Toujours verifier
+cette liste avant de continuer.
+
+2. PREPARER LES MODIFICATIONS
+
+Pour preparer TOUS les fichiers modifies : git add .
+
+Pour preparer UN SEUL fichier : git add chemin/du/fichier.html
+
+Exemple : git add accueil/templates/accueil/Jeux/tetris.html
+
+3. ENREGISTRER LES MODIFICATIONS DANS GIT
+
+git commit -m “Description de mes modifications”
+
+Exemple : git commit -m “Adapte Tetris sur telephone”
+
+4. ACTUALISER GITHUB
+
+git push origin main
+
+C’est cette commande qui envoie le nouveau commit sur GitHub.
+
+Si Render est relie a la branche main, il recupere ensuite le nouveau
+commit et lance automatiquement un nouveau deploiement du site.
+
+5. VERIFIER QUE TOUT EST PROPRE
+
+git status
+
+Resultat attendu :
+
+On branch main Your branch is up to date with ‘origin/main’.
+
+nothing to commit, working tree clean
+
+===================================================== SEQUENCE COMPLETE
+A RETENIR =====================================================
+
+git status git add . git commit -m “Description de mes modifications”
+git push origin main git status
+
+RESUME : git status = verifier git add . = preparer les fichiers git
+commit -m “…” = enregistrer les modifications git push origin main =
+actualiser GitHub git status = verifier que tout est propre
+
+ATTENTION : “git add .” ajoute TOUS les fichiers modifies. Toujours
+regarder le premier “git status” avant de l’utiliser.

@@ -4,7 +4,7 @@
 {% block logo_return %}{% url 'terrain' %}{% endblock %}
 
 {% block title %}Commencer mon PC | Santé Prévention Terrain{% endblock %}
-{% block page_title %}Commencer mon PC{% endblock %}
+{% block page_title %}Bonjour{% endblock %}
 {% block header_actions %}{% endblock %}
 
 
@@ -22,7 +22,8 @@
     /* Footer masqué uniquement sur cette page */
     footer,
     .spt-footer,
-    .site-footer {
+    .site-footer,
+    .spt-shell-footer {
         display: none !important;
     }
 
@@ -180,6 +181,227 @@
         }
     }
 
+
+
+    /* ==========================================================
+       PERSONNALISATION DU BUREAU
+       ========================================================== */
+
+    .bureau-links:empty {
+        display: none;
+        margin: 0;
+    }
+
+    .bureau-link-remove {
+        flex: 0 0 auto;
+        margin-left: 2px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: rgba(255,255,255,.72);
+        font: 700 .88rem/1 var(--font-family-body);
+        cursor: pointer;
+        text-shadow: 0 2px 4px rgba(0,0,0,.95);
+    }
+
+    .bureau-link-remove:hover,
+    .bureau-link-remove:focus-visible {
+        color: #fff;
+    }
+
+    .besoin-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 3px 0;
+        border: 0;
+        background: transparent;
+        color: #fff;
+        font: 600 .9rem/1.35 var(--font-family-body);
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 4px;
+        text-shadow: 0 2px 4px rgba(0,0,0,.95);
+        cursor: pointer;
+    }
+
+    .besoin-toggle:hover,
+    .besoin-toggle:focus-visible {
+        color: #dff9f7;
+    }
+
+    .besoin-toggle:focus-visible {
+        outline: 1px solid rgba(255,255,255,.9);
+        outline-offset: 4px;
+    }
+
+    .besoin-toggle-signe {
+        min-width: 14px;
+        font-weight: 800;
+        text-align: center;
+    }
+
+    .besoin-panel {
+        margin-top: 10px;
+        padding: 11px 12px 12px;
+        border: 1px solid rgba(255,255,255,.22);
+        border-radius: 9px;
+        background: rgba(8,18,15,.55);
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+        box-shadow: 0 7px 20px rgba(0,0,0,.18);
+    }
+
+    .besoin-panel[hidden],
+    .lien-perso-form[hidden] {
+        display: none;
+    }
+
+    .besoin-groupe + .besoin-groupe {
+        margin-top: 11px;
+        padding-top: 9px;
+        border-top: 1px solid rgba(255,255,255,.12);
+    }
+
+    .besoin-groupe-titre {
+        display: block;
+        margin: 0 0 6px;
+        color: rgba(255,255,255,.75);
+        font-size: .72rem;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        text-shadow: 0 1px 3px rgba(0,0,0,.8);
+    }
+
+    .besoin-propositions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px 13px;
+    }
+
+    .besoin-ajout,
+    .lien-perso-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 2px 0;
+        border: 0;
+        background: transparent;
+        color: #fff;
+        font: 600 .86rem/1.35 var(--font-family-body);
+        cursor: pointer;
+        text-shadow: 0 2px 4px rgba(0,0,0,.9);
+    }
+
+    .besoin-ajout::before {
+        content: "+";
+        font-weight: 800;
+    }
+
+    .besoin-ajout:hover,
+    .besoin-ajout:focus-visible,
+    .lien-perso-toggle:hover,
+    .lien-perso-toggle:focus-visible {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    .besoin-ajout[disabled] {
+        opacity: .45;
+        cursor: default;
+        text-decoration: none;
+    }
+
+    .lien-perso-zone {
+        margin-top: 11px;
+        padding-top: 9px;
+        border-top: 1px solid rgba(255,255,255,.12);
+    }
+
+    .lien-perso-form {
+        display: grid;
+        grid-template-columns: minmax(0,.8fr) minmax(0,1.4fr) auto;
+        gap: 6px;
+        margin-top: 8px;
+    }
+
+    .lien-perso-form input {
+        min-width: 0;
+        padding: 7px 8px;
+        border: 1px solid rgba(255,255,255,.28);
+        border-radius: 6px;
+        background: rgba(255,255,255,.10);
+        color: #fff;
+        font: 500 .83rem/1.2 var(--font-family-body);
+        outline: none;
+    }
+
+    .lien-perso-form input::placeholder {
+        color: rgba(255,255,255,.62);
+    }
+
+    .lien-perso-form input:focus {
+        border-color: rgba(255,255,255,.75);
+    }
+
+    .lien-perso-valider {
+        padding: 7px 9px;
+        border: 1px solid rgba(255,255,255,.35);
+        border-radius: 6px;
+        background: rgba(255,255,255,.12);
+        color: #fff;
+        font: 700 .82rem/1 var(--font-family-body);
+        cursor: pointer;
+    }
+
+    .lien-perso-message {
+        min-height: 18px;
+        margin-top: 5px;
+        color: #fff;
+        font-size: .76rem;
+        line-height: 1.25;
+        text-shadow: 0 1px 3px rgba(0,0,0,.9);
+    }
+
+    @media (max-width: 560px) {
+        .lien-perso-form {
+            grid-template-columns: 1fr;
+        }
+    }
+
+
+    /* ==========================================================
+       BANDEAU ESCAMOTABLE — UNIQUEMENT SUR COMMENCER MON PC
+       ========================================================== */
+
+    .spt-shell-header {
+        position: fixed !important;
+        top: 0;
+        right: 0;
+        left: 0;
+        width: 100%;
+        z-index: 5000;
+        transform: translateY(0);
+        transition: transform .35s ease;
+        animation: none !important;
+        will-change: transform;
+    }
+
+    .spt-shell-header.bureau-header-cache {
+        transform: translateY(-100%);
+    }
+
+    .spt-shell-header.bureau-header-visible {
+        transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .spt-shell-header {
+            transition: none;
+        }
+    }
+
 </style>
 {% endblock %}
 
@@ -187,313 +409,1151 @@
 {% block content %}
 
 <main class="bureau-page">
-
-
-    <!-- ======================================================
-         CATÉGORIES
-         ====================================================== -->
-
     <div class="bureau-grid">
 
-
-        <!-- ==================================================
-             FINANCES
-             ================================================== -->
-
-        <section class="bureau-section">
-
+        <section class="bureau-section" data-categorie="finances">
             <h3>
                 <span class="bureau-section-icon">💳</span>
                 Finances
             </h3>
 
-            <div class="bureau-links">
+            <div class="bureau-links" data-selection></div>
 
-                <a
-                    href="https://www.labanquepostale.fr/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="bureau-link"
-                >
-                    <span class="bureau-link-icon">🏦</span>
-                    <span class="bureau-link-text">
-                        La Banque Postale
-                    </span>
-                </a>
+            <button type="button" class="besoin-toggle" data-toggle>
+                De quoi ai-je besoin finalement ?
+                <span class="besoin-toggle-signe" aria-hidden="true">+</span>
+            </button>
 
-                <a
-                    href="https://www.credit-agricole.fr/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="bureau-link"
-                >
-                    <span class="bureau-link-icon">🏦</span>
-                    <span class="bureau-link-text">
-                        Crédit Agricole
-                    </span>
-                </a>
-
-                <a
-                    href="https://www.revolut.com/fr-FR/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="bureau-link"
-                >
-                    <span class="bureau-link-icon">💳</span>
-                    <span class="bureau-link-text">
-                        Revolut
-                    </span>
-                </a>
-
-            </div>
-
+            <div class="besoin-panel" data-panel hidden></div>
         </section>
 
-
-        <!-- ==================================================
-             MES ACCÈS
-             ================================================== -->
-
-        <section class="bureau-section">
-
+        <section class="bureau-section" data-categorie="mes-acces">
             <h3>
                 <span class="bureau-section-icon">🔐</span>
                 Mes accès
             </h3>
 
-            <div class="bureau-links">
+            <div class="bureau-links" data-selection></div>
 
-                <a
-                    href="https://www.dashlane.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="bureau-link"
-                >
-                    <span class="bureau-link-icon">🔑</span>
-                    <span class="bureau-link-text">
-                        Dashlane
-                    </span>
-                </a>
+            <button type="button" class="besoin-toggle" data-toggle>
+                De quoi ai-je besoin finalement ?
+                <span class="besoin-toggle-signe" aria-hidden="true">+</span>
+            </button>
 
-                <a
-                    href="https://calendar.google.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="bureau-link"
-                >
-                    <span class="bureau-link-icon">📅</span>
-                    <span class="bureau-link-text">
-                        Google Agenda
-                    </span>
-                </a>
-
-                <a
-                    href="https://mail.google.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="bureau-link"
-                >
-                    <span class="bureau-link-icon">✉️</span>
-                    <span class="bureau-link-text">
-                        Gmail
-                    </span>
-                </a>
-
-            </div>
-
+            <div class="besoin-panel" data-panel hidden></div>
         </section>
 
-
-        <!-- ==================================================
-             PRATIQUE
-             ================================================== -->
-
-        <section class="bureau-section">
-
+        <section class="bureau-section" data-categorie="pratique">
             <h3>
                 <span class="bureau-section-icon">🧰</span>
                 Pratique
             </h3>
 
-            <div class="bureau-links">
+            <div class="bureau-links" data-selection></div>
 
-                <a
-                    href="https://www.leboncoin.fr/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="bureau-link"
-                >
-                    <span class="bureau-link-icon">📦</span>
-                    <span class="bureau-link-text">
-                        Leboncoin
-                    </span>
-                </a>
+            <button type="button" class="besoin-toggle" data-toggle>
+                De quoi ai-je besoin finalement ?
+                <span class="besoin-toggle-signe" aria-hidden="true">+</span>
+            </button>
 
-                <a
-                    href="https://www.google.com/maps/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="bureau-link"
-                >
-                    <span class="bureau-link-icon">🗺️</span>
-                    <span class="bureau-link-text">
-                        Google Maps
-                    </span>
-                </a>
-
-            </div>
-
+            <div class="besoin-panel" data-panel hidden></div>
         </section>
 
-
-        <!-- ==================================================
-             LOISIRS
-             ================================================== -->
-
-        <section class="bureau-section">
-
+        <section class="bureau-section" data-categorie="loisirs">
             <h3>
                 <span class="bureau-section-icon">🎬</span>
                 Loisirs
             </h3>
 
-            <div class="bureau-links">
+            <div class="bureau-links" data-selection></div>
 
-                <a
-                    href="https://www.youtube.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="bureau-link"
-                >
-                    <span class="bureau-link-icon">▶️</span>
-                    <span class="bureau-link-text">
-                        YouTube
-                    </span>
-                </a>
+            <button type="button" class="besoin-toggle" data-toggle>
+                De quoi ai-je besoin finalement ?
+                <span class="besoin-toggle-signe" aria-hidden="true">+</span>
+            </button>
 
-                <a
-                    href="https://open.spotify.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="bureau-link"
-                >
-                    <span class="bureau-link-icon">🎵</span>
-                    <span class="bureau-link-text">
-                        Spotify
-                    </span>
-                </a>
-
-            </div>
-
+            <div class="besoin-panel" data-panel hidden></div>
         </section>
 
-
-        <!-- ==================================================
-             ADMINISTRATIF & SANTÉ
-             ================================================== -->
-
-        <section class="bureau-section">
-
+        <section class="bureau-section" data-categorie="administratif-sante">
             <h3>
                 <span class="bureau-section-icon">📋</span>
                 Administratif & santé
             </h3>
 
-            <div class="bureau-links">
+            <div class="bureau-links" data-selection></div>
 
-                <a
-                    href="https://www.service-public.fr/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="bureau-link"
-                >
-                    <span class="bureau-link-icon">🇫🇷</span>
-                    <span class="bureau-link-text">
-                        Service-Public.fr
-                    </span>
-                </a>
+            <button type="button" class="besoin-toggle" data-toggle>
+                De quoi ai-je besoin finalement ?
+                <span class="besoin-toggle-signe" aria-hidden="true">+</span>
+            </button>
 
-                <a
-                    href="https://www.impots.gouv.fr/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="bureau-link"
-                >
-                    <span class="bureau-link-icon">📄</span>
-                    <span class="bureau-link-text">
-                        Impôts
-                    </span>
-                </a>
-
-                <a
-                    href="https://www.ameli.fr/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="bureau-link"
-                >
-                    <span class="bureau-link-icon">🩺</span>
-                    <span class="bureau-link-text">
-                        Ameli
-                    </span>
-                </a>
-
-            </div>
-
+            <div class="besoin-panel" data-panel hidden></div>
         </section>
 
-
-        <!-- ==================================================
-             TRAVAIL & PROJETS
-             ================================================== -->
-
-        <section class="bureau-section">
-
+        <section class="bureau-section" data-categorie="travail-projets">
             <h3>
                 <span class="bureau-section-icon">💼</span>
                 Travail & projets
             </h3>
 
-            <div class="bureau-links">
+            <div class="bureau-links" data-selection></div>
 
-                <a
-                    href="https://github.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="bureau-link"
-                >
-                    <span class="bureau-link-icon">💻</span>
-                    <span class="bureau-link-text">
-                        GitHub
-                    </span>
-                </a>
+            <button type="button" class="besoin-toggle" data-toggle>
+                De quoi ai-je besoin finalement ?
+                <span class="besoin-toggle-signe" aria-hidden="true">+</span>
+            </button>
 
-                <a
-                    href="https://drive.google.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="bureau-link"
-                >
-                    <span class="bureau-link-icon">📁</span>
-                    <span class="bureau-link-text">
-                        Google Drive
-                    </span>
-                </a>
+            <div class="besoin-panel" data-panel hidden></div>
+        </section>
 
-                <a
-                    href="{% url 'terrain' %}"
-                    class="bureau-link"
-                >
-                    <span class="bureau-link-icon">🌿</span>
-                    <span class="bureau-link-text">
-                        SP Terrain
-                    </span>
-                </a>
+        <section class="bureau-section" data-categorie="intelligence-artificielle">
+            <h3>
+                <span class="bureau-section-icon">🤖</span>
+                Intelligence artificielle
+            </h3>
 
-            </div>
+            <div class="bureau-links" data-selection></div>
 
+            <button type="button" class="besoin-toggle" data-toggle>
+                De quoi ai-je besoin finalement ?
+                <span class="besoin-toggle-signe" aria-hidden="true">+</span>
+            </button>
+
+            <div class="besoin-panel" data-panel hidden></div>
         </section>
 
     </div>
 </main>
 
+{% endblock %}
+
+
+{% block extra_js %}
+<script>
+
+
+/* ============================================================
+   BANDEAU ESCAMOTABLE
+   ============================================================ */
+
+(function () {
+    const header = document.querySelector(".spt-shell-header");
+    const navigation = document.querySelector("#spt-main-navigation");
+
+    if (!header) {
+        return;
+    }
+
+    const DELAI_INITIAL = 1000;
+    const DELAI_APRES_INTERACTION = 2200;
+    const ZONE_SOURIS = 14;
+    const ZONE_TACTILE = 28;
+
+    let minuterieMasquage = null;
+    let pointeurDansHeader = false;
+
+    function menuEstOuvert() {
+        return (
+            navigation &&
+            navigation.dataset.open === "true"
+        );
+    }
+
+    function annulerMasquage() {
+        if (minuterieMasquage !== null) {
+            window.clearTimeout(minuterieMasquage);
+            minuterieMasquage = null;
+        }
+    }
+
+    function afficherHeader() {
+        annulerMasquage();
+        header.classList.remove("bureau-header-cache");
+        header.classList.add("bureau-header-visible");
+    }
+
+    function masquerHeader() {
+        if (
+            pointeurDansHeader ||
+            menuEstOuvert() ||
+            header.contains(document.activeElement)
+        ) {
+            programmerMasquage(DELAI_APRES_INTERACTION);
+            return;
+        }
+
+        header.classList.remove("bureau-header-visible");
+        header.classList.add("bureau-header-cache");
+    }
+
+    function programmerMasquage(delai) {
+        annulerMasquage();
+
+        minuterieMasquage = window.setTimeout(
+            masquerHeader,
+            delai
+        );
+    }
+
+    /* Visible une seconde à l'ouverture. */
+    afficherHeader();
+    programmerMasquage(DELAI_INITIAL);
+
+    /* PC : la souris tout en haut rappelle le bandeau. */
+    document.addEventListener(
+        "mousemove",
+        function (event) {
+            if (event.clientY <= ZONE_SOURIS) {
+                afficherHeader();
+                return;
+            }
+
+            if (!pointeurDansHeader && !menuEstOuvert()) {
+                programmerMasquage(DELAI_APRES_INTERACTION);
+            }
+        },
+        { passive: true }
+    );
+
+    /* Tactile : toucher le haut de l'écran rappelle le bandeau. */
+    document.addEventListener(
+        "touchstart",
+        function (event) {
+            const contact = event.touches && event.touches[0];
+
+            if (
+                contact &&
+                contact.clientY <= ZONE_TACTILE
+            ) {
+                afficherHeader();
+                programmerMasquage(DELAI_APRES_INTERACTION);
+            }
+        },
+        { passive: true }
+    );
+
+    /* On ne masque jamais le bandeau pendant son utilisation. */
+    header.addEventListener(
+        "mouseenter",
+        function () {
+            pointeurDansHeader = true;
+            afficherHeader();
+        }
+    );
+
+    header.addEventListener(
+        "mouseleave",
+        function () {
+            pointeurDansHeader = false;
+            programmerMasquage(DELAI_APRES_INTERACTION);
+        }
+    );
+
+    header.addEventListener(
+        "focusin",
+        function () {
+            afficherHeader();
+        }
+    );
+
+    header.addEventListener(
+        "focusout",
+        function () {
+            programmerMasquage(DELAI_APRES_INTERACTION);
+        }
+    );
+
+    /*
+     * Le menu mobile de base.html utilise data-open.
+     * On observe son état pour laisser le bandeau visible
+     * tant que le menu est ouvert.
+     */
+    if (navigation) {
+        const observateurMenu = new MutationObserver(
+            function () {
+                if (menuEstOuvert()) {
+                    afficherHeader();
+                } else {
+                    programmerMasquage(DELAI_APRES_INTERACTION);
+                }
+            }
+        );
+
+        observateurMenu.observe(
+            navigation,
+            {
+                attributes: true,
+                attributeFilter: ["data-open"]
+            }
+        );
+    }
+})();
+
+
+(function () {
+    "use strict";
+
+    /*
+     * ============================================================
+     * STOCKAGE TEMPORAIRE DU BUREAU
+     * ============================================================
+     *
+     * Aujourd'hui :
+     *     navigateur -> localStorage
+     *
+     * Plus tard :
+     *     navigateur -> Django -> base persistante -> utilisateur
+     *
+     * L'interface n'aura pas besoin d'être réécrite :
+     * seules chargerPreferences() et enregistrerPreferences()
+     * seront à remplacer par des appels au serveur.
+     *
+     * Aucune donnée de connexion externe n'est conservée.
+     */
+
+    const STORAGE_KEY = "spt_bureau_preferences_v1";
+    const VERSION_PREFERENCES = 1;
+
+    const catalogue = {
+
+        "finances": [
+            {
+                titre: "Banques",
+                services: [
+                    {id:"banque-postale", nom:"La Banque Postale", url:"https://www.labanquepostale.fr/particulier/connexion-espace-client.html", icone:"🏦"},
+                    {id:"credit-agricole", nom:"Crédit Agricole", url:"https://www.credit-agricole.fr/", icone:"🏦"},
+                    {id:"bnp-paribas", nom:"BNP Paribas", url:"https://mabanque.bnpparibas/", icone:"🏦"},
+                    {id:"sg", nom:"SG", url:"https://particuliers.sg.fr/", icone:"🏦"},
+                    {id:"revolut", nom:"Revolut", url:"https://www.revolut.com/fr-FR/", icone:"💳"}
+                ]
+            },
+            {
+                titre: "Paiements",
+                services: [
+                    {id:"paypal", nom:"PayPal", url:"https://www.paypal.com/fr/signin", icone:"💶"}
+                ]
+            }
+        ],
+
+        "mes-acces": [
+            {
+                titre: "Mots de passe",
+                services: [
+                    {id:"dashlane", nom:"Dashlane", url:"https://www.dashlane.com/", icone:"🔑"}
+                ]
+            },
+            {
+                titre: "Messagerie",
+                services: [
+                    {id:"gmail", nom:"Gmail", url:"https://mail.google.com/", icone:"✉️"},
+                    {id:"outlook", nom:"Outlook", url:"https://outlook.live.com/", icone:"✉️"}
+                ]
+            },
+            {
+                titre: "Agenda",
+                services: [
+                    {id:"google-agenda", nom:"Google Agenda", url:"https://calendar.google.com/", icone:"📅"}
+                ]
+            }
+        ],
+
+        "pratique": [
+            {
+                titre: "Achats et annonces",
+                services: [
+                    {id:"leboncoin", nom:"Leboncoin", url:"https://www.leboncoin.fr/", icone:"📦"}
+                ]
+            },
+            {
+                titre: "Déplacements",
+                services: [
+                    {id:"google-maps", nom:"Google Maps", url:"https://www.google.com/maps/", icone:"🗺️"},
+                    {id:"sncf-connect", nom:"SNCF Connect", url:"https://www.sncf-connect.com/", icone:"🚆"}
+                ]
+            }
+        ],
+
+        "loisirs": [
+            {
+                titre: "Vidéo",
+                services: [
+                    {id:"youtube", nom:"YouTube", url:"https://www.youtube.com/", icone:"▶️"},
+                    {id:"netflix", nom:"Netflix", url:"https://www.netflix.com/", icone:"🎞️"}
+                ]
+            },
+            {
+                titre: "Musique",
+                services: [
+                    {id:"spotify", nom:"Spotify", url:"https://open.spotify.com/", icone:"🎵"},
+                    {id:"deezer", nom:"Deezer", url:"https://www.deezer.com/", icone:"🎧"}
+                ]
+            },
+            {
+                titre: "Sites préférés",
+                services: [
+                    {id:"biolibre", nom:"BioLibre", url:"https://biolibre.fr/", icone:"🌿"}
+                ]
+            }
+        ],
+
+        "administratif-sante": [
+            {
+                titre: "Démarches",
+                services: [
+                    {id:"service-public", nom:"Service-Public.fr", url:"https://www.service-public.fr/", icone:"🇫🇷"},
+                    {id:"impots", nom:"Impôts", url:"https://www.impots.gouv.fr/", icone:"📄"},
+                    {id:"caf", nom:"CAF", url:"https://www.caf.fr/", icone:"📋"}
+                ]
+            },
+            {
+                titre: "Santé",
+                services: [
+                    {id:"ameli", nom:"Ameli", url:"https://www.ameli.fr/", icone:"🩺"},
+                    {id:"doctolib", nom:"Doctolib", url:"https://www.doctolib.fr/", icone:"🩺"}
+                ]
+            }
+        ],
+
+        "travail-projets": [
+            {
+                titre: "Développement",
+                services: [
+                    {id:"github", nom:"GitHub", url:"https://github.com/", icone:"💻"}
+                ]
+            },
+            {
+                titre: "Fichiers et organisation",
+                services: [
+                    {id:"google-drive", nom:"Google Drive", url:"https://drive.google.com/", icone:"📁"},
+                    {id:"notion", nom:"Notion", url:"https://www.notion.so/", icone:"📝"}
+                ]
+            },
+            {
+                titre: "Réseau professionnel",
+                services: [
+                    {id:"linkedin", nom:"LinkedIn", url:"https://www.linkedin.com/", icone:"💼"}
+                ]
+            },
+            {
+                titre: "SP Terrain",
+                services: [
+                    {id:"sp-terrain", nom:"SP Terrain", url:"{% url 'terrain' %}", icone:"🌿"}
+                ]
+            }
+        ],
+
+        "intelligence-artificielle": [
+            {
+                titre: "Discuter et créer",
+                services: [
+                    {id:"chatgpt", nom:"ChatGPT", url:"https://chatgpt.com/", icone:"🤖"},
+                    {id:"claude", nom:"Claude", url:"https://claude.com/", icone:"🤖"},
+                    {id:"gemini", nom:"Gemini", url:"https://gemini.google.com/", icone:"✨"}
+                ]
+            },
+            {
+                titre: "Rechercher",
+                services: [
+                    {id:"perplexity", nom:"Perplexity", url:"https://www.perplexity.ai/", icone:"🔎"}
+                ]
+            }
+        ]
+    };
+
+
+    function creerPreferencesVides() {
+        const categories = {};
+
+        Object.keys(catalogue).forEach(function (categorie) {
+            categories[categorie] = {
+                selection: [],
+                personnalises: []
+            };
+        });
+
+        return {
+            version: VERSION_PREFERENCES,
+            categories: categories
+        };
+    }
+
+
+    function normaliserPreferences(valeur) {
+        const base = creerPreferencesVides();
+
+        if (!valeur || typeof valeur !== "object") {
+            return base;
+        }
+
+        const categoriesRecues =
+            valeur.categories && typeof valeur.categories === "object"
+                ? valeur.categories
+                : {};
+
+        Object.keys(base.categories).forEach(function (categorie) {
+            const recue = categoriesRecues[categorie];
+
+            if (!recue || typeof recue !== "object") {
+                return;
+            }
+
+            if (Array.isArray(recue.selection)) {
+                base.categories[categorie].selection =
+                    recue.selection.filter(function (id) {
+                        return typeof id === "string";
+                    });
+            }
+
+            if (Array.isArray(recue.personnalises)) {
+                base.categories[categorie].personnalises =
+                    recue.personnalises.filter(function (lien) {
+                        return (
+                            lien &&
+                            typeof lien === "object" &&
+                            typeof lien.id === "string" &&
+                            typeof lien.nom === "string" &&
+                            typeof lien.url === "string"
+                        );
+                    });
+            }
+        });
+
+        return base;
+    }
+
+
+    /*
+     * Ces deux fonctions constituent l'adaptateur de stockage.
+     * Pour passer plus tard à une base persistante Django,
+     * c'est principalement ici qu'il faudra intervenir.
+     */
+
+    function chargerPreferences() {
+        try {
+            const brut = window.localStorage.getItem(STORAGE_KEY);
+
+            if (!brut) {
+                return creerPreferencesVides();
+            }
+
+            return normaliserPreferences(
+                JSON.parse(brut)
+            );
+        } catch (erreur) {
+            console.warn(
+                "Impossible de charger les préférences du bureau.",
+                erreur
+            );
+
+            return creerPreferencesVides();
+        }
+    }
+
+
+    function enregistrerPreferences(nouvellesPreferences) {
+        preferences =
+            normaliserPreferences(nouvellesPreferences);
+
+        try {
+            window.localStorage.setItem(
+                STORAGE_KEY,
+                JSON.stringify(preferences)
+            );
+        } catch (erreur) {
+            console.warn(
+                "Impossible d'enregistrer les préférences du bureau.",
+                erreur
+            );
+        }
+    }
+
+
+    let preferences = chargerPreferences();
+
+
+    function trouverService(categorie, identifiant) {
+        const groupes = catalogue[categorie] || [];
+
+        for (const groupe of groupes) {
+            const service =
+                groupe.services.find(function (element) {
+                    return element.id === identifiant;
+                });
+
+            if (service) {
+                return service;
+            }
+        }
+
+        return null;
+    }
+
+
+    function estSelectionne(categorie, identifiant) {
+        return preferences.categories[categorie]
+            .selection.includes(identifiant);
+    }
+
+
+    function creerIdPersonnalise() {
+        if (
+            window.crypto &&
+            typeof window.crypto.randomUUID === "function"
+        ) {
+            return "perso-" +
+                window.crypto.randomUUID();
+        }
+
+        return (
+            "perso-" +
+            Date.now().toString(36) +
+            "-" +
+            Math.random().toString(36).slice(2, 8)
+        );
+    }
+
+
+    function normaliserUrl(valeur) {
+        const texte =
+            String(valeur || "").trim();
+
+        if (!texte) {
+            return null;
+        }
+
+        const avecProtocole =
+            /^[a-zA-Z][a-zA-Z\d+\-.]*:/.test(texte)
+                ? texte
+                : "https://" + texte;
+
+        try {
+            const url = new URL(avecProtocole);
+
+            if (
+                url.protocol !== "http:" &&
+                url.protocol !== "https:"
+            ) {
+                return null;
+            }
+
+            return url.href;
+        } catch (erreur) {
+            return null;
+        }
+    }
+
+
+    function creerRaccourci(
+        categorie,
+        element,
+        personnalise
+    ) {
+        const conteneur =
+            document.createElement("span");
+
+        conteneur.style.display = "inline-flex";
+        conteneur.style.alignItems = "center";
+        conteneur.style.gap = "5px";
+        conteneur.style.minWidth = "0";
+
+        const lien =
+            document.createElement("a");
+
+        lien.className = "bureau-link";
+        lien.href = element.url;
+        lien.target = "_blank";
+        lien.rel = "noopener noreferrer";
+
+        const icone =
+            document.createElement("span");
+
+        icone.className = "bureau-link-icon";
+        icone.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+        icone.textContent =
+            element.icone || "↗";
+
+        const texte =
+            document.createElement("span");
+
+        texte.className = "bureau-link-text";
+        texte.textContent = element.nom;
+
+        lien.appendChild(icone);
+        lien.appendChild(texte);
+
+        const retirer =
+            document.createElement("button");
+
+        retirer.type = "button";
+        retirer.className = "bureau-link-remove";
+        retirer.textContent = "×";
+        retirer.title = "Retirer ce raccourci";
+        retirer.setAttribute(
+            "aria-label",
+            "Retirer " + element.nom
+        );
+
+        retirer.addEventListener(
+            "click",
+            function () {
+                if (personnalise) {
+                    preferences
+                        .categories[categorie]
+                        .personnalises =
+                        preferences
+                            .categories[categorie]
+                            .personnalises
+                            .filter(function (lienPerso) {
+                                return lienPerso.id !== element.id;
+                            });
+                } else {
+                    preferences
+                        .categories[categorie]
+                        .selection =
+                        preferences
+                            .categories[categorie]
+                            .selection
+                            .filter(function (id) {
+                                return id !== element.id;
+                            });
+                }
+
+                enregistrerPreferences(
+                    preferences
+                );
+
+                rafraichirCategorie(
+                    categorie
+                );
+            }
+        );
+
+        conteneur.appendChild(lien);
+        conteneur.appendChild(retirer);
+
+        return conteneur;
+    }
+
+
+    function afficherSelection(
+        categorie,
+        section
+    ) {
+        const zone =
+            section.querySelector(
+                "[data-selection]"
+            );
+
+        zone.innerHTML = "";
+
+        const preferencesCategorie =
+            preferences.categories[categorie];
+
+        preferencesCategorie
+            .selection
+            .forEach(function (identifiant) {
+                const service =
+                    trouverService(
+                        categorie,
+                        identifiant
+                    );
+
+                if (service) {
+                    zone.appendChild(
+                        creerRaccourci(
+                            categorie,
+                            service,
+                            false
+                        )
+                    );
+                }
+            });
+
+        preferencesCategorie
+            .personnalises
+            .forEach(function (lienPerso) {
+                zone.appendChild(
+                    creerRaccourci(
+                        categorie,
+                        {
+                            id: lienPerso.id,
+                            nom: lienPerso.nom,
+                            url: lienPerso.url,
+                            icone: "↗"
+                        },
+                        true
+                    )
+                );
+            });
+    }
+
+
+    function creerGroupePropositions(
+        categorie,
+        groupe
+    ) {
+        const bloc =
+            document.createElement("div");
+
+        bloc.className =
+            "besoin-groupe";
+
+        const titre =
+            document.createElement("span");
+
+        titre.className =
+            "besoin-groupe-titre";
+
+        titre.textContent =
+            groupe.titre;
+
+        const propositions =
+            document.createElement("div");
+
+        propositions.className =
+            "besoin-propositions";
+
+        groupe.services.forEach(
+            function (service) {
+                const bouton =
+                    document.createElement(
+                        "button"
+                    );
+
+                bouton.type = "button";
+                bouton.className =
+                    "besoin-ajout";
+
+                bouton.textContent =
+                    service.nom;
+
+                if (
+                    estSelectionne(
+                        categorie,
+                        service.id
+                    )
+                ) {
+                    bouton.disabled = true;
+                    bouton.textContent =
+                        service.nom +
+                        " — ajouté";
+                }
+
+                bouton.addEventListener(
+                    "click",
+                    function () {
+                        if (
+                            !estSelectionne(
+                                categorie,
+                                service.id
+                            )
+                        ) {
+                            preferences
+                                .categories[categorie]
+                                .selection
+                                .push(service.id);
+
+                            enregistrerPreferences(
+                                preferences
+                            );
+
+                            rafraichirCategorie(
+                                categorie
+                            );
+                        }
+                    }
+                );
+
+                propositions.appendChild(
+                    bouton
+                );
+            }
+        );
+
+        bloc.appendChild(titre);
+        bloc.appendChild(propositions);
+
+        return bloc;
+    }
+
+
+    function creerZoneLienPersonnalise(
+        categorie
+    ) {
+        const zone =
+            document.createElement("div");
+
+        zone.className =
+            "lien-perso-zone";
+
+        const toggle =
+            document.createElement("button");
+
+        toggle.type = "button";
+        toggle.className =
+            "lien-perso-toggle";
+
+        toggle.textContent =
+            "+ Ajouter mon propre lien";
+
+        const form =
+            document.createElement("div");
+
+        form.className =
+            "lien-perso-form";
+
+        form.hidden = true;
+
+        const nom =
+            document.createElement("input");
+
+        nom.type = "text";
+        nom.maxLength = 80;
+        nom.placeholder =
+            "Nom du raccourci";
+
+        nom.setAttribute(
+            "aria-label",
+            "Nom du raccourci"
+        );
+
+        const url =
+            document.createElement("input");
+
+        url.type = "text";
+        url.placeholder =
+            "https://...";
+
+        url.setAttribute(
+            "aria-label",
+            "Adresse du raccourci"
+        );
+
+        const valider =
+            document.createElement("button");
+
+        valider.type = "button";
+        valider.className =
+            "lien-perso-valider";
+
+        valider.textContent = "Ajouter";
+
+        const message =
+            document.createElement("div");
+
+        message.className =
+            "lien-perso-message";
+
+        message.setAttribute(
+            "aria-live",
+            "polite"
+        );
+
+        toggle.addEventListener(
+            "click",
+            function () {
+                form.hidden = !form.hidden;
+
+                if (!form.hidden) {
+                    nom.focus();
+                }
+            }
+        );
+
+        valider.addEventListener(
+            "click",
+            function () {
+                const nomNettoye =
+                    nom.value.trim();
+
+                const urlNormalisee =
+                    normaliserUrl(
+                        url.value
+                    );
+
+                if (!nomNettoye) {
+                    message.textContent =
+                        "Indiquez un nom pour ce raccourci.";
+                    nom.focus();
+                    return;
+                }
+
+                if (!urlNormalisee) {
+                    message.textContent =
+                        "Indiquez une adresse web valide.";
+                    url.focus();
+                    return;
+                }
+
+                preferences
+                    .categories[categorie]
+                    .personnalises
+                    .push({
+                        id: creerIdPersonnalise(),
+                        nom: nomNettoye,
+                        url: urlNormalisee
+                    });
+
+                enregistrerPreferences(
+                    preferences
+                );
+
+                nom.value = "";
+                url.value = "";
+                message.textContent = "";
+                form.hidden = true;
+
+                rafraichirCategorie(
+                    categorie
+                );
+            }
+        );
+
+        form.appendChild(nom);
+        form.appendChild(url);
+        form.appendChild(valider);
+
+        zone.appendChild(toggle);
+        zone.appendChild(form);
+        zone.appendChild(message);
+
+        return zone;
+    }
+
+
+    function afficherPanel(
+        categorie,
+        section
+    ) {
+        const panel =
+            section.querySelector(
+                "[data-panel]"
+            );
+
+        const etaitMasque =
+            panel.hidden;
+
+        panel.innerHTML = "";
+
+        (catalogue[categorie] || [])
+            .forEach(function (groupe) {
+                panel.appendChild(
+                    creerGroupePropositions(
+                        categorie,
+                        groupe
+                    )
+                );
+            });
+
+        panel.appendChild(
+            creerZoneLienPersonnalise(
+                categorie
+            )
+        );
+
+        panel.hidden = etaitMasque;
+    }
+
+
+    function rafraichirCategorie(
+        categorie
+    ) {
+        const section =
+            document.querySelector(
+                '[data-categorie="' +
+                categorie +
+                '"]'
+            );
+
+        if (!section) {
+            return;
+        }
+
+        const panel =
+            section.querySelector(
+                "[data-panel]"
+            );
+
+        const panelEtaitOuvert =
+            !panel.hidden;
+
+        afficherSelection(
+            categorie,
+            section
+        );
+
+        afficherPanel(
+            categorie,
+            section
+        );
+
+        panel.hidden =
+            !panelEtaitOuvert;
+
+        const signe =
+            section.querySelector(
+                ".besoin-toggle-signe"
+            );
+
+        if (signe) {
+            signe.textContent =
+                panel.hidden
+                    ? "+"
+                    : "−";
+        }
+    }
+
+
+    document.querySelectorAll(
+        "[data-categorie]"
+    ).forEach(function (section) {
+        const categorie =
+            section.dataset.categorie;
+
+        afficherSelection(
+            categorie,
+            section
+        );
+
+        afficherPanel(
+            categorie,
+            section
+        );
+
+        const toggle =
+            section.querySelector(
+                "[data-toggle]"
+            );
+
+        const panel =
+            section.querySelector(
+                "[data-panel]"
+            );
+
+        const signe =
+            section.querySelector(
+                ".besoin-toggle-signe"
+            );
+
+        toggle.addEventListener(
+            "click",
+            function () {
+                panel.hidden =
+                    !panel.hidden;
+
+                signe.textContent =
+                    panel.hidden
+                        ? "+"
+                        : "−";
+            }
+        );
+    });
+
+})();
+
+</script>
 {% endblock %}
