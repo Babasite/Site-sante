@@ -1,0 +1,499 @@
+{% extends "accueil/base.html" %}
+{% load static %}
+
+{% block logo_return %}{% url 'terrain' %}{% endblock %}
+
+{% block title %}Commencer mon PC | Santé Prévention Terrain{% endblock %}
+{% block page_title %}Commencer mon PC{% endblock %}
+{% block header_actions %}{% endblock %}
+
+
+{% block extra_css %}
+<style>
+
+    /* Fond plein écran de la zone de contenu */
+    .spt-shell-content {
+        min-height: calc(100vh - 120px);
+        background:
+            linear-gradient(rgba(8, 18, 15, .28), rgba(8, 18, 15, .28)),
+            url("{% static 'accueil/images/leopard.webp' %}") center / cover fixed no-repeat;
+    }
+
+    /* Footer masqué uniquement sur cette page */
+    footer,
+    .spt-footer,
+    .site-footer {
+        display: none !important;
+    }
+
+    .bureau-page {
+        width: min(1400px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 22px 0 28px;
+        color: #ffffff;
+        font-family: var(--font-family-body);
+    }
+
+    .bureau-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        column-gap: 54px;
+        row-gap: 34px;
+    }
+
+    /* Plus de gros cadres : catégories directement sur l'image */
+    .bureau-section {
+        min-width: 0;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+    }
+
+    .bureau-section h3 {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 12px;
+        padding: 0 0 7px;
+        border-bottom: 1px solid rgba(255, 255, 255, .58);
+        color: #ffffff;
+        font-family: var(--font-family-title);
+        font-size: 1.08rem;
+        font-weight: 700;
+        line-height: 1.3;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, .9);
+    }
+
+    .bureau-section-icon {
+        font-size: .95rem;
+        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .8));
+    }
+
+    .bureau-links {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px 22px;
+    }
+
+    /* Liens légers : plus de bouton/carré */
+    .bureau-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        min-width: 0;
+        min-height: 30px;
+        padding: 2px 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        color: #ffffff;
+        font-family: var(--font-family-body);
+        font-size: .94rem;
+        font-weight: 600;
+        line-height: 1.25;
+        text-decoration: none;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, .95);
+        box-shadow: none;
+        transition: opacity .16s ease, transform .16s ease;
+    }
+
+    .bureau-link::after {
+        content: "";
+        position: absolute;
+    }
+
+    .bureau-link:hover,
+    .bureau-link:focus-visible {
+        transform: translateY(-1px);
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .bureau-link:hover .bureau-link-text,
+    .bureau-link:focus-visible .bureau-link-text {
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 4px;
+    }
+
+    .bureau-link:focus-visible {
+        outline: 1px solid rgba(255, 255, 255, .9);
+        outline-offset: 4px;
+    }
+
+    .bureau-link-icon {
+        display: inline;
+        width: auto;
+        height: auto;
+        flex: 0 0 auto;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        font-size: .95rem;
+        filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .85));
+    }
+
+    .bureau-link-text {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        border-bottom: 1px solid rgba(255, 255, 255, .55);
+        padding-bottom: 2px;
+    }
+
+    @media (max-width: 1050px) {
+        .bureau-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            column-gap: 38px;
+        }
+    }
+
+    @media (max-width: 760px) {
+        .spt-shell-content {
+            background-attachment: scroll;
+        }
+
+        .bureau-page {
+            width: min(100% - 28px, 1100px);
+            padding-top: 16px;
+        }
+
+        .bureau-grid {
+            grid-template-columns: 1fr;
+            gap: 26px;
+        }
+    }
+
+    @media (max-width: 460px) {
+        .bureau-links {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px 14px;
+        }
+
+        .bureau-link {
+            font-size: .88rem;
+        }
+    }
+
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<main class="bureau-page">
+
+
+    <!-- ======================================================
+         CATÉGORIES
+         ====================================================== -->
+
+    <div class="bureau-grid">
+
+
+        <!-- ==================================================
+             FINANCES
+             ================================================== -->
+
+        <section class="bureau-section">
+
+            <h3>
+                <span class="bureau-section-icon">💳</span>
+                Finances
+            </h3>
+
+            <div class="bureau-links">
+
+                <a
+                    href="https://www.labanquepostale.fr/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="bureau-link"
+                >
+                    <span class="bureau-link-icon">🏦</span>
+                    <span class="bureau-link-text">
+                        La Banque Postale
+                    </span>
+                </a>
+
+                <a
+                    href="https://www.credit-agricole.fr/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="bureau-link"
+                >
+                    <span class="bureau-link-icon">🏦</span>
+                    <span class="bureau-link-text">
+                        Crédit Agricole
+                    </span>
+                </a>
+
+                <a
+                    href="https://www.revolut.com/fr-FR/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="bureau-link"
+                >
+                    <span class="bureau-link-icon">💳</span>
+                    <span class="bureau-link-text">
+                        Revolut
+                    </span>
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             MES ACCÈS
+             ================================================== -->
+
+        <section class="bureau-section">
+
+            <h3>
+                <span class="bureau-section-icon">🔐</span>
+                Mes accès
+            </h3>
+
+            <div class="bureau-links">
+
+                <a
+                    href="https://www.dashlane.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="bureau-link"
+                >
+                    <span class="bureau-link-icon">🔑</span>
+                    <span class="bureau-link-text">
+                        Dashlane
+                    </span>
+                </a>
+
+                <a
+                    href="https://calendar.google.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="bureau-link"
+                >
+                    <span class="bureau-link-icon">📅</span>
+                    <span class="bureau-link-text">
+                        Google Agenda
+                    </span>
+                </a>
+
+                <a
+                    href="https://mail.google.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="bureau-link"
+                >
+                    <span class="bureau-link-icon">✉️</span>
+                    <span class="bureau-link-text">
+                        Gmail
+                    </span>
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             PRATIQUE
+             ================================================== -->
+
+        <section class="bureau-section">
+
+            <h3>
+                <span class="bureau-section-icon">🧰</span>
+                Pratique
+            </h3>
+
+            <div class="bureau-links">
+
+                <a
+                    href="https://www.leboncoin.fr/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="bureau-link"
+                >
+                    <span class="bureau-link-icon">📦</span>
+                    <span class="bureau-link-text">
+                        Leboncoin
+                    </span>
+                </a>
+
+                <a
+                    href="https://www.google.com/maps/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="bureau-link"
+                >
+                    <span class="bureau-link-icon">🗺️</span>
+                    <span class="bureau-link-text">
+                        Google Maps
+                    </span>
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             LOISIRS
+             ================================================== -->
+
+        <section class="bureau-section">
+
+            <h3>
+                <span class="bureau-section-icon">🎬</span>
+                Loisirs
+            </h3>
+
+            <div class="bureau-links">
+
+                <a
+                    href="https://www.youtube.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="bureau-link"
+                >
+                    <span class="bureau-link-icon">▶️</span>
+                    <span class="bureau-link-text">
+                        YouTube
+                    </span>
+                </a>
+
+                <a
+                    href="https://open.spotify.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="bureau-link"
+                >
+                    <span class="bureau-link-icon">🎵</span>
+                    <span class="bureau-link-text">
+                        Spotify
+                    </span>
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             ADMINISTRATIF & SANTÉ
+             ================================================== -->
+
+        <section class="bureau-section">
+
+            <h3>
+                <span class="bureau-section-icon">📋</span>
+                Administratif & santé
+            </h3>
+
+            <div class="bureau-links">
+
+                <a
+                    href="https://www.service-public.fr/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="bureau-link"
+                >
+                    <span class="bureau-link-icon">🇫🇷</span>
+                    <span class="bureau-link-text">
+                        Service-Public.fr
+                    </span>
+                </a>
+
+                <a
+                    href="https://www.impots.gouv.fr/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="bureau-link"
+                >
+                    <span class="bureau-link-icon">📄</span>
+                    <span class="bureau-link-text">
+                        Impôts
+                    </span>
+                </a>
+
+                <a
+                    href="https://www.ameli.fr/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="bureau-link"
+                >
+                    <span class="bureau-link-icon">🩺</span>
+                    <span class="bureau-link-text">
+                        Ameli
+                    </span>
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             TRAVAIL & PROJETS
+             ================================================== -->
+
+        <section class="bureau-section">
+
+            <h3>
+                <span class="bureau-section-icon">💼</span>
+                Travail & projets
+            </h3>
+
+            <div class="bureau-links">
+
+                <a
+                    href="https://github.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="bureau-link"
+                >
+                    <span class="bureau-link-icon">💻</span>
+                    <span class="bureau-link-text">
+                        GitHub
+                    </span>
+                </a>
+
+                <a
+                    href="https://drive.google.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="bureau-link"
+                >
+                    <span class="bureau-link-icon">📁</span>
+                    <span class="bureau-link-text">
+                        Google Drive
+                    </span>
+                </a>
+
+                <a
+                    href="{% url 'terrain' %}"
+                    class="bureau-link"
+                >
+                    <span class="bureau-link-icon">🌿</span>
+                    <span class="bureau-link-text">
+                        SP Terrain
+                    </span>
+                </a>
+
+            </div>
+
+        </section>
+
+    </div>
+</main>
+
+{% endblock %}

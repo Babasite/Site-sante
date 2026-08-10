@@ -1,7 +1,6 @@
 """
-===============================================================================
+
 URLS DES PAGES GÉNÉRALES DU SITE
-===============================================================================
 
 Ce fichier contient uniquement les routes des pages générales gérées par :
 
@@ -18,20 +17,15 @@ Ces routes doivent être placées dans :
     apps/recommendations/urls.py
 
 IMPORTANT
----------
+
 Chaque vue référencée dans ce fichier doit réellement exister dans
 accueil/views.py.
 
-Les routes bouger_questionnaire, resultat_sport et fiche_sport ne sont pas
-déclarées ici, car Django a confirmé que ces attributs ne sont pas présents
-dans le module accueil.views actuellement chargé.
-===============================================================================
 """
 
 from django.urls import path
 
 from . import views
-
 
 urlpatterns = [
     # =========================================================================
@@ -67,6 +61,16 @@ urlpatterns = [
         "sedebrouiller/",
         views.sedebrouiller,
         name="sedebrouiller",
+    ),
+    path(
+        "organisation/",
+        views.organisation,
+        name="organisation",
+    ),
+    path(
+        "organisation/commencer-pc/",
+        views.commencerpc,
+        name="commencerpc",
     ),
     path(
         "voyager-leger/",

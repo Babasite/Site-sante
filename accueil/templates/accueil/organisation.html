@@ -1,0 +1,531 @@
+{% extends "accueil/base.html" %}
+
+{% block logo_return %}{% url 'sedebrouiller' %}{% endblock %}
+
+{% block title %}Votre organisation | Santé Prévention Terrain{% endblock %}
+{% block page_title %}Votre organisation{% endblock %}
+
+{% block header_actions %}
+{% endblock %}
+
+
+{% block extra_css %}
+<style>
+
+    /* ==========================================================
+       PAGE — VOTRE ORGANISATION
+       ========================================================== */
+
+    .spt-shell-content {
+        background: #ffffff;
+    }
+
+    .organisation-page {
+        width: min(900px, calc(100% - 40px));
+        margin: 36px auto 70px;
+        color: var(--spt-texte, #111111);
+        font-family: var(--font-family-body);
+    }
+
+
+    /* ==========================================================
+       TITRES
+       ========================================================== */
+
+    .organisation-page h2,
+    .organisation-page h3 {
+        color: var(--spt-vert-fonce, #214c35);
+        font-family: var(--font-family-title);
+    }
+
+    .organisation-page h2 {
+        margin: 0 0 26px;
+        font-size: clamp(1.7rem, 3vw, 2.2rem);
+        font-weight: 700;
+        line-height: 1.25;
+    }
+
+    .organisation-page h3 {
+        margin: 36px 0 16px;
+        font-size: 1.25rem;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+
+    /* ==========================================================
+       TEXTE
+       ========================================================== */
+
+    .organisation-page p,
+    .organisation-page li {
+        color: var(--spt-texte, #111111);
+        font-family: var(--font-family-body);
+        font-size: 1rem;
+        line-height: 1.7;
+    }
+
+    .organisation-page p {
+        margin: 0 0 18px;
+    }
+
+
+    /* ==========================================================
+       ACTIONS — STYLE SOBRE DE LA PAGE « SE DÉBROUILLER »
+       ========================================================== */
+
+    .organisation-action,
+    .copier-adresse {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        min-height: 0;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        color: var(--spt-vert-fonce, #214c35);
+        font-family: var(--font-family-body);
+        font-size: 1rem;
+        font-weight: 700;
+        line-height: 1.4;
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 4px;
+        box-shadow: none;
+        cursor: pointer;
+        transition: color .2s ease;
+    }
+
+    .organisation-action::before,
+    .copier-adresse::before {
+        content: "→";
+        text-decoration: none;
+    }
+
+    .organisation-action:hover,
+    .organisation-action:focus-visible,
+    .copier-adresse:hover,
+    .copier-adresse:focus-visible {
+        transform: none;
+        background: transparent;
+        color: var(--spt-turquoise, #008080);
+        box-shadow: none;
+    }
+
+    .organisation-action:focus-visible,
+    .copier-adresse:focus-visible {
+        outline: 2px solid var(--spt-turquoise, #008080);
+        outline-offset: 5px;
+    }
+
+
+    /* ==========================================================
+       ASSISTANT NAVIGATEUR
+       ========================================================== */
+
+    .installation-bureau {
+        margin: 22px 0 28px;
+    }
+
+    .aide-navigateur {
+        margin-top: 18px;
+        padding: 18px;
+
+        border-left: 3px solid var(--spt-turquoise, #008080);
+        background: rgba(248, 249, 248, .96);
+    }
+
+    .aide-navigateur[hidden] {
+        display: none;
+    }
+
+    .aide-navigateur p {
+        margin-bottom: 12px;
+    }
+
+    .aide-navigateur strong {
+        color: var(--spt-vert-fonce, #214c35);
+    }
+
+
+    /* ==========================================================
+       ADRESSE DU BUREAU
+       ========================================================== */
+
+    .adresse-label {
+        display: block;
+        margin: 16px 0 7px;
+
+        color: var(--spt-vert-fonce, #214c35);
+        font-family: var(--font-family-body);
+        font-weight: 600;
+    }
+
+    .adresse-bureau {
+        display: flex;
+        align-items: stretch;
+        gap: 8px;
+    }
+
+    .adresse-bureau input {
+        flex: 1;
+        min-width: 0;
+
+        padding: 10px 12px;
+
+        border: 1px solid rgba(33, 76, 53, .35);
+        border-radius: 7px;
+
+        background: #ffffff;
+        color: #30363a;
+
+        font-family: var(--font-family-body);
+        font-size: .92rem;
+    }
+
+    .copie-message {
+        min-height: 22px;
+        margin: 7px 0 0 !important;
+
+        color: var(--spt-vert-fonce, #214c35) !important;
+        font-size: .9rem !important;
+        font-weight: 600;
+    }
+
+
+    /* ==========================================================
+       BOUTON FINAL
+       ========================================================== */
+
+    .ouvrir-bureau {
+        margin-top: 10px;
+    }
+
+
+    /* ==========================================================
+       MOBILE
+       ========================================================== */
+
+    @media (max-width: 600px) {
+
+        .organisation-page {
+            width: calc(100% - 28px);
+            margin-top: 24px;
+            margin-bottom: 50px;
+        }
+
+        .organisation-page h2 {
+            font-size: 1.55rem;
+        }
+
+        .organisation-page h3 {
+            margin-top: 30px;
+            font-size: 1.15rem;
+        }
+
+        .adresse-bureau {
+            flex-direction: column;
+        }
+
+    }
+
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<main class="organisation-page">
+
+    <h2>Votre organisation</h2>
+
+    <p>
+        L'objectif de cette partie est simple : faire de SP Terrain
+        votre point de départ sur Internet.
+    </p>
+
+    <p>
+        La prochaine page, « Commencer sur mon PC », vous permettra
+        de regrouper les liens que vous utilisez régulièrement :
+        agenda, messagerie, banque, Dashlane, YouTube, travail,
+        démarches administratives, santé, loisirs, projets...
+    </p>
+
+    <p>
+        SP Terrain ne se connectera pas à ces services et ne conservera
+        aucun de vos identifiants ou mots de passe. Cette page servira
+        uniquement de bureau personnel contenant les raccourcis que
+        vous aurez choisis.
+    </p>
+
+
+    <!-- ======================================================
+         CONFIGURATION DU NAVIGATEUR
+         ====================================================== -->
+
+    <h3>Faire de cette page votre point de départ</h3>
+
+    <p>
+        Vous pouvez configurer votre navigateur pour ouvrir automatiquement
+        votre bureau SP Terrain lorsque vous le lancez.
+    </p>
+
+    <div class="installation-bureau">
+
+        <button
+            type="button"
+            class="organisation-action"
+            id="configurer-navigateur"
+        >
+            Configurer mon navigateur
+        </button>
+
+
+        <div
+            id="aide-navigateur"
+            class="aide-navigateur"
+            hidden
+        >
+
+            <p id="instructions-navigateur"></p>
+
+            <label
+                for="adresse-bureau"
+                class="adresse-label"
+            >
+                Adresse de votre bureau :
+            </label>
+
+            <div class="adresse-bureau">
+
+                <input
+                    id="adresse-bureau"
+                    type="text"
+                    value="{{ request.scheme }}://{{ request.get_host }}{% url 'commencerpc' %}"
+                    readonly
+                >
+
+                <button
+                    type="button"
+                    id="copier-adresse"
+                    class="copier-adresse"
+                >
+                    Copier l'adresse
+                </button>
+
+            </div>
+
+            <p
+                id="copie-message"
+                class="copie-message"
+                aria-live="polite"
+            ></p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================================
+         FAVORIS
+         ====================================================== -->
+
+    <h3>La garder également dans la barre de favoris</h3>
+
+    <p>
+        Vous pouvez aussi ajouter cette page aux favoris et afficher
+        la barre de favoris de votre navigateur afin de conserver
+        votre bureau accessible en permanence.
+    </p>
+
+    <p>
+        Votre navigateur reste votre navigateur. SP Terrain devient
+        simplement la porte d'entrée vers les services que vous avez
+        choisi d'utiliser.<br>
+        <span style="color: var(--spt-turquoise, #008080);">
+            Mais à quoi ça ressemble ? Regardez ci-dessous...
+        </span>
+    </p>
+
+
+    <!-- ======================================================
+         OUVERTURE DU BUREAU
+         ====================================================== -->
+
+    <a
+        href="{% url 'commencerpc' %}"
+        class="organisation-action ouvrir-bureau"
+    >
+        Commencer sur mon PC
+    </a>
+
+</main>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const boutonConfiguration =
+        document.getElementById("configurer-navigateur");
+
+    const aideNavigateur =
+        document.getElementById("aide-navigateur");
+
+    const instructions =
+        document.getElementById("instructions-navigateur");
+
+    const boutonCopie =
+        document.getElementById("copier-adresse");
+
+    const adresseBureau =
+        document.getElementById("adresse-bureau");
+
+    const messageCopie =
+        document.getElementById("copie-message");
+
+
+    /* ==========================================================
+       DÉTECTION DU NAVIGATEUR
+       ========================================================== */
+
+    function detecterNavigateur() {
+
+        const userAgent = navigator.userAgent;
+
+        if (userAgent.includes("Edg/")) {
+            return "edge";
+        }
+
+        if (userAgent.includes("Firefox/")) {
+            return "firefox";
+        }
+
+        if (
+            userAgent.includes("Chrome/") &&
+            !userAgent.includes("Edg/")
+        ) {
+            return "chrome";
+        }
+
+        return "autre";
+    }
+
+
+    /* ==========================================================
+       INSTRUCTIONS
+       ========================================================== */
+
+    function afficherInstructions() {
+
+        const navigateur = detecterNavigateur();
+
+        if (navigateur === "chrome") {
+
+            instructions.innerHTML =
+                "<strong>Google Chrome détecté.</strong><br>" +
+                "Ouvrez les paramètres de Chrome, puis " +
+                "« Au démarrage ». Choisissez " +
+                "« Ouvrir une page ou un ensemble de pages spécifiques », " +
+                "puis ajoutez l'adresse de votre bureau ci-dessous.";
+
+        }
+
+        else if (navigateur === "edge") {
+
+            instructions.innerHTML =
+                "<strong>Microsoft Edge détecté.</strong><br>" +
+                "Ouvrez les paramètres d'Edge, recherchez les options " +
+                "de démarrage du navigateur, puis choisissez l'ouverture " +
+                "d'une ou plusieurs pages spécifiques. Ajoutez ensuite " +
+                "l'adresse de votre bureau ci-dessous.";
+
+        }
+
+        else if (navigateur === "firefox") {
+
+            instructions.innerHTML =
+                "<strong>Mozilla Firefox détecté.</strong><br>" +
+                "Ouvrez les paramètres de Firefox puis les réglages " +
+                "de la page d'accueil. Utilisez l'adresse de votre bureau " +
+                "ci-dessous comme page personnalisée.";
+
+        }
+
+        else {
+
+            instructions.innerHTML =
+                "<strong>Navigateur détecté.</strong><br>" +
+                "Recherchez dans ses paramètres les options " +
+                "« démarrage » ou « page d'accueil », puis utilisez " +
+                "l'adresse de votre bureau ci-dessous.";
+
+        }
+
+    }
+
+
+    /* ==========================================================
+       OUVRIR / FERMER L'AIDE
+       ========================================================== */
+
+    boutonConfiguration.addEventListener("click", function () {
+
+        if (aideNavigateur.hidden) {
+
+            afficherInstructions();
+
+            aideNavigateur.hidden = false;
+
+            boutonConfiguration.textContent =
+                "× Fermer les instructions";
+
+        }
+
+        else {
+
+            aideNavigateur.hidden = true;
+
+            boutonConfiguration.textContent =
+                "Configurer mon navigateur";
+
+        }
+
+    });
+
+
+    /* ==========================================================
+       COPIER L'ADRESSE
+       ========================================================== */
+
+    boutonCopie.addEventListener("click", async function () {
+
+        const adresse = adresseBureau.value;
+
+        try {
+
+            await navigator.clipboard.writeText(adresse);
+
+            messageCopie.textContent =
+                "Adresse copiée.";
+
+        }
+
+        catch (erreur) {
+
+            adresseBureau.focus();
+            adresseBureau.select();
+
+            messageCopie.textContent =
+                "Sélectionnez l'adresse puis copiez-la.";
+
+        }
+
+    });
+
+});
+
+</script>
+
+{% endblock %}
