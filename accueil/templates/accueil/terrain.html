@@ -43,7 +43,7 @@
     box-sizing: border-box;
 
     display: grid;
-    grid-template-columns: minmax(0, var(--map-width)) minmax(280px, var(--theme-column-width));
+    grid-template-columns: minmax(0, var(--map-width));
     column-gap: 42px;
     align-items: start;
     justify-content: center;
@@ -72,8 +72,8 @@
 
 .world-map-svg{
     flex: 0 0 auto;
-    width: 750px;
-    height: 470px;
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -86,6 +86,88 @@
     max-width: none;
     max-height: none;
     overflow: visible;
+}
+
+
+/* ==========================================================================
+   ZOOM & DÉPLACEMENT DE LA CARTE
+   Ajout sans modifier les dimensions responsive existantes.
+   ========================================================================== */
+.world-map-svg{
+    touch-action: none;
+    user-select: none;
+}
+
+.world-map-svg svg{
+    transform-origin: center center;
+    will-change: transform;
+}
+
+.map-controls{
+    position: absolute;
+    left: 14px;
+    top: 14px;
+    z-index: 20;
+    display: flex;
+    gap: 6px;
+}
+
+.map-control{
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    border: 1px solid rgba(33, 76, 53, .35);
+    border-radius: 8px;
+    background: rgba(255,255,255,.9);
+    color: #214C35;
+    font: inherit;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(33,76,53,.12);
+}
+
+.map-control:hover{
+    background: #ffffff;
+    border-color: rgba(33, 76, 53, .65);
+}
+
+.map-control:focus-visible{
+    outline: 3px solid #008080;
+    outline-offset: 2px;
+}
+
+.map-control-reset{
+    font-size: 16px;
+}
+
+.world-map-svg.is-draggable{
+    cursor: grab;
+}
+
+.world-map-svg.is-dragging{
+    cursor: grabbing;
+}
+
+@media (max-width: 620px){
+    .map-controls{
+        left: 10px;
+        top: 10px;
+        gap: 5px;
+    }
+
+    .map-control{
+        width: 32px;
+        height: 32px;
+        font-size: 18px;
+    }
+
+    .map-control-reset{
+        font-size: 15px;
+    }
 }
 
 .world-map-svg svg path{
@@ -251,11 +333,6 @@
     .terrain-layout{
         column-gap: 28px;
     }
-
-    .world-map-svg{
-        width: 660px;
-        height: 414px;
-    }
 }
 
 @media (max-width: 900px){
@@ -291,11 +368,6 @@
 
     .world-map{
         height: 310px;
-    }
-
-    .world-map-svg{
-        width: 590px;
-        height: 370px;
     }
 
     .health-global-intro{
@@ -347,6 +419,12 @@
             aria-label="Carte interactive du monde">
         </div>
 
+        <div class="map-controls" aria-label="Contrôles de la carte">
+            <button type="button" class="map-control" id="map-zoom-in" aria-label="Zoomer">+</button>
+            <button type="button" class="map-control" id="map-zoom-out" aria-label="Dézoomer">−</button>
+            <button type="button" class="map-control map-control-reset" id="map-reset" aria-label="Réinitialiser la carte">↺</button>
+        </div>
+
         <div class="health-global-intro">
             <h2>Comment se porte chaque pays ?</h2>
             <p>Une évaluation fondée sur sa santé globale.</p>
@@ -355,67 +433,6 @@
         <p class="map-instruction">
             Cliquez sur les différents pays de la carte.
         </p>
-    </div>
-
-    <div class="terrain-themes">
-
-        <div class="theme theme-sauver">
-            <div class="card secours">
-                <a class="terrain-action" href="{% url 'pompier' %}">
-                    Explorer
-                </a>
-            </div>
-
-            <div class="theme-copy">
-                <div class="theme-title sauver">SAUVER</div>
-                <div class="title">1er arrivé, 1er à servir</div>
-            </div>
-        </div>
-
-        <div class="theme theme-bouger">
-            <div class="card mouvement">
-                <a class="terrain-action" href="{% url 'karate' %}">
-                    Explorer
-                </a>
-            </div>
-
-            <div class="theme-copy">
-                <div class="theme-title bouger">BOUGER</div>
-                <div class="title">Everybody Was Kung Fu Fighting</div>
-            </div>
-        </div>
-
-        <div class="theme theme-manger">
-            <div class="card alimentation">
-                <a class="terrain-action" href="{% url 'miam' %}">
-                    Explorer
-                </a>
-            </div>
-
-            <div class="theme-copy">
-                <div class="theme-title manger">MANGER</div>
-                <div class="title">J'ai faim !</div>
-            </div>
-        </div>
-
-        <div class="theme theme-sedebrouiller">
-            <div class="card sedebrouiller">
-                <a class="terrain-action" href="{% url 'sedebrouiller' %}">
-                    Explorer
-                </a>
-            </div>
-
-            <div class="theme-copy">
-                <div class="theme-title sedebrouiller-title">
-                    Réduire sa charge mentale
-                </div>
-
-                <div class="title">
-                    Prendre soin de son «mentale» pour influer sur son «physique».
-                </div>
-            </div>
-        </div>
-
     </div>
 
 </div>
@@ -512,6 +529,313 @@ document.addEventListener("DOMContentLoaded", function(){
                 "aria-label",
                 "Carte interactive du monde"
             );
+
+            /* ==============================================================
+               ZOOM / PAN
+               - Molette sur ordinateur
+               - Pinch à deux doigts sur écran tactile
+               - Déplacement lorsque la carte est zoomée
+               - Boutons + / − / réinitialisation
+               ============================================================== */
+
+            const zoomInButton = document.getElementById("map-zoom-in");
+            const zoomOutButton = document.getElementById("map-zoom-out");
+            const resetButton = document.getElementById("map-reset");
+
+            const MIN_SCALE = 1;
+            const MAX_SCALE = 5;
+            const ZOOM_STEP = 0.35;
+
+            let scale = 1;
+            let translateX = 0;
+            let translateY = 0;
+
+            let pointers = new Map();
+            let dragStart = null;
+            let pinchStart = null;
+            let movedDuringGesture = false;
+            let suppressCountryClick = false;
+
+            function clamp(value, min, max){
+                return Math.min(max, Math.max(min, value));
+            }
+
+            function applyTransform(){
+                svg.style.transform =
+                    `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+
+                mapContainer.classList.toggle(
+                    "is-draggable",
+                    scale > MIN_SCALE
+                );
+            }
+
+            function resetMap(){
+                scale = 1;
+                translateX = 0;
+                translateY = 0;
+                applyTransform();
+            }
+
+            function zoomAt(newScale, clientX, clientY){
+                const rect = mapContainer.getBoundingClientRect();
+
+                const oldScale = scale;
+                newScale = clamp(newScale, MIN_SCALE, MAX_SCALE);
+
+                if(newScale === oldScale){
+                    return;
+                }
+
+                const pointX = clientX - rect.left - rect.width / 2;
+                const pointY = clientY - rect.top - rect.height / 2;
+
+                const ratio = newScale / oldScale;
+
+                translateX =
+                    pointX - (pointX - translateX) * ratio;
+
+                translateY =
+                    pointY - (pointY - translateY) * ratio;
+
+                scale = newScale;
+
+                if(scale === MIN_SCALE){
+                    translateX = 0;
+                    translateY = 0;
+                }
+
+                applyTransform();
+            }
+
+            function zoomFromCenter(delta){
+                const rect = mapContainer.getBoundingClientRect();
+
+                zoomAt(
+                    scale + delta,
+                    rect.left + rect.width / 2,
+                    rect.top + rect.height / 2
+                );
+            }
+
+            mapContainer.addEventListener(
+                "wheel",
+                function(event){
+                    event.preventDefault();
+
+                    const direction =
+                        event.deltaY < 0 ? ZOOM_STEP : -ZOOM_STEP;
+
+                    zoomAt(
+                        scale + direction,
+                        event.clientX,
+                        event.clientY
+                    );
+                },
+                { passive: false }
+            );
+
+            if(zoomInButton){
+                zoomInButton.addEventListener(
+                    "click",
+                    function(){
+                        zoomFromCenter(ZOOM_STEP);
+                    }
+                );
+            }
+
+            if(zoomOutButton){
+                zoomOutButton.addEventListener(
+                    "click",
+                    function(){
+                        zoomFromCenter(-ZOOM_STEP);
+                    }
+                );
+            }
+
+            if(resetButton){
+                resetButton.addEventListener(
+                    "click",
+                    resetMap
+                );
+            }
+
+            function pointerDistance(a, b){
+                const dx = b.clientX - a.clientX;
+                const dy = b.clientY - a.clientY;
+                return Math.hypot(dx, dy);
+            }
+
+            function pointerMidpoint(a, b){
+                return {
+                    x: (a.clientX + b.clientX) / 2,
+                    y: (a.clientY + b.clientY) / 2
+                };
+            }
+
+            mapContainer.addEventListener(
+                "pointerdown",
+                function(event){
+
+                    pointers.set(event.pointerId, event);
+
+                    try{
+                        mapContainer.setPointerCapture(event.pointerId);
+                    }catch(error){
+                        /* Certains navigateurs peuvent refuser la capture. */
+                    }
+
+                    movedDuringGesture = false;
+
+                    if(pointers.size === 1){
+                        dragStart = {
+                            clientX: event.clientX,
+                            clientY: event.clientY,
+                            translateX,
+                            translateY
+                        };
+                        pinchStart = null;
+                    }
+
+                    if(pointers.size === 2){
+                        const values = Array.from(pointers.values());
+                        const midpoint =
+                            pointerMidpoint(values[0], values[1]);
+
+                        pinchStart = {
+                            distance:
+                                pointerDistance(values[0], values[1]),
+                            scale,
+                            midpointX: midpoint.x,
+                            midpointY: midpoint.y
+                        };
+
+                        dragStart = null;
+                    }
+                }
+            );
+
+            mapContainer.addEventListener(
+                "pointermove",
+                function(event){
+
+                    if(!pointers.has(event.pointerId)){
+                        return;
+                    }
+
+                    pointers.set(event.pointerId, event);
+
+                    if(pointers.size === 2 && pinchStart){
+                        const values = Array.from(pointers.values());
+
+                        const distance =
+                            pointerDistance(values[0], values[1]);
+
+                        const midpoint =
+                            pointerMidpoint(values[0], values[1]);
+
+                        if(pinchStart.distance > 0){
+                            const targetScale =
+                                pinchStart.scale *
+                                (distance / pinchStart.distance);
+
+                            zoomAt(
+                                targetScale,
+                                midpoint.x,
+                                midpoint.y
+                            );
+                        }
+
+                        movedDuringGesture = true;
+                        mapContainer.classList.add("is-dragging");
+                        return;
+                    }
+
+                    if(
+                        pointers.size === 1 &&
+                        dragStart &&
+                        scale > MIN_SCALE
+                    ){
+                        const dx =
+                            event.clientX - dragStart.clientX;
+
+                        const dy =
+                            event.clientY - dragStart.clientY;
+
+                        if(Math.hypot(dx, dy) > 5){
+                            movedDuringGesture = true;
+                        }
+
+                        translateX =
+                            dragStart.translateX + dx;
+
+                        translateY =
+                            dragStart.translateY + dy;
+
+                        applyTransform();
+                        mapContainer.classList.add("is-dragging");
+                    }
+                }
+            );
+
+            function endPointer(event){
+
+                pointers.delete(event.pointerId);
+
+                if(movedDuringGesture){
+                    suppressCountryClick = true;
+                }
+
+                mapContainer.classList.remove("is-dragging");
+
+                if(pointers.size === 1){
+                    const remaining =
+                        Array.from(pointers.values())[0];
+
+                    dragStart = {
+                        clientX: remaining.clientX,
+                        clientY: remaining.clientY,
+                        translateX,
+                        translateY
+                    };
+
+                    pinchStart = null;
+                }else{
+                    dragStart = null;
+                    pinchStart = null;
+                }
+            }
+
+            mapContainer.addEventListener(
+                "pointerup",
+                endPointer
+            );
+
+            mapContainer.addEventListener(
+                "pointercancel",
+                endPointer
+            );
+
+            /*
+            Empêche l'ouverture accidentelle d'un pays lorsque l'utilisateur
+            vient simplement de déplacer ou pincer la carte.
+            */
+            svg.addEventListener(
+                "click",
+                function(event){
+
+                    if(!suppressCountryClick){
+                        return;
+                    }
+
+                    event.preventDefault();
+                    event.stopPropagation();
+                    suppressCountryClick = false;
+                },
+                true
+            );
+
+            applyTransform();
 
             const countries = svg.querySelectorAll("path");
 

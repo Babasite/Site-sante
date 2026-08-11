@@ -3,8 +3,8 @@
 {% block logo_return %}{% url 'home' %}{% endblock %}
 {% load static %}
 
-{% block title %}Outils santé{% endblock %}
-{% block page_title %}Calculateurs & repères cliniques{% endblock %}
+{% block title %}Conseils & Tests{% endblock %}
+{% block page_title %}Conseils & Tests{% endblock %}
 {% block header_actions %}{% endblock %}
 
 {% block extra_css %}<style>
@@ -464,56 +464,185 @@
     }
 }
 
+
+/* =========================
+   Groupes éditoriaux
+   ========================= */
+
+.tools-section{
+    margin-top: 30px;
+}
+
+.tools-section:first-child{
+    margin-top: 0;
+}
+
+.tools-section-title{
+    margin: 0 0 6px;
+    color: var(--spt-vert-fonce);
+    font-family: var(--font-family-title);
+    font-size: clamp(1.3rem, 2vw, 1.65rem);
+    line-height: 1.25;
+}
+
+.tools-section-intro{
+    margin: 0 0 14px;
+    max-width: 760px;
+    color: var(--spt-texte);
+    font-size: .98rem;
+    line-height: 1.55;
+}
+
+@media(max-width:700px){
+    .tools-section{
+        margin-top: 24px;
+    }
+}
+
+
+/* Pastilles illustrées héritées de Terrain */
+.tool-image{
+    width:72px;
+    height:72px;
+    border:2px solid rgba(33,76,53,.35);
+    border-radius:50%;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size:cover;
+    box-shadow:0 5px 14px rgba(33,76,53,.13);
+    transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
+}
+
+.tool-link:hover .tool-image{
+    transform:translateY(-2px);
+    border-color:rgba(33,76,53,.65);
+    box-shadow:0 8px 18px rgba(33,76,53,.17);
+}
+
+.tool-image-secours{
+    background-image:url("{% static 'accueil/images/pompier.webp' %}");
+}
+
+.tool-image-mouvement{
+    background-image:url("{% static 'accueil/images/karate.webp' %}");
+}
+
+.tool-image-alimentation{
+    background-image:url("{% static 'accueil/images/miam.webp' %}");
+}
+
+.tool-image-mental{
+    background-image:url("{% static 'accueil/images/sedebrouiller.webp' %}");
+}
+
+/* Les quatre conseils utilisent une pastille plus grande que les icônes des outils. */
+.tool-link:has(.tool-image){
+    grid-template-columns:72px minmax(0,1fr) auto;
+    gap:18px;
+}
+
+@media(max-width:700px){
+    .tool-image{
+        width:62px;
+        height:62px;
+    }
+
+    .tool-link:has(.tool-image){
+        grid-template-columns:62px minmax(0,1fr) auto;
+        gap:14px;
+    }
+}
+
+@media(max-width:480px){
+    .tool-image{
+        width:56px;
+        height:56px;
+    }
+
+    .tool-link:has(.tool-image){
+        grid-template-columns:56px minmax(0,1fr);
+    }
+}
+
 </style>{% endblock %}
 
 {% block content %}
 <main class="container">
 
-        <nav
-            class="tools-list"
-            aria-label="Outils santé"
-        >
+    <section class="tools-section" aria-labelledby="prendre-soin-title">
+        <h2 id="prendre-soin-title" class="tools-section-title">Prendre soin de soi</h2>
+        <p class="tools-section-intro">
+            Des conseils pratiques autour des gestes utiles, du mouvement,
+            de l'alimentation et de l'équilibre au quotidien.
+        </p>
 
-            <a
-                class="tool-link"
-                href="{% url 'check_up_rapide' %}"
-            >
-                <div
-                    class="tool-icon"
-                    aria-hidden="true"
-                >
+        <nav class="tools-list" aria-label="Conseils santé">
+
+            <a class="tool-link" href="{% url 'pompier' %}">
+                <div class="tool-image tool-image-secours" aria-hidden="true"></div>
+                <div class="tool-content">
+                    <h3>SAUVER</h3>
+                    <p>1er arrivé, 1er à servir</p>
+                </div>
+                <span class="tool-arrow" aria-hidden="true">→</span>
+            </a>
+
+            <a class="tool-link" href="{% url 'karate' %}">
+                <div class="tool-image tool-image-mouvement" aria-hidden="true"></div>
+                <div class="tool-content">
+                    <h3>BOUGER</h3>
+                    <p>Everybody Was Kung Fu Fighting</p>
+                </div>
+                <span class="tool-arrow" aria-hidden="true">→</span>
+            </a>
+
+            <a class="tool-link" href="{% url 'miam' %}">
+                <div class="tool-image tool-image-alimentation" aria-hidden="true"></div>
+                <div class="tool-content">
+                    <h3>MANGER</h3>
+                    <p>J'ai faim !</p>
+                </div>
+                <span class="tool-arrow" aria-hidden="true">→</span>
+            </a>
+
+            <a class="tool-link" href="{% url 'sedebrouiller' %}">
+                <div class="tool-image tool-image-mental" aria-hidden="true"></div>
+                <div class="tool-content">
+                    <h3>Réduire sa charge mentale</h3>
+                    <p>Prendre soin de son « mentale » pour influer sur son « physique ».</p>
+                </div>
+                <span class="tool-arrow" aria-hidden="true">→</span>
+            </a>
+
+        </nav>
+    </section>
+
+    <section class="tools-section" aria-labelledby="comprendre-title">
+        <h2 id="comprendre-title" class="tools-section-title">Se situer et comprendre</h2>
+        <p class="tools-section-intro">
+            Des tests, scores et outils pour obtenir des repères et mieux
+            comprendre certaines informations de santé.
+        </p>
+
+        <nav class="tools-list" aria-label="Tests et outils santé">
+
+            <a class="tool-link" href="{% url 'check_up_rapide' %}">
+                <div class="tool-icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="9"></circle>
                         <path d="M12 7v10"></path>
                         <path d="M7 12h10"></path>
                     </svg>
                 </div>
-
                 <div class="tool-content">
                     <h3>Check-up rapide</h3>
-
-                    <p>
-                        Réalisez un premier bilan de vos habitudes quotidiennes
-                        en quelques minutes.
-                    </p>
+                    <p>Réalisez un premier bilan de vos habitudes quotidiennes en quelques minutes.</p>
                 </div>
-
-                <span
-                    class="tool-arrow"
-                    aria-hidden="true"
-                >
-                    →
-                </span>
+                <span class="tool-arrow" aria-hidden="true">→</span>
             </a>
 
-            <a
-                class="tool-link"
-                href="{% url 'suivi_personnalise' %}"
-            >
-                <div
-                    class="tool-icon"
-                    aria-hidden="true"
-                >
+            <a class="tool-link" href="{% url 'suivi_personnalise' %}">
+                <div class="tool-icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24">
                         <path d="M4 19V9"></path>
                         <path d="M10 19V5"></path>
@@ -521,32 +650,15 @@
                         <path d="M22 19H2"></path>
                     </svg>
                 </div>
-
                 <div class="tool-content">
                     <h3>Scores & échelles</h3>
-
-                    <p>
-                        Accédez à une analyse plus complète et suivez votre
-                        évolution dans le temps.
-                    </p>
+                    <p>Accédez à une analyse plus complète et suivez votre évolution dans le temps.</p>
                 </div>
-
-                <span
-                    class="tool-arrow"
-                    aria-hidden="true"
-                >
-                    →
-                </span>
+                <span class="tool-arrow" aria-hidden="true">→</span>
             </a>
 
-            <a
-                class="tool-link"
-                href="{% url 'healthcompare' %}"
-            >
-                <div
-                    class="tool-icon"
-                    aria-hidden="true"
-                >
+            <a class="tool-link" href="{% url 'healthcompare' %}">
+                <div class="tool-icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24">
                         <path d="M12 3v18"></path>
                         <path d="M6 6h12"></path>
@@ -555,31 +667,21 @@
                         <path d="M8 21h8"></path>
                     </svg>
                 </div>
-
                 <div class="tool-content">
                     <h3>HealthCompare</h3>
-
-                    <p>
-                        Comparez deux maladies, symptômes, traitements ou
-                        examens médicaux à partir de sources documentées.
-                    </p>
+                    <p>Comparez deux maladies, symptômes, traitements ou examens médicaux à partir de sources documentées.</p>
                 </div>
-
-                <span
-                    class="tool-arrow"
-                    aria-hidden="true"
-                >
-                    →
-                </span>
+                <span class="tool-arrow" aria-hidden="true">→</span>
             </a>
 
         </nav>
+    </section>
 
-        <aside class="information">
-            <strong>Information importante :</strong>
-            ces outils ont une finalité informative et préventive. Ils ne
-            remplacent pas un avis, un examen ou un diagnostic médical.
-        </aside>
+    <aside class="information">
+        <strong>Information importante :</strong>
+        ces contenus et outils ont une finalité informative et préventive.
+        Ils ne remplacent pas un avis, un examen ou un diagnostic médical.
+    </aside>
 
-    </main>
+</main>
 {% endblock %}
