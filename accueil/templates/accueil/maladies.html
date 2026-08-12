@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Base maladies — HealthCompare</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:980px;margin:40px auto;padding:0 20px;color:#172033}
+.notice{background:#fff7ed;border:1px solid #fed7aa;border-radius:14px;padding:16px;line-height:1.5}
+.meta{color:#64748b}
+.maladie{padding:14px 0;border-bottom:1px solid #e5e7eb}
+.maladie h2{font-size:1.05rem;margin:0 0 4px}
+.maladie p{margin:0;color:#64748b}
+</style>
+</head>
+<body>
+<h1>Base maladies — HealthCompare</h1>
+<p class="meta">100 affections courantes · 20 dimensions · scores ordinaux 0–3.</p>
+<div class="notice">
+<strong>Important :</strong> cette V1 est une base éditoriale destinée à la visualisation comparative.
+Les scores 0–3 ne sont ni des probabilités, ni des poids diagnostiques validés, ni un dispositif médical.
+Il n’existe pas de classement universel unique des « 100 maladies les plus fréquentes » applicable à toute population.
+La sélection regroupe 100 affections courantes et utiles pour une V1 française. Avant publication médicale,
+chaque profil doit être validé et sourcé pathologie par pathologie.
+</div>
+
+<!--
+Ordre exact des 20 scores :
+1. Prévalence, 2. Âge, 3. Sexe, 4. Antécédents, 5. Facteurs de risque, 6. Début / évolution, 7. Douleur, 8. Fièvre, 9. Symptômes généraux, 10. Symptômes caractéristiques, 11. Tension artérielle, 12. Fréquence cardiaque, 13. Fréquence respiratoire, 14. SpO₂, 15. Température, 16. Examen clinique, 17. Biologie, 18. Imagerie, 19. Tests spécifiques, 20. Urgence sans autre information
+Échelle : 0 faible/peu pertinent · 1 secondaire · 2 important · 3 majeur.
+-->
+
+<section id="maladies">
+  <article class="maladie"
+    data-maladie="Hypertension artérielle"
+    data-symptomes="souvent asymptomatique, céphalées parfois"
+    data-healthcompare='[3, 3, 2, 3, 3, 1, 0, 0, 0, 1, 3, 2, 1, 0, 0, 2, 2, 1, 2, 1]'>
+    <h2>Hypertension artérielle</h2>
+    <p class="symptomes">souvent asymptomatique, céphalées parfois</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Rhinopharyngite"
+    data-symptomes="nez bouché, écoulement nasal, mal de gorge, toux, fièvre"
+    data-healthcompare='[3, 1, 0, 1, 1, 2, 1, 2, 2, 3, 0, 1, 1, 0, 2, 2, 0, 0, 1, 0]'>
+    <h2>Rhinopharyngite</h2>
+    <p class="symptomes">nez bouché, écoulement nasal, mal de gorge, toux, fièvre</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Rhume"
+    data-symptomes="nez bouché, rhinorrhée, éternuements, mal de gorge, toux"
+    data-healthcompare='[3, 1, 0, 0, 1, 2, 0, 1, 1, 3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0]'>
+    <h2>Rhume</h2>
+    <p class="symptomes">nez bouché, rhinorrhée, éternuements, mal de gorge, toux</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Grippe"
+    data-symptomes="fièvre, courbatures, fatigue, toux, céphalées"
+    data-healthcompare='[3, 2, 0, 2, 2, 3, 2, 3, 3, 3, 0, 2, 2, 1, 3, 2, 1, 0, 2, 1]'>
+    <h2>Grippe</h2>
+    <p class="symptomes">fièvre, courbatures, fatigue, toux, céphalées</p>
+  </article>
+  <article class="maladie"
+    data-maladie="COVID-19"
+    data-symptomes="fièvre, toux, fatigue, mal de gorge, dyspnée, anosmie"
+    data-healthcompare='[3, 2, 0, 2, 3, 3, 1, 3, 3, 3, 1, 2, 3, 3, 3, 2, 1, 1, 3, 1]'>
+    <h2>COVID-19</h2>
+    <p class="symptomes">fièvre, toux, fatigue, mal de gorge, dyspnée, anosmie</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Gastro-entérite aiguë"
+    data-symptomes="diarrhée, vomissements, douleurs abdominales, fièvre"
+    data-healthcompare='[3, 2, 0, 2, 2, 3, 2, 2, 3, 3, 2, 2, 1, 0, 2, 2, 2, 0, 2, 1]'>
+    <h2>Gastro-entérite aiguë</h2>
+    <p class="symptomes">diarrhée, vomissements, douleurs abdominales, fièvre</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Reflux gastro-œsophagien"
+    data-symptomes="brûlures d&#x27;estomac, remontées acides, douleur thoracique"
+    data-healthcompare='[3, 2, 1, 2, 3, 2, 2, 0, 0, 3, 0, 0, 0, 0, 0, 2, 0, 1, 2, 0]'>
+    <h2>Reflux gastro-œsophagien</h2>
+    <p class="symptomes">brûlures d&#x27;estomac, remontées acides, douleur thoracique</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Constipation"
+    data-symptomes="selles rares, selles dures, ballonnement, douleur abdominale"
+    data-healthcompare='[3, 3, 1, 3, 3, 2, 2, 0, 1, 3, 0, 0, 0, 0, 0, 2, 1, 1, 1, 0]'>
+    <h2>Constipation</h2>
+    <p class="symptomes">selles rares, selles dures, ballonnement, douleur abdominale</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Diarrhée aiguë"
+    data-symptomes="selles liquides, crampes abdominales, nausées, fièvre"
+    data-healthcompare='[3, 2, 0, 2, 2, 3, 2, 2, 2, 3, 1, 2, 1, 0, 2, 2, 2, 0, 2, 1]'>
+    <h2>Diarrhée aiguë</h2>
+    <p class="symptomes">selles liquides, crampes abdominales, nausées, fièvre</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Syndrome de l&#x27;intestin irritable"
+    data-symptomes="douleur abdominale, ballonnement, diarrhée, constipation"
+    data-healthcompare='[3, 2, 2, 2, 2, 2, 3, 0, 1, 3, 0, 0, 0, 0, 0, 2, 1, 0, 1, 0]'>
+    <h2>Syndrome de l&#x27;intestin irritable</h2>
+    <p class="symptomes">douleur abdominale, ballonnement, diarrhée, constipation</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Hémorroïdes"
+    data-symptomes="saignement anal, douleur, démangeaisons, gêne anale"
+    data-healthcompare='[3, 2, 1, 2, 3, 2, 3, 0, 0, 3, 0, 0, 0, 0, 0, 3, 1, 0, 2, 0]'>
+    <h2>Hémorroïdes</h2>
+    <p class="symptomes">saignement anal, douleur, démangeaisons, gêne anale</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Dyspepsie fonctionnelle"
+    data-symptomes="douleur épigastrique, satiété précoce, ballonnement, nausées"
+    data-healthcompare='[2, 2, 1, 2, 2, 2, 2, 0, 1, 3, 0, 0, 0, 0, 0, 2, 1, 1, 2, 0]'>
+    <h2>Dyspepsie fonctionnelle</h2>
+    <p class="symptomes">douleur épigastrique, satiété précoce, ballonnement, nausées</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Gastrite"
+    data-symptomes="douleur épigastrique, nausées, vomissements, brûlures"
+    data-healthcompare='[2, 2, 0, 2, 3, 2, 3, 0, 1, 3, 0, 1, 0, 0, 0, 2, 2, 1, 3, 1]'>
+    <h2>Gastrite</h2>
+    <p class="symptomes">douleur épigastrique, nausées, vomissements, brûlures</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Ulcère gastro-duodénal"
+    data-symptomes="douleur épigastrique, brûlure, nausées, saignement digestif"
+    data-healthcompare='[2, 2, 0, 2, 3, 2, 3, 0, 1, 3, 1, 2, 1, 0, 0, 3, 2, 2, 3, 2]'>
+    <h2>Ulcère gastro-duodénal</h2>
+    <p class="symptomes">douleur épigastrique, brûlure, nausées, saignement digestif</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Lithiase biliaire"
+    data-symptomes="douleur sous les côtes à droite, nausées, douleur après repas"
+    data-healthcompare='[2, 2, 2, 2, 3, 3, 3, 1, 1, 3, 0, 1, 0, 0, 1, 3, 2, 3, 2, 2]'>
+    <h2>Lithiase biliaire</h2>
+    <p class="symptomes">douleur sous les côtes à droite, nausées, douleur après repas</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Infection urinaire basse"
+    data-symptomes="brûlures urinaires, envies fréquentes, douleur pelvienne"
+    data-healthcompare='[3, 2, 3, 3, 3, 3, 2, 1, 1, 3, 0, 1, 0, 0, 1, 2, 3, 0, 3, 1]'>
+    <h2>Infection urinaire basse</h2>
+    <p class="symptomes">brûlures urinaires, envies fréquentes, douleur pelvienne</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Pyélonéphrite"
+    data-symptomes="fièvre, douleur lombaire, brûlures urinaires, frissons"
+    data-healthcompare='[2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 1, 2, 2, 1, 3, 3, 3, 2, 3, 2]'>
+    <h2>Pyélonéphrite</h2>
+    <p class="symptomes">fièvre, douleur lombaire, brûlures urinaires, frissons</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Lithiase urinaire"
+    data-symptomes="colique néphrétique, douleur lombaire intense, sang dans les urines"
+    data-healthcompare='[2, 2, 2, 3, 3, 3, 3, 0, 2, 3, 1, 2, 1, 0, 0, 3, 2, 3, 2, 2]'>
+    <h2>Lithiase urinaire</h2>
+    <p class="symptomes">colique néphrétique, douleur lombaire intense, sang dans les urines</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Hyperplasie bénigne de la prostate"
+    data-symptomes="jet urinaire faible, envies fréquentes, nycturie, rétention"
+    data-healthcompare='[2, 3, 3, 2, 2, 2, 1, 0, 1, 3, 0, 0, 0, 0, 0, 3, 2, 2, 2, 1]'>
+    <h2>Hyperplasie bénigne de la prostate</h2>
+    <p class="symptomes">jet urinaire faible, envies fréquentes, nycturie, rétention</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Dysménorrhée"
+    data-symptomes="règles douloureuses, crampes pelviennes, nausées"
+    data-healthcompare='[3, 2, 3, 2, 2, 3, 3, 0, 2, 3, 0, 1, 0, 0, 0, 2, 0, 1, 1, 0]'>
+    <h2>Dysménorrhée</h2>
+    <p class="symptomes">règles douloureuses, crampes pelviennes, nausées</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Candidose vaginale"
+    data-symptomes="démangeaisons, pertes blanches, brûlures vulvaires"
+    data-healthcompare='[3, 2, 3, 2, 3, 2, 1, 0, 0, 3, 0, 0, 0, 0, 0, 3, 0, 0, 3, 0]'>
+    <h2>Candidose vaginale</h2>
+    <p class="symptomes">démangeaisons, pertes blanches, brûlures vulvaires</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Vaginose bactérienne"
+    data-symptomes="pertes vaginales, odeur, gêne vaginale"
+    data-healthcompare='[3, 2, 3, 2, 3, 2, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 0, 0, 3, 0]'>
+    <h2>Vaginose bactérienne</h2>
+    <p class="symptomes">pertes vaginales, odeur, gêne vaginale</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Endométriose"
+    data-symptomes="douleurs pelviennes, règles douloureuses, douleur rapports, infertilité"
+    data-healthcompare='[2, 2, 3, 3, 2, 2, 3, 0, 2, 3, 0, 0, 0, 0, 0, 3, 1, 3, 2, 0]'>
+    <h2>Endométriose</h2>
+    <p class="symptomes">douleurs pelviennes, règles douloureuses, douleur rapports, infertilité</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Migraine"
+    data-symptomes="céphalée pulsatile, nausées, photophobie, aura"
+    data-healthcompare='[3, 2, 3, 3, 3, 3, 3, 0, 2, 3, 1, 1, 0, 0, 0, 3, 1, 1, 1, 1]'>
+    <h2>Migraine</h2>
+    <p class="symptomes">céphalée pulsatile, nausées, photophobie, aura</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Céphalée de tension"
+    data-symptomes="mal de tête en étau, douleur bilatérale, tension cervicale"
+    data-healthcompare='[3, 2, 1, 2, 3, 2, 3, 0, 1, 3, 1, 0, 0, 0, 0, 2, 0, 0, 0, 0]'>
+    <h2>Céphalée de tension</h2>
+    <p class="symptomes">mal de tête en étau, douleur bilatérale, tension cervicale</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Vertige positionnel paroxystique bénin"
+    data-symptomes="vertige bref déclenché par position, nausées"
+    data-healthcompare='[2, 3, 1, 2, 2, 3, 1, 0, 1, 3, 1, 1, 0, 0, 0, 3, 0, 0, 3, 1]'>
+    <h2>Vertige positionnel paroxystique bénin</h2>
+    <p class="symptomes">vertige bref déclenché par position, nausées</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Insomnie"
+    data-symptomes="difficulté d&#x27;endormissement, réveils nocturnes, fatigue"
+    data-healthcompare='[3, 2, 2, 3, 3, 2, 0, 0, 3, 3, 0, 0, 0, 0, 0, 2, 1, 0, 1, 0]'>
+    <h2>Insomnie</h2>
+    <p class="symptomes">difficulté d&#x27;endormissement, réveils nocturnes, fatigue</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Trouble anxieux généralisé"
+    data-symptomes="anxiété, inquiétude, tension, insomnie, palpitations"
+    data-healthcompare='[3, 2, 2, 3, 3, 2, 1, 0, 3, 3, 1, 2, 1, 0, 0, 2, 1, 0, 1, 0]'>
+    <h2>Trouble anxieux généralisé</h2>
+    <p class="symptomes">anxiété, inquiétude, tension, insomnie, palpitations</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Dépression"
+    data-symptomes="tristesse, perte d&#x27;intérêt, fatigue, troubles du sommeil"
+    data-healthcompare='[3, 2, 2, 3, 3, 2, 1, 0, 3, 3, 0, 0, 0, 0, 0, 3, 2, 0, 2, 1]'>
+    <h2>Dépression</h2>
+    <p class="symptomes">tristesse, perte d&#x27;intérêt, fatigue, troubles du sommeil</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Trouble panique"
+    data-symptomes="crises d&#x27;angoisse, palpitations, dyspnée, douleur thoracique"
+    data-healthcompare='[2, 2, 2, 3, 3, 3, 2, 0, 3, 3, 2, 3, 2, 2, 0, 3, 1, 0, 2, 2]'>
+    <h2>Trouble panique</h2>
+    <p class="symptomes">crises d&#x27;angoisse, palpitations, dyspnée, douleur thoracique</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Asthme"
+    data-symptomes="sifflements, dyspnée, toux, oppression thoracique"
+    data-healthcompare='[3, 2, 1, 3, 3, 3, 2, 1, 2, 3, 1, 3, 3, 3, 1, 3, 1, 1, 3, 2]'>
+    <h2>Asthme</h2>
+    <p class="symptomes">sifflements, dyspnée, toux, oppression thoracique</p>
+  </article>
+  <article class="maladie"
+    data-maladie="BPCO"
+    data-symptomes="dyspnée chronique, toux, expectoration, exacerbations"
+    data-healthcompare='[2, 3, 1, 3, 3, 2, 1, 1, 3, 3, 1, 2, 3, 3, 1, 3, 2, 3, 3, 2]'>
+    <h2>BPCO</h2>
+    <p class="symptomes">dyspnée chronique, toux, expectoration, exacerbations</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Bronchite aiguë"
+    data-symptomes="toux, expectoration, gêne thoracique, fièvre légère"
+    data-healthcompare='[3, 2, 0, 2, 3, 3, 2, 2, 2, 3, 0, 2, 2, 1, 2, 2, 1, 0, 1, 1]'>
+    <h2>Bronchite aiguë</h2>
+    <p class="symptomes">toux, expectoration, gêne thoracique, fièvre légère</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Pneumonie"
+    data-symptomes="fièvre, toux, dyspnée, douleur thoracique, frissons"
+    data-healthcompare='[2, 3, 1, 3, 3, 3, 2, 3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 3, 2, 3]'>
+    <h2>Pneumonie</h2>
+    <p class="symptomes">fièvre, toux, dyspnée, douleur thoracique, frissons</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Sinusite aiguë"
+    data-symptomes="douleur faciale, nez bouché, écoulement nasal, fièvre"
+    data-healthcompare='[3, 2, 0, 2, 2, 3, 3, 2, 2, 3, 0, 1, 0, 0, 2, 3, 0, 1, 1, 1]'>
+    <h2>Sinusite aiguë</h2>
+    <p class="symptomes">douleur faciale, nez bouché, écoulement nasal, fièvre</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Rhinite allergique"
+    data-symptomes="éternuements, nez qui coule, nez bouché, yeux qui grattent"
+    data-healthcompare='[3, 2, 0, 3, 3, 2, 0, 0, 1, 3, 0, 0, 0, 0, 0, 2, 0, 0, 2, 0]'>
+    <h2>Rhinite allergique</h2>
+    <p class="symptomes">éternuements, nez qui coule, nez bouché, yeux qui grattent</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Pharyngite"
+    data-symptomes="mal de gorge, douleur à la déglutition, fièvre"
+    data-healthcompare='[3, 2, 0, 2, 2, 3, 3, 2, 2, 3, 0, 2, 1, 0, 2, 3, 1, 0, 3, 1]'>
+    <h2>Pharyngite</h2>
+    <p class="symptomes">mal de gorge, douleur à la déglutition, fièvre</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Angine streptococcique"
+    data-symptomes="mal de gorge, fièvre, ganglions, douleur à la déglutition"
+    data-healthcompare='[2, 2, 0, 2, 2, 3, 3, 3, 2, 3, 0, 2, 1, 0, 3, 3, 1, 0, 3, 1]'>
+    <h2>Angine streptococcique</h2>
+    <p class="symptomes">mal de gorge, fièvre, ganglions, douleur à la déglutition</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Otite moyenne aiguë"
+    data-symptomes="douleur oreille, fièvre, baisse audition"
+    data-healthcompare='[3, 1, 0, 2, 2, 3, 3, 2, 2, 3, 0, 1, 0, 0, 2, 3, 0, 0, 2, 1]'>
+    <h2>Otite moyenne aiguë</h2>
+    <p class="symptomes">douleur oreille, fièvre, baisse audition</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Otite externe"
+    data-symptomes="douleur oreille, démangeaisons, écoulement auriculaire"
+    data-healthcompare='[2, 2, 0, 2, 3, 3, 3, 0, 1, 3, 0, 0, 0, 0, 0, 3, 0, 0, 1, 1]'>
+    <h2>Otite externe</h2>
+    <p class="symptomes">douleur oreille, démangeaisons, écoulement auriculaire</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Conjonctivite"
+    data-symptomes="œil rouge, écoulement, démangeaisons, larmoiement"
+    data-healthcompare='[3, 2, 0, 2, 2, 3, 1, 0, 0, 3, 0, 0, 0, 0, 0, 3, 0, 0, 1, 0]'>
+    <h2>Conjonctivite</h2>
+    <p class="symptomes">œil rouge, écoulement, démangeaisons, larmoiement</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Sécheresse oculaire"
+    data-symptomes="yeux secs, brûlures, sensation de sable, vision fluctuante"
+    data-healthcompare='[3, 3, 2, 3, 3, 2, 1, 0, 0, 3, 0, 0, 0, 0, 0, 3, 0, 0, 2, 0]'>
+    <h2>Sécheresse oculaire</h2>
+    <p class="symptomes">yeux secs, brûlures, sensation de sable, vision fluctuante</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Cataracte"
+    data-symptomes="baisse progressive de vision, éblouissement, vision trouble"
+    data-healthcompare='[3, 3, 1, 3, 3, 1, 0, 0, 0, 3, 0, 0, 0, 0, 0, 3, 0, 1, 3, 0]'>
+    <h2>Cataracte</h2>
+    <p class="symptomes">baisse progressive de vision, éblouissement, vision trouble</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Glaucome chronique"
+    data-symptomes="souvent asymptomatique, perte progressive du champ visuel"
+    data-healthcompare='[2, 3, 1, 3, 3, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 3, 0, 0, 3, 1]'>
+    <h2>Glaucome chronique</h2>
+    <p class="symptomes">souvent asymptomatique, perte progressive du champ visuel</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Dermatite atopique"
+    data-symptomes="démangeaisons, plaques rouges, peau sèche"
+    data-healthcompare='[3, 2, 0, 3, 3, 2, 1, 0, 1, 3, 0, 0, 0, 0, 0, 3, 0, 0, 1, 0]'>
+    <h2>Dermatite atopique</h2>
+    <p class="symptomes">démangeaisons, plaques rouges, peau sèche</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Eczéma de contact"
+    data-symptomes="plaques rouges, démangeaisons, vésicules après contact"
+    data-healthcompare='[3, 2, 0, 2, 3, 3, 1, 0, 0, 3, 0, 0, 0, 0, 0, 3, 0, 0, 2, 0]'>
+    <h2>Eczéma de contact</h2>
+    <p class="symptomes">plaques rouges, démangeaisons, vésicules après contact</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Urticaire"
+    data-symptomes="plaques en relief, démangeaisons, apparition rapide"
+    data-healthcompare='[3, 2, 0, 3, 3, 3, 1, 0, 1, 3, 1, 2, 1, 1, 0, 3, 0, 0, 1, 1]'>
+    <h2>Urticaire</h2>
+    <p class="symptomes">plaques en relief, démangeaisons, apparition rapide</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Acné"
+    data-symptomes="boutons, comédons, lésions inflammatoires visage ou dos"
+    data-healthcompare='[3, 2, 1, 2, 3, 2, 1, 0, 0, 3, 0, 0, 0, 0, 0, 3, 0, 0, 1, 0]'>
+    <h2>Acné</h2>
+    <p class="symptomes">boutons, comédons, lésions inflammatoires visage ou dos</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Psoriasis"
+    data-symptomes="plaques rouges squameuses, démangeaisons, atteinte ongles"
+    data-healthcompare='[2, 2, 0, 3, 3, 2, 1, 0, 2, 3, 0, 0, 0, 0, 0, 3, 1, 0, 2, 0]'>
+    <h2>Psoriasis</h2>
+    <p class="symptomes">plaques rouges squameuses, démangeaisons, atteinte ongles</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Mycose cutanée"
+    data-symptomes="démangeaisons, rougeur, desquamation, lésions annulaires"
+    data-healthcompare='[3, 2, 0, 2, 3, 2, 1, 0, 0, 3, 0, 0, 0, 0, 0, 3, 0, 0, 3, 0]'>
+    <h2>Mycose cutanée</h2>
+    <p class="symptomes">démangeaisons, rougeur, desquamation, lésions annulaires</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Verrues"
+    data-symptomes="lésions cutanées rugueuses, verrues mains ou pieds"
+    data-healthcompare='[3, 2, 0, 2, 2, 1, 1, 0, 0, 3, 0, 0, 0, 0, 0, 3, 0, 0, 2, 0]'>
+    <h2>Verrues</h2>
+    <p class="symptomes">lésions cutanées rugueuses, verrues mains ou pieds</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Herpès labial"
+    data-symptomes="vésicules douloureuses lèvre, brûlures, récidives"
+    data-healthcompare='[3, 2, 0, 3, 3, 3, 2, 1, 1, 3, 0, 0, 0, 0, 1, 3, 0, 0, 2, 0]'>
+    <h2>Herpès labial</h2>
+    <p class="symptomes">vésicules douloureuses lèvre, brûlures, récidives</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Zona"
+    data-symptomes="douleur brûlante, éruption vésiculeuse unilatérale"
+    data-healthcompare='[2, 3, 0, 3, 3, 3, 3, 1, 2, 3, 0, 1, 0, 0, 1, 3, 0, 0, 2, 2]'>
+    <h2>Zona</h2>
+    <p class="symptomes">douleur brûlante, éruption vésiculeuse unilatérale</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Gale"
+    data-symptomes="démangeaisons nocturnes, sillons cutanés, lésions entre doigts"
+    data-healthcompare='[2, 2, 0, 3, 3, 2, 1, 0, 1, 3, 0, 0, 0, 0, 0, 3, 0, 0, 3, 0]'>
+    <h2>Gale</h2>
+    <p class="symptomes">démangeaisons nocturnes, sillons cutanés, lésions entre doigts</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Arthrose du genou"
+    data-symptomes="douleur mécanique genou, raideur, gêne à la marche"
+    data-healthcompare='[3, 3, 2, 3, 3, 2, 3, 0, 1, 3, 0, 0, 0, 0, 0, 3, 0, 3, 1, 0]'>
+    <h2>Arthrose du genou</h2>
+    <p class="symptomes">douleur mécanique genou, raideur, gêne à la marche</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Arthrose de hanche"
+    data-symptomes="douleur aine ou hanche, raideur, boiterie"
+    data-healthcompare='[2, 3, 1, 3, 3, 2, 3, 0, 1, 3, 0, 0, 0, 0, 0, 3, 0, 3, 1, 0]'>
+    <h2>Arthrose de hanche</h2>
+    <p class="symptomes">douleur aine ou hanche, raideur, boiterie</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Lombalgie commune"
+    data-symptomes="douleur lombaire, raideur, douleur liée aux mouvements"
+    data-healthcompare='[3, 2, 1, 3, 3, 3, 3, 0, 1, 3, 0, 0, 0, 0, 0, 3, 1, 2, 1, 1]'>
+    <h2>Lombalgie commune</h2>
+    <p class="symptomes">douleur lombaire, raideur, douleur liée aux mouvements</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Cervicalgie commune"
+    data-symptomes="douleur cervicale, raideur, limitation des mouvements"
+    data-healthcompare='[3, 2, 1, 3, 3, 3, 3, 0, 1, 3, 0, 0, 0, 0, 0, 3, 0, 1, 1, 0]'>
+    <h2>Cervicalgie commune</h2>
+    <p class="symptomes">douleur cervicale, raideur, limitation des mouvements</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Sciatique"
+    data-symptomes="douleur lombaire irradiant dans la jambe, fourmillements"
+    data-healthcompare='[3, 2, 1, 3, 3, 3, 3, 0, 1, 3, 0, 0, 0, 0, 0, 3, 0, 2, 2, 2]'>
+    <h2>Sciatique</h2>
+    <p class="symptomes">douleur lombaire irradiant dans la jambe, fourmillements</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Tendinopathie de l&#x27;épaule"
+    data-symptomes="douleur épaule, douleur mouvement, limitation fonctionnelle"
+    data-healthcompare='[3, 2, 1, 3, 3, 2, 3, 0, 0, 3, 0, 0, 0, 0, 0, 3, 0, 2, 2, 0]'>
+    <h2>Tendinopathie de l&#x27;épaule</h2>
+    <p class="symptomes">douleur épaule, douleur mouvement, limitation fonctionnelle</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Épicondylite"
+    data-symptomes="douleur externe du coude, douleur à l&#x27;effort, faiblesse prise"
+    data-healthcompare='[2, 2, 0, 2, 3, 2, 3, 0, 0, 3, 0, 0, 0, 0, 0, 3, 0, 1, 2, 0]'>
+    <h2>Épicondylite</h2>
+    <p class="symptomes">douleur externe du coude, douleur à l&#x27;effort, faiblesse prise</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Entorse de cheville"
+    data-symptomes="douleur cheville, gonflement, ecchymose, difficulté appui"
+    data-healthcompare='[3, 2, 0, 2, 2, 3, 3, 0, 1, 3, 0, 1, 0, 0, 0, 3, 0, 2, 1, 1]'>
+    <h2>Entorse de cheville</h2>
+    <p class="symptomes">douleur cheville, gonflement, ecchymose, difficulté appui</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Syndrome du canal carpien"
+    data-symptomes="fourmillements doigts, engourdissement nocturne, faiblesse main"
+    data-healthcompare='[2, 2, 3, 3, 3, 2, 2, 0, 1, 3, 0, 0, 0, 0, 0, 3, 0, 0, 3, 0]'>
+    <h2>Syndrome du canal carpien</h2>
+    <p class="symptomes">fourmillements doigts, engourdissement nocturne, faiblesse main</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Ostéoporose"
+    data-symptomes="souvent asymptomatique, fractures de fragilité, perte de taille"
+    data-healthcompare='[2, 3, 3, 3, 3, 1, 1, 0, 1, 2, 0, 0, 0, 0, 0, 2, 2, 3, 2, 0]'>
+    <h2>Ostéoporose</h2>
+    <p class="symptomes">souvent asymptomatique, fractures de fragilité, perte de taille</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Goutte"
+    data-symptomes="douleur articulaire brutale, rougeur, gonflement, gros orteil"
+    data-healthcompare='[2, 3, 3, 3, 3, 3, 3, 1, 2, 3, 0, 2, 0, 0, 1, 3, 3, 1, 2, 1]'>
+    <h2>Goutte</h2>
+    <p class="symptomes">douleur articulaire brutale, rougeur, gonflement, gros orteil</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Polyarthrite rhumatoïde"
+    data-symptomes="douleurs articulaires, gonflements, raideur matinale, fatigue"
+    data-healthcompare='[1, 2, 3, 3, 3, 2, 3, 1, 3, 3, 0, 1, 0, 0, 1, 3, 3, 2, 3, 1]'>
+    <h2>Polyarthrite rhumatoïde</h2>
+    <p class="symptomes">douleurs articulaires, gonflements, raideur matinale, fatigue</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Diabète de type 2"
+    data-symptomes="soif, urines fréquentes, fatigue, souvent asymptomatique"
+    data-healthcompare='[3, 3, 1, 3, 3, 1, 0, 0, 2, 2, 2, 1, 0, 0, 0, 2, 3, 1, 3, 1]'>
+    <h2>Diabète de type 2</h2>
+    <p class="symptomes">soif, urines fréquentes, fatigue, souvent asymptomatique</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Prédiabète"
+    data-symptomes="souvent asymptomatique, glycémie élevée"
+    data-healthcompare='[3, 3, 1, 3, 3, 1, 0, 0, 1, 1, 2, 0, 0, 0, 0, 1, 3, 0, 3, 0]'>
+    <h2>Prédiabète</h2>
+    <p class="symptomes">souvent asymptomatique, glycémie élevée</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Hypercholestérolémie"
+    data-symptomes="souvent asymptomatique, cholestérol sanguin élevé"
+    data-healthcompare='[3, 3, 1, 3, 3, 1, 0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 3, 0, 3, 0]'>
+    <h2>Hypercholestérolémie</h2>
+    <p class="symptomes">souvent asymptomatique, cholestérol sanguin élevé</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Obésité"
+    data-symptomes="excès de masse grasse, essoufflement, douleurs articulaires"
+    data-healthcompare='[3, 2, 1, 3, 3, 1, 1, 0, 2, 2, 2, 1, 1, 1, 0, 3, 3, 0, 2, 1]'>
+    <h2>Obésité</h2>
+    <p class="symptomes">excès de masse grasse, essoufflement, douleurs articulaires</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Hypothyroïdie"
+    data-symptomes="fatigue, frilosité, prise de poids, constipation, peau sèche"
+    data-healthcompare='[2, 3, 3, 3, 2, 2, 0, 0, 3, 3, 1, 2, 0, 0, 1, 2, 3, 1, 3, 1]'>
+    <h2>Hypothyroïdie</h2>
+    <p class="symptomes">fatigue, frilosité, prise de poids, constipation, peau sèche</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Hyperthyroïdie"
+    data-symptomes="perte de poids, palpitations, tremblements, chaleur, anxiété"
+    data-healthcompare='[1, 2, 3, 3, 2, 2, 0, 0, 3, 3, 2, 3, 1, 0, 2, 3, 3, 1, 3, 2]'>
+    <h2>Hyperthyroïdie</h2>
+    <p class="symptomes">perte de poids, palpitations, tremblements, chaleur, anxiété</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Carence en fer"
+    data-symptomes="fatigue, pâleur, essoufflement, palpitations"
+    data-healthcompare='[3, 2, 3, 3, 3, 2, 0, 0, 3, 2, 1, 2, 2, 1, 0, 3, 3, 1, 3, 1]'>
+    <h2>Carence en fer</h2>
+    <p class="symptomes">fatigue, pâleur, essoufflement, palpitations</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Anémie ferriprive"
+    data-symptomes="fatigue, pâleur, dyspnée d&#x27;effort, palpitations"
+    data-healthcompare='[2, 2, 3, 3, 3, 2, 0, 0, 3, 3, 1, 3, 2, 1, 0, 3, 3, 1, 3, 1]'>
+    <h2>Anémie ferriprive</h2>
+    <p class="symptomes">fatigue, pâleur, dyspnée d&#x27;effort, palpitations</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Carence en vitamine D"
+    data-symptomes="souvent asymptomatique, faiblesse, douleurs osseuses"
+    data-healthcompare='[2, 3, 1, 3, 3, 1, 1, 0, 2, 1, 0, 0, 0, 0, 0, 2, 3, 0, 2, 0]'>
+    <h2>Carence en vitamine D</h2>
+    <p class="symptomes">souvent asymptomatique, faiblesse, douleurs osseuses</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Apnée obstructive du sommeil"
+    data-symptomes="ronflement, pauses respiratoires, somnolence, céphalées matinales"
+    data-healthcompare='[2, 3, 2, 3, 3, 2, 1, 0, 3, 3, 2, 1, 2, 2, 0, 3, 1, 0, 3, 1]'>
+    <h2>Apnée obstructive du sommeil</h2>
+    <p class="symptomes">ronflement, pauses respiratoires, somnolence, céphalées matinales</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Insuffisance veineuse chronique"
+    data-symptomes="jambes lourdes, œdème, varices, douleurs jambes"
+    data-healthcompare='[3, 3, 3, 3, 3, 2, 2, 0, 1, 3, 1, 0, 0, 0, 0, 3, 0, 2, 2, 1]'>
+    <h2>Insuffisance veineuse chronique</h2>
+    <p class="symptomes">jambes lourdes, œdème, varices, douleurs jambes</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Varices"
+    data-symptomes="veines dilatées, jambes lourdes, douleur, gonflement"
+    data-healthcompare='[3, 3, 3, 3, 3, 2, 2, 0, 1, 3, 0, 0, 0, 0, 0, 3, 0, 2, 1, 0]'>
+    <h2>Varices</h2>
+    <p class="symptomes">veines dilatées, jambes lourdes, douleur, gonflement</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Fibrillation atriale"
+    data-symptomes="palpitations, fatigue, dyspnée, parfois asymptomatique"
+    data-healthcompare='[2, 3, 1, 3, 3, 3, 1, 0, 3, 3, 2, 3, 2, 2, 0, 3, 3, 2, 3, 3]'>
+    <h2>Fibrillation atriale</h2>
+    <p class="symptomes">palpitations, fatigue, dyspnée, parfois asymptomatique</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Maladie coronarienne stable"
+    data-symptomes="douleur thoracique à l&#x27;effort, dyspnée, fatigue"
+    data-healthcompare='[2, 3, 2, 3, 3, 2, 3, 0, 2, 3, 3, 3, 2, 2, 0, 3, 3, 3, 3, 2]'>
+    <h2>Maladie coronarienne stable</h2>
+    <p class="symptomes">douleur thoracique à l&#x27;effort, dyspnée, fatigue</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Insuffisance cardiaque"
+    data-symptomes="dyspnée, œdèmes, fatigue, prise de poids rapide"
+    data-healthcompare='[2, 3, 1, 3, 3, 2, 1, 0, 3, 3, 3, 3, 3, 3, 0, 3, 3, 3, 3, 3]'>
+    <h2>Insuffisance cardiaque</h2>
+    <p class="symptomes">dyspnée, œdèmes, fatigue, prise de poids rapide</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Infarctus du myocarde"
+    data-symptomes="douleur thoracique, sueurs, nausées, dyspnée"
+    data-healthcompare='[1, 3, 2, 3, 3, 3, 3, 0, 3, 3, 3, 3, 2, 2, 0, 3, 3, 2, 3, 3]'>
+    <h2>Infarctus du myocarde</h2>
+    <p class="symptomes">douleur thoracique, sueurs, nausées, dyspnée</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Accident ischémique transitoire"
+    data-symptomes="faiblesse d&#x27;un côté, trouble parole, trouble vision transitoire"
+    data-healthcompare='[1, 3, 1, 3, 3, 3, 1, 0, 2, 3, 3, 2, 1, 1, 0, 3, 3, 3, 3, 3]'>
+    <h2>Accident ischémique transitoire</h2>
+    <p class="symptomes">faiblesse d&#x27;un côté, trouble parole, trouble vision transitoire</p>
+  </article>
+  <article class="maladie"
+    data-maladie="AVC"
+    data-symptomes="paralysie, trouble parole, asymétrie visage, trouble équilibre"
+    data-healthcompare='[1, 3, 1, 3, 3, 3, 2, 0, 3, 3, 3, 2, 2, 2, 0, 3, 3, 3, 3, 3]'>
+    <h2>AVC</h2>
+    <p class="symptomes">paralysie, trouble parole, asymétrie visage, trouble équilibre</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Thrombose veineuse profonde"
+    data-symptomes="jambe gonflée, douleur mollet, chaleur, rougeur"
+    data-healthcompare='[1, 3, 2, 3, 3, 3, 3, 0, 2, 3, 1, 2, 1, 1, 0, 3, 2, 3, 3, 3]'>
+    <h2>Thrombose veineuse profonde</h2>
+    <p class="symptomes">jambe gonflée, douleur mollet, chaleur, rougeur</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Embolie pulmonaire"
+    data-symptomes="dyspnée brutale, douleur thoracique, tachycardie, malaise"
+    data-healthcompare='[1, 3, 2, 3, 3, 3, 3, 0, 3, 3, 2, 3, 3, 3, 0, 3, 3, 3, 3, 3]'>
+    <h2>Embolie pulmonaire</h2>
+    <p class="symptomes">dyspnée brutale, douleur thoracique, tachycardie, malaise</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Allergie alimentaire"
+    data-symptomes="urticaire, gonflement, douleurs abdominales, gêne respiratoire"
+    data-healthcompare='[2, 2, 0, 3, 3, 3, 2, 0, 2, 3, 2, 3, 3, 3, 0, 3, 1, 0, 2, 2]'>
+    <h2>Allergie alimentaire</h2>
+    <p class="symptomes">urticaire, gonflement, douleurs abdominales, gêne respiratoire</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Allergie médicamenteuse"
+    data-symptomes="éruption, urticaire, gonflement, gêne respiratoire"
+    data-healthcompare='[2, 2, 0, 3, 3, 3, 2, 0, 2, 3, 2, 3, 3, 3, 0, 3, 1, 0, 2, 2]'>
+    <h2>Allergie médicamenteuse</h2>
+    <p class="symptomes">éruption, urticaire, gonflement, gêne respiratoire</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Intolérance au lactose"
+    data-symptomes="ballonnement, diarrhée, douleurs abdominales après lait"
+    data-healthcompare='[2, 2, 1, 2, 3, 2, 2, 0, 1, 3, 0, 0, 0, 0, 0, 2, 1, 0, 2, 0]'>
+    <h2>Intolérance au lactose</h2>
+    <p class="symptomes">ballonnement, diarrhée, douleurs abdominales après lait</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Maladie cœliaque"
+    data-symptomes="diarrhée, ballonnement, fatigue, perte de poids, anémie"
+    data-healthcompare='[1, 2, 2, 3, 3, 2, 2, 0, 3, 3, 0, 1, 0, 0, 0, 3, 3, 1, 3, 1]'>
+    <h2>Maladie cœliaque</h2>
+    <p class="symptomes">diarrhée, ballonnement, fatigue, perte de poids, anémie</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Diverticulose colique"
+    data-symptomes="souvent asymptomatique, douleurs abdominales parfois"
+    data-healthcompare='[2, 3, 0, 3, 3, 1, 1, 0, 0, 2, 0, 0, 0, 0, 0, 2, 1, 3, 2, 0]'>
+    <h2>Diverticulose colique</h2>
+    <p class="symptomes">souvent asymptomatique, douleurs abdominales parfois</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Diverticulite"
+    data-symptomes="douleur abdominale gauche, fièvre, troubles du transit"
+    data-healthcompare='[1, 3, 0, 3, 3, 3, 3, 3, 3, 3, 1, 2, 1, 0, 3, 3, 3, 3, 2, 2]'>
+    <h2>Diverticulite</h2>
+    <p class="symptomes">douleur abdominale gauche, fièvre, troubles du transit</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Stéatose hépatique métabolique"
+    data-symptomes="souvent asymptomatique, fatigue, gêne abdominale"
+    data-healthcompare='[2, 3, 1, 3, 3, 1, 1, 0, 2, 2, 2, 0, 0, 0, 0, 2, 3, 3, 2, 1]'>
+    <h2>Stéatose hépatique métabolique</h2>
+    <p class="symptomes">souvent asymptomatique, fatigue, gêne abdominale</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Hernie hiatale"
+    data-symptomes="reflux, brûlures, gêne thoracique, régurgitations"
+    data-healthcompare='[2, 3, 1, 3, 3, 2, 2, 0, 0, 3, 0, 0, 0, 0, 0, 2, 0, 2, 2, 0]'>
+    <h2>Hernie hiatale</h2>
+    <p class="symptomes">reflux, brûlures, gêne thoracique, régurgitations</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Hernie inguinale"
+    data-symptomes="boule dans l&#x27;aine, gêne, douleur à l&#x27;effort"
+    data-healthcompare='[2, 3, 3, 2, 3, 2, 3, 0, 0, 3, 0, 0, 0, 0, 0, 3, 0, 2, 1, 1]'>
+    <h2>Hernie inguinale</h2>
+    <p class="symptomes">boule dans l&#x27;aine, gêne, douleur à l&#x27;effort</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Fissure anale"
+    data-symptomes="douleur anale à la selle, saignement rouge"
+    data-healthcompare='[2, 2, 0, 2, 3, 2, 3, 0, 0, 3, 0, 0, 0, 0, 0, 3, 0, 0, 1, 0]'>
+    <h2>Fissure anale</h2>
+    <p class="symptomes">douleur anale à la selle, saignement rouge</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Prostatite"
+    data-symptomes="douleur pelvienne, brûlures urinaires, fièvre, troubles urinaires"
+    data-healthcompare='[1, 2, 3, 3, 3, 3, 3, 2, 3, 3, 1, 2, 1, 0, 2, 3, 3, 1, 3, 2]'>
+    <h2>Prostatite</h2>
+    <p class="symptomes">douleur pelvienne, brûlures urinaires, fièvre, troubles urinaires</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Dysfonction érectile"
+    data-symptomes="difficulté à obtenir ou maintenir une érection"
+    data-healthcompare='[2, 3, 3, 3, 3, 2, 0, 0, 2, 3, 2, 0, 0, 0, 0, 2, 3, 1, 2, 0]'>
+    <h2>Dysfonction érectile</h2>
+    <p class="symptomes">difficulté à obtenir ou maintenir une érection</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Ménopause symptomatique"
+    data-symptomes="bouffées de chaleur, sueurs nocturnes, troubles sommeil, sécheresse vaginale"
+    data-healthcompare='[3, 3, 3, 2, 2, 2, 1, 0, 2, 3, 1, 2, 0, 0, 1, 2, 2, 0, 2, 0]'>
+    <h2>Ménopause symptomatique</h2>
+    <p class="symptomes">bouffées de chaleur, sueurs nocturnes, troubles sommeil, sécheresse vaginale</p>
+  </article>
+  <article class="maladie"
+    data-maladie="Fibrome utérin"
+    data-symptomes="règles abondantes, douleur pelvienne, pression pelvienne"
+    data-healthcompare='[2, 2, 3, 2, 2, 2, 3, 0, 2, 3, 0, 1, 0, 0, 0, 3, 3, 3, 2, 1]'>
+    <h2>Fibrome utérin</h2>
+    <p class="symptomes">règles abondantes, douleur pelvienne, pression pelvienne</p>
+  </article>
+</section>
+</body>
+</html>

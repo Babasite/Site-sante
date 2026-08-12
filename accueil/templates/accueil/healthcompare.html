@@ -3,7 +3,7 @@
 {% block logo_return %}{% url 'outils' %}{% endblock %}
 {% load static %}
 
-{% block title %}Page en préparation{% endblock %}
+{% block title %}HealthCompare{% endblock %}
 {% block page_title %}Comparer ma santé{% endblock %}
 {% block header_actions %}{% endblock %}
 
@@ -11,81 +11,750 @@
 <style>
 body{
     margin:0;
-    background:#efe3c3;
+    background:#ffffff;
     font-family:var(--font-family-body);
     color:#30363a;
 }
 
-.message{
-    margin:40px auto 0;
-    max-width:700px;
-    padding:0 20px;
+.healthcompare{
+    width:min(1180px, calc(100% - 32px));
+    margin:0 auto;
+    padding:34px 0 58px;
+}
+
+.hc-intro{
     text-align:center;
+    margin:0 auto 26px;
+    max-width:760px;
+}
+.hc-intro h2{
+    margin:0 0 8px;
     color:#214C35;
     font-family:var(--font-family-title);
     font-size:2rem;
-    font-weight:700;
-    line-height:1.35;
+    line-height:1.2;
 }
-
-.image{
-    width:300px;
-    height:300px;
-    margin:35px auto 0;
-    border-radius:22px;
-    background-image:url("{% static 'accueil/images/moiManga.webp' %}");
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
-    border:1px solid rgba(0,128,128,.18);
-    box-shadow:0 16px 36px rgba(33,76,53,.18);
-}
-
-.retour{
-    margin-top:35px;
-    text-align:center;
-}
-
-.retour img{
-    width:120px;
-    height:auto;
-    transition:transform .25s ease;
-}
-
-.retour img:hover{
-    transform:scale(1.08);
-}
-
-.retour p{
-    margin-top:10px;
+.hc-intro p{
+    margin:0;
     color:#667078;
-    font-size:1.05rem;
-    font-family:var(--font-family-body);
-    font-style:italic;
+    font-size:1rem;
+    line-height:1.55;
 }
 
-@media (max-width:600px){
+.hc-card{
+    background:#ffffff;
+    border:1px solid #eadfbe;
+    border-radius:22px;
+    box-shadow:0 10px 28px rgba(72,64,45,.07);
+}
 
-    .message{
-        font-size:1.6rem;
-        padding:0 16px;
-    }
+.search-card{
+    padding:20px;
+    position:relative;
+    z-index:4;
+}
+.search-card label{
+    display:block;
+    margin-bottom:9px;
+    color:#214C35;
+    font-family:var(--font-family-title);
+    font-weight:700;
+}
+.search-wrap{position:relative}
+.search-icon{
+    position:absolute;
+    left:16px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#718078;
+    pointer-events:none;
+    font-size:1.15rem;
+}
+.search{
+    width:100%;
+    box-sizing:border-box;
+    border:1px solid #ded4b8;
+    border-radius:15px;
+    padding:15px 18px 15px 46px;
+    background:#ffffff;
+    color:#30363a;
+    font-family:var(--font-family-body);
+    font-size:1rem;
+    outline:none;
+    transition:border-color .2s ease, box-shadow .2s ease;
+}
+.search:focus{
+    border-color:#2d7252;
+    box-shadow:0 0 0 4px rgba(239,227,195,.65);
+}
+.suggestions{
+    display:none;
+    position:absolute;
+    left:0; right:0;
+    top:calc(100% + 8px);
+    max-height:350px;
+    overflow-y:auto;
+    background:#ffffff;
+    border:1px solid #e5d9b8;
+    border-radius:15px;
+    box-shadow:0 14px 32px rgba(72,64,45,.10);
+}
+.suggestions.show{display:block}
+.suggestion{
+    width:100%;
+    border:0;
+    border-bottom:1px solid rgba(33,76,53,.09);
+    background:transparent;
+    padding:12px 15px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    text-align:left;
+    cursor:pointer;
+    color:#30363a;
+    font-family:var(--font-family-body);
+}
+.suggestion:last-child{border-bottom:0}
+.suggestion:hover{background:#f7f0dc}
+.suggestion strong{display:block;color:#214C35}
+.suggestion small{display:block;margin-top:2px;color:#737b7f}
 
-    .image{
-        width:240px;
-        height:240px;
-    }
 
+/* Code couleur des deux comparaisons :
+   A = vert du site ; B = turquoise. */
+.search-card-a label,
+.slot-a .name{
+    color:#214C35;
+}
+.search-card-a .search:focus{
+    border-color:#2d7252;
+}
+.search-card-a .suggestion strong{
+    color:#214C35;
+}
+.search-card-a .suggestion:hover{
+    background:#f3f7f4;
+}
+.slot-a.selected{
+    border-color:#9fb9aa;
+    background:#f8fbf9;
+}
+
+.search-card-b{
+    border-color:#b8dedb;
+}
+.search-card-b label,
+.slot-b .name{
+    color:#168C87;
+}
+.search-card-b .search{
+    border-color:#b8dedb;
+}
+.search-card-b .search:focus{
+    border-color:#168C87;
+    box-shadow:0 0 0 4px rgba(22,140,135,.10);
+}
+.search-card-b .search-icon{
+    color:#168C87;
+}
+.search-card-b .suggestions{
+    border-color:#b8dedb;
+}
+.search-card-b .suggestion strong{
+    color:#168C87;
+}
+.search-card-b .suggestion:hover{
+    background:#eef9f8;
+}
+.slot-b{
+    border-color:#d1e8e6;
+}
+.slot-b .slot-label{
+    color:#168C87;
+}
+.slot-b.selected{
+    border-color:#78c2bd;
+    background:#f3fbfa;
+}
+.slot-b .slot-remove{
+    color:#168C87;
+}
+
+.compare-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-top:18px;
+}
+
+.data-status{
+    margin:12px 2px 0;
+    color:#667078;
+    font-size:.86rem;
+    line-height:1.4;
+}
+.data-status.ok{color:#2d7252}
+.data-status.error{color:#9a3f35}
+.slot{
+    padding:17px 19px;
+    min-height:92px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+.slot-label{
+    color:#738078;
+    font-size:.76rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    margin-bottom:6px;
+}
+.slot .name{
+    color:#214C35;
+    font-family:var(--font-family-title);
+    font-size:1.12rem;
+    font-weight:700;
+}
+.slot .hint{margin-top:4px;color:#7b8385;font-size:.88rem}
+.slot.selected{border-color:#d9c89a;background:#fffdf8}
+.slot-remove{
+    align-self:flex-start;
+    margin-top:9px;
+    border:0;
+    padding:0;
+    background:none;
+    color:#8a5c50;
+    cursor:pointer;
+    font-family:var(--font-family-body);
+    font-size:.82rem;
+    text-decoration:underline;
+}
+
+.radar-card{
+    margin-top:18px;
+    padding:20px;
+}
+.radar-head{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:16px;
+}
+.radar-head h3{
+    margin:0;
+    color:#214C35;
+    font-family:var(--font-family-title);
+    font-size:1.25rem;
+}
+.sub{margin-top:4px;color:#737b7f;font-size:.88rem}
+.legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    color:#59645f;
+    font-size:.86rem;
+}
+.legend span{display:flex;align-items:center;gap:7px}
+.dot{width:10px;height:10px;border-radius:50%}
+.dot.a{background:#28705a}
+.dot.b{background:#168C87}
+.dot.same{background:#2F6FED}
+
+.radar-wrap{
+    width:100%;
+    overflow:hidden;
+}
+#radar{
+    display:block;
+    width:100%;
+    max-width:820px;
+    aspect-ratio:1/1;
+    margin:6px auto 0;
+}
+
+.scale-note{
+    margin:6px auto 0;
+    max-width:780px;
+    text-align:center;
+    color:#737b7f;
+    font-size:.82rem;
+    line-height:1.45;
+}
+.disclaimer{
+    margin-top:18px;
+    padding:15px 17px;
+    background:#fbf7eb;
+    color:#59645f;
+    font-size:.88rem;
+    line-height:1.55;
+}
+.disclaimer strong{color:#214C35}
+
+@media (max-width:700px){
+    .healthcompare{width:min(100% - 20px,1180px);padding-top:22px}
+    .hc-intro h2{font-size:1.65rem}
+    .compare-grid{grid-template-columns:1fr}
+    .radar-head{flex-direction:column}
+    #radar{min-width:620px;transform-origin:top left}
+    .radar-wrap{overflow-x:auto}
 }
 </style>
 {% endblock %}
 
 {% block content %}
+<div class="healthcompare">
 
-<div class="message">
-    Désolé, cette page n'est pas encore prête à être livrée... 🙂
+    <div class="hc-intro">
+        <h2>HealthCompare</h2>
+        <p>Comparez rapidement le profil général de deux affections sur 20 dimensions.</p>
+    </div>
+
+    <section class="compare-grid hc-search-grid">
+        <div class="search-card hc-card search-card-a">
+            <label for="searchA">Maladie / symptôme A :</label>
+            <div class="search-wrap">
+                <span class="search-icon">⌕</span>
+                <input id="searchA" class="search" type="search" autocomplete="off"
+                    placeholder="Rechercher la première maladie"
+                    aria-label="Rechercher la première maladie ou un symptôme">
+                <div id="suggestionsA" class="suggestions" role="listbox"></div>
+            </div>
+        </div>
+
+        <div class="search-card hc-card search-card-b">
+            <label for="searchB">Maladie / symptôme B :</label>
+            <div class="search-wrap">
+                <span class="search-icon">⌕</span>
+                <input id="searchB" class="search" type="search" autocomplete="off"
+                    placeholder="Rechercher la deuxième maladie"
+                    aria-label="Rechercher la deuxième maladie ou un symptôme">
+                <div id="suggestionsB" class="suggestions" role="listbox"></div>
+            </div>
+        </div>
+    </section>
+
+    <div id="dataStatus" class="data-status" aria-live="polite">
+        Chargement de la base des maladies…
+    </div>
+
+    <section class="compare-grid">
+        <div id="slotA" class="slot hc-card slot-a">
+            <div class="slot-label">Affection A</div>
+            <div class="name">Aucune sélection</div>
+            <div class="hint">Choisissez une maladie dans la recherche.</div>
+        </div>
+        <div id="slotB" class="slot hc-card slot-b">
+            <div class="slot-label">Affection B</div>
+            <div class="name">Aucune sélection</div>
+            <div class="hint">Choisissez une deuxième maladie.</div>
+        </div>
+    </section>
+
+    <section class="radar-card hc-card">
+        <div class="radar-head">
+            <div>
+                <h3>Profil clinique comparatif</h3>
+                <div class="sub">20 dimensions comparées sur une échelle descriptive de 0 à 3</div>
+            </div>
+            <div class="legend">
+                <span><i class="dot a"></i><span id="legendA">Affection A</span></span>
+                <span><i class="dot b"></i><span id="legendB">Affection B</span></span>
+                <span><i class="dot same"></i><span>Valeur identique</span></span>
+            </div>
+        </div>
+
+        <div class="radar-wrap">
+            <svg id="radar" viewBox="0 0 820 820" aria-label="Graphique radar comparatif"></svg>
+        </div>
+
+        <div class="scale-note">
+            0 = faible ou peu pertinent · 1 = secondaire · 2 = important · 3 = majeur.
+            Les axes décrivent un profil comparatif et non une probabilité de maladie.
+        </div>
+    </section>
+
+    <div class="disclaimer hc-card">
+        <strong>Information générale uniquement.</strong>
+        HealthCompare sert à comparer visuellement des affections. Il ne pose pas de diagnostic
+        et ne remplace pas l'évaluation d'un professionnel de santé.
+    </div>
+
 </div>
 
-<div class="image"></div>
+<script>
+const AXES = [
+    "Prévalence","Âge","Sexe","Antécédents","Facteurs de risque",
+    "Début / évolution","Douleur","Fièvre","Symptômes généraux","Symptômes caractéristiques",
+    "Tension artérielle","Fréquence cardiaque","Fréquence respiratoire","SpO₂","Température",
+    "Examen clinique","Biologie","Imagerie","Tests spécifiques","Urgence sans autre information"
+];
 
+const state = { diseases: [], selected: [null, null] };
+const $ = s => document.querySelector(s);
+
+const normalize = s => (s || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
+
+function escapeHtml(v=""){
+    return String(v).replace(/[&<>"']/g, c => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+    })[c]);
+}
+
+function parseScores(raw){
+    if(!raw) return null;
+    try{
+        const values = JSON.parse(raw);
+        if(Array.isArray(values) && values.length === 20){
+            return values.map(n => Math.max(0, Math.min(3, Number(n) || 0)));
+        }
+    }catch(e){}
+    return null;
+}
+
+function parseMaladiesDocument(doc){
+    const seen = new Set();
+
+    return [...doc.querySelectorAll("[data-maladie]")]
+        .map(el => ({
+            name: (el.dataset.maladie || "").trim(),
+            symptoms: (el.dataset.symptomes || "").trim(),
+            scores: parseScores(el.dataset.healthcompare)
+        }))
+        .filter(d => {
+            if(!d.name) return false;
+            const key = normalize(d.name);
+            if(seen.has(key)) return false;
+            seen.add(key);
+            return true;
+        });
+}
+
+async function loadDiseases(){
+    const status = $("#dataStatus");
+
+    try{
+        const response = await fetch("{% url 'maladies_data' %}", {
+            method:"GET",
+            cache:"no-store",
+            headers:{
+                "X-Requested-With":"XMLHttpRequest"
+            }
+        });
+
+        if(!response.ok){
+            throw new Error("HTTP " + response.status);
+        }
+
+        const source = await response.text();
+        const doc = new DOMParser().parseFromString(source, "text/html");
+        state.diseases = parseMaladiesDocument(doc);
+
+        if(!state.diseases.length){
+            throw new Error("Aucune maladie trouvée dans la réponse");
+        }
+
+        const withScores = state.diseases.filter(d => Array.isArray(d.scores)).length;
+
+        status.className = "data-status ok";
+        status.textContent =
+            state.diseases.length + " maladies chargées · " +
+            withScores + " profils comparatifs disponibles";
+
+    }catch(error){
+        state.diseases = [];
+        status.className = "data-status error";
+        status.textContent =
+            "Impossible de charger la base des maladies. Vérifiez la route Django « maladies_data ».";
+        console.error("HealthCompare : erreur de chargement", error);
+    }
+}
+
+function diseaseMatches(d, query){
+    const q = normalize(query);
+    return q && (
+        normalize(d.name).includes(q) ||
+        normalize(d.symptoms).includes(q)
+    );
+}
+
+function renderSuggestions(query, targetIndex){
+    const box = targetIndex === 0 ? $("#suggestionsA") : $("#suggestionsB");
+    const q = normalize(query);
+
+    if(!q){
+        box.innerHTML = "";
+        box.classList.remove("show");
+        return;
+    }
+
+    const matches = state.diseases
+        .filter(d => diseaseMatches(d, q))
+        .sort((a, b) => {
+            const rank = d => {
+                const name = normalize(d.name);
+                const symptoms = normalize(d.symptoms);
+                if(name.startsWith(q)) return 0;
+                if(name.includes(q)) return 1;
+                if(symptoms.includes(q)) return 2;
+                return 3;
+            };
+            return (rank(a) - rank(b)) ||
+                normalize(a.name).localeCompare(normalize(b.name), "fr");
+        })
+        .slice(0, 20);
+
+    if(!matches.length){
+        const message = state.diseases.length
+            ? "Essayez un autre terme."
+            : "La base des maladies n'est pas encore disponible.";
+
+        box.innerHTML = `
+            <div class="suggestion">
+                <span><strong>Aucun résultat</strong><small>${message}</small></span>
+            </div>`;
+        box.classList.add("show");
+        return;
+    }
+
+    box.innerHTML = matches.map(d => `
+        <button class="suggestion" type="button"
+                data-index="${state.diseases.indexOf(d)}"
+                data-target="${targetIndex}">
+            <span>
+                <strong>${escapeHtml(d.name)}</strong>
+                <small>${normalize(d.name).includes(q) ? "Maladie" : "Correspondance par symptôme"}</small>
+            </span>
+            <span>＋</span>
+        </button>
+    `).join("");
+
+    box.classList.add("show");
+
+    box.querySelectorAll("button[data-index]").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const disease = state.diseases[Number(btn.dataset.index)];
+            selectDisease(disease, Number(btn.dataset.target));
+        });
+    });
+}
+
+function selectDisease(d, targetIndex){
+    state.selected[targetIndex] = d;
+
+    const input = targetIndex === 0 ? $("#searchA") : $("#searchB");
+    const box = targetIndex === 0 ? $("#suggestionsA") : $("#suggestionsB");
+
+    input.value = d.name;
+    box.classList.remove("show");
+
+    renderSlots();
+    drawRadar();
+}
+
+function removeDisease(index){
+    state.selected[index] = null;
+    const input = index === 0 ? $("#searchA") : $("#searchB");
+    input.value = "";
+    renderSlots();
+    drawRadar();
+}
+
+function renderSlots(){
+    ["A","B"].forEach((letter, i) => {
+        const slot = $("#slot" + letter);
+        const d = state.selected[i];
+
+        if(!d){
+            slot.className = "slot hc-card " + (i === 0 ? "slot-a" : "slot-b");
+            slot.innerHTML = `
+                <div class="slot-label">Affection ${letter}</div>
+                <div class="name">Aucune sélection</div>
+                <div class="hint">${i === 0 ? "Choisissez une maladie dans la recherche." : "Choisissez une deuxième maladie."}</div>`;
+        }else{
+            slot.className = "slot hc-card selected " + (i === 0 ? "slot-a" : "slot-b");
+            slot.innerHTML = `
+                <div class="slot-label">Affection ${letter}</div>
+                <div class="name">${escapeHtml(d.name)}</div>
+                <div class="hint">${d.scores ? "Profil disponible" : "Profil non renseigné"}</div>
+                <button class="slot-remove" type="button" data-remove="${i}">Retirer</button>`;
+        }
+    });
+
+    document.querySelectorAll("[data-remove]").forEach(btn => {
+        btn.addEventListener("click", () => removeDisease(Number(btn.dataset.remove)));
+    });
+
+    $("#legendA").textContent = state.selected[0]?.name || "Affection A";
+    $("#legendB").textContent = state.selected[1]?.name || "Affection B";
+}
+
+function svgEl(name, attrs={}){
+    const e = document.createElementNS("http://www.w3.org/2000/svg", name);
+    Object.entries(attrs).forEach(([k,v]) => e.setAttribute(k,v));
+    return e;
+}
+
+function drawRadar(){
+    const svg = $("#radar");
+    svg.innerHTML = "";
+
+    const cx = 410, cy = 410, radius = 270;
+    const start = -Math.PI / 2;
+    const step = Math.PI * 2 / AXES.length;
+
+    for(let level = 1; level <= 3; level++){
+        const r = radius * level / 3;
+        const points = AXES.map((_, i) => {
+            const a = start + i * step;
+            return `${cx + Math.cos(a)*r},${cy + Math.sin(a)*r}`;
+        }).join(" ");
+
+        svg.appendChild(svgEl("polygon", {
+            points,
+            fill:"none",
+            stroke:"rgba(33,76,53,.18)",
+            "stroke-width":"1.2"
+        }));
+    }
+
+    AXES.forEach((label, i) => {
+        const a = start + i * step;
+        const x = cx + Math.cos(a) * radius;
+        const y = cy + Math.sin(a) * radius;
+
+        svg.appendChild(svgEl("line", {
+            x1:cx, y1:cy, x2:x, y2:y,
+            stroke:"rgba(33,76,53,.14)",
+            "stroke-width":"1"
+        }));
+
+        const labelRadius = radius + 45;
+        const lx = cx + Math.cos(a) * labelRadius;
+        const ly = cy + Math.sin(a) * labelRadius;
+
+        const text = svgEl("text", {
+            x:lx, y:ly,
+            fill:"#59645f",
+            "font-size":"13",
+            "font-family":"var(--font-family-body)",
+            "text-anchor":Math.cos(a) > .25 ? "start" : Math.cos(a) < -.25 ? "end" : "middle",
+            "dominant-baseline":"middle"
+        });
+
+        const words = label.split(" ");
+        if(label.length > 17 && words.length > 1){
+            const mid = Math.ceil(words.length / 2);
+            const first = svgEl("tspan", {x:lx, dy:"-.55em"});
+            const second = svgEl("tspan", {x:lx, dy:"1.1em"});
+            first.textContent = words.slice(0, mid).join(" ");
+            second.textContent = words.slice(mid).join(" ");
+            text.append(first, second);
+        }else{
+            text.textContent = label;
+        }
+        svg.appendChild(text);
+    });
+
+    // A = vert, B = turquoise.
+    // Quand les deux maladies ont exactement la même note sur un axe,
+    // le point commun est affiché en bleu pour rendre l'égalité immédiatement visible.
+    const profiles = [
+        {d:state.selected[0], stroke:"#28705a", fill:"rgba(40,112,90,.18)"},
+        {d:state.selected[1], stroke:"#168C87", fill:"rgba(22,140,135,.16)"}
+    ];
+
+    profiles.forEach(({d, stroke, fill}) => {
+        if(!d?.scores) return;
+
+        const points = d.scores.map((value, i) => {
+            const a = start + i * step;
+            const r = radius * value / 3;
+            return `${cx + Math.cos(a)*r},${cy + Math.sin(a)*r}`;
+        }).join(" ");
+
+        svg.appendChild(svgEl("polygon", {
+            points,
+            fill,
+            stroke,
+            "stroke-width":"3",
+            "stroke-linejoin":"round"
+        }));
+
+        d.scores.forEach((value, i) => {
+            const a = start + i * step;
+            const r = radius * value / 3;
+            svg.appendChild(svgEl("circle", {
+                cx:cx + Math.cos(a)*r,
+                cy:cy + Math.sin(a)*r,
+                r:"4",
+                fill:stroke
+            }));
+        });
+    });
+
+    // Égalités A/B : on redessine par-dessus en bleu uniquement les points
+    // où les deux scores sont identiques.
+    const diseaseA = state.selected[0];
+    const diseaseB = state.selected[1];
+
+    if(diseaseA?.scores && diseaseB?.scores){
+        diseaseA.scores.forEach((valueA, i) => {
+            const valueB = diseaseB.scores[i];
+
+            if(valueA === valueB){
+                const a = start + i * step;
+                const r = radius * valueA / 3;
+
+                svg.appendChild(svgEl("circle", {
+                    cx:cx + Math.cos(a)*r,
+                    cy:cy + Math.sin(a)*r,
+                    r:"6",
+                    fill:"#2F6FED",
+                    stroke:"#ffffff",
+                    "stroke-width":"2"
+                }));
+            }
+        });
+    }
+
+    if(!state.selected.some(d => d?.scores)){
+        const text = svgEl("text", {
+            x:cx, y:cy,
+            fill:"#7b8380",
+            "font-size":"16",
+            "font-family":"var(--font-family-body)",
+            "text-anchor":"middle"
+        });
+        text.textContent = "Sélectionnez une première maladie";
+        svg.appendChild(text);
+    }
+}
+
+$("#searchA").addEventListener("input", e => renderSuggestions(e.target.value, 0));
+$("#searchB").addEventListener("input", e => renderSuggestions(e.target.value, 1));
+
+$("#searchA").addEventListener("focus", e => {
+    if(e.target.value.trim() && !state.selected[0]) renderSuggestions(e.target.value, 0);
+});
+$("#searchB").addEventListener("focus", e => {
+    if(e.target.value.trim() && !state.selected[1]) renderSuggestions(e.target.value, 1);
+});
+
+document.addEventListener("click", e => {
+    if(!e.target.closest(".search-wrap")){
+        $("#suggestionsA").classList.remove("show");
+        $("#suggestionsB").classList.remove("show");
+    }
+});
+
+renderSlots();
+drawRadar();
+loadDiseases();
+</script>
 {% endblock %}

@@ -99,4 +99,9 @@ urlpatterns = [
         views.healthcompare,
         name="healthcompare",
     ),
+    path(
+    "healthcompare/maladies/",
+    views.maladies_data,
+    name="maladies_data",
+),
 ]

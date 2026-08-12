@@ -12,3 +12,6 @@ def suivi_personnalise(request):
 
 def healthcompare(request):
     return render(request, "accueil/healthcompare.html")
+
+def maladies_data(request):
+    return render(request, "accueil/maladies.html")
