@@ -122,23 +122,23 @@ body{
 
 
 /* Code couleur des deux comparaisons :
-   A = vert du site ; B = turquoise. */
+   A = rouge ; B = turquoise ; symptômes = beige. */
 .search-card-a label,
 .slot-a .name{
-    color:#214C35;
+    color:#B5483F;
 }
 .search-card-a .search:focus{
-    border-color:#2d7252;
+    border-color:#B5483F;
 }
 .search-card-a .suggestion strong{
-    color:#214C35;
+    color:#B5483F;
 }
 .search-card-a .suggestion:hover{
-    background:#f3f7f4;
+    background:#fcf3f2;
 }
 .slot-a.selected{
-    border-color:#9fb9aa;
-    background:#f8fbf9;
+    border-color:#d88e87;
+    background:#fdf6f5;
 }
 
 .search-card-b{
@@ -150,6 +150,8 @@ body{
 }
 .search-card-b .search{
     border-color:#b8dedb;
+    color:#168C87;
+    font-weight:700;
 }
 .search-card-b .search:focus{
     border-color:#168C87;
@@ -179,6 +181,241 @@ body{
 }
 .slot-b .slot-remove{
     color:#168C87;
+}
+
+
+.criteria-search-section{
+    margin-bottom:22px;
+}
+.criteria-search-card{
+    padding:20px;
+}
+.criteria-search-card label{
+    display:block;
+    margin-bottom:9px;
+    color:#214C35;
+    font-family:var(--font-family-title);
+    font-weight:700;
+}
+.criteria-help{
+    margin:8px 2px 0;
+    color:#737b7f;
+    font-size:.84rem;
+}
+.criteria-results{
+    margin-top:12px;
+    display:none;
+    gap:10px;
+}
+.criteria-results.show{
+    display:grid;
+}
+.criteria-result{
+    width:100%;
+    border:1px solid #eadfbe;
+    background:#ffffff;
+    border-radius:14px;
+    padding:12px 14px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    cursor:pointer;
+    text-align:left;
+    font-family:var(--font-family-body);
+}
+.criteria-result:hover{
+    background:#fbf7eb;
+}
+.criteria-result strong{
+    display:block;
+    color:#214C35;
+}
+.criteria-result small{
+    display:block;
+    margin-top:3px;
+    color:#737b7f;
+}
+.criteria-result .action{
+    color:#214C35;
+    font-weight:700;
+    white-space:nowrap;
+}
+.criteria-empty{
+    padding:12px 14px;
+    border-radius:14px;
+    background:#fbf7eb;
+    color:#737b7f;
+    font-size:.9rem;
+}
+
+
+.criteria-search-card{border-color:#d8c79a;background:#fffdf8;}
+.criteria-search-card label{color:#9A7A2F;}
+.criteria-search-card .search{border-color:#d8c79a;background:#fffdf8;}
+.criteria-search-card .search:focus{border-color:#b99a4b;box-shadow:0 0 0 4px rgba(239,227,195,.72);}
+.criteria-search-card .search-icon{color:#9A7A2F;}
+.criteria-result{border-color:#e2d4ae;}
+.criteria-result:hover{background:#f8f0d8;}
+.criteria-result strong,.criteria-result .action{color:#8a6d28;}
+.criteria-match{display:block;margin-top:4px;color:#9A7A2F;font-size:.78rem;font-weight:700;}
+.dot.same{background:#2F6FED;}
+.dot.symptom{background:#D6BE7B;}
+
+
+.criteria-wrap{position:relative}
+.criteria-suggestions{
+    display:none;
+    position:absolute;
+    left:0;right:0;
+    top:calc(100% + 8px);
+    background:#fffdf8;
+    border:1px solid #d8c79a;
+    border-radius:15px;
+    box-shadow:0 14px 32px rgba(72,64,45,.10);
+    max-height:280px;
+    overflow-y:auto;
+    z-index:12;
+}
+.criteria-suggestions.show{display:block}
+.criteria-axis-option{
+    width:100%;
+    border:0;
+    border-bottom:1px solid #eee4c8;
+    background:transparent;
+    padding:11px 14px;
+    text-align:left;
+    cursor:pointer;
+    color:#6d5927;
+    font-family:var(--font-family-body);
+}
+.criteria-axis-option:last-child{border-bottom:0}
+.criteria-axis-option:hover{background:#f8f0d8}
+
+.criteria-chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:10px;
+}
+.criteria-chip{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    padding:6px 10px;
+    border-radius:999px;
+    background:#efe3c3;
+    color:#6d5927;
+    font-size:.82rem;
+    font-weight:700;
+}
+.criteria-chip button{
+    border:0;
+    background:transparent;
+    color:#6d5927;
+    cursor:pointer;
+    padding:0;
+    font-size:1rem;
+    line-height:1;
+}
+.criteria-summary{
+    margin-top:10px;
+    font-size:.86rem;
+    color:#7a6a42;
+}
+.criteria-result-actions{
+    display:flex;
+    gap:8px;
+    flex-shrink:0;
+}
+.pick-btn{
+    border:1px solid currentColor;
+    border-radius:10px;
+    padding:7px 10px;
+    background:#fff;
+    cursor:pointer;
+    font-family:var(--font-family-body);
+    font-weight:700;
+    font-size:.8rem;
+}
+.pick-a{color:#B5483F}
+.pick-b{color:#168C87}
+.pick-btn:hover{background:#fafafa}
+
+.search-card.filtered{
+    box-shadow:0 0 0 2px rgba(214,190,123,.25),0 10px 28px rgba(72,64,45,.07);
+}
+.filter-note{
+    margin-top:7px;
+    font-size:.78rem;
+    color:#9A7A2F;
+}
+
+
+/* Renforcement visuel des deux recherches */
+.search-card-a{
+    border-color:#e7b9b4;
+}
+.search-card-a label{
+    color:#B5483F;
+}
+.search-card-a .search{
+    border-color:#e7b9b4;
+    color:#B5483F;
+    font-weight:700;
+}
+.search-card-a .search:focus{
+    border-color:#B5483F;
+    box-shadow:0 0 0 4px rgba(181,72,63,.10);
+}
+.search-card-a .search-icon{
+    color:#B5483F;
+}
+.search-card-a .suggestions{
+    border-color:#e7b9b4;
+}
+.search-card-a .suggestion strong{
+    color:#B5483F;
+}
+.search-card-a .suggestion:hover{
+    background:#fcf3f2;
+}
+
+.search-card-b{
+    border-color:#b8dedb;
+}
+.search-card-b label{
+    color:#168C87;
+}
+.search-card-b .search{
+    border-color:#b8dedb;
+}
+.search-card-b .search:focus{
+    border-color:#168C87;
+    box-shadow:0 0 0 4px rgba(22,140,135,.10);
+}
+.search-card-b .search-icon{
+    color:#168C87;
+}
+.search-card-b .suggestions{
+    border-color:#b8dedb;
+}
+.search-card-b .suggestion strong{
+    color:#168C87;
+}
+.search-card-b .suggestion:hover{
+    background:#eef9f8;
+}
+
+
+/* Valeur sélectionnée dans les champs */
+.search-card-a input.search{
+    color:#B5483F !important;
+    font-weight:700;
+}
+.search-card-b input.search{
+    color:#168C87 !important;
+    font-weight:700;
 }
 
 .compare-grid{
@@ -258,9 +495,8 @@ body{
 }
 .legend span{display:flex;align-items:center;gap:7px}
 .dot{width:10px;height:10px;border-radius:50%}
-.dot.a{background:#28705a}
+.dot.a{background:#B5483F}
 .dot.b{background:#168C87}
-.dot.same{background:#2F6FED}
 
 .radar-wrap{
     width:100%;
@@ -311,48 +547,62 @@ body{
         <p>Comparez rapidement le profil général de deux affections sur 20 dimensions.</p>
     </div>
 
+    <section class="criteria-search-section">
+        <div class="criteria-search-card hc-card">
+            <label for="symptomSearch">Critères majeurs :</label>
+            <div class="criteria-wrap">
+                <div class="search-wrap">
+                    <span class="search-icon">⌕</span>
+                    <input
+                        id="symptomSearch"
+                        class="search"
+                        type="search"
+                        autocomplete="off"
+                        placeholder="Ex. Douleur, Âge, Imagerie…"
+                        aria-label="Choisir jusqu’à cinq critères majeurs"
+                    >
+                </div>
+                <div id="criteriaSuggestions" class="criteria-suggestions"></div>
+            </div>
+            <div class="criteria-help">
+                Choisissez jusqu’à 5 axes. Seules les affections notées 3 sur tous les critères choisis sont conservées.
+            </div>
+            <div id="criteriaChips" class="criteria-chips"></div>
+            <div id="criteriaSummary" class="criteria-summary"></div>
+            <div id="symptomResults" class="criteria-results"></div>
+        </div>
+    </section>
+
     <section class="compare-grid hc-search-grid">
         <div class="search-card hc-card search-card-a">
-            <label for="searchA">Maladie / symptôme A :</label>
+            <label for="searchA">Affection A :</label>
             <div class="search-wrap">
                 <span class="search-icon">⌕</span>
                 <input id="searchA" class="search" type="search" autocomplete="off"
-                    placeholder="Rechercher la première maladie"
-                    aria-label="Rechercher la première maladie ou un symptôme">
+                    placeholder="Rechercher la première affection"
+                    aria-label="Rechercher la première affection">
                 <div id="suggestionsA" class="suggestions" role="listbox"></div>
             </div>
+            <div id="filterNoteA" class="filter-note"></div>
         </div>
 
         <div class="search-card hc-card search-card-b">
-            <label for="searchB">Maladie / symptôme B :</label>
+            <label for="searchB">Affection B :</label>
             <div class="search-wrap">
                 <span class="search-icon">⌕</span>
                 <input id="searchB" class="search" type="search" autocomplete="off"
-                    placeholder="Rechercher la deuxième maladie"
-                    aria-label="Rechercher la deuxième maladie ou un symptôme">
+                    placeholder="Rechercher la deuxième affection"
+                    aria-label="Rechercher la deuxième affection">
                 <div id="suggestionsB" class="suggestions" role="listbox"></div>
             </div>
+            <div id="filterNoteB" class="filter-note"></div>
         </div>
     </section>
 
     <div id="dataStatus" class="data-status" aria-live="polite">
         Chargement de la base des maladies…
     </div>
-
-    <section class="compare-grid">
-        <div id="slotA" class="slot hc-card slot-a">
-            <div class="slot-label">Affection A</div>
-            <div class="name">Aucune sélection</div>
-            <div class="hint">Choisissez une maladie dans la recherche.</div>
-        </div>
-        <div id="slotB" class="slot hc-card slot-b">
-            <div class="slot-label">Affection B</div>
-            <div class="name">Aucune sélection</div>
-            <div class="hint">Choisissez une deuxième maladie.</div>
-        </div>
-    </section>
-
-    <section class="radar-card hc-card">
+<section class="radar-card hc-card">
         <div class="radar-head">
             <div>
                 <h3>Profil clinique comparatif</h3>
@@ -362,6 +612,7 @@ body{
                 <span><i class="dot a"></i><span id="legendA">Affection A</span></span>
                 <span><i class="dot b"></i><span id="legendB">Affection B</span></span>
                 <span><i class="dot same"></i><span>Valeur identique</span></span>
+                <span><i class="dot symptom"></i><span>Critères majeurs</span></span>
             </div>
         </div>
 
@@ -391,7 +642,7 @@ const AXES = [
     "Examen clinique","Biologie","Imagerie","Tests spécifiques","Urgence sans autre information"
 ];
 
-const state = { diseases: [], selected: [null, null] };
+const state = { diseases: [], selected: [null, null], symptoms: [], filteredDiseases: [] };
 const $ = s => document.querySelector(s);
 
 const normalize = s => (s || "")
@@ -454,6 +705,7 @@ async function loadDiseases(){
         const source = await response.text();
         const doc = new DOMParser().parseFromString(source, "text/html");
         state.diseases = parseMaladiesDocument(doc);
+        state.filteredDiseases = state.diseases;
 
         if(!state.diseases.length){
             throw new Error("Aucune maladie trouvée dans la réponse");
@@ -477,10 +729,210 @@ async function loadDiseases(){
 
 function diseaseMatches(d, query){
     const q = normalize(query);
-    return q && (
-        normalize(d.name).includes(q) ||
-        normalize(d.symptoms).includes(q)
+    return q && normalize(d.name).includes(q);
+}
+
+
+function parseCriterionTerms(query){
+    const terms = query.split(",").map(s => s.trim()).filter(Boolean).slice(0,5);
+    const unique = [];
+    const seen = new Set();
+
+    terms.forEach(term => {
+        const key = normalize(term);
+        if(key && !seen.has(key)){
+            seen.add(key);
+            unique.push(term);
+        }
+    });
+
+    return unique;
+}
+
+function axisIndexFromTerm(term){
+    const q = normalize(term);
+
+    const exact = AXES.findIndex(axis => normalize(axis) === q);
+    if(exact !== -1) return exact;
+
+    const starts = AXES.findIndex(axis => normalize(axis).startsWith(q));
+    if(starts !== -1) return starts;
+
+    const contains = AXES.findIndex(axis => normalize(axis).includes(q));
+    return contains;
+}
+
+
+function currentFilteredDiseases(){
+    if(!state.symptoms.length) return state.diseases;
+    return state.diseases.filter(d =>
+        Array.isArray(d.scores) &&
+        state.symptoms.every(i => d.scores[i] === 3)
     );
+}
+
+function renderCriteriaChips(){
+    const box = $("#criteriaChips");
+    box.innerHTML = state.symptoms.map(i => `
+        <span class="criteria-chip">
+            ${escapeHtml(AXES[i])}
+            <button type="button" data-remove-axis="${i}" aria-label="Retirer ${escapeHtml(AXES[i])}">×</button>
+        </span>
+    `).join("");
+
+    box.querySelectorAll("[data-remove-axis]").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const axis = Number(btn.dataset.removeAxis);
+            state.symptoms = state.symptoms.filter(i => i !== axis);
+            renderCriteriaChips();
+            updateCriteriaState();
+            $("#symptomSearch").focus();
+        });
+    });
+}
+
+function updateCriteriaState(){
+    state.filteredDiseases = currentFilteredDiseases();
+
+    const summary = $("#criteriaSummary");
+    if(state.symptoms.length){
+        summary.textContent =
+            state.filteredDiseases.length +
+            " affection" + (state.filteredDiseases.length > 1 ? "s" : "") +
+            " correspondent à vos critères majeurs.";
+    }else{
+        summary.textContent = "";
+    }
+
+    const note = state.symptoms.length
+        ? "Recherche limitée aux " + state.filteredDiseases.length + " affections compatibles."
+        : "";
+
+    $("#filterNoteA").textContent = note;
+    $("#filterNoteB").textContent = note;
+    document.querySelector(".search-card-a")?.classList.toggle("filtered", state.symptoms.length > 0);
+    document.querySelector(".search-card-b")?.classList.toggle("filtered", state.symptoms.length > 0);
+
+    renderCriteriaResults();
+    drawRadar();
+}
+
+function renderCriteriaResults(){
+    const box = $("#symptomResults");
+
+    if(!state.symptoms.length){
+        box.innerHTML = "";
+        box.classList.remove("show");
+        return;
+    }
+
+    const matches = state.filteredDiseases.slice(0, 30);
+
+    if(!matches.length){
+        box.innerHTML = `
+            <div class="criteria-empty">
+                Aucune affection n’a une note 3 sur tous les critères sélectionnés.
+            </div>`;
+        box.classList.add("show");
+        return;
+    }
+
+    box.innerHTML = matches.map(d => `
+        <div class="criteria-result">
+            <span>
+                <strong>${escapeHtml(d.name)}</strong>
+                <small>${state.symptoms.map(i => escapeHtml(AXES[i])).join(" · ")}</small>
+                <span class="criteria-match">${state.symptoms.length}/${state.symptoms.length} critères majeurs</span>
+            </span>
+            <span class="criteria-result-actions">
+                <button class="pick-btn pick-a" type="button"
+                    data-pick-a="${state.diseases.indexOf(d)}">A</button>
+                <button class="pick-btn pick-b" type="button"
+                    data-pick-b="${state.diseases.indexOf(d)}">B</button>
+            </span>
+        </div>
+    `).join("");
+
+    box.classList.add("show");
+
+    box.querySelectorAll("[data-pick-a]").forEach(btn => {
+        btn.addEventListener("click", () => {
+            selectDisease(state.diseases[Number(btn.dataset.pickA)], 0);
+        });
+    });
+    box.querySelectorAll("[data-pick-b]").forEach(btn => {
+        btn.addEventListener("click", () => {
+            selectDisease(state.diseases[Number(btn.dataset.pickB)], 1);
+        });
+    });
+}
+
+function renderCriteriaSuggestions(){
+    const input = $("#symptomSearch");
+    const box = $("#criteriaSuggestions");
+    const value = input.value;
+    const parts = value.split(",");
+    const current = normalize(parts[parts.length - 1] || "");
+
+    if(state.symptoms.length >= 5){
+        box.innerHTML = "";
+        box.classList.remove("show");
+        return;
+    }
+
+    const options = AXES
+        .map((axis, index) => ({axis, index}))
+        .filter(x => !state.symptoms.includes(x.index))
+        .filter(x => !current || normalize(x.axis).includes(current))
+        .slice(0, 10);
+
+    if(!options.length){
+        box.innerHTML = "";
+        box.classList.remove("show");
+        return;
+    }
+
+    box.innerHTML = options.map(x => `
+        <button class="criteria-axis-option" type="button" data-axis="${x.index}">
+            ${escapeHtml(x.axis)}
+        </button>
+    `).join("");
+    box.classList.add("show");
+
+    box.querySelectorAll("[data-axis]").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const index = Number(btn.dataset.axis);
+            if(!state.symptoms.includes(index) && state.symptoms.length < 5){
+                state.symptoms.push(index);
+            }
+            input.value = "";
+            box.classList.remove("show");
+            renderCriteriaChips();
+            updateCriteriaState();
+            input.focus();
+        });
+    });
+}
+
+function renderCriterionResults(query){
+    const terms = parseCriterionTerms(query);
+
+    // Saisie avec virgules toujours possible : les termes reconnus sont convertis en critères.
+    if(query.includes(",")){
+        terms.forEach(term => {
+            const index = axisIndexFromTerm(term);
+            if(index !== -1 && !state.symptoms.includes(index) && state.symptoms.length < 5){
+                state.symptoms.push(index);
+            }
+        });
+
+        const lastPart = query.split(",").pop().trim();
+        $("#symptomSearch").value = lastPart;
+        renderCriteriaChips();
+        updateCriteriaState();
+    }
+
+    renderCriteriaSuggestions();
 }
 
 function renderSuggestions(query, targetIndex){
@@ -493,7 +945,9 @@ function renderSuggestions(query, targetIndex){
         return;
     }
 
-    const matches = state.diseases
+    const sourceDiseases = state.symptoms.length ? currentFilteredDiseases() : state.diseases;
+
+    const matches = sourceDiseases
         .filter(d => diseaseMatches(d, q))
         .sort((a, b) => {
             const rank = d => {
@@ -528,7 +982,7 @@ function renderSuggestions(query, targetIndex){
                 data-target="${targetIndex}">
             <span>
                 <strong>${escapeHtml(d.name)}</strong>
-                <small>${normalize(d.name).includes(q) ? "Maladie" : "Correspondance par symptôme"}</small>
+                <small>Affection</small>
             </span>
             <span>＋</span>
         </button>
@@ -566,30 +1020,6 @@ function removeDisease(index){
 }
 
 function renderSlots(){
-    ["A","B"].forEach((letter, i) => {
-        const slot = $("#slot" + letter);
-        const d = state.selected[i];
-
-        if(!d){
-            slot.className = "slot hc-card " + (i === 0 ? "slot-a" : "slot-b");
-            slot.innerHTML = `
-                <div class="slot-label">Affection ${letter}</div>
-                <div class="name">Aucune sélection</div>
-                <div class="hint">${i === 0 ? "Choisissez une maladie dans la recherche." : "Choisissez une deuxième maladie."}</div>`;
-        }else{
-            slot.className = "slot hc-card selected " + (i === 0 ? "slot-a" : "slot-b");
-            slot.innerHTML = `
-                <div class="slot-label">Affection ${letter}</div>
-                <div class="name">${escapeHtml(d.name)}</div>
-                <div class="hint">${d.scores ? "Profil disponible" : "Profil non renseigné"}</div>
-                <button class="slot-remove" type="button" data-remove="${i}">Retirer</button>`;
-        }
-    });
-
-    document.querySelectorAll("[data-remove]").forEach(btn => {
-        btn.addEventListener("click", () => removeDisease(Number(btn.dataset.remove)));
-    });
-
     $("#legendA").textContent = state.selected[0]?.name || "Affection A";
     $("#legendB").textContent = state.selected[1]?.name || "Affection B";
 }
@@ -607,6 +1037,11 @@ function drawRadar(){
     const cx = 410, cy = 410, radius = 270;
     const start = -Math.PI / 2;
     const step = Math.PI * 2 / AXES.length;
+
+    const colorA = "#B5483F";
+    const colorB = "#168C87";
+    const colorEqual = "#2F6FED";
+    const colorCriteria = "#D6BE7B";
 
     for(let level = 1; level <= 3; level++){
         const r = radius * level / 3;
@@ -627,21 +1062,56 @@ function drawRadar(){
         const a = start + i * step;
         const x = cx + Math.cos(a) * radius;
         const y = cy + Math.sin(a) * radius;
+        const isCriterion = state.symptoms?.includes(i);
 
         svg.appendChild(svgEl("line", {
             x1:cx, y1:cy, x2:x, y2:y,
-            stroke:"rgba(33,76,53,.14)",
-            "stroke-width":"1"
+            stroke:isCriterion ? colorCriteria : "rgba(33,76,53,.14)",
+            "stroke-width":isCriterion ? "3" : "1"
         }));
 
         const labelRadius = radius + 45;
         const lx = cx + Math.cos(a) * labelRadius;
         const ly = cy + Math.sin(a) * labelRadius;
 
+        // La couleur du titre de l'axe indique directement quelle affection
+        // est la mieux notée sur cet axe.
+        let axisLabelColor = "#59645f";
+        let axisLabelWeight = "400";
+
+        const diseaseAForLabel = state.selected[0];
+        const diseaseBForLabel = state.selected[1];
+
+        if(diseaseAForLabel?.scores && diseaseBForLabel?.scores){
+            const valueA = diseaseAForLabel.scores[i];
+            const valueB = diseaseBForLabel.scores[i];
+
+            if(valueA > valueB){
+                axisLabelColor = colorA;
+                axisLabelWeight = "700";
+            }else if(valueB > valueA){
+                axisLabelColor = colorB;
+                axisLabelWeight = "700";
+            }else{
+                axisLabelColor = colorEqual;
+                axisLabelWeight = "700";
+            }
+        }else if(diseaseAForLabel?.scores){
+            axisLabelColor = colorA;
+            axisLabelWeight = "700";
+        }else if(diseaseBForLabel?.scores){
+            axisLabelColor = colorB;
+            axisLabelWeight = "700";
+        }else if(isCriterion){
+            axisLabelColor = "#9A7A2F";
+            axisLabelWeight = "700";
+        }
+
         const text = svgEl("text", {
             x:lx, y:ly,
-            fill:"#59645f",
+            fill:axisLabelColor,
             "font-size":"13",
+            "font-weight":axisLabelWeight,
             "font-family":"var(--font-family-body)",
             "text-anchor":Math.cos(a) > .25 ? "start" : Math.cos(a) < -.25 ? "end" : "middle",
             "dominant-baseline":"middle"
@@ -661,17 +1131,12 @@ function drawRadar(){
         svg.appendChild(text);
     });
 
-    // A = vert, B = turquoise.
-    // Quand les deux maladies ont exactement la même note sur un axe,
-    // le point commun est affiché en bleu pour rendre l'égalité immédiatement visible.
-    const profiles = [
-        {d:state.selected[0], stroke:"#28705a", fill:"rgba(40,112,90,.18)"},
-        {d:state.selected[1], stroke:"#168C87", fill:"rgba(22,140,135,.16)"}
-    ];
+    const diseaseA = state.selected[0];
+    const diseaseB = state.selected[1];
 
-    profiles.forEach(({d, stroke, fill}) => {
+    // Profil seul si une seule affection est sélectionnée.
+    const drawSingleProfile = (d, stroke, fill) => {
         if(!d?.scores) return;
-
         const points = d.scores.map((value, i) => {
             const a = start + i * step;
             const r = radius * value / 3;
@@ -696,45 +1161,274 @@ function drawRadar(){
                 fill:stroke
             }));
         });
-    });
+    };
 
-    // Égalités A/B : on redessine par-dessus en bleu uniquement les points
-    // où les deux scores sont identiques.
-    const diseaseA = state.selected[0];
-    const diseaseB = state.selected[1];
+    if(diseaseA?.scores && !diseaseB?.scores){
+        drawSingleProfile(diseaseA, colorA, "rgba(181,72,63,.14)");
+    }else if(diseaseB?.scores && !diseaseA?.scores){
+        drawSingleProfile(diseaseB, colorB, "rgba(22,140,135,.14)");
+    }
 
     if(diseaseA?.scores && diseaseB?.scores){
-        diseaseA.scores.forEach((valueA, i) => {
-            const valueB = diseaseB.scores[i];
+        // Remplissages très légers pour conserver la lecture des deux profils.
+        const pointsA = diseaseA.scores.map((value, i) => {
+            const a = start + i * step;
+            const r = radius * value / 3;
+            return `${cx + Math.cos(a)*r},${cy + Math.sin(a)*r}`;
+        }).join(" ");
 
-            if(valueA === valueB){
-                const a = start + i * step;
-                const r = radius * valueA / 3;
+        const pointsB = diseaseB.scores.map((value, i) => {
+            const a = start + i * step;
+            const r = radius * value / 3;
+            return `${cx + Math.cos(a)*r},${cy + Math.sin(a)*r}`;
+        }).join(" ");
 
-                svg.appendChild(svgEl("circle", {
-                    cx:cx + Math.cos(a)*r,
-                    cy:cy + Math.sin(a)*r,
-                    r:"6",
-                    fill:"#2F6FED",
-                    stroke:"#ffffff",
-                    "stroke-width":"2"
+        svg.appendChild(svgEl("polygon", {
+            points:pointsA,
+            fill:"rgba(181,72,63,.07)",
+            stroke:"none"
+        }));
+
+        svg.appendChild(svgEl("polygon", {
+            points:pointsB,
+            fill:"rgba(22,140,135,.07)",
+            stroke:"none"
+        }));
+
+        /*
+         * IMPORTANT : la toile est dessinée AVANT les rayons.
+         * Ainsi, lorsqu'une valeur voisine vaut 0 et qu'une jonction passe par le centre,
+         * elle ne masque jamais le découpage couleur centre -> première valeur -> seconde valeur.
+         */
+
+        /*
+         * 1. JONCTIONS ENTRE AXES = TOILE
+         *
+         * Chaque affection relie ses propres valeurs entre deux axes voisins.
+         * - A : rouge
+         * - B : turquoise
+         * - si les DEUX extrémités sont communes A=B : un seul segment bleu
+         *
+         * Donc :
+         * bleu -> bleu = bleu
+         * bleu -> rouge = rouge pour le profil A
+         * bleu -> turquoise = turquoise pour le profil B
+         */
+        for(let i = 0; i < AXES.length; i++){
+            const next = (i + 1) % AXES.length;
+
+            const angle1 = start + i * step;
+            const angle2 = start + next * step;
+
+            const a1 = diseaseA.scores[i];
+            const a2 = diseaseA.scores[next];
+            const b1 = diseaseB.scores[i];
+            const b2 = diseaseB.scores[next];
+
+            const p = (angle, value) => {
+                const r = radius * value / 3;
+                return {
+                    x:cx + Math.cos(angle)*r,
+                    y:cy + Math.sin(angle)*r
+                };
+            };
+
+            const pA1 = p(angle1, a1);
+            const pA2 = p(angle2, a2);
+            const pB1 = p(angle1, b1);
+            const pB2 = p(angle2, b2);
+
+            const equalAtI = a1 === b1;
+            const equalAtNext = a2 === b2;
+
+            if(equalAtI && equalAtNext){
+                // Les deux profils sont confondus sur tout ce segment.
+                svg.appendChild(svgEl("line", {
+                    x1:pA1.x, y1:pA1.y,
+                    x2:pA2.x, y2:pA2.y,
+                    stroke:colorEqual,
+                    "stroke-width":"4",
+                    "stroke-linecap":"round",
+                    "stroke-linejoin":"round"
+                }));
+            }else{
+                // Contour A rouge.
+                svg.appendChild(svgEl("line", {
+                    x1:pA1.x, y1:pA1.y,
+                    x2:pA2.x, y2:pA2.y,
+                    stroke:colorA,
+                    "stroke-width":"3.5",
+                    "stroke-linecap":"round",
+                    "stroke-linejoin":"round"
+                }));
+
+                // Contour B turquoise.
+                svg.appendChild(svgEl("line", {
+                    x1:pB1.x, y1:pB1.y,
+                    x2:pB2.x, y2:pB2.y,
+                    stroke:colorB,
+                    "stroke-width":"3.5",
+                    "stroke-linecap":"round",
+                    "stroke-linejoin":"round"
+                }));
+            }
+        }
+
+        /*
+         * 2. RAYONS CENTRE -> VALEURS
+         *
+         * Si A=2 et B=3 :
+         * centre -> 2 = rouge
+         * 2 -> 3      = turquoise
+         *
+         * Si A=3 et B=2 : inverse.
+         * Si A=B : un seul rayon bleu.
+         */
+        diseaseA.scores.forEach((aValue, i) => {
+            const bValue = diseaseB.scores[i];
+            const angle = start + i * step;
+
+            const pointAt = value => {
+                const r = radius * value / 3;
+                return {
+                    x: cx + Math.cos(angle) * r,
+                    y: cy + Math.sin(angle) * r
+                };
+            };
+
+            const center = {x:cx, y:cy};
+            const pA = pointAt(aValue);
+            const pB = pointAt(bValue);
+
+            if(aValue === bValue){
+                svg.appendChild(svgEl("line", {
+                    x1:center.x, y1:center.y,
+                    x2:pA.x, y2:pA.y,
+                    stroke:colorEqual,
+                    "stroke-width":"4",
+                    "stroke-linecap":"round"
+                }));
+            }else if(aValue < bValue){
+                // A est la première valeur rencontrée : rouge jusqu'à A,
+                // puis turquoise jusqu'à B.
+                svg.appendChild(svgEl("line", {
+                    x1:center.x, y1:center.y,
+                    x2:pA.x, y2:pA.y,
+                    stroke:colorA,
+                    "stroke-width":"4",
+                    "stroke-linecap":"round"
+                }));
+                svg.appendChild(svgEl("line", {
+                    x1:pA.x, y1:pA.y,
+                    x2:pB.x, y2:pB.y,
+                    stroke:colorB,
+                    "stroke-width":"4",
+                    "stroke-linecap":"round"
+                }));
+            }else{
+                // B est la première valeur rencontrée : turquoise jusqu'à B,
+                // puis rouge jusqu'à A.
+                svg.appendChild(svgEl("line", {
+                    x1:center.x, y1:center.y,
+                    x2:pB.x, y2:pB.y,
+                    stroke:colorB,
+                    "stroke-width":"4",
+                    "stroke-linecap":"round"
+                }));
+                svg.appendChild(svgEl("line", {
+                    x1:pB.x, y1:pB.y,
+                    x2:pA.x, y2:pA.y,
+                    stroke:colorA,
+                    "stroke-width":"4",
+                    "stroke-linecap":"round"
                 }));
             }
         });
+
+        /*
+         * 3. POINTS
+         *
+         * Valeurs différentes : un rouge + un turquoise.
+         * Valeur identique : un seul point bleu.
+         */
+        diseaseA.scores.forEach((aValue, i) => {
+            const bValue = diseaseB.scores[i];
+            const angle = start + i * step;
+
+            const position = value => {
+                const r = radius * value / 3;
+                return {
+                    x:cx + Math.cos(angle)*r,
+                    y:cy + Math.sin(angle)*r
+                };
+            };
+
+            const pA = position(aValue);
+            const pB = position(bValue);
+
+            if(aValue === bValue){
+                svg.appendChild(svgEl("circle", {
+                    cx:pA.x,
+                    cy:pA.y,
+                    r:"6",
+                    fill:colorEqual,
+                    stroke:"#fff",
+                    "stroke-width":"1.8"
+                }));
+            }else{
+                svg.appendChild(svgEl("circle", {
+                    cx:pA.x,
+                    cy:pA.y,
+                    r:"5",
+                    fill:colorA,
+                    stroke:"#fff",
+                    "stroke-width":"1.5"
+                }));
+
+                svg.appendChild(svgEl("circle", {
+                    cx:pB.x,
+                    cy:pB.y,
+                    r:"5",
+                    fill:colorB,
+                    stroke:"#fff",
+                    "stroke-width":"1.5"
+                }));
+            }
+        });
+
+        // Centre commun.
+        svg.appendChild(svgEl("circle", {
+            cx:cx,
+            cy:cy,
+            r:"5",
+            fill:"#ffffff",
+            stroke:colorEqual,
+            "stroke-width":"2"
+        }));
     }
 
     if(!state.selected.some(d => d?.scores)){
-        const text = svgEl("text", {
+        const emptyText = svgEl("text", {
             x:cx, y:cy,
             fill:"#7b8380",
             "font-size":"16",
             "font-family":"var(--font-family-body)",
             "text-anchor":"middle"
         });
-        text.textContent = "Sélectionnez une première maladie";
-        svg.appendChild(text);
+        emptyText.textContent = "Sélectionnez une première affection";
+        svg.appendChild(emptyText);
     }
 }
+
+$("#symptomSearch").addEventListener("input", e => renderCriterionResults(e.target.value));
+$("#symptomSearch").addEventListener("focus", () => renderCriteriaSuggestions());
+$("#symptomSearch").addEventListener("keydown", e => {
+    if(e.key === "Enter"){
+        e.preventDefault();
+        const first = $("#criteriaSuggestions [data-axis]");
+        if(first) first.click();
+    }
+});
 
 $("#searchA").addEventListener("input", e => renderSuggestions(e.target.value, 0));
 $("#searchB").addEventListener("input", e => renderSuggestions(e.target.value, 1));
@@ -750,6 +1444,7 @@ document.addEventListener("click", e => {
     if(!e.target.closest(".search-wrap")){
         $("#suggestionsA").classList.remove("show");
         $("#suggestionsB").classList.remove("show");
+        $("#criteriaSuggestions").classList.remove("show");
     }
 });
 
