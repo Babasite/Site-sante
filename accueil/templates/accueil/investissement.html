@@ -1,0 +1,1058 @@
+{% extends "accueil/base.html" %}
+{% load static %}
+
+{% block title %}J'ai de l'argent, j'en fais quoi ? | Santé Prévention Terrain{% endblock %}
+{% block page_title %}Investissement{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ==========================================================
+       INVESTISSEMENT — SP TERRAIN
+       ========================================================== */
+
+    .invest-page {
+        min-height: 100%;
+        background: #ffffff;
+        color: var(--spt-texte);
+        font-family: var(--font-family-body);
+    }
+
+    .invest-inner {
+        width: min(1080px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 34px 0 72px;
+    }
+
+    .invest-hero {
+        max-width: 840px;
+        padding: 18px 0 34px;
+    }
+
+    .invest-eyebrow {
+        margin: 0 0 10px;
+        color: var(--spt-turquoise);
+        font-size: .78rem;
+        font-weight: 700;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+    }
+
+    .invest-title {
+        margin: 0;
+        color: var(--spt-vert-fonce);
+        font-family: var(--font-family-title);
+        font-size: clamp(2rem, 4.2vw, 3.55rem);
+        font-weight: 700;
+        line-height: 1.08;
+        text-wrap: balance;
+    }
+
+    .invest-lead {
+        max-width: 760px;
+        margin: 20px 0 0;
+        color: #46524b;
+        font-size: clamp(1.03rem, 1.25vw, 1.14rem);
+        line-height: 1.72;
+    }
+
+    .invest-principe {
+        margin-top: 26px;
+        padding: 18px 20px;
+        border-left: 3px solid var(--spt-vert);
+        background: rgba(239, 227, 195, .32);
+        color: #3f4b43;
+        font-size: .96rem;
+        line-height: 1.62;
+    }
+
+    .invest-principe strong {
+        color: var(--spt-vert-fonce);
+    }
+
+    .invest-section {
+        padding: 34px 0;
+        border-top: 1px solid rgba(33, 76, 53, .16);
+    }
+
+    .invest-section:first-of-type {
+        border-top: 0;
+    }
+
+    .invest-section-head {
+        max-width: 820px;
+        margin-bottom: 22px;
+    }
+
+    .invest-section-number {
+        display: inline-block;
+        margin-bottom: 7px;
+        color: var(--spt-turquoise);
+        font-size: .78rem;
+        font-weight: 800;
+        letter-spacing: .11em;
+        text-transform: uppercase;
+    }
+
+    .invest-section-title {
+        margin: 0;
+        color: var(--spt-vert-fonce);
+        font-family: var(--font-family-title);
+        font-size: clamp(1.35rem, 2vw, 1.75rem);
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    .invest-section-text {
+        max-width: 800px;
+        margin: 10px 0 0;
+        color: #505d55;
+        font-size: 1rem;
+        line-height: 1.68;
+    }
+
+    .invest-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 22px;
+    }
+
+    .invest-grid--4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .invest-card {
+        padding: 20px;
+        border: 1px solid rgba(33, 76, 53, .15);
+        border-radius: 12px;
+        background: #ffffff;
+    }
+
+    .invest-card--soft {
+        background: rgba(239, 227, 195, .20);
+    }
+
+    .invest-card-kicker {
+        margin: 0 0 7px;
+        color: var(--spt-turquoise);
+        font-size: .75rem;
+        font-weight: 800;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+    }
+
+    .invest-card-title {
+        margin: 0;
+        color: var(--spt-vert-fonce);
+        font-family: var(--font-family-title);
+        font-size: 1.08rem;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    .invest-card-text {
+        margin: 9px 0 0;
+        color: #556159;
+        font-size: .91rem;
+        line-height: 1.55;
+    }
+
+    .invest-card-note {
+        display: block;
+        margin-top: 11px;
+        color: #6c756f;
+        font-size: .8rem;
+        line-height: 1.4;
+    }
+
+    .invest-path {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 24px;
+    }
+
+    .invest-path-item {
+        position: relative;
+        min-height: 118px;
+        padding: 17px 15px;
+        border: 1px solid rgba(33, 76, 53, .14);
+        border-radius: 10px;
+        background: rgba(239, 227, 195, .18);
+    }
+
+    .invest-path-num {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--spt-turquoise);
+        font-size: .78rem;
+        font-weight: 800;
+    }
+
+    .invest-path-title {
+        display: block;
+        color: var(--spt-vert-fonce);
+        font-family: var(--font-family-title);
+        font-size: .98rem;
+        font-weight: 700;
+        line-height: 1.25;
+    }
+
+    .invest-path-text {
+        display: block;
+        margin-top: 6px;
+        color: #667068;
+        font-size: .78rem;
+        line-height: 1.4;
+    }
+
+    .invest-table-wrap {
+        margin-top: 22px;
+        overflow-x: auto;
+        border: 1px solid rgba(33, 76, 53, .15);
+        border-radius: 12px;
+    }
+
+    .invest-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 720px;
+        background: #fff;
+    }
+
+    .invest-table th,
+    .invest-table td {
+        padding: 14px 16px;
+        border-bottom: 1px solid rgba(33, 76, 53, .10);
+        text-align: left;
+        vertical-align: top;
+    }
+
+    .invest-table th {
+        background: rgba(239, 227, 195, .26);
+        color: var(--spt-vert-fonce);
+        font-size: .82rem;
+        font-weight: 800;
+        letter-spacing: .02em;
+    }
+
+    .invest-table td {
+        color: #4f5b53;
+        font-size: .9rem;
+        line-height: 1.5;
+    }
+
+    .invest-table tr:last-child td {
+        border-bottom: 0;
+    }
+
+    .invest-checklist {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px 20px;
+        margin: 22px 0 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .invest-checklist li {
+        position: relative;
+        padding: 14px 16px 14px 42px;
+        border: 1px solid rgba(33, 76, 53, .13);
+        border-radius: 10px;
+        background: #fff;
+        color: #4e5b53;
+        font-size: .92rem;
+        line-height: 1.5;
+    }
+
+    .invest-checklist li::before {
+        content: "✓";
+        position: absolute;
+        top: 13px;
+        left: 16px;
+        color: var(--spt-vert);
+        font-weight: 900;
+    }
+
+    .invest-alert {
+        margin-top: 24px;
+        padding: 18px 20px;
+        border: 1px solid rgba(33, 76, 53, .14);
+        border-radius: 10px;
+        background: #fafafa;
+        color: #535e57;
+        font-size: .88rem;
+        line-height: 1.58;
+    }
+
+    .invest-alert strong {
+        color: var(--spt-vert-fonce);
+    }
+
+    .invest-action {
+        margin-top: 22px;
+    }
+
+    .invest-action a {
+        color: var(--spt-vert-fonce);
+        font-weight: 700;
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 4px;
+    }
+
+    .invest-action a:hover,
+    .invest-action a:focus-visible {
+        color: var(--spt-vert);
+    }
+
+    .invest-sources {
+        margin-top: 8px;
+        padding-top: 24px;
+        border-top: 1px solid rgba(33, 76, 53, .12);
+        color: #6a746d;
+        font-size: .82rem;
+        line-height: 1.55;
+    }
+
+    .invest-sources a {
+        color: var(--spt-vert-fonce);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+
+    @media (max-width: 900px) {
+        .invest-grid,
+        .invest-grid--4 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .invest-path {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 620px) {
+        .invest-inner {
+            width: calc(100% - 22px);
+            padding-top: 20px;
+        }
+
+        .invest-grid,
+        .invest-grid--4,
+        .invest-path,
+        .invest-checklist {
+            grid-template-columns: 1fr;
+        }
+
+        .invest-section {
+            padding: 27px 0;
+        }
+
+        .invest-card {
+            padding: 18px;
+        }
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+<main class="invest-page">
+    <div class="invest-inner">
+
+        <section class="invest-hero">
+            <p class="invest-eyebrow">Patrimoine & investissement</p>
+
+            <h1 class="invest-title">
+                J'ai de l'argent, j'en fais quoi ?
+            </h1>
+
+            <p class="invest-lead">
+                La première question n'est pas forcément « quel placement rapporte le plus ? ».
+                Il faut d'abord savoir ce que vous possédez, ce que vous devez, quand vous aurez
+                besoin de cet argent et quel niveau de risque vous pouvez réellement supporter.
+            </p>
+
+            <div class="invest-principe">
+                <strong>L'idée :</strong>
+                faire travailler son argent sans perdre de vue le reste.
+                Un patrimoine se pilote dans son ensemble : budget, épargne disponible,
+                dettes, placements, projets, frais et niveau de risque.
+            </div>
+        </section>
+
+
+        <section class="invest-section">
+            <div class="invest-section-head">
+                <span class="invest-section-number">Avant de choisir un placement</span>
+                <h2 class="invest-section-title">Une logique simple en cinq étapes</h2>
+                <p class="invest-section-text">
+                    Au lieu de partir directement à la recherche du « meilleur investissement »,
+                    commencez par donner une fonction à chaque euro.
+                </p>
+            </div>
+
+            <div class="invest-path">
+                <div class="invest-path-item">
+                    <span class="invest-path-num">01</span>
+                    <span class="invest-path-title">Voir clair</span>
+                    <span class="invest-path-text">Faire la photo complète de votre patrimoine.</span>
+                </div>
+
+                <div class="invest-path-item">
+                    <span class="invest-path-num">02</span>
+                    <span class="invest-path-title">Sécuriser</span>
+                    <span class="invest-path-text">Garder une réserve réellement disponible.</span>
+                </div>
+
+                <div class="invest-path-item">
+                    <span class="invest-path-num">03</span>
+                    <span class="invest-path-title">Définir un objectif</span>
+                    <span class="invest-path-text">Court, moyen ou long terme.</span>
+                </div>
+
+                <div class="invest-path-item">
+                    <span class="invest-path-num">04</span>
+                    <span class="invest-path-title">Répartir</span>
+                    <span class="invest-path-text">Choisir plusieurs supports adaptés.</span>
+                </div>
+
+                <div class="invest-path-item">
+                    <span class="invest-path-num">05</span>
+                    <span class="invest-path-title">Suivre</span>
+                    <span class="invest-path-text">Frais, évolution, risque et objectifs.</span>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="invest-section">
+            <div class="invest-section-head">
+                <span class="invest-section-number">Étape 1</span>
+                <h2 class="invest-section-title">Commencer par votre patrimoine net</h2>
+                <p class="invest-section-text">
+                    Additionnez ce que vous possédez, puis retirez ce que vous devez.
+                    Cette vision globale évite de regarder un placement isolément.
+                </p>
+            </div>
+
+            <div class="invest-grid invest-grid--4">
+                <article class="invest-card invest-card--soft">
+                    <p class="invest-card-kicker">Disponible</p>
+                    <h3 class="invest-card-title">Comptes & liquidités</h3>
+                    <p class="invest-card-text">
+                        Compte courant, livrets et argent immédiatement mobilisable.
+                    </p>
+                </article>
+
+                <article class="invest-card">
+                    <p class="invest-card-kicker">Placements</p>
+                    <h3 class="invest-card-title">Épargne investie</h3>
+                    <p class="invest-card-text">
+                        PEA, assurance-vie, PER, compte-titres, épargne salariale, etc.
+                    </p>
+                </article>
+
+                <article class="invest-card">
+                    <p class="invest-card-kicker">Autres actifs</p>
+                    <h3 class="invest-card-title">Immobilier & autres biens</h3>
+                    <p class="invest-card-text">
+                        Immobilier, parts de sociétés, métaux, crypto-actifs ou autres actifs.
+                    </p>
+                </article>
+
+                <article class="invest-card invest-card--soft">
+                    <p class="invest-card-kicker">À déduire</p>
+                    <h3 class="invest-card-title">Dettes & emprunts</h3>
+                    <p class="invest-card-text">
+                        Crédit immobilier, crédit à la consommation et autres sommes restant dues.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+
+        <section class="invest-section">
+            <div class="invest-section-head">
+                <span class="invest-section-number">Étape 2</span>
+                <h2 class="invest-section-title">Avant d'investir : conserver une zone de sécurité</h2>
+                <p class="invest-section-text">
+                    L'argent destiné aux dépenses imprévues ne devrait pas dépendre de la hausse
+                    ou de la baisse des marchés. Une épargne de précaution disponible permet
+                    d'éviter de devoir vendre un investissement au mauvais moment.
+                </p>
+            </div>
+
+            <div class="invest-grid">
+                <article class="invest-card">
+                    <p class="invest-card-kicker">Imprévus</p>
+                    <h3 class="invest-card-title">Épargne de précaution</h3>
+                    <p class="invest-card-text">
+                        Une somme disponible rapidement pour absorber une panne, une dépense
+                        urgente ou une baisse temporaire de revenus.
+                    </p>
+                </article>
+
+                <article class="invest-card">
+                    <p class="invest-card-kicker">Budget</p>
+                    <h3 class="invest-card-title">Capacité d'épargne</h3>
+                    <p class="invest-card-text">
+                        Mesurer ce qui reste réellement chaque mois après les dépenses,
+                        plutôt que d'investir une somme difficile à tenir dans la durée.
+                    </p>
+                </article>
+
+                <article class="invest-card">
+                    <p class="invest-card-kicker">Crédits</p>
+                    <h3 class="invest-card-title">Regarder le coût de ses dettes</h3>
+                    <p class="invest-card-text">
+                        Avant de chercher du rendement, comparez-le au coût certain des dettes
+                        que vous supportez déjà.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+
+        <section class="invest-section">
+            <div class="invest-section-head">
+                <span class="invest-section-number">Étape 3</span>
+                <h2 class="invest-section-title">Donner un objectif à l'argent</h2>
+                <p class="invest-section-text">
+                    Le bon support dépend surtout de l'échéance. L'argent d'un projet dans deux ans
+                    ne se gère pas comme celui destiné à la retraite dans trente ans.
+                </p>
+            </div>
+
+            <div class="invest-table-wrap">
+                <table class="invest-table">
+                    <thead>
+                        <tr>
+                            <th>Besoin</th>
+                            <th>Horizon</th>
+                            <th>Priorité</th>
+                            <th>Exemples de supports à étudier</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Imprévu / réserve</td>
+                            <td>Immédiat</td>
+                            <td>Disponibilité et sécurité</td>
+                            <td>Livret réglementé, épargne bancaire disponible</td>
+                        </tr>
+                        <tr>
+                            <td>Projet proche</td>
+                            <td>Quelques années</td>
+                            <td>Préserver l'argent nécessaire au projet</td>
+                            <td>Supports prudents adaptés à la durée du projet</td>
+                        </tr>
+                        <tr>
+                            <td>Constitution de patrimoine</td>
+                            <td>Long terme</td>
+                            <td>Diversification et croissance</td>
+                            <td>PEA, assurance-vie, fonds ou ETF diversifiés selon votre profil</td>
+                        </tr>
+                        <tr>
+                            <td>Retraite</td>
+                            <td>Très long terme</td>
+                            <td>Planifier et investir régulièrement</td>
+                            <td>PER, PEA, assurance-vie et autres supports selon la situation</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+
+        <section class="invest-section">
+            <div class="invest-section-head">
+                <span class="invest-section-number">Étape 4</span>
+                <h2 class="invest-section-title">Ne pas confondre enveloppe et investissement</h2>
+                <p class="invest-section-text">
+                    PEA, assurance-vie, PER ou compte-titres sont des cadres qui permettent
+                    de détenir différents placements. Le niveau de risque dépend surtout
+                    de ce que vous mettez à l'intérieur.
+                </p>
+            </div>
+
+            <div class="invest-grid">
+                <article class="invest-card">
+                    <p class="invest-card-kicker">PEA</p>
+                    <h3 class="invest-card-title">Investir à long terme en actions</h3>
+                    <p class="invest-card-text">
+                        Une enveloppe à étudier pour un investissement de long terme en actions
+                        et fonds éligibles, avec une fiscalité spécifique.
+                    </p>
+                </article>
+
+                <article class="invest-card">
+                    <p class="invest-card-kicker">Assurance-vie</p>
+                    <h3 class="invest-card-title">Une enveloppe polyvalente</h3>
+                    <p class="invest-card-text">
+                        Elle peut accueillir des supports plus prudents ou plus exposés aux marchés,
+                        avec des objectifs d'épargne, de transmission ou de long terme.
+                    </p>
+                </article>
+
+                <article class="invest-card">
+                    <p class="invest-card-kicker">PER</p>
+                    <h3 class="invest-card-title">Préparer la retraite</h3>
+                    <p class="invest-card-text">
+                        Un cadre dédié à l'épargne retraite, avec des règles de disponibilité
+                        et une fiscalité qui doivent être comprises avant de verser.
+                    </p>
+                </article>
+
+                <article class="invest-card">
+                    <p class="invest-card-kicker">CTO</p>
+                    <h3 class="invest-card-title">Plus de liberté</h3>
+                    <p class="invest-card-text">
+                        Le compte-titres offre un univers d'investissement très large,
+                        mais sans les mêmes règles fiscales que les enveloppes dédiées.
+                    </p>
+                </article>
+
+                <article class="invest-card">
+                    <p class="invest-card-kicker">Immobilier</p>
+                    <h3 class="invest-card-title">Un actif à part entière</h3>
+                    <p class="invest-card-text">
+                        Résidence, locatif ou pierre-papier : rendement, crédit, fiscalité,
+                        frais et manque de liquidité doivent être regardés ensemble.
+                    </p>
+                </article>
+
+                <article class="invest-card">
+                    <p class="invest-card-kicker">Crypto-actifs</p>
+                    <h3 class="invest-card-title">Une poche très volatile</h3>
+                    <p class="invest-card-text">
+                        Les variations peuvent être importantes. Elle ne remplace ni une épargne
+                        de précaution ni une diversification construite.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+
+
+        <section class="invest-section">
+            <div class="invest-section-head">
+                <span class="invest-section-number">Avant d'aller plus loin</span>
+                <h2 class="invest-section-title">D'abord, garder une poche vraiment sûre et disponible</h2>
+                <p class="invest-section-text">
+                    Il n'est pas nécessaire de remplir tous ses livrets jusqu'au plafond avant de commencer
+                    à investir. En revanche, il est prudent de conserver une réserve suffisante pour les
+                    dépenses imprévues et les projets proches. Cet argent n'a pas vocation à chercher le
+                    rendement maximal : il doit surtout rester disponible et ne pas pouvoir perdre de valeur
+                    au mauvais moment.
+                </p>
+            </div>
+
+            <div class="invest-grid">
+                <article class="invest-card invest-card--soft">
+                    <p class="invest-card-kicker">Livret A</p>
+                    <h3 class="invest-card-title">La réserve de base</h3>
+                    <p class="invest-card-text">
+                        Argent disponible à tout moment, capital garanti par l'État et intérêts exonérés
+                        d'impôt sur le revenu et de prélèvements sociaux. Au 1er août 2026, son taux est de
+                        1,7 %. Le taux peut évoluer.
+                    </p>
+                </article>
+
+                <article class="invest-card invest-card--soft">
+                    <p class="invest-card-kicker">LDDS</p>
+                    <h3 class="invest-card-title">Un complément au Livret A</h3>
+                    <p class="invest-card-text">
+                        Il fonctionne dans le même esprit que le Livret A et affiche également 1,7 % au
+                        1er août 2026. Il peut servir à prolonger la poche de sécurité une fois le montant
+                        souhaité atteint sur le Livret A.
+                    </p>
+                </article>
+
+                <article class="invest-card invest-card--soft">
+                    <p class="invest-card-kicker">LEP</p>
+                    <h3 class="invest-card-title">À regarder en priorité si vous y avez droit</h3>
+                    <p class="invest-card-text">
+                        Sous conditions de revenus, le Livret d'épargne populaire reste à 2,5 % au
+                        1er août 2026, avec les mêmes qualités de disponibilité et de sécurité.
+                    </p>
+                </article>
+            </div>
+
+            <div class="invest-alert">
+                <strong>Le bon niveau n'est pas le même pour tout le monde.</strong>
+                Une personne avec un revenu très stable, peu de charges et aucun projet proche n'a pas
+                forcément besoin de la même réserve qu'un indépendant, un propriétaire avec des travaux
+                à prévoir ou une famille avec plusieurs dépenses importantes à venir.
+            </div>
+        </section>
+
+
+        <section class="invest-section">
+            <div class="invest-section-head">
+                <span class="invest-section-number">Immobilier</span>
+                <h2 class="invest-section-title">La pierre peut construire un patrimoine, mais elle concentre aussi les risques</h2>
+                <p class="invest-section-text">
+                    L'immobilier attire parce qu'il est concret, qu'il peut produire des loyers et qu'il
+                    permet parfois d'utiliser le crédit pour acquérir un actif plus important que son apport.
+                    Mais un appartement n'est ni un livret, ni un placement garanti : il peut coûter de
+                    l'argent, perdre de la valeur et devenir difficile à revendre.
+                </p>
+            </div>
+
+            <div class="invest-grid">
+                <article class="invest-card">
+                    <p class="invest-card-kicker">Avantage</p>
+                    <h3 class="invest-card-title">L'effet du crédit</h3>
+                    <p class="invest-card-text">
+                        Un emprunt permet d'acquérir un bien sans disposer immédiatement de tout son prix.
+                        Si les loyers couvrent une partie des charges et du remboursement, le crédit peut
+                        participer à la constitution du patrimoine.
+                    </p>
+                </article>
+
+                <article class="invest-card">
+                    <p class="invest-card-kicker">Avantage</p>
+                    <h3 class="invest-card-title">Un revenu potentiel</h3>
+                    <p class="invest-card-text">
+                        Un logement loué peut produire un revenu régulier et l'immobilier peut compléter
+                        des placements financiers. Le rendement doit cependant être calculé après toutes
+                        les charges et pas seulement à partir du loyer brut.
+                    </p>
+                </article>
+
+                <article class="invest-card">
+                    <p class="invest-card-kicker">Avantage</p>
+                    <h3 class="invest-card-title">Un actif tangible</h3>
+                    <p class="invest-card-text">
+                        Le propriétaire conserve un bien réel qu'il peut louer, revendre ou parfois utiliser.
+                        Cela peut être rassurant, mais le caractère tangible ne supprime pas le risque de baisse.
+                    </p>
+                </article>
+            </div>
+
+            <div class="invest-grid">
+                <article class="invest-card invest-card--soft">
+                    <p class="invest-card-kicker">Risque</p>
+                    <h3 class="invest-card-title">Vacance et impayés</h3>
+                    <p class="invest-card-text">
+                        Un logement vide ne produit aucun loyer alors que le crédit, les charges et les taxes
+                        continuent. Des retards ou impayés peuvent également déséquilibrer un projet trop serré.
+                    </p>
+                </article>
+
+                <article class="invest-card invest-card--soft">
+                    <p class="invest-card-kicker">Risque</p>
+                    <h3 class="invest-card-title">Travaux et dépenses imprévues</h3>
+                    <p class="invest-card-text">
+                        Toiture, chaudière, copropriété, remise en état, assurance, taxe foncière ou rénovation
+                        énergétique peuvent transformer rapidement un rendement séduisant sur le papier.
+                    </p>
+                </article>
+
+                <article class="invest-card invest-card--soft">
+                    <p class="invest-card-kicker">Risque</p>
+                    <h3 class="invest-card-title">Manque de liquidité</h3>
+                    <p class="invest-card-text">
+                        On ne revend pas une pièce d'un appartement pour récupérer 5 000 €. Une vente peut
+                        prendre des mois et obliger à accepter un prix inférieur à celui espéré.
+                    </p>
+                </article>
+
+                <article class="invest-card invest-card--soft">
+                    <p class="invest-card-kicker">Risque</p>
+                    <h3 class="invest-card-title">Concentration</h3>
+                    <p class="invest-card-text">
+                        Pour beaucoup de ménages, un seul bien représente une très grande part du patrimoine.
+                        Un problème local, un mauvais emplacement ou une baisse du marché touche alors une
+                        part importante de l'épargne.
+                    </p>
+                </article>
+
+                <article class="invest-card invest-card--soft">
+                    <p class="invest-card-kicker">Risque</p>
+                    <h3 class="invest-card-title">Le crédit amplifie aussi les difficultés</h3>
+                    <p class="invest-card-text">
+                        L'effet de levier fonctionne dans les deux sens. Si la valeur du bien baisse ou si les
+                        revenus locatifs ne suivent pas, la dette reste à rembourser.
+                    </p>
+                </article>
+
+                <article class="invest-card invest-card--soft">
+                    <p class="invest-card-kicker">Alternative</p>
+                    <h3 class="invest-card-title">SCPI : plus simple, pas sans risque</h3>
+                    <p class="invest-card-text">
+                        Les SCPI permettent d'accéder à plusieurs immeubles sans gérer directement les
+                        locataires. En contrepartie, elles comportent des frais, un risque de baisse du prix
+                        des parts et des revenus, et la revente peut prendre du temps. Ni le capital ni le
+                        rendement ne sont garantis.
+                    </p>
+                </article>
+            </div>
+
+            <div class="invest-alert">
+                <strong>À calculer avant d'acheter :</strong>
+                prix d'acquisition + frais d'achat + coût du crédit + charges + travaux + fiscalité +
+                vacance probable, puis comparer le résultat au loyer réellement encaissable. Un rendement
+                brut élevé peut devenir beaucoup moins intéressant une fois toutes les dépenses intégrées.
+            </div>
+        </section>
+
+
+        <section class="invest-section">
+            <div class="invest-section-head">
+                <span class="invest-section-number">Assurance-vie</span>
+                <h2 class="invest-section-title">Après la réserve de sécurité : une enveloppe souple pour investir progressivement</h2>
+                <p class="invest-section-text">
+                    Une fois une partie de l'épargne conservée sur Livret A, LDDS ou LEP selon votre situation,
+                    l'assurance-vie peut servir à investir de l'argent dont vous n'avez pas besoin immédiatement.
+                    Malgré son nom, ce n'est pas seulement un produit destiné au décès : c'est une enveloppe
+                    d'épargne dans laquelle on choisit différents supports.
+                </p>
+            </div>
+
+            <div class="invest-grid">
+                <article class="invest-card">
+                    <p class="invest-card-kicker">Support prudent</p>
+                    <h3 class="invest-card-title">Le fonds en euros</h3>
+                    <p class="invest-card-text">
+                        Le capital du fonds en euros bénéficie d'une garantie de l'assureur selon les conditions
+                        du contrat. Le rendement varie d'une année à l'autre et les frais doivent être examinés.
+                    </p>
+                </article>
+
+                <article class="invest-card">
+                    <p class="invest-card-kicker">Supports investis</p>
+                    <h3 class="invest-card-title">Les unités de compte</h3>
+                    <p class="invest-card-text">
+                        Fonds actions, obligations, ETF, immobilier ou autres supports peuvent être proposés.
+                        Leur valeur monte et baisse : le capital placé en unités de compte n'est pas garanti.
+                    </p>
+                </article>
+
+                <article class="invest-card">
+                    <p class="invest-card-kicker">Souplesse</p>
+                    <h3 class="invest-card-title">On peut retirer avant huit ans</h3>
+                    <p class="invest-card-text">
+                        L'argent n'est pas juridiquement bloqué pendant huit ans. Des rachats partiels ou totaux
+                        sont possibles ; huit ans correspond surtout à un cap important de la fiscalité du contrat.
+                    </p>
+                </article>
+            </div>
+
+            <div class="invest-grid">
+                <article class="invest-card invest-card--soft">
+                    <p class="invest-card-kicker">Avantages</p>
+                    <h3 class="invest-card-title">Pourquoi elle peut être intéressante</h3>
+                    <p class="invest-card-text">
+                        Grande variété de supports, possibilité de mélanger fonds en euros et placements plus
+                        dynamiques, versements libres ou programmés, retraits partiels, possibilité de modifier
+                        la répartition et intérêt patrimonial de la clause bénéficiaire en cas de décès.
+                    </p>
+                </article>
+
+                <article class="invest-card invest-card--soft">
+                    <p class="invest-card-kicker">Fiscalité</p>
+                    <h3 class="invest-card-title">L'ancienneté du contrat compte</h3>
+                    <p class="invest-card-text">
+                        Lors d'un retrait, seule la part correspondant aux gains est imposable. Après huit ans,
+                        un abattement annuel sur les gains retirés est prévu : 4 600 € pour une personne seule
+                        et 9 200 € pour un couple marié ou pacsé soumis à imposition commune. Les règles exactes
+                        dépendent notamment de la date et du montant des versements.
+                    </p>
+                </article>
+
+                <article class="invest-card invest-card--soft">
+                    <p class="invest-card-kicker">Inconvénients</p>
+                    <h3 class="invest-card-title">Les frais peuvent manger une partie du rendement</h3>
+                    <p class="invest-card-text">
+                        Frais sur versement, frais annuels de gestion, frais des fonds et parfois frais
+                        d'arbitrage : deux assurances-vie portant le même nom peuvent avoir des coûts et une
+                        qualité très différents. Comparer les frais est indispensable.
+                    </p>
+                </article>
+
+                <article class="invest-card invest-card--soft">
+                    <p class="invest-card-kicker">Inconvénients</p>
+                    <h3 class="invest-card-title">La sécurité dépend de ce qu'il y a dedans</h3>
+                    <p class="invest-card-text">
+                        « Assurance-vie » ne veut pas dire « sans risque ». Une allocation fortement investie
+                        en unités de compte peut subir une baisse importante, exactement comme les marchés
+                        auxquels ces supports sont exposés.
+                    </p>
+                </article>
+
+                <article class="invest-card invest-card--soft">
+                    <p class="invest-card-kicker">Inconvénients</p>
+                    <h3 class="invest-card-title">Tous les contrats ne se valent pas</h3>
+                    <p class="invest-card-text">
+                        Choix des supports, qualité du fonds en euros, frais, options de gestion et rapidité
+                        des opérations varient selon l'assureur et le distributeur. Il est possible de détenir
+                        plusieurs contrats : inutile de choisir uniquement parce que sa banque le propose.
+                    </p>
+                </article>
+
+                <article class="invest-card invest-card--soft">
+                    <p class="invest-card-kicker">Bon réflexe</p>
+                    <h3 class="invest-card-title">Ouvrir tôt peut avoir un intérêt</h3>
+                    <p class="invest-card-text">
+                        L'ancienneté fiscale commence à la date d'ouverture du contrat. Cela ne signifie pas
+                        qu'il faut y verser beaucoup immédiatement : comprendre le contrat et ses frais reste
+                        plus important que de se précipiter.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+
+        <section class="invest-section">
+            <div class="invest-section-head">
+                <span class="invest-section-number">Bourse</span>
+                <h2 class="invest-section-title">Pour le long terme : accepter les baisses pour chercher davantage de croissance</h2>
+                <p class="invest-section-text">
+                    Investir en bourse revient à devenir propriétaire d'une petite partie d'entreprises,
+                    directement avec des actions ou indirectement avec des fonds. Sur une longue durée,
+                    cela peut participer à la croissance du patrimoine, mais aucune progression n'est
+                    garantie et des baisses importantes peuvent survenir.
+                </p>
+            </div>
+
+            <div class="invest-grid">
+                <article class="invest-card">
+                    <p class="invest-card-kicker">Actions individuelles</p>
+                    <h3 class="invest-card-title">Choisir ses entreprises</h3>
+                    <p class="invest-card-text">
+                        Acheter quelques sociétés peut sembler simple, mais cela demande de comprendre leur
+                        activité, leurs comptes, leur valorisation et leurs risques. Quelques titres seulement
+                        peuvent créer une forte concentration.
+                    </p>
+                </article>
+
+                <article class="invest-card">
+                    <p class="invest-card-kicker">ETF</p>
+                    <h3 class="invest-card-title">Diversifier avec un seul fonds</h3>
+                    <p class="invest-card-text">
+                        Un ETF cherche à reproduire un indice composé de nombreuses valeurs. Il peut simplifier
+                        la diversification, mais il baisse lorsque l'indice suivi baisse et le capital n'est
+                        pas garanti.
+                    </p>
+                </article>
+
+                <article class="invest-card">
+                    <p class="invest-card-kicker">PEA</p>
+                    <h3 class="invest-card-title">Une enveloppe adaptée au long terme</h3>
+                    <p class="invest-card-text">
+                        Le PEA permet de détenir des actions et certains fonds ou ETF éligibles. Après cinq ans,
+                        ses gains bénéficient d'une exonération d'impôt sur le revenu lors des retraits, tout en
+                        restant soumis aux prélèvements sociaux.
+                    </p>
+                </article>
+            </div>
+
+            <div class="invest-grid">
+                <article class="invest-card invest-card--soft">
+                    <p class="invest-card-kicker">Risque</p>
+                    <h3 class="invest-card-title">Une forte baisse reste possible</h3>
+                    <p class="invest-card-text">
+                        Les marchés ne montent pas en ligne droite. Une somme destinée à un achat proche ne
+                        devrait pas dépendre de la valeur de la bourse le jour où vous en aurez besoin.
+                    </p>
+                </article>
+
+                <article class="invest-card invest-card--soft">
+                    <p class="invest-card-kicker">Risque</p>
+                    <h3 class="invest-card-title">La psychologie de l'investisseur</h3>
+                    <p class="invest-card-text">
+                        Acheter après une forte hausse et vendre dans la panique après une chute peut dégrader
+                        fortement le résultat. Une stratégie simple et comprise à l'avance est souvent plus
+                        facile à tenir qu'une succession de paris.
+                    </p>
+                </article>
+
+                <article class="invest-card invest-card--soft">
+                    <p class="invest-card-kicker">Risque</p>
+                    <h3 class="invest-card-title">Les frais et produits complexes</h3>
+                    <p class="invest-card-text">
+                        Courtage, frais de fonds, change et produits à effet de levier peuvent réduire le
+                        rendement ou amplifier les pertes. Un produit difficile à expliquer n'est pas rendu
+                        meilleur parce qu'il est coté en bourse.
+                    </p>
+                </article>
+            </div>
+
+            <div class="invest-alert">
+                <strong>Une approche possible à étudier :</strong>
+                investir sur un horizon long, diversifier largement, limiter les frais et verser
+                progressivement plutôt que chercher à deviner chaque sommet et chaque creux du marché.
+                Ce n'est toutefois pas une garantie de gain : même un portefeuille diversifié peut perdre
+                de la valeur.
+            </div>
+        </section>
+
+
+        <section class="invest-section">
+            <div class="invest-section-head">
+                <span class="invest-section-number">Étape 5</span>
+                <h2 class="invest-section-title">Ce qu'il faut surveiller dans le temps</h2>
+                <p class="invest-section-text">
+                    La gestion du patrimoine ne s'arrête pas au moment de l'achat.
+                    Un bon tableau de bord doit permettre de savoir où vous en êtes sans
+                    passer son temps à regarder les marchés.
+                </p>
+            </div>
+
+            <ul class="invest-checklist">
+                <li><strong>Patrimoine net :</strong> est-il réellement en progression ?</li>
+                <li><strong>Budget :</strong> vos dépenses laissent-elles une capacité d'épargne durable ?</li>
+                <li><strong>Objectifs :</strong> votre trajectoire reste-t-elle compatible avec vos projets ?</li>
+                <li><strong>Diversification :</strong> êtes-vous trop dépendant d'un actif, d'un secteur ou d'une zone ?</li>
+                <li><strong>Frais :</strong> combien coûtent réellement vos contrats, fonds, transactions et intermédiaires ?</li>
+                <li><strong>Risque :</strong> pourriez-vous supporter une forte baisse sans vendre dans la panique ?</li>
+            </ul>
+
+            <div class="invest-alert">
+                <strong>À retenir :</strong>
+                chercher uniquement le placement qui a le mieux performé récemment est rarement
+                une méthode de gestion patrimoniale. L'objectif est plutôt de construire une
+                répartition cohérente avec vos besoins, votre horizon et votre capacité à accepter
+                une perte éventuelle.
+            </div>
+        </section>
+
+
+        <section class="invest-section">
+            <div class="invest-section-head">
+                <span class="invest-section-number">Une règle simple</span>
+                <h2 class="invest-section-title">Comprendre avant d'acheter</h2>
+                <p class="invest-section-text">
+                    Si vous ne savez pas expliquer simplement comment un placement fonctionne,
+                    ce qu'il coûte, quand vous pouvez récupérer votre argent et dans quelles
+                    conditions vous pouvez perdre, il reste probablement du travail avant d'investir.
+                </p>
+            </div>
+
+            <div class="invest-action">
+                <a href="{% url 'argent' %}">← Retour à Gagner de l'argent</a>
+            </div>
+        </section>
+
+
+        <div class="invest-sources">
+            <strong>Information générale :</strong>
+            cette page a une vocation pédagogique et ne constitue pas un conseil en investissement
+            personnalisé. Les choix doivent tenir compte de votre situation, de votre horizon et de
+            votre tolérance au risque. Pour approfondir :
+            <a href="https://www.amf-france.org/fr/espace-epargnants" target="_blank" rel="noopener noreferrer">Espace épargnants de l'AMF</a>.
+            Ressources complémentaires :
+            <a href="https://www.economie.gouv.fr/particuliers/gerer-mon-argent/gerer-mon-budget-et-mon-epargne/livret-comment-ca-marche" target="_blank" rel="noopener noreferrer">Livret A</a>,
+            <a href="https://www.amf-france.org/fr/espace-epargnants/comprendre-les-produits-financiers/supports-dinvestissement/assurance-vie" target="_blank" rel="noopener noreferrer">assurance-vie</a>,
+            <a href="https://www.amf-france.org/fr/espace-epargnants/comprendre-les-produits-financiers/placements-collectifs/scpi-un-autre-moyen-dinvestir-dans-limmobilier" target="_blank" rel="noopener noreferrer">SCPI</a>
+            et
+            <a href="https://www.amf-france.org/fr/espace-epargnants/comprendre-les-produits-financiers/placements-collectifs/trackers-etf" target="_blank" rel="noopener noreferrer">ETF</a>.
+        </div>
+
+    </div>
+</main>
+{% endblock %}

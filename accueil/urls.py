@@ -81,6 +81,7 @@ urlpatterns = [
     path("bricoler/", views.bricoler, name="bricoler"),
     path("argent/", views.argent, name="argent"),
     path("travailler/", views.travailler, name="travailler"),
+    path("investissement/", views.investissement, name="investissement"),
 
     # =========================================================================
     # SANTÉ ET SUIVI
