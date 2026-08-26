@@ -1,0 +1,328 @@
+{% extends "accueil/base.html" %}
+{% load static %}
+
+{% block title %}Boutique | Santé Prévention Terrain{% endblock %}
+{% block page_title %}Boutique{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ==========================================================
+       BOUTIQUE — VITRINE AVANT OUVERTURE
+       ========================================================== */
+
+    .boutique-page {
+        min-height: 100%;
+        background: #ffffff;
+        color: var(--spt-texte);
+        font-family: var(--font-family-body);
+    }
+
+    .boutique-inner {
+        width: min(1120px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: clamp(54px, 8vw, 96px) 0 clamp(64px, 9vw, 110px);
+    }
+
+    .boutique-intro {
+        max-width: 760px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .boutique-eyebrow {
+        margin: 0 0 14px;
+        color: var(--spt-turquoise);
+        font-size: .78rem;
+        font-weight: 700;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+    }
+
+    .boutique-titre {
+        margin: 0;
+        color: var(--spt-vert-fonce);
+        font-family: var(--font-family-title);
+        font-size: clamp(2rem, 4vw, 3.3rem);
+        font-weight: 700;
+        line-height: 1.08;
+    }
+
+    .boutique-sous-titre {
+        max-width: 620px;
+        margin: 22px auto 0;
+        color: #3e4b44;
+        font-size: clamp(1rem, 1.4vw, 1.12rem);
+        font-weight: 500;
+        line-height: 1.7;
+    }
+
+    .boutique-separateur {
+        width: 72px;
+        height: 2px;
+        margin: 32px auto;
+        border: 0;
+        background: var(--spt-vert);
+    }
+
+    .boutique-statut {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        margin: 0;
+        padding: 9px 14px;
+        border: 1px solid var(--spt-bordure);
+        border-radius: 999px;
+        background: rgba(239, 227, 195, .34);
+        color: var(--spt-vert-fonce);
+        font-size: .9rem;
+        font-weight: 700;
+    }
+
+    .boutique-statut::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        flex: 0 0 auto;
+        border-radius: 50%;
+        background: var(--spt-turquoise);
+    }
+
+    .boutique-vitrine {
+        margin-top: clamp(58px, 8vw, 86px);
+        padding-top: 34px;
+        border-top: 1px solid rgba(33, 76, 53, .14);
+    }
+
+    .boutique-vitrine-titre {
+        margin: 0;
+        color: var(--spt-vert-fonce);
+        font-family: var(--font-family-title);
+        font-size: clamp(1.35rem, 2vw, 1.8rem);
+        font-weight: 700;
+        text-align: center;
+    }
+
+    .boutique-vitrine-texte {
+        max-width: 680px;
+        margin: 14px auto 0;
+        color: #536158;
+        font-size: .98rem;
+        line-height: 1.65;
+        text-align: center;
+    }
+
+    .boutique-cartes {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 34px;
+    }
+
+    .boutique-carte {
+        min-height: 210px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 20px;
+        border: 1px solid rgba(33, 76, 53, .16);
+        border-radius: 14px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        overflow: hidden;
+    }
+
+    .boutique-carte:nth-child(1) {
+        background-image:
+            linear-gradient(
+                180deg,
+                rgba(239, 227, 195, .05) 0%,
+                rgba(239, 227, 195, .25) 45%,
+                rgba(239, 227, 195, .96) 78%
+            ),
+            url("{% static 'accueil/images/bsac24.png' %}");
+    }
+
+    .boutique-carte:nth-child(2) {
+        background-image:
+            linear-gradient(
+                180deg,
+                rgba(239, 227, 195, .05) 0%,
+                rgba(239, 227, 195, .25) 45%,
+                rgba(239, 227, 195, .96) 78%
+            ),
+            url("{% static 'accueil/images/bsaco.png' %}");
+    }
+
+    .boutique-carte:nth-child(3) {
+        background-image:
+            linear-gradient(
+                180deg,
+                rgba(239, 227, 195, .05) 0%,
+                rgba(239, 227, 195, .25) 45%,
+                rgba(239, 227, 195, .96) 78%
+            ),
+            url("{% static 'accueil/images/bteeshort.png' %}");
+    }
+
+    .boutique-carte:nth-child(4) {
+        background-image:
+            linear-gradient(
+                180deg,
+                rgba(239, 227, 195, .05) 0%,
+                rgba(239, 227, 195, .25) 45%,
+                rgba(239, 227, 195, .96) 78%
+            ),
+            url("{% static 'accueil/images/bidée.png' %}");
+    }
+
+    .boutique-carte-titre {
+        margin: 18px 0 0;
+        color: var(--spt-vert-fonce);
+        font-family: var(--font-family-title);
+        font-size: 1.05rem;
+        font-weight: 700;
+        text-shadow:
+            -1px -1px 0 #ffffff,
+             1px -1px 0 #ffffff,
+            -1px  1px 0 #ffffff,
+             1px  1px 0 #ffffff;
+    }
+
+    .boutique-carte-texte {
+        margin: 7px 0 0;
+        color: #5c675f;
+        font-size: .86rem;
+        line-height: 1.45;
+        text-shadow:
+            -1px -1px 0 #ffffff,
+             1px -1px 0 #ffffff,
+            -1px  1px 0 #ffffff,
+             1px  1px 0 #ffffff;
+    }
+
+    .boutique-carte a {
+        text-shadow:
+            -1px -1px 0 #ffffff,
+             1px -1px 0 #ffffff,
+            -1px  1px 0 #ffffff,
+             1px  1px 0 #ffffff;
+    }
+
+    .boutique-note {
+        max-width: 720px;
+        margin: 46px auto 0;
+        padding: 17px 20px;
+        border-left: 3px solid var(--spt-vert);
+        background: #fafafa;
+        color: #4d5851;
+        font-size: .9rem;
+        line-height: 1.55;
+    }
+
+    .boutique-note strong {
+        color: var(--spt-vert-fonce);
+    }
+
+    @media (max-width: 900px) {
+        .boutique-cartes {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 560px) {
+        .boutique-inner {
+            width: min(100% - 28px, 1120px);
+            padding-top: 42px;
+        }
+
+        .boutique-cartes {
+            grid-template-columns: 1fr;
+        }
+
+        .boutique-carte {
+            min-height: 165px;
+        }
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+<main class="boutique-page">
+    <div class="boutique-inner">
+
+        <section class="boutique-intro" aria-labelledby="boutique-titre">
+            <p class="boutique-eyebrow">Santé Prévention Terrain</p>
+
+            <h2 class="boutique-titre" id="boutique-titre">
+                Collection SP Terrain
+            </h2>
+
+            <p class="boutique-sous-titre">
+                Une petite sélection d’objets et d’accessoires pratiques
+                aux couleurs de SP Terrain est en préparation.
+            </p>
+
+            <hr class="boutique-separateur">
+
+            <p class="boutique-statut">
+                Bientôt disponible
+            </p>
+        </section>
+
+
+        <section class="boutique-vitrine" aria-labelledby="boutique-vitrine-titre">
+            <h3 class="boutique-vitrine-titre" id="boutique-vitrine-titre">
+                Je préférerais :
+            </h3>
+
+            <p class="boutique-vitrine-texte">
+                Parmi ces premières idées, quel produit SP Terrain vous intéresserait le plus ?
+            </p>
+
+            <div class="boutique-cartes" aria-label="Sondage sur la future collection">
+
+                <article class="boutique-carte">
+                    <h4 class="boutique-carte-titre">Un sac à dos 24 litres</h4>
+                    <p class="boutique-carte-texte">
+                        Avec la philosophie minimaliste SP Terrain : pratique, sobre et pensé pour l’essentiel.
+                    </p>
+                    <a href="https://whatsapp.com/channel/0029Vb8Zpu6EwEjpXrwd3N1c" target="_blank" rel="noopener noreferrer">Je vote</a>
+                </article>
+
+                <article class="boutique-carte">
+                    <h4 class="boutique-carte-titre">Une sacoche</h4>
+                    <p class="boutique-carte-texte">
+                        Compacte et pratique pour garder avec soi les objets utiles du quotidien.
+                    </p>
+                    <a href="https://whatsapp.com/channel/0029Vb8Zpu6EwEjpXrwd3N1c" target="_blank" rel="noopener noreferrer">Je vote</a>
+                </article>
+
+                <article class="boutique-carte">
+                    <h4 class="boutique-carte-titre">Un ensemble tee-shirt + short</h4>
+                    <p class="boutique-carte-texte">
+                        Un ensemble simple, confortable et pratique (tout en 1) aux couleurs de SP Terrain.
+                    </p>
+                    <a href="https://whatsapp.com/channel/0029Vb8Zpu6EwEjpXrwd3N1c" target="_blank" rel="noopener noreferrer">Je vote</a>
+                </article>
+
+                <article class="boutique-carte">
+                    <h4 class="boutique-carte-titre">Une autre idée ?</h4>
+                    <p class="boutique-carte-texte">
+                        Vous avez une autre suggestion pour la future collection SP Terrain ? Proposez-la.
+                    </p>
+                    <a href="https://whatsapp.com/channel/0029Vb8Zpu6EwEjpXrwd3N1c" target="_blank" rel="noopener noreferrer">Je vote</a>
+                </article>
+
+            </div>
+
+            <p class="boutique-note">
+                <strong>Information :</strong>
+                aucun produit n’est actuellement proposé à la vente sur cette page.
+            </p>
+        </section>
+
+    </div>
+</main>
+{% endblock %}

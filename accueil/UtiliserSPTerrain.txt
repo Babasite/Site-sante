@@ -1,0 +1,6 @@
+Ouvrir dossier python et raccourci Visual studio Code
+File, Open Folder, Site santé
+ds terminal:  python manage.py runserver
+ouvrir internet à http spterrain
+chat gpt
+Faire les controle S et Envoyer les modif sur github

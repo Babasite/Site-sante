@@ -38,6 +38,7 @@ urlpatterns = [
     path("apropos/", views.apropos, name="apropos"),
     path("pompier/", views.pompier, name="pompier"),
     path("contact/", views.contact, name="contact"),
+    path("boutique/", views.boutique, name="boutique"),
 
     # =========================================================================
     # ACTIVITÉS ET JEUX

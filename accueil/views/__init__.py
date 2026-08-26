@@ -48,3 +48,4 @@ from .contact import *
 from .Jcombat import *
 from .pays import *
 from .organisation import *
+from .boutique import *

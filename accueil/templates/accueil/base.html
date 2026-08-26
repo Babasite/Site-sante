@@ -587,6 +587,12 @@
                     </a>
 
                     <a class="spt-shell-action"
+                       href="{% url 'boutique' %}"
+                       {% if request.resolver_match.url_name == 'boutique' %}aria-current="page"{% endif %}>
+                        Boutique
+                    </a>
+
+                    <a class="spt-shell-action"
                        href="{% url 'apropos' %}"
                        {% if request.resolver_match.url_name == 'apropos' %}aria-current="page"{% endif %}>
                         À propos

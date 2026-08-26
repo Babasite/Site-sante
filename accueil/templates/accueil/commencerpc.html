@@ -321,12 +321,13 @@
 
     .lien-perso-form {
         display: grid;
-        grid-template-columns: minmax(0,.8fr) minmax(0,1.4fr) auto;
+        grid-template-columns: minmax(0,.8fr) minmax(0,1.35fr) minmax(0,1fr) auto;
         gap: 6px;
         margin-top: 8px;
     }
 
-    .lien-perso-form input {
+    .lien-perso-form input,
+    .lien-perso-form select {
         min-width: 0;
         padding: 7px 8px;
         border: 1px solid rgba(255,255,255,.28);
@@ -337,11 +338,21 @@
         outline: none;
     }
 
+    .lien-perso-form select {
+        cursor: pointer;
+    }
+
+    .lien-perso-form select option {
+        background: #ffffff;
+        color: #111111;
+    }
+
     .lien-perso-form input::placeholder {
         color: rgba(255,255,255,.62);
     }
 
-    .lien-perso-form input:focus {
+    .lien-perso-form input:focus,
+    .lien-perso-form select:focus {
         border-color: rgba(255,255,255,.75);
     }
 
@@ -400,6 +411,242 @@
         .spt-shell-header {
             transition: none;
         }
+    }
+
+
+
+    /* ==========================================================
+       CENTRE DU JOUR — AJOUT DISCRET EN BAS À DROITE
+       ========================================================== */
+
+    .centre-jour {
+        position: fixed;
+        right: 18px;
+        bottom: 18px;
+        z-index: 4500;
+        width: min(370px, calc(100vw - 28px));
+        font-family: var(--font-family-body);
+        color: #fff;
+    }
+
+    .centre-jour-resume {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+        width: 100%;
+        padding: 9px 12px;
+        border: 1px solid rgba(255,255,255,.30);
+        border-radius: 12px;
+        background: rgba(8,18,15,.72);
+        color: #fff;
+        box-shadow: 0 8px 26px rgba(0,0,0,.24);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        cursor: pointer;
+        text-shadow: 0 1px 3px rgba(0,0,0,.85);
+    }
+
+    .centre-jour-resume:hover,
+    .centre-jour-resume:focus-visible {
+        background: rgba(8,18,15,.84);
+    }
+
+    .centre-jour-resume:focus-visible,
+    .centre-jour-lien:focus-visible,
+    .centre-jour-fermer:focus-visible {
+        outline: 1px solid rgba(255,255,255,.92);
+        outline-offset: 3px;
+    }
+
+    .centre-jour-heure {
+        font-size: 1.08rem;
+        font-weight: 800;
+        letter-spacing: .02em;
+    }
+
+    .centre-jour-date {
+        margin-right: auto;
+        color: rgba(255,255,255,.78);
+        font-size: .78rem;
+        font-weight: 600;
+        text-align: left;
+    }
+
+    .centre-jour-indicateur {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        white-space: nowrap;
+        font-size: .82rem;
+        font-weight: 700;
+    }
+
+    .centre-jour-panel {
+        position: absolute;
+        right: 0;
+        bottom: calc(100% + 8px);
+        width: 100%;
+        max-height: min(520px, calc(100vh - 110px));
+        overflow: auto;
+        padding: 14px;
+        border: 1px solid rgba(255,255,255,.28);
+        border-radius: 12px;
+        background: rgba(8,18,15,.90);
+        box-shadow: 0 14px 38px rgba(0,0,0,.32);
+        -webkit-backdrop-filter: blur(13px);
+        backdrop-filter: blur(13px);
+    }
+
+    .centre-jour-panel[hidden] {
+        display: none;
+    }
+
+    .centre-jour-entete {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 12px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(255,255,255,.16);
+    }
+
+    .centre-jour-entete-texte {
+        min-width: 0;
+        flex: 1;
+    }
+
+    .centre-jour-titre {
+        margin: 0;
+        color: #fff;
+        font-family: var(--font-family-title);
+        font-size: 1rem;
+        font-weight: 800;
+    }
+
+    .centre-jour-date-longue {
+        margin-top: 3px;
+        color: rgba(255,255,255,.72);
+        font-size: .78rem;
+        line-height: 1.3;
+    }
+
+    .centre-jour-fermer {
+        padding: 1px 4px;
+        border: 0;
+        background: transparent;
+        color: rgba(255,255,255,.82);
+        font-size: 1.15rem;
+        cursor: pointer;
+    }
+
+    .centre-jour-bloc + .centre-jour-bloc {
+        margin-top: 13px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(255,255,255,.12);
+    }
+
+    .centre-jour-bloc-titre {
+        margin: 0 0 7px;
+        color: #fff;
+        font-size: .82rem;
+        font-weight: 800;
+    }
+
+    .centre-jour-info {
+        margin: 0 0 8px;
+        color: rgba(255,255,255,.72);
+        font-size: .76rem;
+        line-height: 1.4;
+    }
+
+    .centre-jour-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px 12px;
+    }
+
+    .centre-jour-lien {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 3px 0;
+        color: #fff;
+        font-size: .8rem;
+        font-weight: 700;
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 3px;
+    }
+
+    .centre-jour-evenements {
+        display: grid;
+        gap: 7px;
+        margin: 0 0 9px;
+    }
+
+    .centre-jour-evenement {
+        display: grid;
+        grid-template-columns: 52px minmax(0,1fr);
+        gap: 8px;
+        padding: 6px 0;
+        border-bottom: 1px solid rgba(255,255,255,.09);
+        font-size: .78rem;
+    }
+
+    .centre-jour-evenement-heure {
+        font-weight: 800;
+        color: rgba(255,255,255,.82);
+    }
+
+    @media (max-width: 560px) {
+        .centre-jour {
+            right: 12px;
+            bottom: 12px;
+            width: min(360px, calc(100vw - 24px));
+        }
+
+        .centre-jour-date {
+            display: none;
+        }
+
+        .centre-jour-resume {
+            gap: 9px;
+        }
+    }
+
+
+    /* Météo pratique : ajout au centre du jour */
+    .centre-jour-meteo-conseil {
+        margin: 0 0 7px auto;
+        width: fit-content;
+        max-width: 100%;
+        padding: 5px 9px;
+        border: 1px solid rgba(255,255,255,.22);
+        border-radius: 9px;
+        background: rgba(8,18,15,.68);
+        color: #fff;
+        font-size: .76rem;
+        font-weight: 700;
+        line-height: 1.3;
+        text-align: right;
+        text-shadow: 0 1px 3px rgba(0,0,0,.85);
+        -webkit-backdrop-filter: blur(9px);
+        backdrop-filter: blur(9px);
+    }
+
+    .centre-jour-meteo {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        white-space: nowrap;
+        font-size: .84rem;
+        font-weight: 800;
+    }
+
+    .centre-jour-meteo-icone {
+        font-size: 1rem;
+        line-height: 1;
     }
 
 </style>
@@ -525,6 +772,70 @@
 
     </div>
 </main>
+
+<!-- ============================================================
+     CENTRE DU JOUR — ajout non intrusif
+     Les données réelles d'agenda et de messagerie nécessiteront
+     une connexion autorisée aux comptes Google/Microsoft.
+     ============================================================ -->
+<div class="centre-jour" data-centre-jour>
+    <div class="centre-jour-panel" data-centre-jour-panel hidden>
+        <div class="centre-jour-entete">
+            <div class="centre-jour-entete-texte">
+                <h3 class="centre-jour-titre">Aujourd’hui</h3>
+                <div class="centre-jour-date-longue" data-centre-jour-date-longue></div>
+            </div>
+            <button type="button" class="centre-jour-fermer" data-centre-jour-fermer aria-label="Fermer le centre du jour">×</button>
+        </div>
+
+        <section class="centre-jour-bloc" aria-labelledby="centre-jour-agenda-titre">
+            <h4 class="centre-jour-bloc-titre" id="centre-jour-agenda-titre">📅 Planning du jour</h4>
+            <div class="centre-jour-evenements" data-centre-jour-evenements></div>
+            <p class="centre-jour-info" data-centre-jour-agenda-info>
+                Agenda non connecté : aucun rendez-vous n’est inventé. Ouvrez votre agenda pour voir la journée.
+            </p>
+            <div class="centre-jour-actions">
+                <a class="centre-jour-lien" href="https://calendar.google.com/calendar/u/0/r/day" target="_blank" rel="noopener noreferrer">Google Agenda</a>
+                <a class="centre-jour-lien" href="https://outlook.live.com/calendar/0/view/day" target="_blank" rel="noopener noreferrer">Calendrier Outlook</a>
+            </div>
+        </section>
+
+        <section class="centre-jour-bloc" aria-labelledby="centre-jour-mail-titre">
+            <h4 class="centre-jour-bloc-titre" id="centre-jour-mail-titre">✉️ Nouveaux messages</h4>
+            <p class="centre-jour-info" data-centre-jour-mail-info>
+                Messagerie non connectée : le nombre de mails reçus depuis la dernière consultation sera affiché ici après connexion du compte.
+            </p>
+            <p class="centre-jour-info" data-centre-jour-derniere-consultation></p>
+            <div class="centre-jour-actions">
+                <a class="centre-jour-lien" data-centre-jour-mail-link href="https://mail.google.com/" target="_blank" rel="noopener noreferrer">Gmail</a>
+                <a class="centre-jour-lien" data-centre-jour-mail-link href="https://outlook.live.com/mail/0/" target="_blank" rel="noopener noreferrer">Outlook</a>
+            </div>
+        </section>
+    </div>
+
+    <div
+        class="centre-jour-meteo-conseil"
+        data-centre-jour-meteo-conseil
+        title="Conseil prudent établi à partir des 10 prochaines heures"
+    >Météo en cours…</div>
+
+    <button
+        type="button"
+        class="centre-jour-resume"
+        data-centre-jour-toggle
+        aria-expanded="false"
+        aria-label="Ouvrir le centre du jour"
+    >
+        <span class="centre-jour-heure" data-centre-jour-heure>--:--</span>
+        <span class="centre-jour-date" data-centre-jour-date></span>
+        <span class="centre-jour-meteo" title="Tendance prudente sur les 10 prochaines heures">
+            <span class="centre-jour-meteo-icone" data-centre-jour-meteo-icone>—</span>
+            <span data-centre-jour-meteo-temperature>—</span>
+        </span>
+        <span class="centre-jour-indicateur" title="Rendez-vous aujourd’hui">📅 <span data-centre-jour-agenda-count>—</span></span>
+        <span class="centre-jour-indicateur" title="Nouveaux mails depuis la dernière consultation">✉️ <span data-centre-jour-mail-count>—</span></span>
+    </button>
+</div>
 
 {% endblock %}
 
@@ -731,7 +1042,15 @@
             {
                 titre: "Paiements",
                 services: [
-                    {id:"paypal", nom:"PayPal", url:"https://www.paypal.com/fr/signin", icone:"💶"}
+                    {id:"paypal", nom:"PayPal", url:"https://www.paypal.com/fr/signin", icone:"💶"},
+                    {id:"wero", nom:"Wero", url:"https://wero-wallet.eu/fr/", icone:"💸"},
+                    {id:"google-wallet", nom:"Google Wallet", url:"https://wallet.google/intl/fr_fr/", icone:"👛"}
+                ]
+            },
+            {
+                titre: "Budget & partage",
+                services: [
+                    {id:"tricount", nom:"Tricount", url:"https://tricount.com/", icone:"🧾"}
                 ]
             }
         ],
@@ -747,13 +1066,16 @@
                 titre: "Messagerie",
                 services: [
                     {id:"gmail", nom:"Gmail", url:"https://mail.google.com/", icone:"✉️"},
-                    {id:"outlook", nom:"Outlook", url:"https://outlook.live.com/", icone:"✉️"}
+                    {id:"outlook", nom:"Outlook", url:"https://outlook.live.com/", icone:"✉️"},
+                    {id:"whatsapp", nom:"WhatsApp", url:"https://web.whatsapp.com/", icone:"💬"},
+                    {id:"messenger", nom:"Messenger", url:"https://www.messenger.com/", icone:"💬"}
                 ]
             },
             {
                 titre: "Agenda",
                 services: [
-                    {id:"google-agenda", nom:"Google Agenda", url:"https://calendar.google.com/", icone:"📅"}
+                    {id:"google-agenda", nom:"Google Agenda", url:"https://calendar.google.com/", icone:"📅"},
+                    {id:"outlook-agenda", nom:"Calendrier Outlook", url:"https://outlook.live.com/calendar/0/view/month", icone:"📅"}
                 ]
             }
         ],
@@ -762,31 +1084,73 @@
             {
                 titre: "Achats et annonces",
                 services: [
-                    {id:"leboncoin", nom:"Leboncoin", url:"https://www.leboncoin.fr/", icone:"📦"}
+                    {id:"leboncoin", nom:"Leboncoin", url:"https://www.leboncoin.fr/", icone:"📦"},
+                    {id:"pap", nom:"PAP", url:"https://www.pap.fr/", icone:"🏠"},
+                    {id:"seloger", nom:"SeLoger", url:"https://www.seloger.com/", icone:"🏡"}
                 ]
             },
             {
                 titre: "Déplacements",
                 services: [
                     {id:"google-maps", nom:"Google Maps", url:"https://www.google.com/maps/", icone:"🗺️"},
-                    {id:"sncf-connect", nom:"SNCF Connect", url:"https://www.sncf-connect.com/", icone:"🚆"}
+                    {id:"sncf-connect", nom:"SNCF Connect", url:"https://www.sncf-connect.com/", icone:"🚆"},
+                    {id:"waze", nom:"Waze", url:"https://www.waze.com/live-map/", icone:"🚗"}
+                ]
+            },
+            {
+                titre: "Voyages",
+                services: [
+                    {id:"booking", nom:"Booking.com", url:"https://www.booking.com/", icone:"🧳"}
+                ]
+            },
+            {
+                titre: "Applications & outils",
+                services: [
+                    {id:"google-play", nom:"Google Play Store", url:"https://play.google.com/store/apps", icone:"📱"},
+                    {id:"google-traduction", nom:"Google Traduction", url:"https://translate.google.com/?hl=fr", icone:"🌐"},
+                    {id:"calculatrice", nom:"Calculatrice", url:"https://www.google.com/search?q=calculatrice", icone:"🧮"}
+                ]
+            },
+            {
+                titre: "Maison & énergie",
+                services: [
+                    {id:"energie-info", nom:"Énergie-Info", url:"https://www.energie-info.fr/", icone:"⚡"}
                 ]
             }
         ],
 
         "loisirs": [
             {
-                titre: "Vidéo",
+                titre: "Réseaux sociaux",
                 services: [
-                    {id:"youtube", nom:"YouTube", url:"https://www.youtube.com/", icone:"▶️"},
-                    {id:"netflix", nom:"Netflix", url:"https://www.netflix.com/", icone:"🎞️"}
+                    {id:"facebook", nom:"Facebook", url:"https://www.facebook.com/", icone:"👥"},
+                    {id:"instagram", nom:"Instagram", url:"https://www.instagram.com/", icone:"📸"},
+                    {id:"x-twitter", nom:"X (Twitter)", url:"https://x.com/", icone:"💬"},
+                    {id:"tiktok", nom:"TikTok", url:"https://www.tiktok.com/", icone:"🎵"}
                 ]
             },
             {
-                titre: "Musique",
+                titre: "Vidéo",
+                services: [
+                    {id:"youtube", nom:"YouTube", url:"https://www.youtube.com/", icone:"▶️"},
+                    {id:"netflix", nom:"Netflix", url:"https://www.netflix.com/", icone:"🎞️"},
+                    {id:"orange-tv", nom:"Orange TV", url:"https://tv.orange.fr/", icone:"📺"},
+                    {id:"disney-plus", nom:"Disney+", url:"https://www.disneyplus.com/fr-fr", icone:"✨"},
+                    {id:"prime-video", nom:"Prime Video", url:"https://www.primevideo.com/", icone:"🎬"}
+                ]
+            },
+            {
+                titre: "Musique & radio",
                 services: [
                     {id:"spotify", nom:"Spotify", url:"https://open.spotify.com/", icone:"🎵"},
-                    {id:"deezer", nom:"Deezer", url:"https://www.deezer.com/", icone:"🎧"}
+                    {id:"deezer", nom:"Deezer", url:"https://www.deezer.com/", icone:"🎧"},
+                    {id:"radio-france", nom:"Radio France", url:"https://www.radiofrance.fr/", icone:"📻"}
+                ]
+            },
+            {
+                titre: "Information",
+                services: [
+                    {id:"franceinfo", nom:"Franceinfo", url:"https://www.franceinfo.fr/", icone:"📰"}
                 ]
             },
             {
@@ -807,6 +1171,13 @@
                 ]
             },
             {
+                titre: "Emploi & formation",
+                services: [
+                    {id:"france-travail", nom:"Mon espace France Travail", url:"https://www.francetravail.fr/candidat/", icone:"💼"},
+                    {id:"mon-cpf", nom:"Mon Compte Formation", url:"https://www.moncompteformation.gouv.fr/", icone:"🎓"}
+                ]
+            },
+            {
                 titre: "Santé",
                 services: [
                     {id:"ameli", nom:"Ameli", url:"https://www.ameli.fr/", icone:"🩺"},
@@ -819,20 +1190,61 @@
             {
                 titre: "Développement",
                 services: [
-                    {id:"github", nom:"GitHub", url:"https://github.com/", icone:"💻"}
+                    {id:"github", nom:"GitHub", url:"https://github.com/", icone:"💻"},
+                    {id:"vscode", nom:"Visual Studio Code", url:"https://vscode.dev/", icone:"🧑‍💻"},
+                    {id:"python", nom:"Python", url:"https://docs.python.org/3/", icone:"🐍"},
+                    {id:"django", nom:"Django", url:"https://docs.djangoproject.com/en/stable/", icone:"🌐"}
                 ]
             },
             {
                 titre: "Fichiers et organisation",
                 services: [
                     {id:"google-drive", nom:"Google Drive", url:"https://drive.google.com/", icone:"📁"},
-                    {id:"notion", nom:"Notion", url:"https://www.notion.so/", icone:"📝"}
+                    {id:"notion", nom:"Notion", url:"https://www.notion.so/", icone:"📝"},
+                    {id:"zotero", nom:"Zotero", url:"https://www.zotero.org/user/login", icone:"📚"}
                 ]
             },
             {
-                titre: "Réseau professionnel",
+                titre: "Recherche & documentation",
                 services: [
+                    {id:"google", nom:"Google", url:"https://www.google.com/", icone:"🔎"},
+                    {id:"google-scholar", nom:"Google Scholar", url:"https://scholar.google.com/", icone:"🎓"},
+                    {id:"pubmed", nom:"PubMed", url:"https://pubmed.ncbi.nlm.nih.gov/", icone:"🔬"},
+                    {id:"sci-hub", nom:"Sci-Hub (miroir externe)", url:"https://sci-hub.mksa.top/", icone:"📄"},
+                    {id:"promed", nom:"ProMED", url:"https://www.promedmail.org/", icone:"🦠"}
+                ]
+            },
+            {
+                titre: "Formation",
+                services: [
+                    {id:"alforpro", nom:"AlforPro", url:"https://alforpro.vet-alfort.fr/", icone:"🎓"},
+                    {id:"cristolink", nom:"Cristolink", url:"https://cristolink.sante.u-pec.fr/login/index.php", icone:"🎓"},
+                    {id:"prisme", nom:"PRISME", url:"https://prisme.cirad.fr/elearning/", icone:"🌍"},
+                    {id:"tuto-zotero", nom:"Tutoriel Zotero", url:"https://www.youtube.com/watch?v=MbrnQVr5ElE", icone:"▶️"}
+                ]
+            },
+            {
+                titre: "Communication professionnelle",
+                services: [
+                    {id:"anses-webmail", nom:"Webmail ANSES", url:"https://webmail.anses.fr/owa/auth/logon.aspx?replaceCurrent=1&url=https%3a%2f%2fwebmail.anses.fr%2fowa%2f", icone:"✉️"},
+                    {id:"microsoft-teams", nom:"Microsoft Teams", url:"https://teams.microsoft.com/", icone:"💬"},
                     {id:"linkedin", nom:"LinkedIn", url:"https://www.linkedin.com/", icone:"💼"}
+                ]
+            },
+            {
+                titre: "Emploi & missions",
+                services: [
+                    {id:"indeed", nom:"Indeed", url:"https://fr.indeed.com/", icone:"🔎"},
+                    {id:"hublo", nom:"Hublo", url:"https://www.hublo.com/", icone:"🏥"},
+                    {id:"appel-medical", nom:"L'Appel Médical", url:"https://www.appelmedical.com/", icone:"🩺"},
+                    {id:"florence", nom:"Florence", url:"https://florenceapp.com/fr/", icone:"💜"},
+                    {id:"brigad", nom:"Brigad", url:"https://www.brigad.co/", icone:"🤝"}
+                ]
+            },
+            {
+                titre: "Création",
+                services: [
+                    {id:"inshot", nom:"InShot", url:"https://inshot.com/", icone:"🎬"}
                 ]
             },
             {
@@ -849,7 +1261,8 @@
                 services: [
                     {id:"chatgpt", nom:"ChatGPT", url:"https://chatgpt.com/", icone:"🤖"},
                     {id:"claude", nom:"Claude", url:"https://claude.com/", icone:"🤖"},
-                    {id:"gemini", nom:"Gemini", url:"https://gemini.google.com/", icone:"✨"}
+                    {id:"gemini", nom:"Gemini", url:"https://gemini.google.com/", icone:"✨"},
+                    {id:"vera-health", nom:"Vera Health", url:"https://www.verahealth.ai/fr/home", icone:"🩺"}
                 ]
             },
             {
@@ -1333,6 +1746,40 @@
             "Adresse du raccourci"
         );
 
+        const sousCategorie =
+            document.createElement("select");
+
+        sousCategorie.setAttribute(
+            "aria-label",
+            "Sous-catégorie du raccourci"
+        );
+
+        const optionVide =
+            document.createElement("option");
+
+        optionVide.value = "";
+        optionVide.textContent =
+            "Sous-catégorie…";
+        optionVide.disabled = true;
+        optionVide.selected = true;
+
+        sousCategorie.appendChild(
+            optionVide
+        );
+
+        (catalogue[categorie] || [])
+            .forEach(function (groupe) {
+                const option =
+                    document.createElement("option");
+
+                option.value = groupe.titre;
+                option.textContent = groupe.titre;
+
+                sousCategorie.appendChild(
+                    option
+                );
+            });
+
         const valider =
             document.createElement("button");
 
@@ -1389,13 +1836,21 @@
                     return;
                 }
 
+                if (!sousCategorie.value) {
+                    message.textContent =
+                        "Choisissez une sous-catégorie.";
+                    sousCategorie.focus();
+                    return;
+                }
+
                 preferences
                     .categories[categorie]
                     .personnalises
                     .push({
                         id: creerIdPersonnalise(),
                         nom: nomNettoye,
-                        url: urlNormalisee
+                        url: urlNormalisee,
+                        groupe: sousCategorie.value
                     });
 
                 enregistrerPreferences(
@@ -1404,6 +1859,7 @@
 
                 nom.value = "";
                 url.value = "";
+                sousCategorie.value = "";
                 message.textContent = "";
                 form.hidden = true;
 
@@ -1415,6 +1871,7 @@
 
         form.appendChild(nom);
         form.appendChild(url);
+        form.appendChild(sousCategorie);
         form.appendChild(valider);
 
         zone.appendChild(toggle);
@@ -1554,6 +2011,438 @@
     });
 
 })();
+
+
+
+/* ============================================================
+   CENTRE DU JOUR
+   - Heure et date : fonctionnement local immédiat.
+   - Agenda / mail : valeurs réelles injectables plus tard par Django
+     après autorisation Google/Microsoft. Aucun faux compteur.
+   ============================================================ */
+(function () {
+    "use strict";
+
+    const racine = document.querySelector("[data-centre-jour]");
+
+    if (!racine) {
+        return;
+    }
+
+    const toggle = racine.querySelector("[data-centre-jour-toggle]");
+    const panel = racine.querySelector("[data-centre-jour-panel]");
+    const fermer = racine.querySelector("[data-centre-jour-fermer]");
+    const heure = racine.querySelector("[data-centre-jour-heure]");
+    const dateCourte = racine.querySelector("[data-centre-jour-date]");
+    const dateLongue = racine.querySelector("[data-centre-jour-date-longue]");
+    const agendaCount = racine.querySelector("[data-centre-jour-agenda-count]");
+    const mailCount = racine.querySelector("[data-centre-jour-mail-count]");
+    const agendaInfo = racine.querySelector("[data-centre-jour-agenda-info]");
+    const mailInfo = racine.querySelector("[data-centre-jour-mail-info]");
+    const evenementsZone = racine.querySelector("[data-centre-jour-evenements]");
+    const derniereConsultation = racine.querySelector("[data-centre-jour-derniere-consultation]");
+    const liensMail = racine.querySelectorAll("[data-centre-jour-mail-link]");
+    const meteoConseil = racine.querySelector("[data-centre-jour-meteo-conseil]");
+    const meteoIcone = racine.querySelector("[data-centre-jour-meteo-icone]");
+    const meteoTemperature = racine.querySelector("[data-centre-jour-meteo-temperature]");
+
+    const CLE_DERNIERE_CONSULTATION_MAIL = "spt_derniere_consultation_mail_v1";
+
+    function mettreAJourHorloge() {
+        const maintenant = new Date();
+
+        heure.textContent = new Intl.DateTimeFormat(
+            "fr-FR",
+            {hour: "2-digit", minute: "2-digit"}
+        ).format(maintenant);
+
+        dateCourte.textContent = new Intl.DateTimeFormat(
+            "fr-FR",
+            {weekday: "short", day: "2-digit", month: "short"}
+        ).format(maintenant);
+
+        dateLongue.textContent = new Intl.DateTimeFormat(
+            "fr-FR",
+            {weekday: "long", day: "numeric", month: "long", year: "numeric"}
+        ).format(maintenant);
+    }
+
+    function ouvrir() {
+        panel.hidden = false;
+        toggle.setAttribute("aria-expanded", "true");
+        toggle.setAttribute("aria-label", "Fermer le centre du jour");
+    }
+
+    function fermerPanel() {
+        panel.hidden = true;
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.setAttribute("aria-label", "Ouvrir le centre du jour");
+    }
+
+    toggle.addEventListener("click", function () {
+        if (panel.hidden) {
+            ouvrir();
+        } else {
+            fermerPanel();
+        }
+    });
+
+    fermer.addEventListener("click", fermerPanel);
+
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && !panel.hidden) {
+            fermerPanel();
+            toggle.focus();
+        }
+    });
+
+    document.addEventListener("click", function (event) {
+        if (!panel.hidden && !racine.contains(event.target)) {
+            fermerPanel();
+        }
+    });
+
+    function afficherDerniereConsultationMail() {
+        let valeur = null;
+
+        try {
+            valeur = window.localStorage.getItem(
+                CLE_DERNIERE_CONSULTATION_MAIL
+            );
+        } catch (erreur) {
+            valeur = null;
+        }
+
+        if (!valeur) {
+            derniereConsultation.textContent =
+                "Dernière consultation enregistrée : aucune.";
+            return;
+        }
+
+        const date = new Date(valeur);
+
+        if (Number.isNaN(date.getTime())) {
+            derniereConsultation.textContent = "";
+            return;
+        }
+
+        derniereConsultation.textContent =
+            "Dernière consultation enregistrée : " +
+            new Intl.DateTimeFormat(
+                "fr-FR",
+                {day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit"}
+            ).format(date) +
+            ".";
+    }
+
+    liensMail.forEach(function (lien) {
+        lien.addEventListener("click", function () {
+            try {
+                window.localStorage.setItem(
+                    CLE_DERNIERE_CONSULTATION_MAIL,
+                    new Date().toISOString()
+                );
+            } catch (erreur) {
+                /* Le raccourci mail reste utilisable même sans localStorage. */
+            }
+
+            afficherDerniereConsultationMail();
+        });
+    });
+
+    function nettoyerEvenements() {
+        evenementsZone.innerHTML = "";
+    }
+
+    function mettreAJourAgenda(evenements) {
+        const liste = Array.isArray(evenements) ? evenements : [];
+        nettoyerEvenements();
+
+        agendaCount.textContent = String(liste.length);
+
+        if (!liste.length) {
+            agendaInfo.textContent = "Aucun événement prévu aujourd’hui.";
+            return;
+        }
+
+        agendaInfo.textContent = "";
+
+        liste.forEach(function (evenement) {
+            const ligne = document.createElement("div");
+            ligne.className = "centre-jour-evenement";
+
+            const horaire = document.createElement("span");
+            horaire.className = "centre-jour-evenement-heure";
+            horaire.textContent = evenement.heure || "—";
+
+            const titre = document.createElement("span");
+            titre.textContent = evenement.titre || "Événement";
+
+            ligne.appendChild(horaire);
+            ligne.appendChild(titre);
+            evenementsZone.appendChild(ligne);
+        });
+    }
+
+    function mettreAJourMails(nombre) {
+        const total = Number(nombre);
+
+        if (!Number.isFinite(total) || total < 0) {
+            mailCount.textContent = "—";
+            return;
+        }
+
+        const entier = Math.floor(total);
+        mailCount.textContent = String(entier);
+        mailInfo.textContent =
+            entier === 0
+                ? "Aucun nouveau mail depuis la dernière consultation."
+                : entier +
+                  (entier === 1
+                      ? " nouveau mail depuis la dernière consultation."
+                      : " nouveaux mails depuis la dernière consultation.");
+    }
+
+    /* ========================================================
+       MÉTÉO PRATIQUE — 10 PROCHAINES HEURES
+       Logique volontairement prudente pour savoir quoi emporter.
+       Source : Open-Meteo, à partir de la position autorisée
+       par l'utilisateur dans son navigateur.
+       ======================================================== */
+
+    const METEO_HEURES = 10;
+    const SEUIL_PETIT_PULL = 14;
+    const SEUIL_GROSSE_DOUDOUNE = 5;
+    const SEUIL_VENT_KMH = 30;
+    const SEUIL_RAFales_KMH = 45;
+    const SEUIL_PRECIPITATIONS_MM = 0.2;
+
+    function afficherMeteoIndisponible(texte) {
+        meteoIcone.textContent = "—";
+        meteoTemperature.textContent = "—";
+        meteoConseil.textContent = texte || "Météo non disponible";
+    }
+
+    function codeEstOrage(code) {
+        return [95, 96, 99].includes(Number(code));
+    }
+
+    function codeEstNeige(code) {
+        const valeur = Number(code);
+        return (
+            (valeur >= 71 && valeur <= 77) ||
+            valeur === 85 ||
+            valeur === 86
+        );
+    }
+
+    function codeEstPluie(code) {
+        const valeur = Number(code);
+        return (
+            (valeur >= 51 && valeur <= 67) ||
+            (valeur >= 80 && valeur <= 82)
+        );
+    }
+
+    function codeEstBrouillard(code) {
+        return [45, 48].includes(Number(code));
+    }
+
+    function choisirIconeMeteo(codes, precipitationMax, neigeMax) {
+        if (codes.some(codeEstOrage)) {
+            return "⛈️";
+        }
+
+        if (neigeMax > 0 || codes.some(codeEstNeige)) {
+            return "❄️";
+        }
+
+        if (
+            precipitationMax >= SEUIL_PRECIPITATIONS_MM ||
+            codes.some(codeEstPluie)
+        ) {
+            return "🌧️";
+        }
+
+        if (codes.some(codeEstBrouillard)) {
+            return "🌫️";
+        }
+
+        if (codes.some(function (code) {
+            const valeur = Number(code);
+            return valeur === 2 || valeur === 3;
+        })) {
+            return "☁️";
+        }
+
+        if (codes.some(function (code) {
+            return Number(code) === 1;
+        })) {
+            return "🌤️";
+        }
+
+        return "☀️";
+    }
+
+    function construireConseilMeteo(donnees) {
+        const temperatures = donnees.temperature_2m || [];
+        const precipitations = donnees.precipitation || [];
+        const neiges = donnees.snowfall || [];
+        const codes = donnees.weather_code || [];
+        const vents = donnees.wind_speed_10m || [];
+        const rafales = donnees.wind_gusts_10m || [];
+
+        const valeursTemperatures = temperatures
+            .map(Number)
+            .filter(Number.isFinite);
+
+        if (!valeursTemperatures.length) {
+            return null;
+        }
+
+        const minimum = Math.min.apply(null, valeursTemperatures);
+        const precipitationMax = Math.max(
+            0,
+            ...precipitations.map(Number).filter(Number.isFinite)
+        );
+        const neigeMax = Math.max(
+            0,
+            ...neiges.map(Number).filter(Number.isFinite)
+        );
+        const ventMax = Math.max(
+            0,
+            ...vents.map(Number).filter(Number.isFinite)
+        );
+        const rafaleMax = Math.max(
+            0,
+            ...rafales.map(Number).filter(Number.isFinite)
+        );
+
+        const pluieOuNeige =
+            precipitationMax >= SEUIL_PRECIPITATIONS_MM ||
+            neigeMax > 0 ||
+            codes.some(codeEstPluie) ||
+            codes.some(codeEstNeige) ||
+            codes.some(codeEstOrage);
+
+        const ventFort =
+            ventMax >= SEUIL_VENT_KMH ||
+            rafaleMax >= SEUIL_RAFales_KMH;
+
+        const conseils = [];
+
+        if (pluieOuNeige) {
+            conseils.push("imperméable");
+        } else if (ventFort) {
+            conseils.push("coupe-vent");
+        }
+
+        if (minimum <= SEUIL_GROSSE_DOUDOUNE) {
+            conseils.push("grosse doudoune");
+        } else if (minimum <= SEUIL_PETIT_PULL) {
+            conseils.push("petit pull");
+        }
+
+        return {
+            minimum: minimum,
+            icone: choisirIconeMeteo(
+                codes,
+                precipitationMax,
+                neigeMax
+            ),
+            conseil: conseils.length
+                ? "Prévoir " + conseils.join(" + ")
+                : "Prévoir aucun vêtement particulier"
+        };
+    }
+
+    async function chargerMeteo(latitude, longitude) {
+        const parametres = new URLSearchParams({
+            latitude: String(latitude),
+            longitude: String(longitude),
+            hourly: [
+                "temperature_2m",
+                "precipitation",
+                "snowfall",
+                "weather_code",
+                "wind_speed_10m",
+                "wind_gusts_10m"
+            ].join(","),
+            forecast_hours: String(METEO_HEURES),
+            timezone: "auto"
+        });
+
+        const reponse = await fetch(
+            "https://api.open-meteo.com/v1/forecast?" +
+            parametres.toString(),
+            {headers: {"Accept": "application/json"}}
+        );
+
+        if (!reponse.ok) {
+            throw new Error("Réponse météo invalide");
+        }
+
+        const donnees = await reponse.json();
+        const resultat = construireConseilMeteo(donnees.hourly || {});
+
+        if (!resultat) {
+            throw new Error("Données météo incomplètes");
+        }
+
+        meteoIcone.textContent = resultat.icone;
+        meteoTemperature.textContent =
+            Math.round(resultat.minimum) + "°C";
+        meteoConseil.textContent = resultat.conseil;
+    }
+
+    function initialiserMeteo() {
+        if (!navigator.geolocation) {
+            afficherMeteoIndisponible("Météo non disponible");
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                chargerMeteo(
+                    position.coords.latitude,
+                    position.coords.longitude
+                ).catch(function () {
+                    afficherMeteoIndisponible(
+                        "Météo temporairement indisponible"
+                    );
+                });
+            },
+            function () {
+                afficherMeteoIndisponible(
+                    "Autoriser la localisation pour la météo"
+                );
+            },
+            {
+                enableHighAccuracy: false,
+                timeout: 8000,
+                maximumAge: 60 * 60 * 1000
+            }
+        );
+    }
+
+    /*
+     * Point d'entrée prévu pour la future connexion Django/OAuth :
+     * window.SPTCentreDuJour.mettreAJourAgenda([...])
+     * window.SPTCentreDuJour.mettreAJourMails(3)
+     */
+    window.SPTCentreDuJour = {
+        mettreAJourAgenda: mettreAJourAgenda,
+        mettreAJourMails: mettreAJourMails,
+        ouvrir: ouvrir,
+        fermer: fermerPanel
+    };
+
+    mettreAJourHorloge();
+    afficherDerniereConsultationMail();
+    initialiserMeteo();
+    window.setInterval(mettreAJourHorloge, 30000);
+})();
+
 
 </script>
 {% endblock %}
