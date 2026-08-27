@@ -258,11 +258,164 @@
 .bouger-grid > article.bouger-card:last-of-type {
     background: #fff;
 }
+
+/* ==========================================================
+   BOUTON "T'AS MAL OÙ ?" — OSTÉOPATHIE DOUCE
+   ========================================================== */
+
+.osteo-sticky-button {
+    position: sticky;
+    top: 120px;
+    z-index: 1000;
+    height: 0;
+    display: flex;
+    justify-content: flex-end;
+    pointer-events: none;
+}
+
+.osteo-tamalou-button {
+    position: relative;
+    right: 4px;
+    display: inline-block;
+    padding: 0;
+    border: none;
+    background: none;
+    box-shadow: none;
+    pointer-events: auto;
+    transition: transform .2s ease;
+}
+
+.osteo-tamalou-button:hover {
+    transform: translateY(-2px);
+}
+
+.osteo-tamalou-button img {
+    display: block;
+    height: 150px;
+    width: auto;
+}
+
+.osteo-tamalou-button span {
+    position: absolute;
+    left: 50%;
+    top: calc(50% + 1.15cm);
+    transform: translate(-50%, -50%);
+    color: var(--bouger-vert-fonce);
+    font-weight: 800;
+    font-size: .9rem;
+    text-shadow: 0 2px 6px rgba(0,0,0,.6);
+    white-space: nowrap;
+}
+
+@media (max-width: 850px) {
+    .osteo-tamalou-button img {
+        height: 125px;
+    }
+}
+
+@media (max-width: 580px) {
+    .osteo-sticky-button {
+        top: 70px;
+    }
+
+    .osteo-tamalou-button {
+        right: 0;
+    }
+
+    .osteo-tamalou-button img {
+        height: 105px;
+    }
+
+    .osteo-tamalou-button span {
+        top: calc(50% + .8cm);
+        font-size: .78rem;
+    }
+}
+
+/* ==========================================================
+   FORME OVALE VERTICALE DU BOUTON OSTÉO
+   ========================================================== */
+
+.osteo-tamalou-button {
+    width: 110px;
+    height: 160px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,.9);
+    box-shadow: 0 8px 22px rgba(33,76,53,.25);
+}
+
+.osteo-tamalou-button img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.osteo-tamalou-button span {
+    left: 50%;
+    top: auto;
+    bottom: 15px;
+    width: 100%;
+    padding: 0 5px;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: .82rem;
+    font-weight: 900;
+    line-height: 1.05;
+    text-align: center;
+    text-shadow:
+        0 2px 4px rgba(0,0,0,.9),
+        0 0 7px rgba(0,0,0,.65);
+}
+
+@media (max-width: 850px) {
+    .osteo-tamalou-button {
+        width: 94px;
+        height: 138px;
+    }
+
+    .osteo-tamalou-button img {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+@media (max-width: 580px) {
+    .osteo-tamalou-button {
+        width: 82px;
+        height: 120px;
+    }
+
+    .osteo-tamalou-button img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .osteo-tamalou-button span {
+        bottom: 11px;
+        font-size: .68rem;
+    }
+}
 </style>
 {% endblock %}
 
 {% block content %}
 <main class="bouger-page">
+
+    <div class="osteo-sticky-button">
+        <a
+            href="{% url 'osteo' %}"
+            class="osteo-tamalou-button"
+            aria-label="T’as mal où ? Conseils d’ostéopathie douce"
+        >
+            <img
+                src="{% static 'accueil/images/crac.png' %}"
+                alt="T’as mal où ?"
+            >
+            <span>T’as mal où ?</span>
+        </a>
+    </div>
     <section class="bouger-section bouger-grid" id="introduction">
         <article class="bouger-card bouger-card-image">
             <h2>Pourquoi bouger ? Parfois je me demande aussi 😄</h2>

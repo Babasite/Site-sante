@@ -626,6 +626,34 @@ color:var(--vert-principal);
 
         /* Règles uniquement pour téléphone vertical */
 
+        .hero {
+            background:
+                linear-gradient(
+                    90deg,
+                    #EFE3C3 0%,
+                    rgba(239,227,195,.96) 18%,
+                    rgba(239,227,195,.72) 38%,
+                    rgba(239,227,195,.30) 58%,
+                    rgba(239,227,195,0) 78%
+                ),
+                url("{% static 'accueil/images/table.webp' %}")
+                center center / cover no-repeat;
+
+            background-position: 62% center;
+        }
+
+        .sticky-pharmacy-button {
+            position: sticky;
+            top: 70px;
+            height: 0;
+            margin-bottom: 0;
+            justify-content: flex-end;
+        }
+
+        .secondary-button {
+            right: 4px;
+        }
+
     }
 
 

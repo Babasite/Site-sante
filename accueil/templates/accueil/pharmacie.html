@@ -2053,6 +2053,8 @@
                             "🥬 Épinards",
                             "🥜 Amandes",
                             "🐟 Poisson gras",
+                            "☕ 1 café (avec modération)",
+                            "🍵 Thé (avec modération)",
                             "🍌 Banane"
                         ],
 
@@ -2068,6 +2070,9 @@
                             "🍷 Alcool",
                             "🥤 Boissons très sucrées",
                             "☕ Excès de café",
+                            "🍷 Vin rouge",
+                            "🥂 Vin blanc",
+                            "🍺 Bière",
                             "🍟 Repas très salés"
                         ],
 
@@ -2102,6 +2107,9 @@
                             "🍷 Alcool",
                             "🥓 Charcuteries",
                             "🍬 Excès de sucre",
+                            "🍷 Vin rouge",
+                            "🥂 Vin blanc",
+                            "🍺 Bière",
                             "☕ Variations brutales de caféine"
                         ],
 
@@ -2221,6 +2229,7 @@
                             "☕ Café",
                             "🍷 Alcool",
                             "🥤 Boissons gazeuses",
+                            "🥤 Coca-Cola",
                             "🥛 Lait si mal toléré"
                         ],
 
@@ -2254,6 +2263,7 @@
 
                         limits: [
                             "🥤 Boissons gazeuses",
+                            "🥤 Coca-Cola",
                             "🫘 Grosses portions de légumineuses",
                             "🥦 Choux si sensibles",
                             "🧅 Oignon cru",
@@ -2291,6 +2301,9 @@
                             "🍟 Fritures",
                             "🥓 Charcuteries",
                             "🍰 Desserts très riches",
+                            "🍷 Vin rouge",
+                            "🥂 Vin blanc",
+                            "🍺 Bière",
                             "🍷 Alcool"
                         ],
 
@@ -2327,6 +2340,10 @@
                             "🍫 Chocolat",
                             "☕ Café",
                             "🍷 Alcool",
+                            "🍷 Vin rouge",
+                            "🥂 Vin blanc",
+                            "🍺 Bière",
+                            "🥤 Coca-Cola",
                             "🌿 Menthe poivrée"
                         ],
 
@@ -2899,6 +2916,7 @@
                             "🍌 Banane",
                             "🥣 Compote",
                             "🥛 Yaourt nature",
+                            "🍵 Thé ou infusion tiède",
                             "💧 Eau tiède"
                         ],
 
@@ -2934,6 +2952,7 @@
                             "🍐 Poire cuite",
                             "🍎 Compote",
                             "💧 Eau",
+                            "🍵 Thé ou infusion tiède",
                             "🥛 Boisson tiède"
                         ],
 
@@ -4145,6 +4164,7 @@
                             "🍌 Banane",
                             "🥣 Compote",
                             "🥛 Yaourt nature",
+                            "🍵 Thé ou infusion tiède",
                             "💧 Eau tiède"
                         ],
 
@@ -4180,6 +4200,7 @@
                             "🍐 Poire cuite",
                             "🍎 Compote",
                             "💧 Eau",
+                            "🍵 Thé ou infusion tiède",
                             "🥛 Boisson tiède"
                         ],
 
@@ -6407,6 +6428,8 @@
                             "🫘 Lentilles",
                             "🥜 Amandes",
                             "🍊 Orange",
+                            "☕ 1 café (avec modération)",
+                            "🍵 Thé (avec modération)",
                             "💧 Eau"
                         ],
 
@@ -6847,6 +6870,44 @@
             }
 
         };
+        /* =====================================================
+           CONSEILS SHIATSU / ACUPRESSION — AJOUT
+           Conseils de confort uniquement, sans aiguilles.
+        ====================================================== */
+
+        const shiatsuData = {
+            tete: "Pour un mal de tête ou une tension légère, masse doucement les tempes et la base du crâne. Tu peux aussi presser LI-4 (entre le pouce et l’index) 2 à 3 minutes de chaque côté, sans douleur. Ne pas utiliser LI-4 pendant la grossesse.",
+            yeux: "Pour la fatigue visuelle, ferme les yeux et masse très doucement les tempes, les sourcils et le contour osseux des orbites pendant 1 à 2 minutes. Ne presse jamais directement sur le globe oculaire.",
+            oreilles: "Masse doucement le pavillon de l’oreille, la zone derrière l’oreille et les muscles de la mâchoire. Ne mets jamais de pression ni d’objet dans le conduit auditif.",
+            nez: "Pour une sensation de nez encombré, exerce une pression douce de chaque côté des narines puis sous les pommettes pendant quelques respirations. Pour des allergies persistantes, l’acupuncture peut être discutée avec un praticien qualifié.",
+            bouche: "Masse doucement les joues et les muscles de la mâchoire, puis relâche la langue et la mâchoire. Évite toute pression directe sur une lésion, un aphte ou une zone douloureuse.",
+            dents: "En cas de tension de mâchoire, masse doucement les muscles devant les oreilles et le long des joues. Une douleur dentaire persistante doit être évaluée par un dentiste : l’acupression ne traite pas sa cause.",
+            gorge: "Pour une gorge tendue ou une voix fatiguée, masse doucement les épaules, la nuque et la zone sous la mâchoire. Évite toute pression forte sur l’avant du cou ou la gorge.",
+            thorax: "Pour une oppression clairement liée au stress, privilégie un shiatsu très doux des épaules et du haut du dos associé à une respiration lente. N’utilise pas l’acupression pour une douleur thoracique, un essoufflement inhabituel ou une oppression soudaine : fais-toi évaluer rapidement.",
+            coeur: "Le shiatsu peut servir uniquement à la détente générale, par exemple sur les épaules, les mains et les avant-bras. Une douleur thoracique, un malaise, des palpitations importantes ou un essoufflement ne doivent jamais être traités par acupression à la place d’un avis médical.",
+            ventre: "En cas de nausée, tu peux presser P-6 : trois largeurs de doigt sous le pli du poignet, entre les deux tendons, pendant 2 à 3 minutes de chaque côté. Pour un simple ballonnement, un massage abdominal très doux dans le sens des aiguilles d’une montre peut être confortable ; évite-le en cas de douleur aiguë ou inexpliquée.",
+            dos: "Pose les pouces ou les paumes sur les muscles situés de chaque côté de la colonne et exerce une pression progressive et confortable. Ne presse pas directement sur les vertèbres et arrête si une douleur irradie dans une jambe ou un bras.",
+            bras: "Masse lentement les muscles du bras et de l’avant-bras avec la paume ou le pouce, en restant sur les tissus souples. Évite une zone gonflée, rouge, chaude ou récemment blessée.",
+            poignets: "Masse doucement les muscles de l’avant-bras et le pourtour du poignet sans appuyer sur une zone douloureuse. Pour les gestes répétitifs, préfère de courtes pressions légères et des pauses régulières.",
+            mains: "Pétris doucement la paume, puis chaque doigt, sans forcer les articulations. Une pression modérée entre les métacarpiens peut être relaxante, mais évite les zones gonflées ou inflammatoires.",
+            doigts: "Masse chaque doigt de la base vers l’extrémité et effectue de petits mouvements circulaires autour des articulations, sans tirer ni forcer. Arrête si la douleur augmente.",
+            fesses: "Utilise la paume ou une balle souple contre un mur pour masser les muscles fessiers, jamais directement sur une zone donnant une douleur électrique ou descendant dans la jambe.",
+            intime: "Pas d’auto-acupression profonde sur les organes génitaux ou le bas-ventre douloureux. Pour les symptômes urinaires, menstruels ou pelviens persistants, l’acupuncture doit être pratiquée uniquement par un professionnel qualifié après avis adapté.",
+            cuisses: "Masse les quadriceps et l’arrière des cuisses avec la paume, lentement et sans douleur. Évite tout massage profond si une jambe est soudainement gonflée, rouge ou chaude.",
+            genoux: "Masse doucement les muscles au-dessus et au-dessous du genou et les tissus autour de l’articulation. N’appuie pas directement sur une articulation très gonflée, chaude ou traumatisée.",
+            tibias: "Masse doucement les muscles situés à côté du tibia plutôt que l’os lui-même. Une douleur très localisée sur l’os, persistante après la course, mérite du repos et une évaluation si elle ne disparaît pas.",
+            pieds: "Masse la plante du pied avec le pouce ou fais rouler doucement une balle sous le pied pendant quelques minutes. La pression doit rester agréable et ne jamais provoquer de douleur vive.",
+            orteils: "Masse doucement les orteils et la plante du pied, puis mobilise chaque orteil sans forcer. Évite toute pression sur une plaie, une zone infectée ou une articulation très inflammatoire.",
+            peau: "Le shiatsu peut se faire autour d’une zone saine pour favoriser la détente, mais ne presse pas une peau irritée, brûlée, infectée, lésée ou présentant une éruption inexpliquée.",
+            cheveux: "Un massage doux du cuir chevelu avec la pulpe des doigts, sans gratter, peut détendre la zone. Évite les zones douloureuses, inflammatoires ou présentant des lésions.",
+            sang: "L’acupression ne corrige pas une anémie, un trouble de coagulation ou une maladie circulatoire. Si tu l’utilises, limite-toi à un massage doux des mains et des pieds pour la détente, sans remplacer le bilan médical nécessaire.",
+            muscles: "Sur un muscle simplement tendu ou courbaturé, exerce une pression progressive avec la paume ou le pouce pendant quelques secondes puis relâche. Ne travaille pas profondément sur une blessure récente ou une zone gonflée.",
+            articulations: "Masse les muscles autour de l’articulation plutôt que l’articulation elle-même. Évite les pressions fortes si elle est rouge, chaude, gonflée ou récemment traumatisée.",
+            fatigue: "Pour un coup de fatigue, un shiatsu doux des épaules, des mains et des jambes peut aider à se détendre et à se remettre en mouvement. L’acupuncture peut être envisagée comme approche complémentaire avec un praticien qualifié si la fatigue est persistante, après en avoir recherché la cause.",
+            stress: "Masse lentement les tempes, les épaules et la paume des mains en respirant profondément. Une pression douce entre les sourcils peut aussi être utilisée comme geste de relaxation, sans chercher à provoquer de douleur.",
+            sommeil: "Avant le coucher, pratique 3 à 5 minutes de massage doux des tempes, de la nuque, des paumes et de la plante des pieds. Le but est la détente ; une insomnie persistante mérite d’en rechercher la cause.",
+            immunite: "Le shiatsu ou l’acupuncture ne doivent pas être présentés comme un moyen de « booster » l’immunité. Ils peuvent uniquement être utilisés pour la détente et le confort ; en cas d’infection ou de symptômes persistants, privilégie l’évaluation et les soins adaptés."
+        };
 
         /*
             La partie 6 ajoutera :
@@ -7076,6 +7137,27 @@
                 category.conditions
                     .map(createConditionCard)
                     .join("");
+            /* Ajout : conseil de shiatsu / acupression pour cette zone */
+            if (shiatsuData[categoryKey]) {
+                modalContent.insertAdjacentHTML(
+                    "afterbegin",
+                    `
+                        <article class="condition-block">
+                            <h3 class="condition-title">
+                                🤲 Shiatsu / acupression
+                            </h3>
+                            <p class="condition-description">
+                                ${escapeHtml(shiatsuData[categoryKey])}
+                            </p>
+                            <div class="remedy-box explain">
+                                <p>
+                                    Conseil de confort uniquement. Pas d’aiguille en auto-traitement : pour l’acupuncture, adresse-toi à un praticien qualifié. L’acupression ne remplace pas un avis médical lorsque les symptômes sont importants, inhabituels ou persistants.
+                                </p>
+                            </div>
+                        </article>
+                    `
+                );
+            }
 
             bodyPartButtons.forEach(button => {
                 button.classList.toggle(

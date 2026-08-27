@@ -1,0 +1,691 @@
+{% extends "accueil/base.html" %}
+
+{% block logo_return %}{% url 'suivi_personnalise' %}{% endblock %}
+{% load static %}
+
+{% block title %}Cockcroft-Gault | Santé Prévention Terrain{% endblock %}
+{% block page_title %}Clairance de la créatinine{% endblock %}
+{% block header_actions %}{% endblock %}
+
+{% block extra_css %}
+<style>
+.spt-shell-content {
+    background: #fff;
+}
+
+.cg-page {
+    width: min(1080px, calc(100% - 28px));
+    margin: 10px auto 60px;
+    color: var(--spt-texte);
+    font-family: var(--font-family-body);
+    font-size: 1rem;
+    line-height: 1.68;
+}
+
+.cg-page * {
+    box-sizing: border-box;
+}
+
+.cg-back {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 0 18px;
+    padding: 4px 0;
+    color: var(--spt-vert-fonce);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.cg-back:hover,
+.cg-back:focus-visible {
+    color: var(--spt-vert);
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}
+
+.cg-intro {
+    max-width: 900px;
+    padding: 28px 4px 30px;
+    border-top: 1px solid rgba(33, 76, 53, .16);
+    border-bottom: 1px solid rgba(33, 76, 53, .16);
+}
+
+.cg-intro h1 {
+    margin: 0 0 12px;
+    color: var(--spt-vert-fonce);
+    font-family: var(--font-family-title);
+    font-size: clamp(1.55rem, 2.6vw, 2rem);
+    line-height: 1.25;
+    text-wrap: balance;
+}
+
+.cg-intro p {
+    max-width: 820px;
+    margin: 0;
+    color: #30363a;
+}
+
+.cg-notice {
+    max-width: 820px;
+    margin-top: 22px;
+    padding: 13px 15px;
+    border-left: 3px solid var(--spt-vert);
+    border-radius: 0 8px 8px 0;
+    background: rgba(239, 227, 195, .50);
+    line-height: 1.55;
+}
+
+.cg-notice strong {
+    color: var(--spt-vert-fonce);
+}
+
+.cg-tool-section {
+    max-width: 920px;
+    padding: 32px 4px 0;
+}
+
+.cg-tool-section h2,
+.cg-info h2 {
+    margin: 0 0 8px;
+    color: var(--spt-vert-fonce);
+    font-family: var(--font-family-title);
+    font-size: clamp(1.3rem, 2vw, 1.6rem);
+    line-height: 1.3;
+}
+
+.cg-tool-section > p,
+.cg-info p,
+.cg-info li {
+    color: #4f5a61;
+}
+
+.cg-card {
+    margin-top: 20px;
+    padding: clamp(20px, 4vw, 32px);
+    border: 2px solid var(--spt-vert);
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(33, 76, 53, .10);
+}
+
+.cg-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.cg-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.cg-field.full {
+    grid-column: 1 / -1;
+}
+
+.cg-label {
+    color: var(--spt-vert-fonce);
+    font-weight: 800;
+}
+
+.cg-help {
+    color: #667078;
+    font-size: .86rem;
+    line-height: 1.45;
+}
+
+.cg-input,
+.cg-select {
+    width: 100%;
+    min-height: 46px;
+    padding: 10px 12px;
+    border: 1px solid rgba(33, 76, 53, .28);
+    border-radius: 9px;
+    background: #fff;
+    color: #30363a;
+    font: inherit;
+}
+
+.cg-input:focus,
+.cg-select:focus {
+    outline: 3px solid rgba(55, 107, 77, .18);
+    border-color: var(--spt-vert);
+}
+
+.cg-unit-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 150px;
+    gap: 8px;
+}
+
+.cg-sex-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.cg-radio {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 42px;
+    padding: 8px 11px;
+    border: 1px solid rgba(33, 76, 53, .16);
+    border-radius: 9px;
+    background: #fff;
+    cursor: pointer;
+}
+
+.cg-radio input {
+    accent-color: var(--spt-vert);
+}
+
+.cg-formula {
+    margin-top: 20px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    background: rgba(239, 227, 195, .35);
+    color: #4f5a61;
+    font-size: .9rem;
+}
+
+.cg-formula strong {
+    color: var(--spt-vert-fonce);
+}
+
+.cg-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.cg-button {
+    min-height: 44px;
+    padding: 9px 16px;
+    border: 1px solid var(--spt-vert-fonce);
+    border-radius: 8px;
+    background: var(--spt-vert-fonce);
+    color: #fff;
+    font: 600 .95rem/1.3 var(--font-family-body);
+    cursor: pointer;
+    transition: transform .2s ease, background .2s ease;
+}
+
+.cg-button:hover,
+.cg-button:focus-visible {
+    transform: translateY(-1px);
+    background: var(--spt-vert);
+}
+
+.cg-button.secondary {
+    background: #fff;
+    color: var(--spt-vert-fonce);
+}
+
+.cg-button.secondary:hover,
+.cg-button.secondary:focus-visible {
+    background: rgba(239, 227, 195, .38);
+}
+
+.cg-error {
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-left: 4px solid #b7564b;
+    border-radius: 0 8px 8px 0;
+    background: #fff4f1;
+    color: #7d3d36;
+}
+
+.cg-error[hidden],
+.cg-result[hidden] {
+    display: none;
+}
+
+.cg-result {
+    margin-top: 22px;
+    padding: 18px;
+    border-radius: 12px;
+    background: rgba(223, 234, 219, .65);
+}
+
+.cg-result-label {
+    display: block;
+    margin-bottom: 4px;
+    color: #667078;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.cg-result-value {
+    display: block;
+    color: var(--spt-vert-fonce);
+    font-family: var(--font-family-title);
+    font-size: clamp(1.55rem, 3vw, 2.1rem);
+    line-height: 1.2;
+}
+
+.cg-result-note {
+    margin: 8px 0 0;
+    color: #4f5a61;
+    font-size: .92rem;
+}
+
+.cg-detail {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(33, 76, 53, .14);
+    color: #4f5a61;
+    font-size: .88rem;
+}
+
+.cg-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    max-width: 920px;
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(33, 76, 53, .16);
+}
+
+.cg-info {
+    padding: 20px;
+    border: 1px solid rgba(33, 76, 53, .16);
+    border-radius: 12px;
+    background: #fff;
+}
+
+.cg-info p {
+    margin: 0;
+}
+
+.cg-info ul {
+    margin: 10px 0 0;
+    padding-left: 20px;
+}
+
+.cg-info li + li {
+    margin-top: 7px;
+}
+
+.cg-alert {
+    grid-column: 1 / -1;
+    border-left: 4px solid #b7564b;
+    background: #fffaf8;
+}
+
+.cg-alert h2 {
+    color: #7d3d36;
+}
+
+@media (max-width: 700px) {
+    .cg-page {
+        width: calc(100% - 20px);
+        margin-top: 8px;
+        margin-bottom: 44px;
+    }
+
+    .cg-intro {
+        padding: 24px 2px 26px;
+    }
+
+    .cg-tool-section {
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+
+    .cg-card {
+        padding: 20px 15px;
+    }
+
+    .cg-form-grid,
+    .cg-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cg-field.full,
+    .cg-alert {
+        grid-column: auto;
+    }
+
+    .cg-unit-row {
+        grid-template-columns: 1fr;
+    }
+
+    .cg-sex-row,
+    .cg-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .cg-radio,
+    .cg-button {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cg-button {
+        transition: none;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="cg-page">
+
+    <a class="cg-back" href="{% url 'suivi_personnalise' %}">
+        ← Retour aux scores et échelles
+    </a>
+
+    <section class="cg-intro">
+        <h1>Clairance de la créatinine — Cockcroft-Gault</h1>
+
+        <p>
+            La formule de Cockcroft-Gault estime la clairance de la créatinine
+            à partir de l’âge, du poids, du sexe et de la créatininémie.
+        </p>
+
+        <div class="cg-notice">
+            <strong>À savoir :</strong>
+            cette estimation est notamment utilisée dans certains contextes de
+            prescription et d’adaptation posologique. Elle ne remplace pas
+            l’évaluation médicale de la fonction rénale et ne doit pas être
+            confondue avec le DFG estimé fourni par d’autres équations.
+        </div>
+    </section>
+
+    <section class="cg-tool-section" aria-labelledby="cg-tool-title">
+        <h2 id="cg-tool-title">Calcul de la clairance estimée</h2>
+
+        <p>
+            Renseigne les données ci-dessous. Le poids doit être saisi en kilogrammes.
+        </p>
+
+        <div class="cg-card">
+
+            <div class="cg-form-grid">
+
+                <div class="cg-field">
+                    <label class="cg-label" for="cgAge">
+                        Âge
+                    </label>
+                    <input
+                        class="cg-input"
+                        id="cgAge"
+                        type="number"
+                        min="18"
+                        max="120"
+                        step="1"
+                        inputmode="numeric"
+                        placeholder="Ex. 68"
+                    >
+                    <span class="cg-help">Âge en années.</span>
+                </div>
+
+                <div class="cg-field">
+                    <label class="cg-label" for="cgWeight">
+                        Poids
+                    </label>
+                    <input
+                        class="cg-input"
+                        id="cgWeight"
+                        type="number"
+                        min="20"
+                        max="300"
+                        step="0.1"
+                        inputmode="decimal"
+                        placeholder="Ex. 72"
+                    >
+                    <span class="cg-help">Poids utilisé dans la formule, en kg.</span>
+                </div>
+
+                <div class="cg-field full">
+                    <span class="cg-label">Sexe utilisé par la formule historique</span>
+
+                    <div class="cg-sex-row">
+                        <label class="cg-radio">
+                            <input type="radio" name="cgSex" value="male" checked>
+                            <span>Homme</span>
+                        </label>
+
+                        <label class="cg-radio">
+                            <input type="radio" name="cgSex" value="female">
+                            <span>Femme</span>
+                        </label>
+                    </div>
+
+                    <span class="cg-help">
+                        La formule historique applique un coefficient de 0,85 chez la femme.
+                    </span>
+                </div>
+
+                <div class="cg-field full">
+                    <label class="cg-label" for="cgCreatinine">
+                        Créatininémie
+                    </label>
+
+                    <div class="cg-unit-row">
+                        <input
+                            class="cg-input"
+                            id="cgCreatinine"
+                            type="number"
+                            min="1"
+                            step="0.01"
+                            inputmode="decimal"
+                            placeholder="Ex. 1,0 ou 88"
+                        >
+
+                        <select class="cg-select" id="cgCreatinineUnit">
+                            <option value="mgdl">mg/dL</option>
+                            <option value="umoll">µmol/L</option>
+                        </select>
+                    </div>
+
+                    <span class="cg-help">
+                        Le calcul convertit automatiquement les µmol/L en mg/dL si nécessaire.
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="cg-formula">
+                <strong>Formule :</strong>
+                [(140 − âge) × poids] ÷ [72 × créatinine en mg/dL],
+                puis × 0,85 chez la femme.
+            </div>
+
+            <div class="cg-actions">
+                <button class="cg-button" id="cgCalculate" type="button">
+                    Calculer la clairance
+                </button>
+
+                <button class="cg-button secondary" id="cgReset" type="button">
+                    Recommencer
+                </button>
+            </div>
+
+            <div class="cg-error" id="cgError" hidden aria-live="polite"></div>
+
+            <div class="cg-result" id="cgResult" hidden aria-live="polite">
+                <span class="cg-result-label">Clairance estimée</span>
+
+                <strong class="cg-result-value" id="cgResultValue">
+                    — mL/min
+                </strong>
+
+                <p class="cg-result-note">
+                    Résultat calculé avec la formule historique de Cockcroft-Gault.
+                </p>
+
+                <div class="cg-detail" id="cgDetail"></div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="cg-info-grid">
+
+        <section class="cg-info">
+            <h2>Que représente ce résultat ?</h2>
+            <p>
+                La formule fournit une estimation de la clairance de la créatinine
+                en mL/min. Elle a été développée à partir de la créatininémie,
+                de l’âge et du poids et reste utilisée dans certains référentiels
+                de médicaments.
+            </p>
+        </section>
+
+        <section class="cg-info">
+            <h2>Points de vigilance</h2>
+            <ul>
+                <li>le choix du poids à utiliser peut dépendre de la corpulence et du contexte ;</li>
+                <li>une créatininémie instable rend l’estimation moins fiable ;</li>
+                <li>la formule n’est pas interchangeable avec un DFG en mL/min/1,73 m² ;</li>
+                <li>les décisions de dose doivent suivre la notice ou le référentiel concerné.</li>
+            </ul>
+        </section>
+
+        <section class="cg-info cg-alert">
+            <h2>Ne pas adapter un médicament seul</h2>
+            <p>
+                Une clairance calculée ne suffit pas à modifier une dose ou à arrêter
+                un traitement. L’âge, la corpulence, l’état d’hydratation, l’évolution
+                de la créatinine, les autres traitements et la situation clinique
+                peuvent modifier l’interprétation.
+            </p>
+        </section>
+
+    </div>
+
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const ageInput = document.getElementById("cgAge");
+    const weightInput = document.getElementById("cgWeight");
+    const creatinineInput = document.getElementById("cgCreatinine");
+    const unitSelect = document.getElementById("cgCreatinineUnit");
+
+    const calculateButton = document.getElementById("cgCalculate");
+    const resetButton = document.getElementById("cgReset");
+
+    const errorBox = document.getElementById("cgError");
+    const resultBox = document.getElementById("cgResult");
+    const resultValue = document.getElementById("cgResultValue");
+    const detail = document.getElementById("cgDetail");
+
+    function showError(message) {
+        errorBox.textContent = message;
+        errorBox.hidden = false;
+        resultBox.hidden = true;
+    }
+
+    function clearMessages() {
+        errorBox.hidden = true;
+        resultBox.hidden = true;
+    }
+
+    function getCreatinineMgDl(value, unit) {
+        if (unit === "umoll") {
+            return value / 88.4;
+        }
+
+        return value;
+    }
+
+    function calculateCockcroftGault() {
+        const age = Number(ageInput.value);
+        const weight = Number(weightInput.value);
+        const creatinineRaw = Number(creatinineInput.value);
+        const unit = unitSelect.value;
+
+        const sexInput = document.querySelector('input[name="cgSex"]:checked');
+        const sex = sexInput ? sexInput.value : "male";
+
+        if (!Number.isFinite(age) || age < 18 || age > 120) {
+            showError("Renseigne un âge valide entre 18 et 120 ans.");
+            return;
+        }
+
+        if (!Number.isFinite(weight) || weight <= 0) {
+            showError("Renseigne un poids valide en kilogrammes.");
+            return;
+        }
+
+        if (!Number.isFinite(creatinineRaw) || creatinineRaw <= 0) {
+            showError("Renseigne une créatininémie valide.");
+            return;
+        }
+
+        const creatinineMgDl = getCreatinineMgDl(creatinineRaw, unit);
+
+        if (!Number.isFinite(creatinineMgDl) || creatinineMgDl <= 0) {
+            showError("La créatininémie saisie ne permet pas le calcul.");
+            return;
+        }
+
+        let clearance =
+            ((140 - age) * weight) /
+            (72 * creatinineMgDl);
+
+        if (sex === "female") {
+            clearance *= 0.85;
+        }
+
+        if (!Number.isFinite(clearance) || clearance < 0) {
+            showError("Le calcul n’a pas pu être effectué avec ces valeurs.");
+            return;
+        }
+
+        const rounded = Math.round(clearance * 10) / 10;
+        const convertedCreatinine =
+            Math.round(creatinineMgDl * 100) / 100;
+
+        resultValue.textContent = `${rounded.toLocaleString("fr-FR")} mL/min`;
+
+        detail.textContent =
+            `Créatinine utilisée dans la formule : ${convertedCreatinine.toLocaleString("fr-FR")} mg/dL. ` +
+            `Poids saisi : ${weight.toLocaleString("fr-FR")} kg.`;
+
+        errorBox.hidden = true;
+        resultBox.hidden = false;
+    }
+
+    function resetCalculator() {
+        ageInput.value = "";
+        weightInput.value = "";
+        creatinineInput.value = "";
+        unitSelect.value = "mgdl";
+
+        const maleRadio = document.querySelector(
+            'input[name="cgSex"][value="male"]'
+        );
+
+        if (maleRadio) {
+            maleRadio.checked = true;
+        }
+
+        clearMessages();
+        ageInput.focus();
+    }
+
+    calculateButton.addEventListener("click", calculateCockcroftGault);
+    resetButton.addEventListener("click", resetCalculator);
+
+    document.querySelectorAll(
+        ".cg-card input, .cg-card select"
+    ).forEach(element => {
+        element.addEventListener("input", clearMessages);
+        element.addEventListener("change", clearMessages);
+    });
+});
+</script>
+{% endblock %}

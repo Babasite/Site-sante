@@ -455,7 +455,36 @@ kbd.answer{
             font-weight: 900;
             text-align: center;
         }
+/* Bulles correctement rattachées à chaque personnage */
+#reporterBubble {
+    left: 8px;
+    right: auto;
+    top: 8px;
+    max-width: 44%;
+    font-size: 11px;
+    line-height: 1.25;
+}
 
+#nurseBubble {
+    left: auto;
+    right: 8px;
+    top: 8px;
+    max-width: 44%;
+    font-size: 11px;
+    line-height: 1.25;
+}
+
+#reporterBubble::after,
+#reporterBubble::before {
+    left: 24px;
+    right: auto;
+}
+
+#nurseBubble::after,
+#nurseBubble::before {
+    left: auto;
+    right: 24px;
+}
     }
 
 

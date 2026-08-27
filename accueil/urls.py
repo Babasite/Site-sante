@@ -48,7 +48,7 @@ urlpatterns = [
     path("space/", views.space, name="space"),
     path("combat/", views.combat, name="combat"),
     path("karate/", views.karate, name="karate"),
-
+    path("osteo/", views.osteo, name="osteo"),
     # PAYS
 
     path("pays/<slug:pays>/", views.pays, name="pays"),
@@ -86,6 +86,25 @@ urlpatterns = [
     # =========================================================================
     # SANTÉ ET SUIVI
     # =========================================================================
+path("scores/analogique/", views.score_analogique, name="score_analogique"),
+
+path("scores/cha/", views.score_cha, name="score_cha"),
+
+path("scores/cockcroft-gault/", views.score_cockcroft_gault, name="score_cockcroft_gault"),
+
+path("scores/glasgow/", views.score_glasgow, name="score_glasgow"),
+
+path("scores/iadl/", views.score_iadl, name="score_iadl"),
+
+path("scores/katz/", views.score_katz, name="score_katz"),
+
+path("scores/numerique/", views.score_numerique, name="score_numerique"),
+
+path("scores/wells-embolie/", views.score_wells_embolie, name="score_wells_embolie"),
+
+path("scores/wells-thrombose/", views.score_wells_thrombose, name="score_wells_thrombose"),
+
+
     path(
         "check-up-rapide/",
         views.check_up_rapide,

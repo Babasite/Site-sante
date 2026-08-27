@@ -241,6 +241,10 @@ body{
     font-size:1.2rem;
     font-weight:900}
 
+/* Commandes spécifiques au téléphone en paysage */
+.landscape-controls{
+    display:none}
+
 @media(max-width:700px){
     .tetris-layout{
         grid-template-columns:minmax(180px,1fr) minmax(250px,280px)}
@@ -293,6 +297,47 @@ body{
    ========================================================== */
 
 @media (max-width: 900px) and (orientation: landscape) {
+
+    /* Conserve les 3 colonnes : question | jeu | commandes */
+    .tetris-layout{
+        grid-template-columns:minmax(170px,1fr) minmax(220px,280px) minmax(120px,150px);
+        align-items:stretch}
+
+    /* Panneau de droite réservé aux commandes tactiles */
+    .side-panel{
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:stretch;
+        gap:6px}
+
+    /* Cache Pièce suivante et Règles uniquement en paysage */
+    .side-panel > div:not(.landscape-controls){
+        display:none}
+
+    /* Affiche les commandes à leur place */
+    .landscape-controls{
+        display:grid;
+        grid-template-columns:repeat(2,minmax(48px,1fr));
+        gap:8px;
+        width:100%;
+        margin:auto 0}
+
+    .landscape-controls button{
+        min-height:58px;
+        padding:6px;
+        border:1px solid var(--jeu-bordure);
+        border-radius:13px;
+        background:#f3eee2;
+        color:var(--jeu-vert-fonce);
+        font-size:1.35rem;
+        font-weight:900;
+        cursor:pointer;
+        touch-action:manipulation}
+
+    /* Les commandes mobiles habituelles restent pour le mode vertical */
+    .mobile-controls{
+        display:none}
 
 }
 
@@ -362,6 +407,13 @@ body{
 <p class="help">Bonne réponse : +150 points et retrait d’une ligne occupée. Mauvaise réponse : ajout d’une ligne parasite.</p>
 
 <p class="help">Clavier : ← → déplacer, ↑ tourner, ↓ descendre, espace chute rapide, P pause.</p>
+</div>
+
+<div class="landscape-controls">
+<button id="landMoveLeft" type="button" aria-label="Déplacer à gauche">◀</button>
+<button id="landRotate" type="button" aria-label="Tourner">⟳</button>
+<button id="landMoveRight" type="button" aria-label="Déplacer à droite">▶</button>
+<button id="landDrop" type="button" aria-label="Descendre">▼</button>
 </div>
 </aside>
 
@@ -847,6 +899,11 @@ $("moveLeft").onclick=()=>move(-1);
     $("moveRight").onclick=()=>move(1);
     $("rotate").onclick=rotate;
     $("drop").onclick=soft;
+
+    $("landMoveLeft").onclick=()=>move(-1);
+    $("landMoveRight").onclick=()=>move(1);
+    $("landRotate").onclick=rotate;
+    $("landDrop").onclick=soft;
     reset();
     
 }

@@ -1,0 +1,713 @@
+{% extends "accueil/base.html" %}
+
+{% block logo_return %}{% url 'suivi_personnalise' %}{% endblock %}
+{% load static %}
+
+{% block title %}Score de Wells — Thrombose veineuse profonde | Santé Prévention Terrain{% endblock %}
+{% block page_title %}Score de Wells — Thrombose veineuse profonde{% endblock %}
+{% block header_actions %}{% endblock %}
+
+{% block extra_css %}
+<style>
+.spt-shell-content {
+    background: #fff;
+}
+
+.wtv-page {
+    width: min(1080px, calc(100% - 28px));
+    margin: 10px auto 60px;
+    color: var(--spt-texte);
+    font-family: var(--font-family-body);
+    font-size: 1rem;
+    line-height: 1.68;
+}
+
+.wtv-page * {
+    box-sizing: border-box;
+}
+
+.wtv-back {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 0 18px;
+    padding: 4px 0;
+    color: var(--spt-vert-fonce);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.wtv-back:hover,
+.wtv-back:focus-visible {
+    color: var(--spt-vert);
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}
+
+.wtv-intro {
+    max-width: 920px;
+    padding: 28px 4px 30px;
+    border-top: 1px solid rgba(33, 76, 53, .16);
+    border-bottom: 1px solid rgba(33, 76, 53, .16);
+}
+
+.wtv-intro h1 {
+    margin: 0 0 12px;
+    color: var(--spt-vert-fonce);
+    font-family: var(--font-family-title);
+    font-size: clamp(1.55rem, 2.6vw, 2rem);
+    line-height: 1.25;
+    text-wrap: balance;
+}
+
+.wtv-intro p {
+    max-width: 840px;
+    margin: 0;
+    color: #30363a;
+}
+
+.wtv-notice {
+    max-width: 840px;
+    margin-top: 22px;
+    padding: 13px 15px;
+    border-left: 3px solid var(--spt-vert);
+    border-radius: 0 8px 8px 0;
+    background: rgba(239, 227, 195, .50);
+    line-height: 1.55;
+}
+
+.wtv-notice strong {
+    color: var(--spt-vert-fonce);
+}
+
+.wtv-tool-section {
+    max-width: 940px;
+    padding: 32px 4px 0;
+}
+
+.wtv-tool-section > h2,
+.wtv-info h2 {
+    margin: 0 0 8px;
+    color: var(--spt-vert-fonce);
+    font-family: var(--font-family-title);
+    font-size: clamp(1.3rem, 2vw, 1.6rem);
+    line-height: 1.3;
+}
+
+.wtv-tool-section > p,
+.wtv-info p,
+.wtv-info li {
+    color: #4f5a61;
+}
+
+.wtv-card {
+    margin-top: 20px;
+    padding: clamp(20px, 4vw, 32px);
+    border: 2px solid var(--spt-vert);
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(33, 76, 53, .10);
+}
+
+.wtv-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.wtv-item {
+    padding: 15px;
+    border: 1px solid rgba(33, 76, 53, .16);
+    border-radius: 12px;
+    background: #fff;
+}
+
+.wtv-item.full {
+    grid-column: 1 / -1;
+}
+
+.wtv-item.negative {
+    border-color: rgba(183, 86, 75, .28);
+    background: #fffaf8;
+}
+
+.wtv-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.wtv-label input {
+    width: 19px;
+    height: 19px;
+    flex: 0 0 auto;
+    margin-top: 3px;
+    accent-color: var(--spt-vert);
+}
+
+.wtv-label-text {
+    min-width: 0;
+}
+
+.wtv-label-title {
+    display: block;
+    color: var(--spt-vert-fonce);
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+.wtv-item.negative .wtv-label-title {
+    color: #7d3d36;
+}
+
+.wtv-label-note {
+    display: block;
+    margin-top: 4px;
+    color: #667078;
+    font-size: .9rem;
+    line-height: 1.5;
+}
+
+.wtv-points {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 42px;
+    margin-left: auto;
+    padding: 3px 7px;
+    border-radius: 999px;
+    background: rgba(239, 227, 195, .58);
+    color: var(--spt-vert-fonce);
+    font-size: .78rem;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.wtv-item.negative .wtv-points {
+    background: rgba(183, 86, 75, .10);
+    color: #7d3d36;
+}
+
+.wtv-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.wtv-button {
+    min-height: 44px;
+    padding: 9px 16px;
+    border: 1px solid var(--spt-vert-fonce);
+    border-radius: 8px;
+    background: var(--spt-vert-fonce);
+    color: #fff;
+    font: 600 .95rem/1.3 var(--font-family-body);
+    cursor: pointer;
+    transition: transform .2s ease, background .2s ease;
+}
+
+.wtv-button:hover,
+.wtv-button:focus-visible {
+    transform: translateY(-1px);
+    background: var(--spt-vert);
+}
+
+.wtv-button.secondary {
+    background: #fff;
+    color: var(--spt-vert-fonce);
+}
+
+.wtv-button.secondary:hover,
+.wtv-button.secondary:focus-visible {
+    background: rgba(239, 227, 195, .38);
+}
+
+.wtv-result {
+    margin-top: 22px;
+    padding: 18px;
+    border-radius: 12px;
+    background: rgba(223, 234, 219, .65);
+}
+
+.wtv-result[hidden] {
+    display: none;
+}
+
+.wtv-result-label {
+    display: block;
+    margin-bottom: 4px;
+    color: #667078;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.wtv-result-value {
+    display: block;
+    color: var(--spt-vert-fonce);
+    font-family: var(--font-family-title);
+    font-size: clamp(1.55rem, 3vw, 2.1rem);
+    line-height: 1.2;
+}
+
+.wtv-result-note {
+    margin: 8px 0 0;
+    color: #4f5a61;
+    font-size: .92rem;
+}
+
+.wtv-breakdown {
+    margin: 12px 0 0;
+    padding-left: 20px;
+    color: #4f5a61;
+    font-size: .9rem;
+}
+
+.wtv-breakdown li + li {
+    margin-top: 5px;
+}
+
+.wtv-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    max-width: 940px;
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(33, 76, 53, .16);
+}
+
+.wtv-info {
+    padding: 20px;
+    border: 1px solid rgba(33, 76, 53, .16);
+    border-radius: 12px;
+    background: #fff;
+}
+
+.wtv-info p {
+    margin: 0;
+}
+
+.wtv-info ul {
+    margin: 10px 0 0;
+    padding-left: 20px;
+}
+
+.wtv-info li + li {
+    margin-top: 7px;
+}
+
+.wtv-alert {
+    grid-column: 1 / -1;
+    border-left: 4px solid #b7564b;
+    background: #fffaf8;
+}
+
+.wtv-alert h2 {
+    color: #7d3d36;
+}
+
+@media (max-width: 760px) {
+    .wtv-page {
+        width: calc(100% - 20px);
+        margin-top: 8px;
+        margin-bottom: 44px;
+    }
+
+    .wtv-intro {
+        padding: 24px 2px 26px;
+    }
+
+    .wtv-tool-section {
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+
+    .wtv-card {
+        padding: 20px 15px;
+    }
+
+    .wtv-grid,
+    .wtv-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .wtv-item.full,
+    .wtv-alert {
+        grid-column: auto;
+    }
+
+    .wtv-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .wtv-button {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .wtv-button {
+        transition: none;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="wtv-page">
+
+    <a class="wtv-back" href="{% url 'suivi_personnalise' %}">
+        ← Retour aux scores et échelles
+    </a>
+
+    <section class="wtv-intro">
+        <h1>Score de Wells — Thrombose veineuse profonde</h1>
+
+        <p>
+            Le score de Wells pour la TVP aide à structurer l’estimation de la
+            probabilité clinique d’une thrombose veineuse profonde à partir
+            de plusieurs éléments de l’histoire et de l’examen clinique.
+        </p>
+
+        <div class="wtv-notice">
+            <strong>À savoir :</strong>
+            ce score ne confirme ni n’exclut à lui seul une thrombose veineuse profonde.
+            Il doit être interprété dans une stratégie clinique adaptée avec, selon
+            la situation, des examens complémentaires.
+        </div>
+    </section>
+
+    <section class="wtv-tool-section" aria-labelledby="wtv-tool-title">
+        <h2 id="wtv-tool-title">Calcul du score</h2>
+
+        <p>
+            Coche uniquement les critères présents. Le dernier critère retire 2 points.
+        </p>
+
+        <div class="wtv-card">
+
+            <div class="wtv-grid">
+
+                <div class="wtv-item">
+                    <label class="wtv-label">
+                        <input
+                            type="checkbox"
+                            data-points="1"
+                            data-label="Cancer actif"
+                        >
+                        <span class="wtv-label-text">
+                            <span class="wtv-label-title">Cancer actif</span>
+                            <span class="wtv-label-note">
+                                Cancer actif, traité récemment ou en situation palliative,
+                                selon le contexte clinique retenu.
+                            </span>
+                        </span>
+                        <span class="wtv-points">+1</span>
+                    </label>
+                </div>
+
+                <div class="wtv-item">
+                    <label class="wtv-label">
+                        <input
+                            type="checkbox"
+                            data-points="1"
+                            data-label="Paralysie, parésie ou immobilisation plâtrée récente d’un membre inférieur"
+                        >
+                        <span class="wtv-label-text">
+                            <span class="wtv-label-title">Paralysie, parésie ou immobilisation plâtrée</span>
+                            <span class="wtv-label-note">
+                                Atteinte ou immobilisation récente d’un membre inférieur.
+                            </span>
+                        </span>
+                        <span class="wtv-points">+1</span>
+                    </label>
+                </div>
+
+                <div class="wtv-item">
+                    <label class="wtv-label">
+                        <input
+                            type="checkbox"
+                            data-points="1"
+                            data-label="Alitement ≥ 3 jours ou chirurgie majeure récente"
+                        >
+                        <span class="wtv-label-text">
+                            <span class="wtv-label-title">Alitement ou chirurgie récente</span>
+                            <span class="wtv-label-note">
+                                Alitement d’au moins 3 jours ou chirurgie majeure récente.
+                            </span>
+                        </span>
+                        <span class="wtv-points">+1</span>
+                    </label>
+                </div>
+
+                <div class="wtv-item">
+                    <label class="wtv-label">
+                        <input
+                            type="checkbox"
+                            data-points="1"
+                            data-label="Douleur localisée sur le trajet veineux profond"
+                        >
+                        <span class="wtv-label-text">
+                            <span class="wtv-label-title">Douleur localisée sur le trajet veineux profond</span>
+                            <span class="wtv-label-note">
+                                Sensibilité localisée le long du système veineux profond.
+                            </span>
+                        </span>
+                        <span class="wtv-points">+1</span>
+                    </label>
+                </div>
+
+                <div class="wtv-item">
+                    <label class="wtv-label">
+                        <input
+                            type="checkbox"
+                            data-points="1"
+                            data-label="Gonflement de toute la jambe"
+                        >
+                        <span class="wtv-label-text">
+                            <span class="wtv-label-title">Gonflement de toute la jambe</span>
+                            <span class="wtv-label-note">
+                                Augmentation de volume touchant l’ensemble du membre inférieur.
+                            </span>
+                        </span>
+                        <span class="wtv-points">+1</span>
+                    </label>
+                </div>
+
+                <div class="wtv-item">
+                    <label class="wtv-label">
+                        <input
+                            type="checkbox"
+                            data-points="1"
+                            data-label="Mollet ≥ 3 cm plus large que le côté asymptomatique"
+                        >
+                        <span class="wtv-label-text">
+                            <span class="wtv-label-title">Mollet ≥ 3 cm plus large</span>
+                            <span class="wtv-label-note">
+                                Différence mesurée environ 10 cm sous la tubérosité tibiale.
+                            </span>
+                        </span>
+                        <span class="wtv-points">+1</span>
+                    </label>
+                </div>
+
+                <div class="wtv-item">
+                    <label class="wtv-label">
+                        <input
+                            type="checkbox"
+                            data-points="1"
+                            data-label="Œdème prenant le godet limité au membre symptomatique"
+                        >
+                        <span class="wtv-label-text">
+                            <span class="wtv-label-title">Œdème prenant le godet</span>
+                            <span class="wtv-label-note">
+                                Œdème principalement limité au membre inférieur symptomatique.
+                            </span>
+                        </span>
+                        <span class="wtv-points">+1</span>
+                    </label>
+                </div>
+
+                <div class="wtv-item">
+                    <label class="wtv-label">
+                        <input
+                            type="checkbox"
+                            data-points="1"
+                            data-label="Veines superficielles collatérales non variqueuses"
+                        >
+                        <span class="wtv-label-text">
+                            <span class="wtv-label-title">Veines superficielles collatérales</span>
+                            <span class="wtv-label-note">
+                                Circulation veineuse superficielle collatérale non expliquée par des varices.
+                            </span>
+                        </span>
+                        <span class="wtv-points">+1</span>
+                    </label>
+                </div>
+
+                <div class="wtv-item full">
+                    <label class="wtv-label">
+                        <input
+                            type="checkbox"
+                            data-points="1"
+                            data-label="Antécédent documenté de TVP"
+                        >
+                        <span class="wtv-label-text">
+                            <span class="wtv-label-title">Antécédent documenté de TVP</span>
+                            <span class="wtv-label-note">
+                                Thrombose veineuse profonde antérieure connue et documentée.
+                            </span>
+                        </span>
+                        <span class="wtv-points">+1</span>
+                    </label>
+                </div>
+
+                <div class="wtv-item full negative">
+                    <label class="wtv-label">
+                        <input
+                            type="checkbox"
+                            data-points="-2"
+                            data-label="Autre diagnostic au moins aussi probable qu’une TVP"
+                        >
+                        <span class="wtv-label-text">
+                            <span class="wtv-label-title">Autre diagnostic au moins aussi probable qu’une TVP</span>
+                            <span class="wtv-label-note">
+                                Un autre diagnostic explique au moins aussi bien les signes cliniques observés.
+                            </span>
+                        </span>
+                        <span class="wtv-points">−2</span>
+                    </label>
+                </div>
+
+            </div>
+
+            <div class="wtv-actions">
+                <button class="wtv-button" id="wtvCalculate" type="button">
+                    Calculer le score
+                </button>
+
+                <button class="wtv-button secondary" id="wtvReset" type="button">
+                    Recommencer
+                </button>
+            </div>
+
+            <div class="wtv-result" id="wtvResult" hidden aria-live="polite">
+                <span class="wtv-result-label">Score de Wells — TVP</span>
+
+                <strong class="wtv-result-value" id="wtvResultValue">
+                    0 point
+                </strong>
+
+                <p class="wtv-result-note" id="wtvResultNote"></p>
+
+                <ul class="wtv-breakdown" id="wtvBreakdown"></ul>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="wtv-info-grid">
+
+        <section class="wtv-info">
+            <h2>Interprétation en 2 catégories</h2>
+            <ul>
+                <li>≤ 1 point : TVP dite « peu probable » ;</li>
+                <li>≥ 2 points : TVP dite « probable ».</li>
+            </ul>
+            <p>
+                Cette classification ne constitue pas un diagnostic et doit s’intégrer
+                à une stratégie d’évaluation adaptée.
+            </p>
+        </section>
+
+        <section class="wtv-info">
+            <h2>Interprétation en 3 catégories</h2>
+            <ul>
+                <li>≤ 0 point : probabilité faible ;</li>
+                <li>1 à 2 points : probabilité intermédiaire ;</li>
+                <li>≥ 3 points : probabilité élevée.</li>
+            </ul>
+            <p>
+                Les examens à réaliser ensuite dépendent du contexte clinique
+                et du protocole utilisé.
+            </p>
+        </section>
+
+        <section class="wtv-info wtv-alert">
+            <h2>Quand demander rapidement un avis ?</h2>
+            <p>
+                Un gonflement récent et unilatéral d’une jambe, surtout s’il est associé
+                à une douleur, une chaleur locale ou des facteurs de risque, mérite une
+                évaluation médicale. Une difficulté respiratoire brutale, une douleur
+                thoracique, un malaise ou des crachats sanglants nécessitent une prise
+                en charge urgente.
+            </p>
+        </section>
+
+    </div>
+
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const inputs = Array.from(
+        document.querySelectorAll(".wtv-card input[type='checkbox']")
+    );
+
+    const calculateButton = document.getElementById("wtvCalculate");
+    const resetButton = document.getElementById("wtvReset");
+
+    const resultBox = document.getElementById("wtvResult");
+    const resultValue = document.getElementById("wtvResultValue");
+    const resultNote = document.getElementById("wtvResultNote");
+    const breakdown = document.getElementById("wtvBreakdown");
+
+    function calculateWells() {
+        let score = 0;
+        const details = [];
+
+        inputs.forEach(input => {
+            if (input.checked) {
+                const points = Number(input.dataset.points);
+                score += points;
+
+                const prefix = points > 0 ? "+" : "";
+                details.push(
+                    `${input.dataset.label} : ${prefix}${points}`
+                );
+            }
+        });
+
+        resultValue.textContent =
+            `${score} point${Math.abs(score) > 1 ? "s" : ""}`;
+
+        if (score >= 2) {
+            resultNote.textContent =
+                "Dans la classification en 2 catégories, ce résultat se situe dans la catégorie « TVP probable ». Une évaluation clinique adaptée reste indispensable.";
+        } else {
+            resultNote.textContent =
+                "Dans la classification en 2 catégories, ce résultat se situe dans la catégorie « TVP peu probable ». Cela n’exclut pas à lui seul une thrombose veineuse profonde.";
+        }
+
+        breakdown.innerHTML = "";
+
+        if (details.length) {
+            details.forEach(detail => {
+                const li = document.createElement("li");
+                li.textContent = detail;
+                breakdown.appendChild(li);
+            });
+        } else {
+            const li = document.createElement("li");
+            li.textContent = "Aucun critère n’a été coché.";
+            breakdown.appendChild(li);
+        }
+
+        resultBox.hidden = false;
+    }
+
+    function resetWells() {
+        inputs.forEach(input => {
+            input.checked = false;
+        });
+
+        resultBox.hidden = true;
+    }
+
+    inputs.forEach(input => {
+        input.addEventListener("change", () => {
+            resultBox.hidden = true;
+        });
+    });
+
+    calculateButton.addEventListener("click", calculateWells);
+    resetButton.addEventListener("click", resetWells);
+});
+</script>
+{% endblock %}

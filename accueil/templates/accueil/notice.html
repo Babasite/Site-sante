@@ -351,6 +351,20 @@
         transform:none;
     }
 }
+
+
+/* ==========================================================
+   ENCADRÉS LÉGERS — JOURNAL + CONSEILS & TESTS
+   ========================================================== */
+
+.notice-section:nth-child(1) .notice-section__content p,
+.notice-section:nth-child(3) .notice-section__content p{
+    padding:14px 18px;
+    border:1px solid rgba(239,227,195,.95);
+    border-radius:12px;
+    background:rgba(239,227,195,.22);
+}
+
 </style>
 {% endblock %}
 
@@ -381,7 +395,7 @@
                         <a href="{% url 'veille' %}" class="notice-link">
                             <strong>journal</strong>
                         </a>
-                        quotidien (souvent en anglais 😛), pour rester dans le coup.
+                        quotidien (souvent en anglais), pour rester dans le coup.
                     </p>
                 </div>
 

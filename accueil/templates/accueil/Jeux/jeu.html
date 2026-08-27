@@ -248,6 +248,51 @@
     #down { grid-column: 2; grid-row: 2; }
     #right { grid-column: 3; grid-row: 2; }
 
+    /* ==========================================================
+       LISTE LISIBLE DES RÉPONSES SUR MOBILE
+       Cachée par défaut sur ordinateur
+       ========================================================== */
+
+    .jeu-answer-list {
+        display: none;
+    }
+
+    .jeu-answer-item {
+        min-width: 0;
+        padding: 7px 9px;
+        border: 2px solid;
+        border-radius: 9px;
+        color: #26332a;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 700;
+        line-height: 1.2;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow-wrap: anywhere;
+    }
+
+    /* Même palette que les réponses présentes dans le Snake */
+    .jeu-answer-item:nth-child(1) {
+        background: #fff3d7;
+        border-color: #9a6828;
+    }
+
+    .jeu-answer-item:nth-child(2) {
+        background: #e2eee0;
+        border-color: #376b4d;
+    }
+
+    .jeu-answer-item:nth-child(3) {
+        background: #f9e0dc;
+        border-color: #9d4038;
+    }
+
+    .jeu-answer-item:nth-child(4) {
+        background: #e5e7f4;
+        border-color: #4d5688;
+    }
     @media (max-width: 1050px) {
         .jeu-main-grid {
             grid-template-columns: minmax(240px, 0.4fr) minmax(0, 1fr);
@@ -309,6 +354,28 @@
 
     @media (max-width: 480px) and (orientation: portrait) {
 
+        /* 4 réponses lisibles sous la question */
+        .jeu-answer-list {
+            order: 2;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 5px;
+            width: 100%;
+            margin: 0;
+        }
+
+        .jeu-answer-item {
+            min-height: 42px;
+            padding: 6px 7px;
+            font-size: clamp(0.72rem, 3.2vw, 0.86rem);
+            line-height: 1.15;
+        }
+
+        /* Le plateau vient après les réponses */
+        .jeu-board-column {
+            order: 3;
+        }
+
     }
 
 
@@ -343,6 +410,27 @@
             grid-template-rows: auto auto;
             gap: 10px;
             align-items: center;
+        }
+        /* 4 réponses lisibles juste sous la question */
+        .jeu-answer-list {
+            order: 2;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 4px;
+            width: 100%;
+            margin: 0;
+        }
+
+        .jeu-answer-item {
+            min-height: 34px;
+            padding: 4px 7px;
+            font-size: clamp(0.68rem, 1.7vw, 0.82rem);
+            line-height: 1.1;
+        }
+
+        /* Surcharge mobile : le plateau passe après la liste */
+        .jeu-board-column {
+            order: 3;
         }
 
         .jeu-canvas-wrap {
@@ -426,6 +514,8 @@
 
                 <p class="jeu-feedback" id="feedback" aria-live="polite"></p>
             </aside>
+
+            <div class="jeu-answer-list" id="answerList" aria-label="Réponses proposées"></div>
 
             <div class="jeu-board-column">
                 <div class="jeu-canvas-wrap" id="canvasWrap">
@@ -523,6 +613,7 @@
     const questionNumberEl = document.getElementById("questionNumber");
     const questionTotalEl = document.getElementById("questionTotal");
     const feedbackEl = document.getElementById("feedback");
+    const answerListEl = document.getElementById("answerList");
 
     const startButton = document.getElementById("startButton");
     const pauseButton = document.getElementById("pauseButton");
@@ -849,6 +940,16 @@
 
     function placeAnswers(current) {
         answerZones = [];
+
+        /* Copie lisible des réponses sous la question sur mobile */
+        answerListEl.innerHTML = "";
+
+        current.answers.forEach((answer) => {
+            const item = document.createElement("div");
+            item.className = "jeu-answer-item";
+            item.textContent = answer;
+            answerListEl.appendChild(item);
+        });
 
         current.answers.forEach((text, index) => {
             const zone = randomZone(answerZones);

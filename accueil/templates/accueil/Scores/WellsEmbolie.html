@@ -1,0 +1,655 @@
+{% extends "accueil/base.html" %}
+
+{% block logo_return %}{% url 'suivi_personnalise' %}{% endblock %}
+{% load static %}
+
+{% block title %}Score de Wells — Embolie pulmonaire | Santé Prévention Terrain{% endblock %}
+{% block page_title %}Score de Wells — Embolie pulmonaire{% endblock %}
+{% block header_actions %}{% endblock %}
+
+{% block extra_css %}
+<style>
+.spt-shell-content {
+    background: #fff;
+}
+
+.wpe-page {
+    width: min(1080px, calc(100% - 28px));
+    margin: 10px auto 60px;
+    color: var(--spt-texte);
+    font-family: var(--font-family-body);
+    font-size: 1rem;
+    line-height: 1.68;
+}
+
+.wpe-page * {
+    box-sizing: border-box;
+}
+
+.wpe-back {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 0 18px;
+    padding: 4px 0;
+    color: var(--spt-vert-fonce);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.wpe-back:hover,
+.wpe-back:focus-visible {
+    color: var(--spt-vert);
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}
+
+.wpe-intro {
+    max-width: 920px;
+    padding: 28px 4px 30px;
+    border-top: 1px solid rgba(33, 76, 53, .16);
+    border-bottom: 1px solid rgba(33, 76, 53, .16);
+}
+
+.wpe-intro h1 {
+    margin: 0 0 12px;
+    color: var(--spt-vert-fonce);
+    font-family: var(--font-family-title);
+    font-size: clamp(1.55rem, 2.6vw, 2rem);
+    line-height: 1.25;
+    text-wrap: balance;
+}
+
+.wpe-intro p {
+    max-width: 840px;
+    margin: 0;
+    color: #30363a;
+}
+
+.wpe-notice {
+    max-width: 840px;
+    margin-top: 22px;
+    padding: 13px 15px;
+    border-left: 3px solid var(--spt-vert);
+    border-radius: 0 8px 8px 0;
+    background: rgba(239, 227, 195, .50);
+    line-height: 1.55;
+}
+
+.wpe-notice strong {
+    color: var(--spt-vert-fonce);
+}
+
+.wpe-tool-section {
+    max-width: 940px;
+    padding: 32px 4px 0;
+}
+
+.wpe-tool-section > h2,
+.wpe-info h2 {
+    margin: 0 0 8px;
+    color: var(--spt-vert-fonce);
+    font-family: var(--font-family-title);
+    font-size: clamp(1.3rem, 2vw, 1.6rem);
+    line-height: 1.3;
+}
+
+.wpe-tool-section > p,
+.wpe-info p,
+.wpe-info li {
+    color: #4f5a61;
+}
+
+.wpe-card {
+    margin-top: 20px;
+    padding: clamp(20px, 4vw, 32px);
+    border: 2px solid var(--spt-vert);
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(33, 76, 53, .10);
+}
+
+.wpe-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.wpe-item {
+    padding: 15px;
+    border: 1px solid rgba(33, 76, 53, .16);
+    border-radius: 12px;
+    background: #fff;
+}
+
+.wpe-item.full {
+    grid-column: 1 / -1;
+}
+
+.wpe-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.wpe-label input {
+    width: 19px;
+    height: 19px;
+    flex: 0 0 auto;
+    margin-top: 3px;
+    accent-color: var(--spt-vert);
+}
+
+.wpe-label-text {
+    min-width: 0;
+}
+
+.wpe-label-title {
+    display: block;
+    color: var(--spt-vert-fonce);
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+.wpe-label-note {
+    display: block;
+    margin-top: 4px;
+    color: #667078;
+    font-size: .9rem;
+    line-height: 1.5;
+}
+
+.wpe-points {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 42px;
+    margin-left: auto;
+    padding: 3px 7px;
+    border-radius: 999px;
+    background: rgba(239, 227, 195, .58);
+    color: var(--spt-vert-fonce);
+    font-size: .78rem;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.wpe-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.wpe-button {
+    min-height: 44px;
+    padding: 9px 16px;
+    border: 1px solid var(--spt-vert-fonce);
+    border-radius: 8px;
+    background: var(--spt-vert-fonce);
+    color: #fff;
+    font: 600 .95rem/1.3 var(--font-family-body);
+    cursor: pointer;
+    transition: transform .2s ease, background .2s ease;
+}
+
+.wpe-button:hover,
+.wpe-button:focus-visible {
+    transform: translateY(-1px);
+    background: var(--spt-vert);
+}
+
+.wpe-button.secondary {
+    background: #fff;
+    color: var(--spt-vert-fonce);
+}
+
+.wpe-button.secondary:hover,
+.wpe-button.secondary:focus-visible {
+    background: rgba(239, 227, 195, .38);
+}
+
+.wpe-result {
+    margin-top: 22px;
+    padding: 18px;
+    border-radius: 12px;
+    background: rgba(223, 234, 219, .65);
+}
+
+.wpe-result[hidden] {
+    display: none;
+}
+
+.wpe-result-label {
+    display: block;
+    margin-bottom: 4px;
+    color: #667078;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.wpe-result-value {
+    display: block;
+    color: var(--spt-vert-fonce);
+    font-family: var(--font-family-title);
+    font-size: clamp(1.55rem, 3vw, 2.1rem);
+    line-height: 1.2;
+}
+
+.wpe-result-note {
+    margin: 8px 0 0;
+    color: #4f5a61;
+    font-size: .92rem;
+}
+
+.wpe-breakdown {
+    margin: 12px 0 0;
+    padding-left: 20px;
+    color: #4f5a61;
+    font-size: .9rem;
+}
+
+.wpe-breakdown li + li {
+    margin-top: 5px;
+}
+
+.wpe-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    max-width: 940px;
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(33, 76, 53, .16);
+}
+
+.wpe-info {
+    padding: 20px;
+    border: 1px solid rgba(33, 76, 53, .16);
+    border-radius: 12px;
+    background: #fff;
+}
+
+.wpe-info p {
+    margin: 0;
+}
+
+.wpe-info ul {
+    margin: 10px 0 0;
+    padding-left: 20px;
+}
+
+.wpe-info li + li {
+    margin-top: 7px;
+}
+
+.wpe-alert {
+    grid-column: 1 / -1;
+    border-left: 4px solid #b7564b;
+    background: #fffaf8;
+}
+
+.wpe-alert h2 {
+    color: #7d3d36;
+}
+
+@media (max-width: 760px) {
+    .wpe-page {
+        width: calc(100% - 20px);
+        margin-top: 8px;
+        margin-bottom: 44px;
+    }
+
+    .wpe-intro {
+        padding: 24px 2px 26px;
+    }
+
+    .wpe-tool-section {
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+
+    .wpe-card {
+        padding: 20px 15px;
+    }
+
+    .wpe-grid,
+    .wpe-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .wpe-item.full,
+    .wpe-alert {
+        grid-column: auto;
+    }
+
+    .wpe-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .wpe-button {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .wpe-button {
+        transition: none;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="wpe-page">
+
+    <a class="wpe-back" href="{% url 'suivi_personnalise' %}">
+        ← Retour aux scores et échelles
+    </a>
+
+    <section class="wpe-intro">
+        <h1>Score de Wells — Embolie pulmonaire</h1>
+
+        <p>
+            Le score de Wells aide à structurer l’estimation de la probabilité clinique
+            d’une embolie pulmonaire à partir de plusieurs éléments de l’histoire
+            et de l’examen clinique.
+        </p>
+
+        <div class="wpe-notice">
+            <strong>À savoir :</strong>
+            ce score doit être utilisé dans le contexte pour lequel il a été conçu.
+            Il ne confirme ni n’exclut à lui seul une embolie pulmonaire et ne remplace
+            pas l’évaluation médicale ni les examens complémentaires adaptés.
+        </div>
+    </section>
+
+    <section class="wpe-tool-section" aria-labelledby="wpe-tool-title">
+        <h2 id="wpe-tool-title">Calcul du score</h2>
+
+        <p>
+            Coche uniquement les critères présents.
+        </p>
+
+        <div class="wpe-card">
+
+            <div class="wpe-grid">
+
+                <div class="wpe-item full">
+                    <label class="wpe-label">
+                        <input
+                            type="checkbox"
+                            data-points="3"
+                            data-label="Signes cliniques de thrombose veineuse profonde"
+                        >
+                        <span class="wpe-label-text">
+                            <span class="wpe-label-title">Signes cliniques de thrombose veineuse profonde</span>
+                            <span class="wpe-label-note">
+                                Par exemple douleur à la palpation du trajet veineux profond
+                                et gonflement unilatéral du membre inférieur.
+                            </span>
+                        </span>
+                        <span class="wpe-points">+3</span>
+                    </label>
+                </div>
+
+                <div class="wpe-item full">
+                    <label class="wpe-label">
+                        <input
+                            type="checkbox"
+                            data-points="3"
+                            data-label="Embolie pulmonaire jugée plus probable qu’un autre diagnostic"
+                        >
+                        <span class="wpe-label-text">
+                            <span class="wpe-label-title">Embolie pulmonaire jugée plus probable qu’un autre diagnostic</span>
+                            <span class="wpe-label-note">
+                                Critère clinique subjectif : l’EP est considérée comme le diagnostic
+                                le plus probable après évaluation.
+                            </span>
+                        </span>
+                        <span class="wpe-points">+3</span>
+                    </label>
+                </div>
+
+                <div class="wpe-item">
+                    <label class="wpe-label">
+                        <input
+                            type="checkbox"
+                            data-points="1.5"
+                            data-label="Fréquence cardiaque > 100/min"
+                        >
+                        <span class="wpe-label-text">
+                            <span class="wpe-label-title">Fréquence cardiaque &gt; 100/min</span>
+                            <span class="wpe-label-note">
+                                Tachycardie supérieure à 100 battements par minute.
+                            </span>
+                        </span>
+                        <span class="wpe-points">+1,5</span>
+                    </label>
+                </div>
+
+                <div class="wpe-item">
+                    <label class="wpe-label">
+                        <input
+                            type="checkbox"
+                            data-points="1.5"
+                            data-label="Immobilisation ≥ 3 jours ou chirurgie récente"
+                        >
+                        <span class="wpe-label-text">
+                            <span class="wpe-label-title">Immobilisation ou chirurgie récente</span>
+                            <span class="wpe-label-note">
+                                Immobilisation d’au moins 3 jours ou chirurgie au cours des 4 dernières semaines.
+                            </span>
+                        </span>
+                        <span class="wpe-points">+1,5</span>
+                    </label>
+                </div>
+
+                <div class="wpe-item">
+                    <label class="wpe-label">
+                        <input
+                            type="checkbox"
+                            data-points="1.5"
+                            data-label="Antécédent de TVP ou d’embolie pulmonaire"
+                        >
+                        <span class="wpe-label-text">
+                            <span class="wpe-label-title">Antécédent de TVP ou d’EP</span>
+                            <span class="wpe-label-note">
+                                Antécédent connu de thrombose veineuse profonde ou d’embolie pulmonaire.
+                            </span>
+                        </span>
+                        <span class="wpe-points">+1,5</span>
+                    </label>
+                </div>
+
+                <div class="wpe-item">
+                    <label class="wpe-label">
+                        <input
+                            type="checkbox"
+                            data-points="1"
+                            data-label="Hémoptysie"
+                        >
+                        <span class="wpe-label-text">
+                            <span class="wpe-label-title">Hémoptysie</span>
+                            <span class="wpe-label-note">
+                                Présence de sang lors de la toux.
+                            </span>
+                        </span>
+                        <span class="wpe-points">+1</span>
+                    </label>
+                </div>
+
+                <div class="wpe-item full">
+                    <label class="wpe-label">
+                        <input
+                            type="checkbox"
+                            data-points="1"
+                            data-label="Cancer actif"
+                        >
+                        <span class="wpe-label-text">
+                            <span class="wpe-label-title">Cancer actif</span>
+                            <span class="wpe-label-note">
+                                Cancer traité récemment, sous traitement ou en situation palliative,
+                                selon le contexte clinique utilisé pour le score.
+                            </span>
+                        </span>
+                        <span class="wpe-points">+1</span>
+                    </label>
+                </div>
+
+            </div>
+
+            <div class="wpe-actions">
+                <button class="wpe-button" id="wpeCalculate" type="button">
+                    Calculer le score
+                </button>
+
+                <button class="wpe-button secondary" id="wpeReset" type="button">
+                    Recommencer
+                </button>
+            </div>
+
+            <div class="wpe-result" id="wpeResult" hidden aria-live="polite">
+                <span class="wpe-result-label">Score de Wells — EP</span>
+
+                <strong class="wpe-result-value" id="wpeResultValue">
+                    0 point
+                </strong>
+
+                <p class="wpe-result-note" id="wpeResultNote"></p>
+
+                <ul class="wpe-breakdown" id="wpeBreakdown"></ul>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="wpe-info-grid">
+
+        <section class="wpe-info">
+            <h2>Interprétation en 2 catégories</h2>
+            <ul>
+                <li>≤ 4 points : embolie pulmonaire dite « peu probable » ;</li>
+                <li>&gt; 4 points : embolie pulmonaire dite « probable ».</li>
+            </ul>
+            <p>
+                Cette classification ne constitue pas un diagnostic et doit s’intégrer
+                à une stratégie clinique adaptée.
+            </p>
+        </section>
+
+        <section class="wpe-info">
+            <h2>Interprétation en 3 catégories</h2>
+            <ul>
+                <li>&lt; 2 points : probabilité faible ;</li>
+                <li>2 à 6 points : probabilité intermédiaire ;</li>
+                <li>&gt; 6 points : probabilité élevée.</li>
+            </ul>
+            <p>
+                Les seuils et les étapes suivantes dépendent du protocole utilisé
+                et du contexte clinique.
+            </p>
+        </section>
+
+        <section class="wpe-info wpe-alert">
+            <h2>Suspicion d’embolie pulmonaire = évaluation urgente</h2>
+            <p>
+                Une difficulté respiratoire brutale, une douleur thoracique,
+                un malaise, une perte de connaissance, des crachats sanglants
+                ou une aggravation rapide nécessitent une évaluation médicale urgente.
+                Ne retarde pas cette démarche pour compléter un score en ligne.
+            </p>
+        </section>
+
+    </div>
+
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const inputs = Array.from(
+        document.querySelectorAll(".wpe-card input[type='checkbox']")
+    );
+
+    const calculateButton = document.getElementById("wpeCalculate");
+    const resetButton = document.getElementById("wpeReset");
+
+    const resultBox = document.getElementById("wpeResult");
+    const resultValue = document.getElementById("wpeResultValue");
+    const resultNote = document.getElementById("wpeResultNote");
+    const breakdown = document.getElementById("wpeBreakdown");
+
+    function formatScore(value) {
+        return value
+            .toLocaleString("fr-FR", {
+                minimumFractionDigits: Number.isInteger(value) ? 0 : 1,
+                maximumFractionDigits: 1
+            });
+    }
+
+    function calculateWells() {
+        let score = 0;
+        const details = [];
+
+        inputs.forEach(input => {
+            if (input.checked) {
+                const points = Number(input.dataset.points);
+                score += points;
+                details.push(
+                    `${input.dataset.label} : +${formatScore(points)}`
+                );
+            }
+        });
+
+        resultValue.textContent =
+            `${formatScore(score)} point${score > 1 ? "s" : ""}`;
+
+        if (score > 4) {
+            resultNote.textContent =
+                "Dans la classification en 2 catégories, ce résultat se situe dans la catégorie « embolie pulmonaire probable ». Une évaluation clinique adaptée reste indispensable.";
+        } else {
+            resultNote.textContent =
+                "Dans la classification en 2 catégories, ce résultat se situe dans la catégorie « embolie pulmonaire peu probable ». Cela n’exclut pas à lui seul une embolie pulmonaire.";
+        }
+
+        breakdown.innerHTML = "";
+
+        if (details.length) {
+            details.forEach(detail => {
+                const li = document.createElement("li");
+                li.textContent = detail;
+                breakdown.appendChild(li);
+            });
+        } else {
+            const li = document.createElement("li");
+            li.textContent = "Aucun critère n’a été coché.";
+            breakdown.appendChild(li);
+        }
+
+        resultBox.hidden = false;
+    }
+
+    function resetWells() {
+        inputs.forEach(input => {
+            input.checked = false;
+        });
+
+        resultBox.hidden = true;
+    }
+
+    inputs.forEach(input => {
+        input.addEventListener("change", () => {
+            resultBox.hidden = true;
+        });
+    });
+
+    calculateButton.addEventListener("click", calculateWells);
+    resetButton.addEventListener("click", resetWells);
+});
+</script>
+{% endblock %}

@@ -1,0 +1,867 @@
+{% extends "accueil/base.html" %}
+
+{% block logo_return %}{% url 'suivi_personnalise' %}{% endblock %}
+{% load static %}
+
+{% block title %}Échelle IADL | Santé Prévention Terrain{% endblock %}
+{% block page_title %}Échelle IADL{% endblock %}
+{% block header_actions %}{% endblock %}
+
+{% block extra_css %}
+<style>
+.spt-shell-content {
+    background: #fff;
+}
+
+.iadl-page {
+    width: min(1080px, calc(100% - 28px));
+    margin: 10px auto 60px;
+    color: var(--spt-texte);
+    font-family: var(--font-family-body);
+    font-size: 1rem;
+    line-height: 1.68;
+}
+
+.iadl-page * {
+    box-sizing: border-box;
+}
+
+.iadl-back {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 0 18px;
+    padding: 4px 0;
+    color: var(--spt-vert-fonce);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.iadl-back:hover,
+.iadl-back:focus-visible {
+    color: var(--spt-vert);
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}
+
+.iadl-intro {
+    max-width: 920px;
+    padding: 28px 4px 30px;
+    border-top: 1px solid rgba(33, 76, 53, .16);
+    border-bottom: 1px solid rgba(33, 76, 53, .16);
+}
+
+.iadl-intro h1 {
+    margin: 0 0 12px;
+    color: var(--spt-vert-fonce);
+    font-family: var(--font-family-title);
+    font-size: clamp(1.55rem, 2.6vw, 2rem);
+    line-height: 1.25;
+    text-wrap: balance;
+}
+
+.iadl-intro p {
+    max-width: 840px;
+    margin: 0;
+    color: #30363a;
+}
+
+.iadl-notice {
+    max-width: 840px;
+    margin-top: 22px;
+    padding: 13px 15px;
+    border-left: 3px solid var(--spt-vert);
+    border-radius: 0 8px 8px 0;
+    background: rgba(239, 227, 195, .50);
+    line-height: 1.55;
+}
+
+.iadl-notice strong {
+    color: var(--spt-vert-fonce);
+}
+
+.iadl-tool-section {
+    max-width: 940px;
+    padding: 32px 4px 0;
+}
+
+.iadl-tool-section > h2,
+.iadl-info h2 {
+    margin: 0 0 8px;
+    color: var(--spt-vert-fonce);
+    font-family: var(--font-family-title);
+    font-size: clamp(1.3rem, 2vw, 1.6rem);
+    line-height: 1.3;
+}
+
+.iadl-tool-section > p,
+.iadl-info p,
+.iadl-info li {
+    color: #4f5a61;
+}
+
+.iadl-card {
+    margin-top: 20px;
+    padding: clamp(20px, 4vw, 32px);
+    border: 2px solid var(--spt-vert);
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(33, 76, 53, .10);
+}
+
+.iadl-domain + .iadl-domain {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(33, 76, 53, .16);
+}
+
+.iadl-domain h3 {
+    margin: 0 0 5px;
+    color: var(--spt-vert-fonce);
+    font-family: var(--font-family-title);
+    font-size: 1.13rem;
+    line-height: 1.35;
+}
+
+.iadl-domain > p {
+    margin: 0 0 11px;
+    color: #667078;
+    font-size: .9rem;
+    line-height: 1.5;
+}
+
+.iadl-options {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 9px;
+}
+
+.iadl-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    min-height: 58px;
+    padding: 11px 12px;
+    border: 1px solid rgba(33, 76, 53, .16);
+    border-radius: 10px;
+    background: #fff;
+    cursor: pointer;
+    transition: border-color .18s ease, background .18s ease;
+}
+
+.iadl-option:hover {
+    background: rgba(239, 227, 195, .18);
+}
+
+.iadl-option:has(input:checked) {
+    border-color: var(--spt-vert);
+    background: rgba(223, 234, 219, .46);
+}
+
+.iadl-option input {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+    margin-top: 2px;
+    accent-color: var(--spt-vert);
+}
+
+.iadl-option-text {
+    min-width: 0;
+}
+
+.iadl-option-title {
+    display: block;
+    color: #30363a;
+    font-weight: 750;
+    line-height: 1.35;
+}
+
+.iadl-option-note {
+    display: block;
+    margin-top: 3px;
+    color: #667078;
+    font-size: .8rem;
+    line-height: 1.4;
+}
+
+.iadl-points {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    margin-left: auto;
+    padding: 3px 7px;
+    border-radius: 999px;
+    background: rgba(239, 227, 195, .58);
+    color: var(--spt-vert-fonce);
+    font-size: .76rem;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.iadl-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 26px;
+}
+
+.iadl-button {
+    min-height: 44px;
+    padding: 9px 16px;
+    border: 1px solid var(--spt-vert-fonce);
+    border-radius: 8px;
+    background: var(--spt-vert-fonce);
+    color: #fff;
+    font: 600 .95rem/1.3 var(--font-family-body);
+    cursor: pointer;
+    transition: transform .2s ease, background .2s ease;
+}
+
+.iadl-button:hover,
+.iadl-button:focus-visible {
+    transform: translateY(-1px);
+    background: var(--spt-vert);
+}
+
+.iadl-button.secondary {
+    background: #fff;
+    color: var(--spt-vert-fonce);
+}
+
+.iadl-button.secondary:hover,
+.iadl-button.secondary:focus-visible {
+    background: rgba(239, 227, 195, .38);
+}
+
+.iadl-error {
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-left: 4px solid #b7564b;
+    border-radius: 0 8px 8px 0;
+    background: #fff4f1;
+    color: #7d3d36;
+}
+
+.iadl-error[hidden],
+.iadl-result[hidden] {
+    display: none;
+}
+
+.iadl-result {
+    margin-top: 22px;
+    padding: 18px;
+    border-radius: 12px;
+    background: rgba(223, 234, 219, .65);
+}
+
+.iadl-result-label {
+    display: block;
+    margin-bottom: 4px;
+    color: #667078;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.iadl-result-value {
+    display: block;
+    color: var(--spt-vert-fonce);
+    font-family: var(--font-family-title);
+    font-size: clamp(1.55rem, 3vw, 2.1rem);
+    line-height: 1.2;
+}
+
+.iadl-result-note {
+    margin: 8px 0 0;
+    color: #4f5a61;
+    font-size: .92rem;
+}
+
+.iadl-breakdown {
+    margin: 12px 0 0;
+    padding-left: 20px;
+    color: #4f5a61;
+    font-size: .9rem;
+}
+
+.iadl-breakdown li + li {
+    margin-top: 5px;
+}
+
+.iadl-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    max-width: 940px;
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(33, 76, 53, .16);
+}
+
+.iadl-info {
+    padding: 20px;
+    border: 1px solid rgba(33, 76, 53, .16);
+    border-radius: 12px;
+    background: #fff;
+}
+
+.iadl-info p {
+    margin: 0;
+}
+
+.iadl-info ul {
+    margin: 10px 0 0;
+    padding-left: 20px;
+}
+
+.iadl-info li + li {
+    margin-top: 7px;
+}
+
+.iadl-alert {
+    grid-column: 1 / -1;
+    border-left: 4px solid #b7564b;
+    background: #fffaf8;
+}
+
+.iadl-alert h2 {
+    color: #7d3d36;
+}
+
+@media (max-width: 760px) {
+    .iadl-page {
+        width: calc(100% - 20px);
+        margin-top: 8px;
+        margin-bottom: 44px;
+    }
+
+    .iadl-intro {
+        padding: 24px 2px 26px;
+    }
+
+    .iadl-tool-section {
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+
+    .iadl-card {
+        padding: 20px 15px;
+    }
+
+    .iadl-options,
+    .iadl-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .iadl-alert {
+        grid-column: auto;
+    }
+
+    .iadl-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .iadl-button {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .iadl-option,
+    .iadl-button {
+        transition: none;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="iadl-page">
+
+    <a class="iadl-back" href="{% url 'suivi_personnalise' %}">
+        ← Retour aux scores et échelles
+    </a>
+
+    <section class="iadl-intro">
+        <h1>Échelle IADL — activités instrumentales de la vie quotidienne</h1>
+
+        <p>
+            L’IADL explore l’autonomie dans des activités complexes nécessaires
+            à la vie quotidienne : téléphone, courses, repas, entretien du domicile,
+            lessive, déplacements, médicaments et gestion des finances.
+        </p>
+
+        <div class="iadl-notice">
+            <strong>À savoir :</strong>
+            plusieurs versions et modalités de cotation de l’IADL existent.
+            Cette page utilise une présentation simple à 8 domaines, cotés
+            « autonome » ou « aide / dépendance », avec possibilité de noter
+            une activité comme non évaluée.
+        </div>
+    </section>
+
+    <section class="iadl-tool-section" aria-labelledby="iadl-tool-title">
+        <h2 id="iadl-tool-title">Évaluation de l’autonomie</h2>
+
+        <p>
+            Pour chaque activité, choisis l’option qui correspond le mieux
+            aux capacités habituelles de la personne, et non à une situation exceptionnelle.
+        </p>
+
+        <div class="iadl-card">
+
+            <section class="iadl-domain">
+                <h3>1. Utilisation du téléphone</h3>
+                <p>Capacité à utiliser le téléphone ou un moyen de communication habituel.</p>
+
+                <div class="iadl-options">
+                    <label class="iadl-option">
+                        <input type="radio" name="iadlPhone" value="1" data-label="Téléphone">
+                        <span class="iadl-option-text">
+                            <span class="iadl-option-title">Autonome</span>
+                            <span class="iadl-option-note">Utilise seul le téléphone de façon adaptée.</span>
+                        </span>
+                        <span class="iadl-points">1</span>
+                    </label>
+
+                    <label class="iadl-option">
+                        <input type="radio" name="iadlPhone" value="0" data-label="Téléphone">
+                        <span class="iadl-option-text">
+                            <span class="iadl-option-title">Aide / dépendance</span>
+                            <span class="iadl-option-note">A besoin d’une aide importante ou ne peut pas l’utiliser seul.</span>
+                        </span>
+                        <span class="iadl-points">0</span>
+                    </label>
+
+                    <label class="iadl-option">
+                        <input type="radio" name="iadlPhone" value="NT" data-label="Téléphone">
+                        <span class="iadl-option-text">
+                            <span class="iadl-option-title">Non évalué</span>
+                            <span class="iadl-option-note">Impossible ou non pertinent à évaluer ici.</span>
+                        </span>
+                        <span class="iadl-points">NT</span>
+                    </label>
+                </div>
+            </section>
+
+            <section class="iadl-domain">
+                <h3>2. Courses</h3>
+                <p>Capacité à organiser et réaliser les achats nécessaires.</p>
+
+                <div class="iadl-options">
+                    <label class="iadl-option">
+                        <input type="radio" name="iadlShopping" value="1" data-label="Courses">
+                        <span class="iadl-option-text">
+                            <span class="iadl-option-title">Autonome</span>
+                            <span class="iadl-option-note">Réalise seul les achats nécessaires.</span>
+                        </span>
+                        <span class="iadl-points">1</span>
+                    </label>
+
+                    <label class="iadl-option">
+                        <input type="radio" name="iadlShopping" value="0" data-label="Courses">
+                        <span class="iadl-option-text">
+                            <span class="iadl-option-title">Aide / dépendance</span>
+                            <span class="iadl-option-note">A besoin d’aide ou ne peut pas faire ses achats seul.</span>
+                        </span>
+                        <span class="iadl-points">0</span>
+                    </label>
+
+                    <label class="iadl-option">
+                        <input type="radio" name="iadlShopping" value="NT" data-label="Courses">
+                        <span class="iadl-option-text">
+                            <span class="iadl-option-title">Non évalué</span>
+                            <span class="iadl-option-note">Impossible ou non pertinent à évaluer ici.</span>
+                        </span>
+                        <span class="iadl-points">NT</span>
+                    </label>
+                </div>
+            </section>
+
+            <section class="iadl-domain">
+                <h3>3. Préparation des repas</h3>
+                <p>Capacité à prévoir, préparer et servir un repas adapté.</p>
+
+                <div class="iadl-options">
+                    <label class="iadl-option">
+                        <input type="radio" name="iadlFood" value="1" data-label="Préparation des repas">
+                        <span class="iadl-option-text">
+                            <span class="iadl-option-title">Autonome</span>
+                            <span class="iadl-option-note">Prépare seul des repas de façon adaptée.</span>
+                        </span>
+                        <span class="iadl-points">1</span>
+                    </label>
+
+                    <label class="iadl-option">
+                        <input type="radio" name="iadlFood" value="0" data-label="Préparation des repas">
+                        <span class="iadl-option-text">
+                            <span class="iadl-option-title">Aide / dépendance</span>
+                            <span class="iadl-option-note">A besoin d’aide importante pour préparer ses repas.</span>
+                        </span>
+                        <span class="iadl-points">0</span>
+                    </label>
+
+                    <label class="iadl-option">
+                        <input type="radio" name="iadlFood" value="NT" data-label="Préparation des repas">
+                        <span class="iadl-option-text">
+                            <span class="iadl-option-title">Non évalué</span>
+                            <span class="iadl-option-note">Impossible ou non pertinent à évaluer ici.</span>
+                        </span>
+                        <span class="iadl-points">NT</span>
+                    </label>
+                </div>
+            </section>
+
+            <section class="iadl-domain">
+                <h3>4. Entretien du domicile</h3>
+                <p>Capacité à assurer les tâches ménagères habituelles.</p>
+
+                <div class="iadl-options">
+                    <label class="iadl-option">
+                        <input type="radio" name="iadlHouse" value="1" data-label="Entretien du domicile">
+                        <span class="iadl-option-text">
+                            <span class="iadl-option-title">Autonome</span>
+                            <span class="iadl-option-note">Assure seul l’entretien courant du domicile.</span>
+                        </span>
+                        <span class="iadl-points">1</span>
+                    </label>
+
+                    <label class="iadl-option">
+                        <input type="radio" name="iadlHouse" value="0" data-label="Entretien du domicile">
+                        <span class="iadl-option-text">
+                            <span class="iadl-option-title">Aide / dépendance</span>
+                            <span class="iadl-option-note">A besoin d’une aide importante pour les tâches ménagères.</span>
+                        </span>
+                        <span class="iadl-points">0</span>
+                    </label>
+
+                    <label class="iadl-option">
+                        <input type="radio" name="iadlHouse" value="NT" data-label="Entretien du domicile">
+                        <span class="iadl-option-text">
+                            <span class="iadl-option-title">Non évalué</span>
+                            <span class="iadl-option-note">Impossible ou non pertinent à évaluer ici.</span>
+                        </span>
+                        <span class="iadl-points">NT</span>
+                    </label>
+                </div>
+            </section>
+
+            <section class="iadl-domain">
+                <h3>5. Lessive</h3>
+                <p>Capacité à gérer son linge habituel.</p>
+
+                <div class="iadl-options">
+                    <label class="iadl-option">
+                        <input type="radio" name="iadlLaundry" value="1" data-label="Lessive">
+                        <span class="iadl-option-text">
+                            <span class="iadl-option-title">Autonome</span>
+                            <span class="iadl-option-note">Gère seul son linge ou sa lessive habituelle.</span>
+                        </span>
+                        <span class="iadl-points">1</span>
+                    </label>
+
+                    <label class="iadl-option">
+                        <input type="radio" name="iadlLaundry" value="0" data-label="Lessive">
+                        <span class="iadl-option-text">
+                            <span class="iadl-option-title">Aide / dépendance</span>
+                            <span class="iadl-option-note">A besoin d’une aide importante pour gérer son linge.</span>
+                        </span>
+                        <span class="iadl-points">0</span>
+                    </label>
+
+                    <label class="iadl-option">
+                        <input type="radio" name="iadlLaundry" value="NT" data-label="Lessive">
+                        <span class="iadl-option-text">
+                            <span class="iadl-option-title">Non évalué</span>
+                            <span class="iadl-option-note">Impossible ou non pertinent à évaluer ici.</span>
+                        </span>
+                        <span class="iadl-points">NT</span>
+                    </label>
+                </div>
+            </section>
+
+            <section class="iadl-domain">
+                <h3>6. Déplacements / transports</h3>
+                <p>Capacité à organiser et utiliser un moyen de transport adapté.</p>
+
+                <div class="iadl-options">
+                    <label class="iadl-option">
+                        <input type="radio" name="iadlTransport" value="1" data-label="Transports">
+                        <span class="iadl-option-text">
+                            <span class="iadl-option-title">Autonome</span>
+                            <span class="iadl-option-note">Se déplace seul avec un moyen de transport adapté.</span>
+                        </span>
+                        <span class="iadl-points">1</span>
+                    </label>
+
+                    <label class="iadl-option">
+                        <input type="radio" name="iadlTransport" value="0" data-label="Transports">
+                        <span class="iadl-option-text">
+                            <span class="iadl-option-title">Aide / dépendance</span>
+                            <span class="iadl-option-note">Nécessite l’aide d’une autre personne pour ses déplacements.</span>
+                        </span>
+                        <span class="iadl-points">0</span>
+                    </label>
+
+                    <label class="iadl-option">
+                        <input type="radio" name="iadlTransport" value="NT" data-label="Transports">
+                        <span class="iadl-option-text">
+                            <span class="iadl-option-title">Non évalué</span>
+                            <span class="iadl-option-note">Impossible ou non pertinent à évaluer ici.</span>
+                        </span>
+                        <span class="iadl-points">NT</span>
+                    </label>
+                </div>
+            </section>
+
+            <section class="iadl-domain">
+                <h3>7. Gestion des médicaments</h3>
+                <p>Capacité à prendre correctement les traitements prescrits.</p>
+
+                <div class="iadl-options">
+                    <label class="iadl-option">
+                        <input type="radio" name="iadlMeds" value="1" data-label="Médicaments">
+                        <span class="iadl-option-text">
+                            <span class="iadl-option-title">Autonome</span>
+                            <span class="iadl-option-note">Gère seul ses médicaments de façon correcte.</span>
+                        </span>
+                        <span class="iadl-points">1</span>
+                    </label>
+
+                    <label class="iadl-option">
+                        <input type="radio" name="iadlMeds" value="0" data-label="Médicaments">
+                        <span class="iadl-option-text">
+                            <span class="iadl-option-title">Aide / dépendance</span>
+                            <span class="iadl-option-note">A besoin d’aide pour organiser ou prendre ses traitements.</span>
+                        </span>
+                        <span class="iadl-points">0</span>
+                    </label>
+
+                    <label class="iadl-option">
+                        <input type="radio" name="iadlMeds" value="NT" data-label="Médicaments">
+                        <span class="iadl-option-text">
+                            <span class="iadl-option-title">Non évalué</span>
+                            <span class="iadl-option-note">Impossible ou non pertinent à évaluer ici.</span>
+                        </span>
+                        <span class="iadl-points">NT</span>
+                    </label>
+                </div>
+            </section>
+
+            <section class="iadl-domain">
+                <h3>8. Gestion des finances</h3>
+                <p>Capacité à gérer les dépenses, paiements et démarches financières habituelles.</p>
+
+                <div class="iadl-options">
+                    <label class="iadl-option">
+                        <input type="radio" name="iadlFinances" value="1" data-label="Finances">
+                        <span class="iadl-option-text">
+                            <span class="iadl-option-title">Autonome</span>
+                            <span class="iadl-option-note">Gère seul les opérations financières habituelles.</span>
+                        </span>
+                        <span class="iadl-points">1</span>
+                    </label>
+
+                    <label class="iadl-option">
+                        <input type="radio" name="iadlFinances" value="0" data-label="Finances">
+                        <span class="iadl-option-text">
+                            <span class="iadl-option-title">Aide / dépendance</span>
+                            <span class="iadl-option-note">A besoin d’aide importante pour gérer ses finances.</span>
+                        </span>
+                        <span class="iadl-points">0</span>
+                    </label>
+
+                    <label class="iadl-option">
+                        <input type="radio" name="iadlFinances" value="NT" data-label="Finances">
+                        <span class="iadl-option-text">
+                            <span class="iadl-option-title">Non évalué</span>
+                            <span class="iadl-option-note">Impossible ou non pertinent à évaluer ici.</span>
+                        </span>
+                        <span class="iadl-points">NT</span>
+                    </label>
+                </div>
+            </section>
+
+            <div class="iadl-actions">
+                <button class="iadl-button" id="iadlCalculate" type="button">
+                    Calculer le score
+                </button>
+
+                <button class="iadl-button secondary" id="iadlReset" type="button">
+                    Recommencer
+                </button>
+            </div>
+
+            <div class="iadl-error" id="iadlError" hidden aria-live="polite"></div>
+
+            <div class="iadl-result" id="iadlResult" hidden aria-live="polite">
+                <span class="iadl-result-label">Résultat IADL</span>
+
+                <strong class="iadl-result-value" id="iadlResultValue">
+                    — / 8
+                </strong>
+
+                <p class="iadl-result-note" id="iadlResultNote"></p>
+
+                <ul class="iadl-breakdown" id="iadlBreakdown"></ul>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="iadl-info-grid">
+
+        <section class="iadl-info">
+            <h2>Comment lire le résultat ?</h2>
+            <p>
+                Dans cette version à 8 domaines, chaque activité autonome vaut 1 point.
+                Un score plus élevé traduit donc une plus grande autonomie dans les
+                activités instrumentales évaluées. Il n’existe pas ici de seuil unique
+                permettant à lui seul de conclure à une maladie ou à un diagnostic.
+            </p>
+        </section>
+
+        <section class="iadl-info">
+            <h2>Ce qui peut influencer le score</h2>
+            <ul>
+                <li>les habitudes de vie et la répartition habituelle des tâches ;</li>
+                <li>l’environnement et l’accessibilité du logement ou des transports ;</li>
+                <li>les capacités physiques, sensorielles et cognitives ;</li>
+                <li>une maladie aiguë ou une situation temporaire.</li>
+            </ul>
+        </section>
+
+        <section class="iadl-info iadl-alert">
+            <h2>Une perte d’autonomie récente mérite d’être explorée</h2>
+            <p>
+                Une diminution nouvelle ou rapide des capacités à gérer les médicaments,
+                les finances, les déplacements ou les activités quotidiennes peut nécessiter
+                une évaluation médicale et sociale adaptée, notamment si elle s’accompagne
+                de confusion, de chutes, de difficultés inhabituelles ou d’un changement brutal.
+            </p>
+        </section>
+
+    </div>
+
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const domains = [
+        "iadlPhone",
+        "iadlShopping",
+        "iadlFood",
+        "iadlHouse",
+        "iadlLaundry",
+        "iadlTransport",
+        "iadlMeds",
+        "iadlFinances"
+    ];
+
+    const calculateButton = document.getElementById("iadlCalculate");
+    const resetButton = document.getElementById("iadlReset");
+
+    const errorBox = document.getElementById("iadlError");
+    const resultBox = document.getElementById("iadlResult");
+    const resultValue = document.getElementById("iadlResultValue");
+    const resultNote = document.getElementById("iadlResultNote");
+    const breakdown = document.getElementById("iadlBreakdown");
+
+    function selected(name) {
+        return document.querySelector(`input[name="${name}"]:checked`);
+    }
+
+    function clearMessages() {
+        errorBox.hidden = true;
+        resultBox.hidden = true;
+    }
+
+    function calculateIadl() {
+        const selections = domains.map(name => selected(name));
+
+        if (selections.some(item => !item)) {
+            errorBox.textContent =
+                "Choisis une réponse pour chacun des 8 domaines, y compris « Non évalué » si nécessaire.";
+            errorBox.hidden = false;
+            resultBox.hidden = true;
+            return;
+        }
+
+        let score = 0;
+        let evaluated = 0;
+        let ntCount = 0;
+        const dependentItems = [];
+
+        selections.forEach(input => {
+            if (input.value === "NT") {
+                ntCount += 1;
+                return;
+            }
+
+            evaluated += 1;
+
+            if (input.value === "1") {
+                score += 1;
+            } else {
+                dependentItems.push(input.dataset.label);
+            }
+        });
+
+        breakdown.innerHTML = "";
+
+        if (ntCount === 0) {
+            resultValue.textContent = `${score} / 8`;
+
+            resultNote.textContent =
+                "Plus le score est élevé, plus l’autonomie est préservée dans les activités instrumentales évaluées.";
+        } else {
+            resultValue.textContent = `${score} / ${evaluated} évalués`;
+
+            resultNote.textContent =
+                `${ntCount} domaine${ntCount > 1 ? "s sont" : " est"} non évalué${ntCount > 1 ? "s" : ""}. Il est préférable de conserver ce résultat comme score partiel plutôt que de le convertir artificiellement sur 8.`;
+        }
+
+        if (dependentItems.length) {
+            dependentItems.forEach(label => {
+                const li = document.createElement("li");
+                li.textContent = `${label} : aide / dépendance`;
+                breakdown.appendChild(li);
+            });
+        } else if (evaluated > 0) {
+            const li = document.createElement("li");
+            li.textContent =
+                "Aucune dépendance n’a été cochée parmi les domaines évalués.";
+            breakdown.appendChild(li);
+        } else {
+            const li = document.createElement("li");
+            li.textContent =
+                "Aucun domaine n’a pu être évalué.";
+            breakdown.appendChild(li);
+        }
+
+        errorBox.hidden = true;
+        resultBox.hidden = false;
+    }
+
+    function resetIadl() {
+        document.querySelectorAll(".iadl-card input").forEach(input => {
+            input.checked = false;
+        });
+
+        clearMessages();
+    }
+
+    calculateButton.addEventListener("click", calculateIadl);
+    resetButton.addEventListener("click", resetIadl);
+
+    document.querySelectorAll(".iadl-card input").forEach(input => {
+        input.addEventListener("change", clearMessages);
+    });
+});
+</script>
+{% endblock %}

@@ -386,6 +386,92 @@
 
     @media (max-width: 480px) and (orientation: portrait) {
 
+        /* Quiz dans le bloc Commandes en mode portrait */
+        .space-controls-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 6px;
+        }
+
+        .space-controls-panel .space-side-title {
+            margin: 0 0 3px;
+            font-size: .76rem;
+        }
+
+        .space-controls-panel .space-quiz {
+            position: static;
+            inset: auto;
+            z-index: auto;
+            order: 1;
+            padding: 0;
+            background: transparent;
+            backdrop-filter: none;
+        }
+
+        .space-controls-panel .space-quiz[hidden] {
+            display: none;
+        }
+
+        .space-controls-panel .space-quiz:not([hidden]) {
+            display: block;
+        }
+
+        .space-controls-panel .space-dialog {
+            width: 100%;
+            padding: 6px;
+            border: 0;
+            border-radius: 9px;
+            box-shadow: none;
+        }
+
+        .space-controls-panel .space-dialog h2 {
+            margin: 0 0 4px;
+            font-size: .78rem;
+        }
+
+        .space-controls-panel .space-question {
+            margin: 0 0 5px;
+            font-size: .76rem;
+            line-height: 1.18;
+        }
+
+        .space-controls-panel .space-answers {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 4px;
+        }
+
+        .space-controls-panel .space-answer {
+            min-height: 38px;
+            padding: 5px 6px;
+            border: 1px solid #d8e3ec;
+            border-radius: 8px;
+            font-size: .66rem;
+            line-height: 1.1;
+        }
+
+        .space-controls-panel .space-feedback {
+            min-height: 0;
+            margin-top: 3px;
+            font-size: .66rem;
+            line-height: 1.1;
+        }
+
+        /* Les 4 boutons principaux restent dessous, en format compact */
+        .space-controls-panel .space-game-controls {
+            order: 2;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 3px;
+            margin-top: 2px;
+        }
+
+        .space-controls-panel .space-game-controls .space-btn {
+            min-height: 28px;
+            padding: 2px 3px;
+            border-radius: 7px;
+            font-size: .56rem;
+            line-height: 1.05;
+        }
     }
 
 
@@ -396,6 +482,41 @@
 
     @media (max-width: 900px) and (orientation: landscape) {
 
+        /* Les 3 commandes tactiles passent a gauche du terrain */
+        .space-game-center {
+            display: grid;
+            grid-template-columns: 88px minmax(0, 1fr);
+            grid-template-rows: auto;
+            gap: 6px;
+            align-items: stretch;
+            width: 100%;
+        }
+
+        .space-canvas-wrap {
+            grid-column: 2;
+            grid-row: 1;
+            min-width: 0;
+        }
+
+        .space-touch-controls {
+            grid-column: 1;
+            grid-row: 1;
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(3, 1fr);
+            gap: 5px;
+            margin: 0;
+            align-self: stretch;
+        }
+
+        .space-touch-controls .space-btn {
+            min-width: 0;
+            min-height: 0;
+            padding: 4px 2px;
+            border-radius: 9px;
+            font-size: .64rem;
+            line-height: 1.05;
+        }
     }
 
 </style>
@@ -504,6 +625,27 @@
     const quizAnswers = document.getElementById("quizAnswers");
     const quizFeedback = document.getElementById("quizFeedback");
     const sideFeedback = document.getElementById("sideFeedback");
+
+    const canvasWrap = document.querySelector(".space-canvas-wrap");
+    const controlsPanel = document.querySelector(".space-controls-panel");
+
+    const portraitMobile = window.matchMedia(
+        "(max-width: 480px) and (orientation: portrait)"
+    );
+
+    function syncMobileQuizPosition() {
+        if (portraitMobile.matches) {
+            controlsPanel.appendChild(quizPanel);
+        } else {
+            canvasWrap.appendChild(quizPanel);
+        }
+    }
+
+    if (portraitMobile.addEventListener) {
+        portraitMobile.addEventListener("change", syncMobileQuizPosition);
+    } else {
+        portraitMobile.addListener(syncMobileQuizPosition);
+    }
 
     const startButton = document.getElementById("startButton");
     const pauseButton = document.getElementById("pauseButton");
@@ -1724,6 +1866,7 @@
         player.x = Math.max(10, Math.min(W - player.width - 10, player.x));
     });
 
+    syncMobileQuizPosition();
     bestValue.textContent = state.best;
     initialiserSon();
     initStars();

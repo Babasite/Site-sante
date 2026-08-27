@@ -1,0 +1,772 @@
+{% extends "accueil/base.html" %}
+
+{% block logo_return %}{% url 'terrain' %}{% endblock %}
+{% load static %}
+
+{% block title %}Ostéopathie douce | Santé et mouvement{% endblock %}
+{% block page_title %}Ostéopathie douce{% endblock %}
+{% block header_actions %}{% endblock %}
+
+{% block extra_css %}
+<style>
+.spt-shell-content {
+    background:#fff;
+}
+
+:root {
+    --osteo-fond:#eaf2f8;
+    --osteo-clair:#f8fbff;
+    --osteo-bleu:#4f7f9f;
+    --osteo-bleu-fonce:#264b63;
+    --osteo-bleu-clair:#dceaf4;
+    --osteo-texte:#2f3b44;
+    --osteo-gris:#66737c;
+    --osteo-rouge:#b7564b;
+    --osteo-jaune:#f8f0d9;
+    --osteo-ombre:0 12px 30px rgba(38,75,99,.14);
+}
+
+.osteo-page {
+    width:min(1180px,calc(100% - 32px));
+    margin:0 auto 70px;
+    color:var(--osteo-texte);
+    font-family:var(--font-family-body);
+    line-height:1.7;
+}
+
+.osteo-page * {
+    box-sizing:border-box;
+}
+
+.osteo-intro {
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 190px;
+    gap:28px;
+    align-items:center;
+    margin-bottom:24px;
+    padding:clamp(24px,4vw,38px);
+    border:2px solid var(--osteo-bleu);
+    border-radius:20px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(248,251,255,.98),
+            rgba(220,234,244,.96)
+        );
+    box-shadow:var(--osteo-ombre);
+}
+
+.osteo-intro h1 {
+    margin:0;
+    color:var(--osteo-bleu-fonce);
+    font-family:var(--font-family-title);
+    font-size:clamp(1.8rem,3vw,2.4rem);
+    line-height:1.2;
+}
+
+.osteo-intro p {
+    margin:12px 0 0;
+    color:#516775;
+    font-size:1.04rem;
+}
+
+.osteo-intro-image {
+    display:block;
+    width:100%;
+    max-width:180px;
+    margin-left:auto;
+    object-fit:contain;
+}
+
+.osteo-warning {
+    margin-top:16px;
+    padding:14px 16px;
+    border-left:5px solid var(--osteo-rouge);
+    border-radius:0 12px 12px 0;
+    background:#f8e8e3;
+    color:#5b3330;
+    font-size:.92rem;
+}
+
+.osteo-panel {
+    overflow:hidden;
+    border-radius:22px;
+    background:
+        linear-gradient(
+            180deg,
+            var(--osteo-bleu),
+            var(--osteo-bleu-fonce)
+        );
+    color:#fff;
+    box-shadow:0 18px 38px rgba(38,75,99,.26);
+}
+
+.osteo-panel-head {
+    padding:22px 22px 16px;
+}
+
+.osteo-panel-head h2 {
+    margin:0;
+    font-family:var(--font-family-title);
+    font-size:1.55rem;
+}
+
+.osteo-panel-head p {
+    margin:7px 0 0;
+    color:rgba(255,255,255,.8);
+    font-size:.9rem;
+}
+
+.osteo-search-wrap {
+    padding:0 18px 16px;
+}
+
+.osteo-search-box {
+    position:relative;
+}
+
+.osteo-search-icon {
+    position:absolute;
+    top:50%;
+    left:14px;
+    transform:translateY(-50%);
+    pointer-events:none;
+}
+
+.osteo-search {
+    width:100%;
+    min-height:48px;
+    padding:11px 14px 11px 43px;
+    border:1px solid rgba(255,255,255,.24);
+    border-radius:14px;
+    outline:none;
+    background:rgba(255,255,255,.12);
+    color:#fff;
+    font:inherit;
+}
+
+.osteo-search::placeholder {
+    color:rgba(255,255,255,.72);
+}
+
+.osteo-search:focus {
+    background:rgba(255,255,255,.18);
+    border-color:rgba(255,255,255,.65);
+}
+
+.osteo-zones {
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:8px;
+    padding:8px 14px 18px;
+}
+
+.osteo-zone {
+    display:flex;
+    align-items:center;
+    gap:9px;
+    min-height:54px;
+    padding:10px 11px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:12px;
+    background:rgba(255,255,255,.07);
+    color:#fff;
+    font:inherit;
+    font-weight:750;
+    text-align:left;
+    cursor:pointer;
+    transition:transform .18s ease,background .18s ease;
+}
+
+.osteo-zone:hover,
+.osteo-zone:focus-visible {
+    transform:translateY(-2px);
+    background:rgba(255,255,255,.16);
+}
+
+.osteo-zone:focus-visible {
+    outline:2px solid #fff;
+    outline-offset:2px;
+}
+
+.osteo-zone-icon {
+    display:grid;
+    place-items:center;
+    width:32px;
+    height:32px;
+    flex:0 0 32px;
+    border-radius:9px;
+    background:rgba(255,255,255,.12);
+}
+
+.osteo-no-result {
+    display:none;
+    padding:18px;
+    text-align:center;
+    color:rgba(255,255,255,.78);
+}
+
+.osteo-modal {
+    position:fixed;
+    z-index:1100;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(19,35,47,.70);
+    backdrop-filter:blur(7px);
+}
+
+.osteo-modal.open {
+    display:flex;
+}
+
+.osteo-modal-card {
+    width:min(880px,100%);
+    max-height:90vh;
+    overflow-y:auto;
+    border-radius:24px;
+    background:var(--osteo-clair);
+    box-shadow:0 30px 80px rgba(17,30,40,.42);
+}
+
+.osteo-modal-top {
+    position:sticky;
+    z-index:3;
+    top:0;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding:18px 22px;
+    border-bottom:1px solid rgba(79,127,159,.18);
+    background:rgba(248,251,255,.96);
+    backdrop-filter:blur(10px);
+}
+
+.osteo-modal-heading {
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.osteo-modal-heading-icon {
+    display:grid;
+    place-items:center;
+    width:46px;
+    height:46px;
+    flex:0 0 46px;
+    border-radius:13px;
+    background:var(--osteo-bleu-clair);
+    font-size:1.35rem;
+}
+
+.osteo-modal-title {
+    margin:0;
+    color:var(--osteo-bleu-fonce);
+    font-family:var(--font-family-title);
+    font-size:1.5rem;
+}
+
+.osteo-close {
+    display:grid;
+    place-items:center;
+    width:42px;
+    height:42px;
+    flex:0 0 42px;
+    border:0;
+    border-radius:50%;
+    background:var(--osteo-bleu);
+    color:#fff;
+    font-size:1.25rem;
+    cursor:pointer;
+}
+
+.osteo-modal-content {
+    padding:22px;
+}
+
+.osteo-summary {
+    margin:0 0 16px;
+    color:#516775;
+}
+
+.osteo-advice-grid {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:13px;
+}
+
+.osteo-box {
+    padding:16px;
+    border-radius:15px;
+    background:var(--osteo-bleu-clair);
+}
+
+.osteo-box.avoid {
+    background:#f8e8e3;
+}
+
+.osteo-box.alert {
+    grid-column:1 / -1;
+    background:var(--osteo-jaune);
+}
+
+.osteo-box h3 {
+    margin:0 0 8px;
+    color:var(--osteo-bleu-fonce);
+    font-size:1rem;
+}
+
+.osteo-box p {
+    margin:0;
+    color:#44535d;
+    font-size:.92rem;
+    line-height:1.6;
+}
+
+.osteo-disclaimer {
+    margin-top:18px;
+    padding-top:14px;
+    border-top:1px solid rgba(79,127,159,.18);
+    color:#66737c;
+    font-size:.82rem;
+}
+
+@media(max-width:900px) {
+    .osteo-zones {
+        grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+}
+
+@media(max-width:680px) {
+    .osteo-intro {
+        grid-template-columns:1fr;
+    }
+
+    .osteo-intro-image {
+        width:130px;
+        margin:0 auto;
+    }
+
+    .osteo-zones {
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+}
+
+@media(max-width:480px) {
+    .osteo-page {
+        width:calc(100% - 24px);
+    }
+
+    .osteo-intro {
+        padding:22px 17px;
+        border-radius:17px;
+    }
+
+    .osteo-zones {
+        grid-template-columns:1fr;
+    }
+
+    .osteo-advice-grid {
+        grid-template-columns:1fr;
+    }
+
+    .osteo-box.alert {
+        grid-column:auto;
+    }
+
+    .osteo-modal {
+        padding:10px;
+    }
+
+    .osteo-modal-content {
+        padding:15px;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="osteo-page">
+
+    <section class="osteo-intro">
+        <div>
+            <h1>T’as mal où ?</h1>
+
+            <p>
+                Choisis une zone du corps pour afficher quelques gestes très doux :
+                respiration, mobilité confortable, relâchement et auto-massage.
+                Le but n’est pas de « remettre quelque chose en place » ni de faire
+                craquer une articulation.
+            </p>
+
+            <div class="osteo-warning">
+                <strong>Important :</strong>
+                ces conseils ne remplacent pas un diagnostic. Une douleur brutale,
+                intense, inhabituelle, après un traumatisme, accompagnée de faiblesse,
+                engourdissement important, fièvre, difficulté à respirer ou douleur
+                thoracique nécessite un avis médical adapté.
+            </div>
+        </div>
+
+        <img
+            src="{% static 'accueil/images/crac.png' %}"
+            alt="Illustration ostéopathie douce"
+            class="osteo-intro-image"
+        >
+    </section>
+
+    <section class="osteo-panel" aria-label="Conseils d'ostéopathie douce par zone">
+
+        <div class="osteo-panel-head">
+            <h2>👐 T’as mal où ?</h2>
+            <p>
+                Sélectionne une zone. Tous les gestes proposés doivent rester lents,
+                confortables et sans douleur vive.
+            </p>
+        </div>
+
+        <div class="osteo-search-wrap">
+            <div class="osteo-search-box">
+                <span class="osteo-search-icon" aria-hidden="true">🔎</span>
+                <input
+                    type="search"
+                    id="osteoSearch"
+                    class="osteo-search"
+                    placeholder="Exemple : cou, dos, genou..."
+                    autocomplete="off"
+                >
+            </div>
+        </div>
+
+        <div class="osteo-zones" id="osteoZones"></div>
+
+        <div class="osteo-no-result" id="osteoNoResult">
+            Aucun résultat. Essaie un autre mot.
+        </div>
+    </section>
+
+</main>
+
+<div
+    class="osteo-modal"
+    id="osteoModal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="osteoModalTitle"
+>
+    <div class="osteo-modal-card">
+
+        <div class="osteo-modal-top">
+            <div class="osteo-modal-heading">
+                <div class="osteo-modal-heading-icon" id="osteoModalIcon">👐</div>
+                <h2 class="osteo-modal-title" id="osteoModalTitle">Conseil</h2>
+            </div>
+
+            <button
+                type="button"
+                class="osteo-close"
+                id="osteoClose"
+                aria-label="Fermer"
+            >
+                ✕
+            </button>
+        </div>
+
+        <div class="osteo-modal-content" id="osteoModalContent"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const osteoData = [
+        {
+            name:"Tête / céphalées",
+            icon:"🤕",
+            search:"tête tete migraine céphalée cephalee mal de tête crane crâne",
+            summary:"Pour une tension légère associée au stress ou aux muscles du cou, privilégie surtout le relâchement et la respiration.",
+            move:"Assis confortablement, laisse tomber les épaules puis tourne très lentement la tête à droite et à gauche dans une amplitude facile. 5 répétitions de chaque côté.",
+            relax:"Pose les doigts sur les tempes et la base du crâne et effectue de petits cercles très doux pendant 30 à 60 secondes.",
+            avoid:"Évite toute manipulation rapide ou forcée du cou et tout mouvement qui augmente nettement la douleur.",
+            alert:"Consulte rapidement si le mal de tête est brutal et inhabituel, après un choc, avec fièvre, confusion, faiblesse, troubles de la parole ou de la vision."
+        },
+        {
+            name:"Mâchoire",
+            icon:"😬",
+            search:"mâchoire machoire atm temporo mandibulaire dents tension",
+            summary:"Les tensions de mâchoire peuvent être favorisées par le serrage des dents et le stress.",
+            move:"Laisse les lèvres se toucher sans serrer les dents. Ouvre puis referme lentement la bouche 6 à 8 fois sans aller jusqu’à la douleur.",
+            relax:"Masse doucement les muscles des joues devant les oreilles et le long de la mâchoire pendant 30 secondes.",
+            avoid:"Évite de forcer l’ouverture de la bouche ou d’essayer de faire craquer l’articulation.",
+            alert:"Si la mâchoire reste bloquée, gonfle, devient très douloureuse ou si la douleur suit un traumatisme, demande un avis professionnel."
+        },
+        {
+            name:"Cou / cervicales",
+            icon:"🧣",
+            search:"cou cervicales nuque raideur torticolis",
+            summary:"Pour une raideur légère, le mouvement lent est généralement préférable à l’immobilité complète.",
+            move:"Incline très légèrement l’oreille vers l’épaule puis reviens au centre. Fais 4 à 5 répétitions de chaque côté sans tirer sur la tête.",
+            relax:"Respire lentement en relâchant volontairement les épaules vers le bas pendant 1 minute.",
+            avoid:"Pas de rotation forcée, d’à-coup ou d’auto-manipulation visant à faire craquer le cou.",
+            alert:"Consulte si la douleur suit un traumatisme important, descend fortement dans le bras, s’accompagne de faiblesse, engourdissement marqué ou troubles neurologiques."
+        },
+        {
+            name:"Épaules",
+            icon:"🤷",
+            search:"épaule epaules épaules deltoide omoplate",
+            summary:"Les épaules aiment généralement les mouvements fréquents et progressifs.",
+            move:"Fais 8 petits cercles d’épaules vers l’arrière puis 8 vers l’avant, sans chercher une grande amplitude.",
+            relax:"Pose la main opposée sur le haut de l’épaule et masse doucement la zone musculaire pendant 30 à 60 secondes.",
+            avoid:"Évite les mouvements au-dessus de la tête s’ils provoquent une douleur vive ou une sensation d’instabilité.",
+            alert:"Après une chute, une déformation, une perte brutale de force ou une impossibilité de lever le bras justifient un avis médical."
+        },
+        {
+            name:"Haut du dos",
+            icon:"🫁",
+            search:"haut du dos dorsales omoplates thoracique",
+            summary:"Une posture prolongée peut favoriser les tensions entre les omoplates.",
+            move:"Assis, croise les bras sur la poitrine et effectue doucement une rotation du tronc à droite puis à gauche, 5 fois de chaque côté.",
+            relax:"Place une serviette roulée derrière le haut du dos sur le dossier d’une chaise et laisse la poitrine s’ouvrir légèrement en respirant.",
+            avoid:"Ne cherche pas à provoquer un craquement ou une extension importante.",
+            alert:"Douleur thoracique, essoufflement, malaise ou douleur qui irradie vers le bras ou la mâchoire : demande une aide médicale rapidement."
+        },
+        {
+            name:"Bas du dos / lombaires",
+            icon:"🦴",
+            search:"bas du dos lombaires lombalgie reins dos",
+            summary:"Lors d’une lombalgie banale, des mouvements doux et réguliers peuvent aider à éviter l’enraidissement.",
+            move:"Allongé sur le dos, genoux pliés, laisse les deux genoux partir doucement de quelques centimètres à droite puis à gauche, 6 fois.",
+            relax:"Respire profondément en laissant le ventre se gonfler à l’inspiration et le bas du dos se relâcher.",
+            avoid:"Évite les torsions forcées, le port lourd et les manipulations destinées à faire craquer le dos pendant une phase douloureuse.",
+            alert:"Urgence si faiblesse importante d’une jambe, perte de sensibilité dans la zone selle, ou difficulté nouvelle à uriner / retenir les selles."
+        },
+        {
+            name:"Bassin / sacrum",
+            icon:"🧘",
+            search:"bassin sacrum sacro iliaque sacro-iliaque",
+            summary:"La sensation de raideur du bassin peut être travaillée par des mouvements de faible amplitude.",
+            move:"Debout avec appui stable, effectue de petits cercles de bassin très lents, 5 dans chaque sens.",
+            relax:"Allongé sur le dos, genoux pliés, laisse simplement le poids du bassin se déposer au sol pendant quelques respirations.",
+            avoid:"Évite les torsions rapides ou les mouvements asymétriques forcés.",
+            alert:"Une douleur après chute importante, associée à fièvre ou à des symptômes neurologiques mérite un avis médical."
+        },
+        {
+            name:"Hanches",
+            icon:"🦵",
+            search:"hanche hanches aine fessier",
+            summary:"Une hanche raide répond souvent mieux à des mobilités modestes répétées qu’à un grand étirement.",
+            move:"Debout en tenant un support, fais de petits balancements de jambe d’avant en arrière, 8 fois par côté.",
+            relax:"Masse doucement les muscles du côté de la hanche et du haut de la fesse avec la paume.",
+            avoid:"Ne force pas une position qui pince fortement dans l’aine.",
+            alert:"Après une chute, impossibilité de prendre appui, douleur importante de l’aine ou raccourcissement apparent de la jambe : consulte rapidement."
+        },
+        {
+            name:"Bras",
+            icon:"💪",
+            search:"bras biceps triceps douleur bras",
+            summary:"Pour une tension musculaire légère, bouger doucement le coude et l’épaule aide à conserver la mobilité.",
+            move:"Plie puis tends lentement le coude 8 à 10 fois, sans charge et sans douleur vive.",
+            relax:"Masse doucement le muscle douloureux avec la main opposée pendant 30 secondes.",
+            avoid:"Évite les charges lourdes ou les étirements intenses sur une zone récemment douloureuse.",
+            alert:"Gonflement important, déformation, faiblesse brutale ou douleur après traumatisme nécessitent un avis."
+        },
+        {
+            name:"Coudes",
+            icon:"💪",
+            search:"coude coudes tennis elbow épicondyle epicondyle",
+            summary:"Les douleurs de coude liées à l’effort bénéficient souvent d’une réduction temporaire des gestes répétitifs.",
+            move:"Coude près du corps, plie et tends doucement l’avant-bras 8 fois.",
+            relax:"Masse légèrement les muscles de l’avant-bras plutôt que directement une zone osseuse très sensible.",
+            avoid:"Évite de répéter le mouvement qui déclenche nettement la douleur.",
+            alert:"Consulte après traumatisme important, déformation, blocage ou perte de force marquée."
+        },
+        {
+            name:"Poignets",
+            icon:"🤲",
+            search:"poignet poignets canal carpien",
+            summary:"Le poignet apprécie les mouvements doux dans toutes les directions qui restent confortables.",
+            move:"Dessine lentement de petits cercles avec la main, 5 dans chaque sens.",
+            relax:"Secoue très doucement les mains quelques secondes puis relâche les avant-bras.",
+            avoid:"Évite les appuis prolongés sur la main si cela augmente la douleur ou les fourmillements.",
+            alert:"Fourmillements persistants, perte de force, gonflement ou douleur après chute doivent être évalués."
+        },
+        {
+            name:"Mains / doigts",
+            icon:"✋",
+            search:"mains doigts main doigt raideur",
+            summary:"Les petites articulations aiment les mouvements fréquents et non forcés.",
+            move:"Ouvre la main puis referme-la doucement sans serrer, 10 fois. Ensuite touche successivement chaque doigt avec le pouce.",
+            relax:"Masse la paume puis chaque doigt de la base vers l’extrémité.",
+            avoid:"Ne force pas une articulation gonflée ou très douloureuse.",
+            alert:"Déformation, plaie importante, doigt bloqué après traumatisme ou perte de sensibilité nécessitent un avis."
+        },
+        {
+            name:"Cuisses",
+            icon:"🦵",
+            search:"cuisse cuisses quadriceps ischio jambiers",
+            summary:"Après un effort, une récupération active très légère peut être plus confortable qu’un étirement intense.",
+            move:"Marche lentement 2 à 5 minutes ou effectue quelques flexions très partielles de genou en appui.",
+            relax:"Masse la cuisse avec les deux mains dans le sens du muscle, sans pression forte.",
+            avoid:"Pas d’étirement intense juste après une douleur aiguë ou une sensation de déchirure.",
+            alert:"Douleur brutale avec claquement, gros hématome ou impossibilité d’appui : fais évaluer la blessure."
+        },
+        {
+            name:"Genoux",
+            icon:"🦿",
+            search:"genou genoux rotule",
+            summary:"La mobilité douce du genou peut aider à limiter l’enraidissement lorsqu’il n’y a pas de traumatisme important.",
+            move:"Assis, tends doucement la jambe puis redescends, 8 fois de chaque côté.",
+            relax:"Masse les muscles au-dessus et autour du genou sans appuyer fortement sur une zone gonflée.",
+            avoid:"Évite les flexions profondes ou les pivots si ceux-ci déclenchent la douleur.",
+            alert:"Gonflement rapide, genou bloqué, déformation ou impossibilité de prendre appui après traumatisme : consulte."
+        },
+        {
+            name:"Mollets",
+            icon:"🦵",
+            search:"mollet mollets crampe jambes",
+            summary:"Pour une tension musculaire simple, alterner contraction et relâchement peut être confortable.",
+            move:"Assis ou debout avec appui, monte légèrement sur la pointe des pieds puis redescends 6 à 8 fois.",
+            relax:"Masse doucement le mollet avec la paume, sans pression profonde.",
+            avoid:"Ne masse pas fortement un mollet soudainement gonflé, chaud ou rouge.",
+            alert:"Un seul mollet gonflé, chaud, rouge et douloureux sans cause claire nécessite une évaluation médicale rapide."
+        },
+        {
+            name:"Chevilles",
+            icon:"🦶",
+            search:"cheville chevilles entorse",
+            summary:"Après une gêne légère sans traumatisme important, de petits mouvements peuvent entretenir la mobilité.",
+            move:"Dessine doucement l’alphabet avec le pied ou fais 5 petits cercles dans chaque sens.",
+            relax:"Pose le pied et relâche volontairement les orteils et la plante du pied.",
+            avoid:"Évite de forcer l’appui si la cheville est gonflée et douloureuse après une torsion.",
+            alert:"Déformation, douleur osseuse importante ou impossibilité de faire quelques pas après traumatisme : fais vérifier la cheville."
+        },
+        {
+            name:"Pieds",
+            icon:"🦶",
+            search:"pied pieds plante voûte voute plantaire talon",
+            summary:"La plante du pied peut se détendre avec des mouvements doux et une pression modérée.",
+            move:"Assis, recroqueville légèrement les orteils puis relâche-les 8 à 10 fois.",
+            relax:"Fais rouler très doucement une balle souple sous le pied pendant 30 à 60 secondes.",
+            avoid:"N’insiste pas sur une zone très inflammatoire ou douloureuse après un choc.",
+            alert:"Plaie, rougeur qui s’étend, gonflement important ou impossibilité d’appui nécessitent un avis."
+        },
+        {
+            name:"Thorax / côtes",
+            icon:"🫁",
+            search:"thorax côtes cotes poitrine intercostal respiration",
+            summary:"Pour une tension légère de la cage thoracique, la respiration lente peut favoriser le relâchement.",
+            move:"Assis, pose les mains sur les côtes et inspire lentement en sentant la cage thoracique s’ouvrir, puis expire sans forcer. 5 respirations.",
+            relax:"Relâche les épaules à chaque expiration et évite de chercher une grande inspiration douloureuse.",
+            avoid:"Aucune manipulation forcée des côtes ou du thorax.",
+            alert:"Toute douleur thoracique inhabituelle, oppression, essoufflement, malaise ou irradiation vers bras/mâchoire nécessite une évaluation médicale urgente."
+        }
+    ];
+
+    const zonesEl = document.getElementById("osteoZones");
+    const searchEl = document.getElementById("osteoSearch");
+    const noResultEl = document.getElementById("osteoNoResult");
+    const modal = document.getElementById("osteoModal");
+    const closeButton = document.getElementById("osteoClose");
+    const modalTitle = document.getElementById("osteoModalTitle");
+    const modalIcon = document.getElementById("osteoModalIcon");
+    const modalContent = document.getElementById("osteoModalContent");
+
+    function renderZones(query = "") {
+        const normalized = query.trim().toLowerCase();
+
+        const filtered = osteoData.filter(item =>
+            !normalized ||
+            item.name.toLowerCase().includes(normalized) ||
+            item.search.toLowerCase().includes(normalized)
+        );
+
+        zonesEl.innerHTML = "";
+
+        filtered.forEach(item => {
+            const button = document.createElement("button");
+            button.type = "button";
+            button.className = "osteo-zone";
+            button.innerHTML = `
+                <span class="osteo-zone-icon">${item.icon}</span>
+                <span>${item.name}</span>
+            `;
+            button.addEventListener("click", () => openAdvice(item));
+            zonesEl.appendChild(button);
+        });
+
+        noResultEl.style.display = filtered.length ? "none" : "block";
+    }
+
+    function openAdvice(item) {
+        modalTitle.textContent = item.name;
+        modalIcon.textContent = item.icon;
+
+        modalContent.innerHTML = `
+            <p class="osteo-summary">${item.summary}</p>
+
+            <div class="osteo-advice-grid">
+
+                <div class="osteo-box">
+                    <h3>🧘 Mobilité douce</h3>
+                    <p>${item.move}</p>
+                </div>
+
+                <div class="osteo-box">
+                    <h3>👐 Relâchement / auto-massage</h3>
+                    <p>${item.relax}</p>
+                </div>
+
+                <div class="osteo-box avoid">
+                    <h3>⛔ À éviter</h3>
+                    <p>${item.avoid}</p>
+                </div>
+
+                <div class="osteo-box alert">
+                    <h3>⚠️ Quand demander un avis</h3>
+                    <p>${item.alert}</p>
+                </div>
+
+            </div>
+
+            <p class="osteo-disclaimer">
+                Ces gestes sont des conseils de confort et de mobilité douce.
+                Ils ne constituent ni un diagnostic ni une manipulation ostéopathique.
+                Une manipulation articulaire ou vertébrale doit être réalisée par un
+                professionnel qualifié après évaluation.
+            </p>
+        `;
+
+        modal.classList.add("open");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeAdvice() {
+        modal.classList.remove("open");
+        document.body.style.overflow = "";
+    }
+
+    searchEl.addEventListener("input", event => {
+        renderZones(event.target.value);
+    });
+
+    closeButton.addEventListener("click", closeAdvice);
+
+    modal.addEventListener("click", event => {
+        if (event.target === modal) closeAdvice();
+    });
+
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape" && modal.classList.contains("open")) {
+            closeAdvice();
+        }
+    });
+
+    renderZones();
+});
+</script>
+{% endblock %}

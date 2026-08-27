@@ -1,0 +1,606 @@
+{% extends "accueil/base.html" %}
+
+{% block logo_return %}{% url 'suivi_personnalise' %}{% endblock %}
+{% load static %}
+
+{% block title %}Échelle numérique de la douleur | Santé Prévention Terrain{% endblock %}
+{% block page_title %}Échelle numérique de la douleur{% endblock %}
+{% block header_actions %}{% endblock %}
+
+{% block extra_css %}
+<style>
+.spt-shell-content {
+    background: #fff;
+}
+
+.en-page {
+    width: min(1080px, calc(100% - 28px));
+    margin: 10px auto 60px;
+    color: var(--spt-texte);
+    font-family: var(--font-family-body);
+    font-size: 1rem;
+    line-height: 1.68;
+}
+
+.en-page * {
+    box-sizing: border-box;
+}
+
+.en-back {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 0 18px;
+    padding: 4px 0;
+    color: var(--spt-vert-fonce);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.en-back:hover,
+.en-back:focus-visible {
+    color: var(--spt-vert);
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}
+
+.en-intro {
+    max-width: 900px;
+    padding: 28px 4px 30px;
+    border-top: 1px solid rgba(33, 76, 53, .16);
+    border-bottom: 1px solid rgba(33, 76, 53, .16);
+}
+
+.en-intro h1 {
+    margin: 0 0 12px;
+    color: var(--spt-vert-fonce);
+    font-family: var(--font-family-title);
+    font-size: clamp(1.55rem, 2.6vw, 2rem);
+    line-height: 1.25;
+    text-wrap: balance;
+}
+
+.en-intro p {
+    max-width: 820px;
+    margin: 0;
+    color: #30363a;
+}
+
+.en-notice {
+    max-width: 820px;
+    margin-top: 22px;
+    padding: 13px 15px;
+    border-left: 3px solid var(--spt-vert);
+    border-radius: 0 8px 8px 0;
+    background: rgba(239, 227, 195, .50);
+    line-height: 1.55;
+}
+
+.en-notice strong {
+    color: var(--spt-vert-fonce);
+}
+
+.en-tool-section {
+    max-width: 900px;
+    padding: 32px 4px 0;
+}
+
+.en-tool-section h2,
+.en-info h2 {
+    margin: 0 0 8px;
+    color: var(--spt-vert-fonce);
+    font-family: var(--font-family-title);
+    font-size: clamp(1.3rem, 2vw, 1.6rem);
+    line-height: 1.3;
+}
+
+.en-tool-section > p,
+.en-info p,
+.en-info li {
+    color: #4f5a61;
+}
+
+.en-card {
+    margin-top: 20px;
+    padding: clamp(22px, 4vw, 34px);
+    border: 2px solid var(--spt-vert);
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(33, 76, 53, .10);
+}
+
+.en-question {
+    margin: 0 0 22px;
+    color: var(--spt-vert-fonce);
+    font-family: var(--font-family-title);
+    font-size: clamp(1.2rem, 2vw, 1.45rem);
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.en-endpoints {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 12px;
+    color: #667078;
+    font-size: .88rem;
+    font-weight: 700;
+}
+
+.en-endpoints span:last-child {
+    text-align: right;
+}
+
+.en-scale {
+    display: grid;
+    grid-template-columns: repeat(11, minmax(0, 1fr));
+    gap: 6px;
+}
+
+.en-number {
+    min-width: 0;
+    min-height: 48px;
+    padding: 8px 4px;
+    border: 1px solid rgba(33, 76, 53, .24);
+    border-radius: 9px;
+    background: #fff;
+    color: var(--spt-vert-fonce);
+    font: 800 1rem/1 var(--font-family-body);
+    cursor: pointer;
+    transition:
+        background .18s ease,
+        color .18s ease,
+        border-color .18s ease,
+        transform .18s ease;
+}
+
+.en-number:hover,
+.en-number:focus-visible {
+    border-color: var(--spt-vert);
+    background: rgba(239, 227, 195, .28);
+    transform: translateY(-1px);
+}
+
+.en-number.is-selected {
+    border-color: var(--spt-vert-fonce);
+    background: var(--spt-vert-fonce);
+    color: #fff;
+}
+
+.en-selected {
+    margin-top: 18px;
+    text-align: center;
+}
+
+.en-selected-label {
+    display: block;
+    color: #667078;
+    font-size: .82rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+.en-selected-value {
+    display: block;
+    margin-top: 4px;
+    color: var(--spt-vert-fonce);
+    font-family: var(--font-family-title);
+    font-size: clamp(1.7rem, 4vw, 2.5rem);
+    line-height: 1.15;
+}
+
+.en-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.en-button {
+    min-height: 44px;
+    padding: 9px 16px;
+    border: 1px solid var(--spt-vert-fonce);
+    border-radius: 8px;
+    background: var(--spt-vert-fonce);
+    color: #fff;
+    font: 600 .95rem/1.3 var(--font-family-body);
+    cursor: pointer;
+    transition: transform .2s ease, background .2s ease;
+}
+
+.en-button:hover,
+.en-button:focus-visible {
+    transform: translateY(-1px);
+    background: var(--spt-vert);
+}
+
+.en-button.secondary {
+    background: #fff;
+    color: var(--spt-vert-fonce);
+}
+
+.en-button.secondary:hover,
+.en-button.secondary:focus-visible {
+    background: rgba(239, 227, 195, .38);
+}
+
+.en-error {
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-left: 4px solid #b7564b;
+    border-radius: 0 8px 8px 0;
+    background: #fff4f1;
+    color: #7d3d36;
+}
+
+.en-error[hidden],
+.en-result[hidden] {
+    display: none;
+}
+
+.en-result {
+    margin-top: 22px;
+    padding: 18px;
+    border-radius: 12px;
+    background: rgba(223, 234, 219, .65);
+}
+
+.en-result-label {
+    display: block;
+    margin-bottom: 4px;
+    color: #667078;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.en-result-value {
+    display: block;
+    color: var(--spt-vert-fonce);
+    font-family: var(--font-family-title);
+    font-size: clamp(1.55rem, 3vw, 2.1rem);
+    line-height: 1.2;
+}
+
+.en-result-note {
+    margin: 8px 0 0;
+    color: #4f5a61;
+    font-size: .92rem;
+}
+
+.en-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    max-width: 900px;
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(33, 76, 53, .16);
+}
+
+.en-info {
+    padding: 20px;
+    border: 1px solid rgba(33, 76, 53, .16);
+    border-radius: 12px;
+    background: #fff;
+}
+
+.en-info p {
+    margin: 0;
+}
+
+.en-info ul {
+    margin: 10px 0 0;
+    padding-left: 20px;
+}
+
+.en-info li + li {
+    margin-top: 7px;
+}
+
+.en-alert {
+    grid-column: 1 / -1;
+    border-left: 4px solid #b7564b;
+    background: #fffaf8;
+}
+
+.en-alert h2 {
+    color: #7d3d36;
+}
+
+@media (max-width: 760px) {
+    .en-page {
+        width: calc(100% - 20px);
+        margin-top: 8px;
+        margin-bottom: 44px;
+    }
+
+    .en-intro {
+        padding: 24px 2px 26px;
+    }
+
+    .en-tool-section {
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+
+    .en-card {
+        padding: 20px 15px;
+    }
+
+    .en-scale {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    .en-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .en-alert {
+        grid-column: auto;
+    }
+
+    .en-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .en-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 430px) {
+    .en-scale {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .en-number,
+    .en-button {
+        transition: none;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="en-page">
+
+    <a class="en-back" href="{% url 'suivi_personnalise' %}">
+        ← Retour aux scores et échelles
+    </a>
+
+    <section class="en-intro">
+        <h1>Échelle numérique de la douleur</h1>
+
+        <p>
+            L’échelle numérique permet d’exprimer l’intensité d’une douleur
+            par un nombre compris entre 0 et 10.
+        </p>
+
+        <div class="en-notice">
+            <strong>À savoir :</strong>
+            0 correspond à l’absence de douleur et 10 à la douleur maximale imaginable.
+            Ce chiffre décrit ton ressenti à un moment donné : il ne permet pas,
+            à lui seul, d’identifier la cause de la douleur.
+        </div>
+    </section>
+
+    <section class="en-tool-section" aria-labelledby="en-tool-title">
+        <h2 id="en-tool-title">Évalue ta douleur maintenant</h2>
+
+        <p>
+            Choisis le chiffre qui correspond le mieux à l’intensité de la douleur ressentie.
+        </p>
+
+        <div class="en-card">
+
+            <p class="en-question">
+                Sur une échelle de 0 à 10, quelle est l’intensité de ta douleur ?
+            </p>
+
+            <div class="en-endpoints" aria-hidden="true">
+                <span>0 — Pas de douleur</span>
+                <span>10 — Douleur maximale imaginable</span>
+            </div>
+
+            <div
+                class="en-scale"
+                id="enScale"
+                role="radiogroup"
+                aria-label="Intensité de la douleur de 0 à 10"
+            >
+                <button class="en-number" type="button" data-value="0" role="radio" aria-checked="false">0</button>
+                <button class="en-number" type="button" data-value="1" role="radio" aria-checked="false">1</button>
+                <button class="en-number" type="button" data-value="2" role="radio" aria-checked="false">2</button>
+                <button class="en-number" type="button" data-value="3" role="radio" aria-checked="false">3</button>
+                <button class="en-number" type="button" data-value="4" role="radio" aria-checked="false">4</button>
+                <button class="en-number" type="button" data-value="5" role="radio" aria-checked="false">5</button>
+                <button class="en-number" type="button" data-value="6" role="radio" aria-checked="false">6</button>
+                <button class="en-number" type="button" data-value="7" role="radio" aria-checked="false">7</button>
+                <button class="en-number" type="button" data-value="8" role="radio" aria-checked="false">8</button>
+                <button class="en-number" type="button" data-value="9" role="radio" aria-checked="false">9</button>
+                <button class="en-number" type="button" data-value="10" role="radio" aria-checked="false">10</button>
+            </div>
+
+            <div class="en-selected">
+                <span class="en-selected-label">Valeur sélectionnée</span>
+                <strong class="en-selected-value" id="enSelectedValue">— / 10</strong>
+            </div>
+
+            <div class="en-actions">
+                <button class="en-button" id="enShow" type="button">
+                    Afficher le résultat
+                </button>
+
+                <button class="en-button secondary" id="enReset" type="button">
+                    Recommencer
+                </button>
+            </div>
+
+            <div class="en-error" id="enError" hidden aria-live="polite"></div>
+
+            <div class="en-result" id="enResult" hidden aria-live="polite">
+                <span class="en-result-label">Résultat</span>
+
+                <strong class="en-result-value" id="enResultValue">
+                    — / 10
+                </strong>
+
+                <p class="en-result-note" id="enResultNote"></p>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="en-info-grid">
+
+        <section class="en-info">
+            <h2>Comment utiliser ce chiffre ?</h2>
+            <p>
+                L’intérêt principal est de suivre ton propre ressenti dans le temps.
+                Par exemple, tu peux comparer la douleur au repos et au mouvement,
+                ou avant et après une mesure de soulagement.
+            </p>
+        </section>
+
+        <section class="en-info">
+            <h2>Pour un suivi cohérent</h2>
+            <ul>
+                <li>utilise toujours la même échelle de 0 à 10 ;</li>
+                <li>note le moment et le contexte de la mesure ;</li>
+                <li>compare surtout tes propres résultats successifs ;</li>
+                <li>un même chiffre peut correspondre à des situations très différentes selon les personnes.</li>
+            </ul>
+        </section>
+
+        <section class="en-info en-alert">
+            <h2>Le chiffre ne remplace pas les signes d’alerte</h2>
+            <p>
+                Une douleur brutale ou inhabituelle, après un traumatisme important,
+                associée à une difficulté à respirer, un malaise, une faiblesse brutale,
+                une confusion, une douleur thoracique ou d’autres symptômes inquiétants
+                nécessite une évaluation médicale adaptée, quel que soit le chiffre choisi.
+            </p>
+        </section>
+
+    </div>
+
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const buttons = Array.from(document.querySelectorAll(".en-number"));
+    const selectedValue = document.getElementById("enSelectedValue");
+
+    const showButton = document.getElementById("enShow");
+    const resetButton = document.getElementById("enReset");
+
+    const errorBox = document.getElementById("enError");
+    const resultBox = document.getElementById("enResult");
+    const resultValue = document.getElementById("enResultValue");
+    const resultNote = document.getElementById("enResultNote");
+
+    let value = null;
+
+    function selectValue(newValue) {
+        value = Number(newValue);
+
+        buttons.forEach(button => {
+            const isSelected = Number(button.dataset.value) === value;
+
+            button.classList.toggle("is-selected", isSelected);
+            button.setAttribute("aria-checked", isSelected ? "true" : "false");
+        });
+
+        selectedValue.textContent = `${value} / 10`;
+
+        errorBox.hidden = true;
+        resultBox.hidden = true;
+    }
+
+    function resultText(currentValue) {
+        if (currentValue === 0) {
+            return "Aucune douleur n’est signalée au moment de cette mesure.";
+        }
+
+        if (currentValue <= 3) {
+            return "La douleur est présente mais reste dans la partie basse de l’échelle. L’évolution dans le temps reste importante à suivre.";
+        }
+
+        if (currentValue <= 6) {
+            return "La douleur se situe dans la partie intermédiaire de l’échelle. Son retentissement et son évolution doivent être pris en compte.";
+        }
+
+        return "La douleur se situe dans la partie haute de l’échelle. Le contexte, le retentissement et les éventuels signes associés sont particulièrement importants.";
+    }
+
+    function showResult() {
+        if (value === null) {
+            errorBox.textContent =
+                "Choisis d’abord une valeur entre 0 et 10.";
+            errorBox.hidden = false;
+            resultBox.hidden = true;
+            return;
+        }
+
+        resultValue.textContent = `${value} / 10`;
+        resultNote.textContent = resultText(value);
+
+        errorBox.hidden = true;
+        resultBox.hidden = false;
+    }
+
+    function resetScale() {
+        value = null;
+
+        buttons.forEach(button => {
+            button.classList.remove("is-selected");
+            button.setAttribute("aria-checked", "false");
+        });
+
+        selectedValue.textContent = "— / 10";
+        errorBox.hidden = true;
+        resultBox.hidden = true;
+
+        if (buttons.length) {
+            buttons[0].focus();
+        }
+    }
+
+    buttons.forEach(button => {
+        button.addEventListener("click", () => {
+            selectValue(button.dataset.value);
+        });
+
+        button.addEventListener("keydown", event => {
+            const currentIndex = buttons.indexOf(button);
+            let nextIndex = null;
+
+            if (event.key === "ArrowRight" || event.key === "ArrowUp") {
+                nextIndex = Math.min(buttons.length - 1, currentIndex + 1);
+            }
+
+            if (event.key === "ArrowLeft" || event.key === "ArrowDown") {
+                nextIndex = Math.max(0, currentIndex - 1);
+            }
+
+            if (nextIndex !== null) {
+                event.preventDefault();
+                buttons[nextIndex].focus();
+                selectValue(buttons[nextIndex].dataset.value);
+            }
+        });
+    });
+
+    showButton.addEventListener("click", showResult);
+    resetButton.addEventListener("click", resetScale);
+});
+</script>
+{% endblock %}

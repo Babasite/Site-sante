@@ -1,0 +1,803 @@
+{% extends "accueil/base.html" %}
+
+{% block logo_return %}{% url 'suivi_personnalise' %}{% endblock %}
+{% load static %}
+
+{% block title %}Échelle ADL de Katz | Santé Prévention Terrain{% endblock %}
+{% block page_title %}Échelle ADL de Katz{% endblock %}
+{% block header_actions %}{% endblock %}
+
+{% block extra_css %}
+<style>
+.spt-shell-content {
+    background: #fff;
+}
+
+.katz-page {
+    width: min(1080px, calc(100% - 28px));
+    margin: 10px auto 60px;
+    color: var(--spt-texte);
+    font-family: var(--font-family-body);
+    font-size: 1rem;
+    line-height: 1.68;
+}
+
+.katz-page * {
+    box-sizing: border-box;
+}
+
+.katz-back {
+    display: inline-flex;
+    align-items: center;
+    margin: 0 0 18px;
+    padding: 4px 0;
+    color: var(--spt-vert-fonce);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.katz-back:hover,
+.katz-back:focus-visible {
+    color: var(--spt-vert);
+    text-decoration: underline;
+    text-underline-offset: 5px;
+}
+
+.katz-intro {
+    max-width: 920px;
+    padding: 28px 4px 30px;
+    border-top: 1px solid rgba(33, 76, 53, .16);
+    border-bottom: 1px solid rgba(33, 76, 53, .16);
+}
+
+.katz-intro h1 {
+    margin: 0 0 12px;
+    color: var(--spt-vert-fonce);
+    font-family: var(--font-family-title);
+    font-size: clamp(1.55rem, 2.6vw, 2rem);
+    line-height: 1.25;
+    text-wrap: balance;
+}
+
+.katz-intro p {
+    max-width: 840px;
+    margin: 0;
+    color: #30363a;
+}
+
+.katz-notice {
+    max-width: 840px;
+    margin-top: 22px;
+    padding: 13px 15px;
+    border-left: 3px solid var(--spt-vert);
+    border-radius: 0 8px 8px 0;
+    background: rgba(239, 227, 195, .50);
+    line-height: 1.55;
+}
+
+.katz-notice strong {
+    color: var(--spt-vert-fonce);
+}
+
+.katz-tool-section {
+    max-width: 940px;
+    padding: 32px 4px 0;
+}
+
+.katz-tool-section > h2,
+.katz-info h2 {
+    margin: 0 0 8px;
+    color: var(--spt-vert-fonce);
+    font-family: var(--font-family-title);
+    font-size: clamp(1.3rem, 2vw, 1.6rem);
+    line-height: 1.3;
+}
+
+.katz-tool-section > p,
+.katz-info p,
+.katz-info li {
+    color: #4f5a61;
+}
+
+.katz-card {
+    margin-top: 20px;
+    padding: clamp(20px, 4vw, 32px);
+    border: 2px solid var(--spt-vert);
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(33, 76, 53, .10);
+}
+
+.katz-domain + .katz-domain {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(33, 76, 53, .16);
+}
+
+.katz-domain h3 {
+    margin: 0 0 5px;
+    color: var(--spt-vert-fonce);
+    font-family: var(--font-family-title);
+    font-size: 1.13rem;
+    line-height: 1.35;
+}
+
+.katz-domain > p {
+    margin: 0 0 11px;
+    color: #667078;
+    font-size: .9rem;
+    line-height: 1.5;
+}
+
+.katz-options {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 9px;
+}
+
+.katz-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    min-height: 58px;
+    padding: 11px 12px;
+    border: 1px solid rgba(33, 76, 53, .16);
+    border-radius: 10px;
+    background: #fff;
+    cursor: pointer;
+    transition: border-color .18s ease, background .18s ease;
+}
+
+.katz-option:hover {
+    background: rgba(239, 227, 195, .18);
+}
+
+.katz-option:has(input:checked) {
+    border-color: var(--spt-vert);
+    background: rgba(223, 234, 219, .46);
+}
+
+.katz-option input {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+    margin-top: 2px;
+    accent-color: var(--spt-vert);
+}
+
+.katz-option-text {
+    min-width: 0;
+}
+
+.katz-option-title {
+    display: block;
+    color: #30363a;
+    font-weight: 750;
+    line-height: 1.35;
+}
+
+.katz-option-note {
+    display: block;
+    margin-top: 3px;
+    color: #667078;
+    font-size: .8rem;
+    line-height: 1.4;
+}
+
+.katz-points {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    margin-left: auto;
+    padding: 3px 7px;
+    border-radius: 999px;
+    background: rgba(239, 227, 195, .58);
+    color: var(--spt-vert-fonce);
+    font-size: .76rem;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.katz-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 26px;
+}
+
+.katz-button {
+    min-height: 44px;
+    padding: 9px 16px;
+    border: 1px solid var(--spt-vert-fonce);
+    border-radius: 8px;
+    background: var(--spt-vert-fonce);
+    color: #fff;
+    font: 600 .95rem/1.3 var(--font-family-body);
+    cursor: pointer;
+    transition: transform .2s ease, background .2s ease;
+}
+
+.katz-button:hover,
+.katz-button:focus-visible {
+    transform: translateY(-1px);
+    background: var(--spt-vert);
+}
+
+.katz-button.secondary {
+    background: #fff;
+    color: var(--spt-vert-fonce);
+}
+
+.katz-button.secondary:hover,
+.katz-button.secondary:focus-visible {
+    background: rgba(239, 227, 195, .38);
+}
+
+.katz-error {
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-left: 4px solid #b7564b;
+    border-radius: 0 8px 8px 0;
+    background: #fff4f1;
+    color: #7d3d36;
+}
+
+.katz-error[hidden],
+.katz-result[hidden] {
+    display: none;
+}
+
+.katz-result {
+    margin-top: 22px;
+    padding: 18px;
+    border-radius: 12px;
+    background: rgba(223, 234, 219, .65);
+}
+
+.katz-result-label {
+    display: block;
+    margin-bottom: 4px;
+    color: #667078;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+}
+
+.katz-result-value {
+    display: block;
+    color: var(--spt-vert-fonce);
+    font-family: var(--font-family-title);
+    font-size: clamp(1.55rem, 3vw, 2.1rem);
+    line-height: 1.2;
+}
+
+.katz-result-note {
+    margin: 8px 0 0;
+    color: #4f5a61;
+    font-size: .92rem;
+}
+
+.katz-breakdown {
+    margin: 12px 0 0;
+    padding-left: 20px;
+    color: #4f5a61;
+    font-size: .9rem;
+}
+
+.katz-breakdown li + li {
+    margin-top: 5px;
+}
+
+.katz-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    max-width: 940px;
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(33, 76, 53, .16);
+}
+
+.katz-info {
+    padding: 20px;
+    border: 1px solid rgba(33, 76, 53, .16);
+    border-radius: 12px;
+    background: #fff;
+}
+
+.katz-info p {
+    margin: 0;
+}
+
+.katz-info ul {
+    margin: 10px 0 0;
+    padding-left: 20px;
+}
+
+.katz-info li + li {
+    margin-top: 7px;
+}
+
+.katz-alert {
+    grid-column: 1 / -1;
+    border-left: 4px solid #b7564b;
+    background: #fffaf8;
+}
+
+.katz-alert h2 {
+    color: #7d3d36;
+}
+
+@media (max-width: 760px) {
+    .katz-page {
+        width: calc(100% - 20px);
+        margin-top: 8px;
+        margin-bottom: 44px;
+    }
+
+    .katz-intro {
+        padding: 24px 2px 26px;
+    }
+
+    .katz-tool-section {
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+
+    .katz-card {
+        padding: 20px 15px;
+    }
+
+    .katz-options,
+    .katz-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .katz-alert {
+        grid-column: auto;
+    }
+
+    .katz-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .katz-button {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .katz-option,
+    .katz-button {
+        transition: none;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<main class="katz-page">
+
+    <a class="katz-back" href="{% url 'suivi_personnalise' %}">
+        ← Retour aux scores et échelles
+    </a>
+
+    <section class="katz-intro">
+        <h1>Échelle ADL de Katz</h1>
+
+        <p>
+            L’échelle de Katz évalue l’autonomie dans six activités essentielles
+            de la vie quotidienne : toilette, habillage, utilisation des toilettes,
+            transferts, continence et alimentation.
+        </p>
+
+        <div class="katz-notice">
+            <strong>À savoir :</strong>
+            cette page utilise une cotation simple de 0 à 6 :
+            1 point pour chaque activité réalisée de manière indépendante.
+            Un item peut être laissé « non évalué » lorsqu’une cotation fiable
+            n’est pas possible.
+        </div>
+    </section>
+
+    <section class="katz-tool-section" aria-labelledby="katz-tool-title">
+        <h2 id="katz-tool-title">Évaluation de l’autonomie</h2>
+
+        <p>
+            Pour chaque activité, sélectionne l’option qui correspond le mieux
+            au fonctionnement habituel de la personne.
+        </p>
+
+        <div class="katz-card">
+
+            <section class="katz-domain">
+                <h3>1. Toilette / bain</h3>
+                <p>Capacité à se laver et assurer son hygiène corporelle.</p>
+
+                <div class="katz-options">
+                    <label class="katz-option">
+                        <input type="radio" name="katzBathing" value="1" data-label="Toilette / bain">
+                        <span class="katz-option-text">
+                            <span class="katz-option-title">Indépendant</span>
+                            <span class="katz-option-note">Se lave seul, avec au plus une aide limitée pour une petite partie du corps.</span>
+                        </span>
+                        <span class="katz-points">1</span>
+                    </label>
+
+                    <label class="katz-option">
+                        <input type="radio" name="katzBathing" value="0" data-label="Toilette / bain">
+                        <span class="katz-option-text">
+                            <span class="katz-option-title">Dépendant</span>
+                            <span class="katz-option-note">A besoin d’une aide importante pour se laver.</span>
+                        </span>
+                        <span class="katz-points">0</span>
+                    </label>
+
+                    <label class="katz-option">
+                        <input type="radio" name="katzBathing" value="NT" data-label="Toilette / bain">
+                        <span class="katz-option-text">
+                            <span class="katz-option-title">Non évalué</span>
+                            <span class="katz-option-note">Impossible à évaluer de façon fiable.</span>
+                        </span>
+                        <span class="katz-points">NT</span>
+                    </label>
+                </div>
+            </section>
+
+            <section class="katz-domain">
+                <h3>2. Habillage</h3>
+                <p>Capacité à choisir ses vêtements, s’habiller et se déshabiller.</p>
+
+                <div class="katz-options">
+                    <label class="katz-option">
+                        <input type="radio" name="katzDressing" value="1" data-label="Habillage">
+                        <span class="katz-option-text">
+                            <span class="katz-option-title">Indépendant</span>
+                            <span class="katz-option-note">S’habille seul, avec éventuellement une aide minime.</span>
+                        </span>
+                        <span class="katz-points">1</span>
+                    </label>
+
+                    <label class="katz-option">
+                        <input type="radio" name="katzDressing" value="0" data-label="Habillage">
+                        <span class="katz-option-text">
+                            <span class="katz-option-title">Dépendant</span>
+                            <span class="katz-option-note">A besoin d’aide pour s’habiller.</span>
+                        </span>
+                        <span class="katz-points">0</span>
+                    </label>
+
+                    <label class="katz-option">
+                        <input type="radio" name="katzDressing" value="NT" data-label="Habillage">
+                        <span class="katz-option-text">
+                            <span class="katz-option-title">Non évalué</span>
+                            <span class="katz-option-note">Impossible à évaluer de façon fiable.</span>
+                        </span>
+                        <span class="katz-points">NT</span>
+                    </label>
+                </div>
+            </section>
+
+            <section class="katz-domain">
+                <h3>3. Utilisation des toilettes</h3>
+                <p>Capacité à aller aux toilettes, s’installer et assurer son hygiène.</p>
+
+                <div class="katz-options">
+                    <label class="katz-option">
+                        <input type="radio" name="katzToileting" value="1" data-label="Toilettes">
+                        <span class="katz-option-text">
+                            <span class="katz-option-title">Indépendant</span>
+                            <span class="katz-option-note">Utilise les toilettes seul et assure son hygiène.</span>
+                        </span>
+                        <span class="katz-points">1</span>
+                    </label>
+
+                    <label class="katz-option">
+                        <input type="radio" name="katzToileting" value="0" data-label="Toilettes">
+                        <span class="katz-option-text">
+                            <span class="katz-option-title">Dépendant</span>
+                            <span class="katz-option-note">A besoin d’une aide importante pour cette activité.</span>
+                        </span>
+                        <span class="katz-points">0</span>
+                    </label>
+
+                    <label class="katz-option">
+                        <input type="radio" name="katzToileting" value="NT" data-label="Toilettes">
+                        <span class="katz-option-text">
+                            <span class="katz-option-title">Non évalué</span>
+                            <span class="katz-option-note">Impossible à évaluer de façon fiable.</span>
+                        </span>
+                        <span class="katz-points">NT</span>
+                    </label>
+                </div>
+            </section>
+
+            <section class="katz-domain">
+                <h3>4. Transferts</h3>
+                <p>Capacité à passer du lit au fauteuil et à se relever.</p>
+
+                <div class="katz-options">
+                    <label class="katz-option">
+                        <input type="radio" name="katzTransfer" value="1" data-label="Transferts">
+                        <span class="katz-option-text">
+                            <span class="katz-option-title">Indépendant</span>
+                            <span class="katz-option-note">Se transfère seul, avec ou sans aide technique.</span>
+                        </span>
+                        <span class="katz-points">1</span>
+                    </label>
+
+                    <label class="katz-option">
+                        <input type="radio" name="katzTransfer" value="0" data-label="Transferts">
+                        <span class="katz-option-text">
+                            <span class="katz-option-title">Dépendant</span>
+                            <span class="katz-option-note">A besoin de l’aide d’une autre personne pour les transferts.</span>
+                        </span>
+                        <span class="katz-points">0</span>
+                    </label>
+
+                    <label class="katz-option">
+                        <input type="radio" name="katzTransfer" value="NT" data-label="Transferts">
+                        <span class="katz-option-text">
+                            <span class="katz-option-title">Non évalué</span>
+                            <span class="katz-option-note">Impossible à évaluer de façon fiable.</span>
+                        </span>
+                        <span class="katz-points">NT</span>
+                    </label>
+                </div>
+            </section>
+
+            <section class="katz-domain">
+                <h3>5. Continence</h3>
+                <p>Capacité à contrôler les fonctions urinaires et fécales.</p>
+
+                <div class="katz-options">
+                    <label class="katz-option">
+                        <input type="radio" name="katzContinence" value="1" data-label="Continence">
+                        <span class="katz-option-text">
+                            <span class="katz-option-title">Indépendant</span>
+                            <span class="katz-option-note">Contrôle habituellement les fonctions urinaires et fécales.</span>
+                        </span>
+                        <span class="katz-points">1</span>
+                    </label>
+
+                    <label class="katz-option">
+                        <input type="radio" name="katzContinence" value="0" data-label="Continence">
+                        <span class="katz-option-text">
+                            <span class="katz-option-title">Dépendant</span>
+                            <span class="katz-option-note">Présente une incontinence ou nécessite une prise en charge importante.</span>
+                        </span>
+                        <span class="katz-points">0</span>
+                    </label>
+
+                    <label class="katz-option">
+                        <input type="radio" name="katzContinence" value="NT" data-label="Continence">
+                        <span class="katz-option-text">
+                            <span class="katz-option-title">Non évalué</span>
+                            <span class="katz-option-note">Impossible à évaluer de façon fiable.</span>
+                        </span>
+                        <span class="katz-points">NT</span>
+                    </label>
+                </div>
+            </section>
+
+            <section class="katz-domain">
+                <h3>6. Alimentation</h3>
+                <p>Capacité à porter les aliments à la bouche et à manger.</p>
+
+                <div class="katz-options">
+                    <label class="katz-option">
+                        <input type="radio" name="katzFeeding" value="1" data-label="Alimentation">
+                        <span class="katz-option-text">
+                            <span class="katz-option-title">Indépendant</span>
+                            <span class="katz-option-note">Mange seul, avec éventuellement une aide pour préparer ou couper les aliments.</span>
+                        </span>
+                        <span class="katz-points">1</span>
+                    </label>
+
+                    <label class="katz-option">
+                        <input type="radio" name="katzFeeding" value="0" data-label="Alimentation">
+                        <span class="katz-option-text">
+                            <span class="katz-option-title">Dépendant</span>
+                            <span class="katz-option-note">A besoin d’aide pour porter les aliments à la bouche ou s’alimenter.</span>
+                        </span>
+                        <span class="katz-points">0</span>
+                    </label>
+
+                    <label class="katz-option">
+                        <input type="radio" name="katzFeeding" value="NT" data-label="Alimentation">
+                        <span class="katz-option-text">
+                            <span class="katz-option-title">Non évalué</span>
+                            <span class="katz-option-note">Impossible à évaluer de façon fiable.</span>
+                        </span>
+                        <span class="katz-points">NT</span>
+                    </label>
+                </div>
+            </section>
+
+            <div class="katz-actions">
+                <button class="katz-button" id="katzCalculate" type="button">
+                    Calculer le score
+                </button>
+
+                <button class="katz-button secondary" id="katzReset" type="button">
+                    Recommencer
+                </button>
+            </div>
+
+            <div class="katz-error" id="katzError" hidden aria-live="polite"></div>
+
+            <div class="katz-result" id="katzResult" hidden aria-live="polite">
+                <span class="katz-result-label">Résultat Katz ADL</span>
+
+                <strong class="katz-result-value" id="katzResultValue">
+                    — / 6
+                </strong>
+
+                <p class="katz-result-note" id="katzResultNote"></p>
+
+                <ul class="katz-breakdown" id="katzBreakdown"></ul>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="katz-info-grid">
+
+        <section class="katz-info">
+            <h2>Comment lire le résultat ?</h2>
+            <p>
+                Dans cette présentation, chaque activité réalisée de manière indépendante
+                vaut 1 point. Un score de 6 correspond donc à une autonomie préservée
+                pour les six activités évaluées. Un score plus bas traduit une dépendance
+                dans un ou plusieurs domaines.
+            </p>
+        </section>
+
+        <section class="katz-info">
+            <h2>À interpréter dans le contexte</h2>
+            <ul>
+                <li>une aide technique n’implique pas forcément une dépendance ;</li>
+                <li>une situation temporaire peut modifier le score ;</li>
+                <li>l’environnement et les habitudes de vie comptent ;</li>
+                <li>l’évolution dans le temps est souvent plus informative qu’un score isolé.</li>
+            </ul>
+        </section>
+
+        <section class="katz-info katz-alert">
+            <h2>Une perte d’autonomie récente doit être explorée</h2>
+            <p>
+                Une diminution brutale ou inhabituelle des capacités à se laver,
+                s’habiller, se transférer, aller aux toilettes ou s’alimenter peut
+                révéler un problème médical aigu. Une évaluation adaptée est particulièrement
+                importante si elle s’accompagne de confusion, de faiblesse, de chute,
+                de douleur importante ou d’un changement rapide de l’état général.
+            </p>
+        </section>
+
+    </div>
+
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const domains = [
+        "katzBathing",
+        "katzDressing",
+        "katzToileting",
+        "katzTransfer",
+        "katzContinence",
+        "katzFeeding"
+    ];
+
+    const calculateButton = document.getElementById("katzCalculate");
+    const resetButton = document.getElementById("katzReset");
+
+    const errorBox = document.getElementById("katzError");
+    const resultBox = document.getElementById("katzResult");
+    const resultValue = document.getElementById("katzResultValue");
+    const resultNote = document.getElementById("katzResultNote");
+    const breakdown = document.getElementById("katzBreakdown");
+
+    function selected(name) {
+        return document.querySelector(`input[name="${name}"]:checked`);
+    }
+
+    function clearMessages() {
+        errorBox.hidden = true;
+        resultBox.hidden = true;
+    }
+
+    function calculateKatz() {
+        const selections = domains.map(name => selected(name));
+
+        if (selections.some(item => !item)) {
+            errorBox.textContent =
+                "Choisis une réponse pour chacune des 6 activités, y compris « Non évalué » si nécessaire.";
+            errorBox.hidden = false;
+            resultBox.hidden = true;
+            return;
+        }
+
+        let score = 0;
+        let evaluated = 0;
+        let ntCount = 0;
+        const dependentItems = [];
+
+        selections.forEach(input => {
+            if (input.value === "NT") {
+                ntCount += 1;
+                return;
+            }
+
+            evaluated += 1;
+
+            if (input.value === "1") {
+                score += 1;
+            } else {
+                dependentItems.push(input.dataset.label);
+            }
+        });
+
+        breakdown.innerHTML = "";
+
+        if (ntCount === 0) {
+            resultValue.textContent = `${score} / 6`;
+
+            if (score === 6) {
+                resultNote.textContent =
+                    "Autonomie préservée pour les six activités cotées dans cette évaluation.";
+            } else {
+                resultNote.textContent =
+                    "Le score met en évidence une dépendance dans au moins une activité de base évaluée.";
+            }
+        } else {
+            resultValue.textContent = `${score} / ${evaluated} évalués`;
+
+            resultNote.textContent =
+                `${ntCount} activité${ntCount > 1 ? "s sont" : " est"} non évaluée${ntCount > 1 ? "s" : ""}. Il vaut mieux conserver ce résultat partiel plutôt que de le convertir artificiellement sur 6.`;
+        }
+
+        if (dependentItems.length) {
+            dependentItems.forEach(label => {
+                const li = document.createElement("li");
+                li.textContent = `${label} : dépendance`;
+                breakdown.appendChild(li);
+            });
+        } else if (evaluated > 0) {
+            const li = document.createElement("li");
+            li.textContent =
+                "Aucune dépendance n’a été cochée parmi les activités évaluées.";
+            breakdown.appendChild(li);
+        } else {
+            const li = document.createElement("li");
+            li.textContent =
+                "Aucune activité n’a pu être évaluée.";
+            breakdown.appendChild(li);
+        }
+
+        errorBox.hidden = true;
+        resultBox.hidden = false;
+    }
+
+    function resetKatz() {
+        document.querySelectorAll(".katz-card input").forEach(input => {
+            input.checked = false;
+        });
+
+        clearMessages();
+    }
+
+    calculateButton.addEventListener("click", calculateKatz);
+    resetButton.addEventListener("click", resetKatz);
+
+    document.querySelectorAll(".katz-card input").forEach(input => {
+        input.addEventListener("change", clearMessages);
+    });
+});
+</script>
+{% endblock %}
